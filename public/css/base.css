@@ -7800,9 +7800,12 @@ button,
   align-items: center;
   transition: width .2s; }
   .app-header__logo .logo-src {
-    height: 23px;
-    width: 97px;
-    background: url("../../images/logo-inverse.png"); }
+    height: 30px;
+    width: 200px;
+    /* width: 100%; */
+    background: url("../../images/logo-muyhumano-lineal.png");
+    background-size: contain;
+    background-repeat: no-repeat; }
 
 .app-header__menu,
 .app-header__mobile-menu {
@@ -14744,9 +14747,11 @@ legend {
         background: rgba(255, 255, 255, 0.2); }
 
 .app-logo {
-  height: 23px;
-  width: 97px;
-  background: url("../../images/logo-inverse.png"); }
+  height: 200px;
+  width: 200px;
+  background: url("../../images/logo-mh.svg");
+  background-size: contain;
+  background-repeat: no-repeat; }
 
 .app-logo-inverse {
   height: 23px;
