@@ -77,6 +77,7 @@
                 <div class="divider row"></div>
                 <div class="d-flex align-items-center">
                     <div class="ms-auto">
+                        <a href="{{ route('start') }}" class="btn btn-dark btn-lg">Inicio</a>
                         <button type="submit" class="btn btn-primary btn-lg">Registrar</button>
                     </div>
                 </div>

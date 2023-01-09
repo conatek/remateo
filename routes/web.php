@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 
 /*
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\URL;
 
 Route::get('/', function () {
     return view('front.welcome');
-});
+})->name('start');
 
 Auth::routes();
 

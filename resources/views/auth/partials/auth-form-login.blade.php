@@ -57,6 +57,7 @@
                                 Recuperar contraseña
                             </a>
                         @endif
+                        <a href="{{ route('start') }}" class="btn btn-dark btn-lg">Inicio</a>
                         <button type="submit" class="btn btn-primary btn-lg">Ingresar</button>
                     </div>
                 </div>
