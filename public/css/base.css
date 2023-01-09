@@ -14862,8 +14862,12 @@ legend {
   padding: 1.5rem; }
 
 @media (max-width: 991.98px) {
+  .app-container {
+    padding: 15px 0; }
   .chat-layout.app-inner-layout .app-inner-layout__sidebar .widget-content .widget-content-left .widget-subheading {
-    white-space: normal; } }
+    white-space: normal; }
+  .h-100 {
+    height: fit-content !important; } }
 
 .mobile-app-menu-btn {
   display: none;

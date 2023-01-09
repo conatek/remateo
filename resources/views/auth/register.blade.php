@@ -1,7 +1,7 @@
 @extends('auth.layouts.app')
 
 @section('content')
-<div class="app-container app-theme-white body-tabs-shadow">
+<div class="app-container app-theme-white body-tabs-shadow bg-white">
     <div class="app-container">
         <div class="h-100">
             <div class="h-100 g-0 row">
