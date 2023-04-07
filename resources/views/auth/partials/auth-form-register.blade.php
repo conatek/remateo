@@ -10,7 +10,7 @@
         </h6>
         <div class="divider row"></div>
         <div>
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('register') }}">
                 @csrf
 
                 <div class="row">

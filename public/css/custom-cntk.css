@@ -1,0 +1,15 @@
+table.dataTable {
+    border-collapse: collapse !important;
+    border: 1px solid #e9ecef !important;
+}
+
+table.dataTable td,
+table.dataTable th {
+    border: 1px solid #e9ecef !important;
+}
+
+table.dataTable .td-actions {
+    display: flex;
+    border: none !important;
+    justify-content: end;
+}
