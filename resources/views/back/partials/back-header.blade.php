@@ -369,7 +369,7 @@
                                                                     <div class="avatar-wrapper mt-2 avatar-wrapper-overlap">
                                                                         <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                             <div class="avatar-icon">
-                                                                                <img src="images/avatars/1.jpg" alt="">
+                                                                                <img src="images/avatars/12.jpg" alt="">
                                                                             </div>
                                                                         </div>
                                                                         <div class="avatar-icon-wrapper avatar-icon-sm">
@@ -733,7 +733,7 @@
                         <div class="widget-content-left">
                             <div class="btn-group">
                                 <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                    <img width="42" class="rounded-circle" src="images/avatars/1.jpg" alt="">
+                                    <img width="42" class="rounded-circle" src="images/avatars/12.jpg" alt="">
                                     <i class="fa fa-angle-down ms-2 opacity-8"></i>
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true"
@@ -746,10 +746,10 @@
                                                     <div class="widget-content-wrapper">
                                                         <div class="widget-content-left me-3">
                                                             <img width="42" class="rounded-circle"
-                                                                src="images/avatars/1.jpg" alt="">
+                                                                src="images/avatars/12.jpg" alt="">
                                                         </div>
                                                         <div class="widget-content-left">
-                                                            <div class="widget-heading">Alina Mcloughlin</div>
+                                                            <div class="widget-heading">{{ auth()->user()->name }}</div>
                                                             <div class="widget-subheading opacity-8">A short profile description</div>
                                                         </div>
                                                         <div class="widget-content-right me-2">
@@ -831,7 +831,7 @@
                             </div>
                         </div>
                         <div class="widget-content-left  ms-3 header-user-info">
-                            <div class="widget-heading"> Alina Mclourd</div>
+                            <div class="widget-heading"> {{ auth()->user()->name }}</div>
                             <div class="widget-subheading"> VP People Manager</div>
                         </div>
                         <div class="widget-content-right header-user-info ms-3">

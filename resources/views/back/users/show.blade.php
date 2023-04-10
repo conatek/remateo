@@ -12,19 +12,15 @@
             </div>
         </div>
         <div class="page-title-actions">
-            <button type="button" class="btn-shadow me-3 btn btn-info"
-                onclick="event.preventDefault();
-                document.getElementById('users-index-form').submit();">
-                <i class="fa fa-users"></i>
-                Volver a Usuarios
-            </button>
-
-            <form id="users-index-form" action="{{ route('users.index') }}" method="GET" class="d-none"></form>
+            <a href="{{ route('users.index') }}" type="button" class="btn-shadow me-3 btn btn-info">
+                <i class="fa fa-list"></i>
+                Ver Listado
+            </a>
         </div>
     </div>
 </div>
 
-@if (session('success'))    
+@if (session('success'))
     <div class="mbg-3 alert alert-success alert-dismissible fade show" role="alert">
         <span class="pe-2">
             <i class="fa fa-star"></i>
@@ -52,18 +48,24 @@
                             <h6 class="menu-header-subtitle">Implementation Specialist</h6>
                             <h6 class="menu-header-subtitle">{{ $user->email }}</h6>
                         </div>
+                        <div class="m-4">
+                            @forelse($user->roles as $role)
+                                <span class="badge bg-success">{{ $role->name }}</span>
+                            @empty
+                                <span class="badge bg-danger">No roles added</span>
+                            @endforelse
+                        </div>
                         <div class="menu-header-btn-pane">
-                            <button class="ladda-button btn btn-pill btn-dark" data-style="slide-right">
-                                <span class="ladda-label">Load Click</span>
+                            <a href="{{ route('users.edit', $user->id) }}" class="ladda-button btn btn-pill btn-dark" data-style="slide-right">
+                                <span class="ladda-label">Editar</span>
                                 <span class="ladda-spinner"></span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <ul class="list-group list-group-flush">
-                {{-- <li class="bg-warm-flame list-group-item"> --}}
-                <li class="bg-tempting-azure list-group-item">
+                <li class="bg-heavy-rain list-group-item">
                     <div class="widget-content p-0">
                         <div class="widget-content-wrapper">
                             <div class="widget-content-left me-3">

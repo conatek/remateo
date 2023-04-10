@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="app-main__outer">
-                
+
                     <div class="app-main__inner">
                         @yield('content')
                     </div>
@@ -55,11 +55,11 @@
                 </div>
             </div>
         </div>
-        
+
         @include('back.partials.back-drawer-wrapper')
 
         <div class="app-drawer-overlay d-none animated fadeIn"></div>
-        
+
         @include('back.partials.back-scripts')
     </body>
 </html>
