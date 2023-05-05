@@ -42,7 +42,12 @@
                             </button>
                         </span>
                     </div>
-                    @include('back.partials.back-sidebar')
+                    @canany(['home_master', 'home_super'])
+                        @include('back.partials.back-sidebar')
+                    @else
+                        @include('back.partials.back-sidebar-client')
+                    @endcanany
+
                 </div>
 
                 <div class="app-main__outer">

@@ -10,13 +10,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class UserCompanyController extends Controller
 {
     public function index()
     {
         abort_if(Gate::denies('user_index'), 403);
-        $users = User::all();
-        return view('back.users.index', compact('users'));
+        $company = auth()->user()->company_id;
+        $users = User::where('company_id', $company)->get();
+        return view('back.users_company.index', compact('users'));
     }
 
     public function create()

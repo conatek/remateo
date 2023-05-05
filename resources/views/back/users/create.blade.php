@@ -55,6 +55,21 @@ written!
             <div class="row">
                 <div class="col-md-6">
                     <div class="position-relative mb-3">
+                        <label for="company" class="form-label">Empresa</label>
+                        <select type="select" id="company"
+                                name="company_id" class="form-select">
+                            <option value="">-- Seleccionar empresa --</option>
+                            @foreach($companies as $id => $company)
+                                <option value="{{ $id }}" {{ old('company') == $id ? 'selected' : '' }}>{{ $company }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('company'))
+                            <span class="error text-danger" for="input-company">{{ $errors->first('company') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="position-relative mb-3">
                         <label for="password" class="form-label">Contraseña</label>
                         <input name="password" id="password" placeholder="Ingresar contraseña" type="password" class="form-control">
                         @if($errors->has('password'))

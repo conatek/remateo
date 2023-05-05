@@ -5,7 +5,7 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    <i class="pe-7s-unlock text-success"></i>
+                    <i class="pe-7s-key text-success"></i>
                 </div>
                 <div>
                     Agregar Permiso

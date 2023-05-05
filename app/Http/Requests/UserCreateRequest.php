@@ -26,6 +26,7 @@ class UserCreateRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users',
+            'company_id' => 'required',
             'password' => 'required',
         ];
     }
@@ -42,6 +43,7 @@ class UserCreateRequest extends FormRequest
             'email.required' => 'El campo email es requerido.',
             'email.email' => 'El campo email no tiene el formato adecuado.',
             'email.unique' => 'El email ya se encuentra registrado.',
+            'company_id.required' => 'El campo empresa es requerido.',
             'password.required' => 'El campo contraseña es requerido.',
         ];
     }

@@ -16,7 +16,10 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'home',
+            'home_master',
+            'home_super',
+            'home_admin',
+            'home_generic',
 
             'permission_index',
             'permission_create',
