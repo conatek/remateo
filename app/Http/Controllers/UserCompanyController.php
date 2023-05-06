@@ -14,7 +14,7 @@ class UserCompanyController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('user_index'), 403);
+        abort_if(Gate::denies('user_company_index'), 403);
         $company = auth()->user()->company_id;
         $users = User::where('company_id', $company)->get();
         return view('back.users_company.index', compact('users'));
@@ -22,10 +22,10 @@ class UserCompanyController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('user_create'), 403);
-        $companies = Company::all()->pluck('name', 'id');
+        abort_if(Gate::denies('user_company_create'), 403);
+        $company = Company::where('id', auth()->user()->company_id)->first();
         $roles = Role::all()->pluck('name', 'id');
-        return view('back.users.create', compact('companies', 'roles'));
+        return view('back.users_company.create', compact('company', 'roles'));
     }
 
     public function store(UserCreateRequest $request)
@@ -39,23 +39,30 @@ class UserCompanyController extends Controller
 
         $roles = $request->input('roles', []);
         $user->syncRoles($roles);
-        return redirect()->route('users.show', $user->id)->with('success', 'Usuario creado exitosamente!');
+        return redirect()->route('users_company.show', $user->id)->with('success', 'Usuario creado exitosamente!');
     }
 
     public function show(User $user)
     {
-        abort_if(Gate::denies('user_show'), 403);
+        abort_if(Gate::denies('user_company_show'), 403);
         $user->load('roles');
-        return view('back.users.show', compact('user'));
+        return view('back.users_company.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-        abort_if(Gate::denies('user_edit'), 403);
-        $companies = Company::all()->pluck('name', 'id');
+        abort_if(Gate::denies('user_company_edit'), 403);
+        $company = Company::where('id', auth()->user()->company_id)->first();
+
+//        dd($user);
+
+        if($user->company_id != $company->id) {
+            return redirect()->route('users_company.index');
+        }
+
         $roles = Role::all()->pluck('name', 'id');
         $user->load('roles');
-        return view('back.users.edit', compact('user', 'companies', 'roles'));
+        return view('back.users_company.edit', compact('user', 'company', 'roles'));
     }
 
     public function update(UserEditRequest $request, User $user)
@@ -71,14 +78,14 @@ class UserCompanyController extends Controller
         $user->update($data);
         $roles = $request->input('roles', []);
         $user->syncRoles($roles);
-        return redirect()->route('users.show', $user->id)->with('success', 'Usuario actualizado correctamente.');
+        return redirect()->route('users_company.show', $user->id)->with('success', 'Usuario actualizado correctamente.');
     }
 
     public function destroy(User $user)
     {
-        abort_if(Gate::denies('user_destroy'), 403);
+        abort_if(Gate::denies('user_company_destroy'), 403);
         if(auth()->user()->id == $user->id) {
-            return redirect()->route('users.index');
+            return redirect()->route('users_company.index');
         }
 
         $user->delete();

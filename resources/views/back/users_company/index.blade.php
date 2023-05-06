@@ -12,8 +12,8 @@
                 </div>
             </div>
             <div class="page-title-actions">
-                @can('user_create')
-                    <a href="{{ route('users.create') }}" type="button" class="btn-shadow me-3 btn btn-info">
+                @can('user_company_create')
+                    <a href="{{ route('users_company.create') }}" type="button" class="btn-shadow me-3 btn btn-info">
                         <i class="fa fa-plus"></i>
                         Agregar
                     </a>
@@ -39,9 +39,7 @@
                 <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Area</th>
-                    <th>Cargo</th>
-                    <th>Nº Identificación</th>
+                    <th>Email</th>
                     <th>Roles</th>
                     <th>Acciones</th>
                 </tr>
@@ -50,9 +48,7 @@
                 @foreach ($users as $user)
                     <tr>
                         <td>{{ $user->name }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $user->email }}</td>
                         <td>
                             @forelse($user->roles as $role)
                                 <span class="badge bg-success">{{ $role->name }}</span>
@@ -61,20 +57,20 @@
                             @endforelse
                         </td>
                         <td class="td-actions">
-                            @can('user_show')
-                                <a href="{{ route('users.show', $user->id) }}" class="mb-2 me-2 btn-icon btn btn-sm btn-success">
+                            @can('user_company_show')
+                                <a href="{{ route('users_company.show', $user->id) }}" class="mb-2 me-2 btn-icon btn btn-sm btn-success">
                                     <i class="pe-7s-look btn-icon-wrapper"></i>Mostrar
                                 </a>
                             @endcan
 
-                            @can('user_edit')
-                                <a href="{{ route('users.edit', $user->id) }}" class="mb-2 me-2 btn-icon btn btn-sm btn-primary">
+                            @can('user_company_edit')
+                                <a href="{{ route('users_company.edit', $user->id) }}" class="mb-2 me-2 btn-icon btn btn-sm btn-primary">
                                     <i class="pe-7s-pen btn-icon-wrapper"></i>Editar
                                 </a>
                             @endcan
 
-                            @can('user_destroy')
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                            @can('user_company_destroy')
+                                <form action="{{ route('users_company.destroy', $user->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button class="mb-2 me-2 btn-icon btn btn-sm btn-danger" type="submit">
@@ -89,9 +85,7 @@
                 <tfoot>
                 <tr>
                     <th>Nombre</th>
-                    <th>Area</th>
-                    <th>Cargo</th>
-                    <th>Nº Identificación</th>
+                    <th>Email</th>
                     <th>Roles</th>
                     <th>Acciones</th>
                 </tr>

@@ -41,47 +41,24 @@ class RoleHasPermissionSeeder extends Seeder
                 $permission->name != 'home_generic' &&
                 substr($permission->name, 0,5) != 'role_' &&
                 substr($permission->name, 0,11) != 'permission_' &&
-                $permission->name != 'user_destroy';
-        });
-        Role::findOrFail(3)->permissions()->sync($admin_permissions);
-
-        // Editor [4]
-        $editor_permissions = Permission::all()->filter(function ($permission) {
-            return $permission->name != 'home_master' &&
-                $permission->name != 'home_super' &&
-                $permission->name != 'home_admin' &&
-                substr($permission->name, 0,5) != 'role_' &&
-                substr($permission->name, 0,11) != 'permission_' &&
-                $permission->name != 'user_create' &&
-                $permission->name != 'user_destroy';
-        });
-        Role::findOrFail(4)->permissions()->sync($editor_permissions);
-
-        // Analyst [5]
-        $analyst_permissions = Permission::all()->filter(function ($permission) {
-            return $permission->name != 'home_master' &&
-                $permission->name != 'home_super' &&
-                $permission->name != 'home_admin' &&
-                substr($permission->name, 0,5) != 'role_' &&
-                substr($permission->name, 0,11) != 'permission_' &&
-                $permission->name != 'user_create' &&
-                $permission->name != 'user_edit' &&
-                $permission->name != 'user_destroy';
-        });
-        Role::findOrFail(5)->permissions()->sync($analyst_permissions);
-
-        // Collaborator [6]
-        $collaborator_permissions = Permission::all()->filter(function ($permission) {
-            return $permission->name != 'home_master' &&
-                $permission->name != 'home_super' &&
-                $permission->name != 'home_admin' &&
-                substr($permission->name, 0,5) != 'role_' &&
-                substr($permission->name, 0,11) != 'permission_' &&
+                $permission->name != 'user_index' &&
                 $permission->name != 'user_create' &&
                 $permission->name != 'user_show' &&
                 $permission->name != 'user_edit' &&
                 $permission->name != 'user_destroy';
         });
+        Role::findOrFail(3)->permissions()->sync($admin_permissions);
+
+        // Editor [4]
+        $editor_permissions = $admin_permissions;
+        Role::findOrFail(4)->permissions()->sync($editor_permissions);
+
+        // Analyst [5]
+        $analyst_permissions = $admin_permissions;
+        Role::findOrFail(5)->permissions()->sync($analyst_permissions);
+
+        // Collaborator [6]
+        $collaborator_permissions = $admin_permissions;
         Role::findOrFail(6)->permissions()->sync($collaborator_permissions);
 
         // Guest [7]
@@ -91,7 +68,8 @@ class RoleHasPermissionSeeder extends Seeder
                 $permission->name != 'home_admin' &&
                 substr($permission->name, 0,5) != 'role_' &&
                 substr($permission->name, 0,11) != 'permission_' &&
-                substr($permission->name, 0,5) != 'user_';
+                substr($permission->name, 0,5) != 'user_' &&
+                substr($permission->name, 0,8) != 'company_';
         });
         Role::findOrFail(7)->permissions()->sync($guest_permissions);
     }

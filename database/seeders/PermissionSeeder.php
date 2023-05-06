@@ -39,6 +39,12 @@ class PermissionSeeder extends Seeder
             'user_edit',
             'user_destroy',
 
+            'user_company_index',
+            'user_company_create',
+            'user_company_show',
+            'user_company_edit',
+            'user_company_destroy',
+
             'company_index',
             'company_create',
             'company_show',
