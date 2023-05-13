@@ -99,15 +99,15 @@
     </div>
 </div>
 
-<div class="components">
-    <div class="hello">
-        <h2>Hello.vue</h2>
-        <hello-component />
-    </div>
+{{--<div class="components">--}}
+{{--    <div class="hello">--}}
+{{--        <h2>Hello.vue</h2>--}}
+{{--        <hello-component />--}}
+{{--    </div>--}}
 
-    <div class="world">
-        <h2>World.vue</h2>
-        <world-component />
-    </div>
-</div>
+{{--    <div class="world">--}}
+{{--        <h2>World.vue</h2>--}}
+{{--        <world-component />--}}
+{{--    </div>--}}
+{{--</div>--}}
 @endsection
