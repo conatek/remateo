@@ -15,3 +15,4 @@
 <link href="{{ asset('css/custom-cntk.css') }}" rel="stylesheet">
 <!-- iCheck for checkboxes and radio inputs -->
 <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.css') }}">
+@vite('resources/css/app.css')
