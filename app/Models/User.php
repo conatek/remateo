@@ -46,7 +46,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the user that owns the phone.
+     * Get the company that owns the user.
      */
     public function company()
     {

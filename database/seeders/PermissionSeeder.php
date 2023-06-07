@@ -50,6 +50,24 @@ class PermissionSeeder extends Seeder
             'company_show',
             'company_edit',
             'company_destroy',
+
+            'area_index',
+            'area_create',
+            'area_show',
+            'area_edit',
+            'area_destroy',
+
+            'position_index',
+            'position_create',
+            'position_show',
+            'position_edit',
+            'position_destroy',
+
+            'campus_index',
+            'campus_create',
+            'campus_show',
+            'campus_edit',
+            'campus_destroy',
         ];
 
         foreach ($permissions as $permission) {

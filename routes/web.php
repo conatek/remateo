@@ -3,9 +3,13 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserCompanyController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\AreaController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\CampusController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ProvinceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,7 +43,34 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/companies/{company}', [CompanyController::class, 'update'])->name('companies.update');
     Route::delete('/companies/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy');
 
+    Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
+    Route::get('/areas/create', [AreaController::class, 'create'])->name('areas.create');
+    Route::post('/areas', [AreaController::class, 'store'])->name('areas.store');
+    Route::get('/areas/{area}', [AreaController::class, 'show'])->name('areas.show');
+    Route::get('/areas/{area}/edit', [AreaController::class, 'edit'])->name('areas.edit');
+    Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
+    Route::delete('/areas/{area}', [AreaController::class, 'destroy'])->name('areas.destroy');
+
+    Route::get('/positions', [PositionController::class, 'index'])->name('positions.index');
+    Route::get('/positions/create', [PositionController::class, 'create'])->name('positions.create');
+    Route::post('/positions', [PositionController::class, 'store'])->name('positions.store');
+    Route::get('/positions/{position}', [PositionController::class, 'show'])->name('positions.show');
+    Route::get('/positions/{position}/edit', [PositionController::class, 'edit'])->name('positions.edit');
+    Route::put('/positions/{position}', [PositionController::class, 'update'])->name('positions.update');
+    Route::delete('/positions/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
+
+    Route::get('/campuses', [CampusController::class, 'index'])->name('campuses.index');
+    Route::get('/campuses/create', [CampusController::class, 'create'])->name('campuses.create');
+    Route::post('/campuses', [CampusController::class, 'store'])->name('campuses.store');
+    Route::get('/campuses/{campus}', [CampusController::class, 'show'])->name('campuses.show');
+    Route::get('/campuses/{campus}/edit', [CampusController::class, 'edit'])->name('campuses.edit');
+    Route::put('/campuses/{campus}', [CampusController::class, 'update'])->name('campuses.update');
+    Route::delete('/campuses/{campus}', [CampusController::class, 'destroy'])->name('campuses.destroy');
+
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
+
+    // Provinces - Cities
+    Route::post('/get-cities', [ProvinceController::class, 'getCities'])->name('get_cities');
 });
 

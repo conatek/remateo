@@ -14,6 +14,8 @@
 <script type="text/javascript" src="{{ asset('vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendors/select2/dist/js/select2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendors/@atomaras/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}"></script>
 
 <!-- custome.js -->
 <script type="text/javascript" src="{{ asset('js/charts/apex-charts.js') }}"></script>
@@ -24,4 +26,9 @@
 <script type="text/javascript" src="{{ asset('js/treeview.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/form-components/toggle-switch.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/tables.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/form-components/input-select.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+{{--<script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>--}}
+{{--<script>--}}
+{{--    CKEDITOR.replace('description');--}}
+{{--</script>--}}
