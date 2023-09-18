@@ -19,6 +19,27 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        // Validator::make($input, [
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => [
+        //         'required',
+        //         'string',
+        //         'email',
+        //         'max:255',
+        //         Rule::unique(User::class),
+        //     ],
+        //     'password' => $this->passwordRules(),
+        // ])->validate();
+
+        // $user = User::create([
+        //     'name' => $input['name'],
+        //     'email' => $input['email'],
+        //     'password' => Hash::make($input['password']),
+        // ]);
+
+        // $user->assignRole('User');
+        // return $user;
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -32,12 +53,20 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         $user = User::create([
+            'company_id' => $input['company_id'],
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
 
-        $user->assignRole('User');
+        $user->assignRole('Guest');
+
+        // $client = Client::create([
+        //     'user_id' => $user['id']
+        // ]);
+
+        // Aqui siguen las subtablas de clientes
+
         return $user;
     }
 }

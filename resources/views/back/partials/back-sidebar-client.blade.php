@@ -8,14 +8,14 @@
                 </a>
             </li>
 
-            @can('user_company_index')
+            {{-- @can('user_company_index') --}}
             <li class="{{ request()->is('collaborators*') ? 'mm-active' : '' }}">
-                <a href="{{ route('users.index') }}" class="{{ request()->is('collaborators*') ? 'mm-active' : '' }}">
+                <a href="{{ route('collaborators.index') }}" class="{{ request()->is('collaborators*') ? 'mm-active' : '' }}">
                     <i class="metismenu-icon pe-7s-science"></i>
                     Maestro
                 </a>
             </li>
-            @endcan
+            {{-- @endcan --}}
 
             <hr>
 

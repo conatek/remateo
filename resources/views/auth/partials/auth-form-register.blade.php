@@ -15,6 +15,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
+                        <input id="company_id" name="company_id" type="hidden" value="2">
                         <div class="position-relative mb-3">
                             <label for="name" class="form-label">Nombre</label>
                             <input  name="name" 

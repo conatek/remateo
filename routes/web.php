@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserCompanyController;
+use App\Http\Controllers\CollaboratorController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\PositionController;
@@ -66,6 +67,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/campuses/{campus}/edit', [CampusController::class, 'edit'])->name('campuses.edit');
     Route::put('/campuses/{campus}', [CampusController::class, 'update'])->name('campuses.update');
     Route::delete('/campuses/{campus}', [CampusController::class, 'destroy'])->name('campuses.destroy');
+
+    Route::get('/collaborators', [CollaboratorController::class, 'index'])->name('collaborators.index');
+    Route::get('/collaborators/create', [CollaboratorController::class, 'create'])->name('collaborators.create');
+    Route::post('/collaborators', [CollaboratorController::class, 'store'])->name('collaborators.store');
+    Route::get('/collaborators/{collaborator}', [CollaboratorController::class, 'show'])->name('collaborators.show');
+    Route::get('/collaborators/{collaborator}/edit', [CollaboratorController::class, 'edit'])->name('collaborators.edit');
+    Route::put('/collaborators/{collaborator}', [CollaboratorController::class, 'update'])->name('collaborators.update');
+    Route::delete('/collaborators/{collaborator}', [CollaboratorController::class, 'destroy'])->name('collaborators.destroy');
 
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
