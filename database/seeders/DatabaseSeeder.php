@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProvinceSeeder::class,
             CitySeeder::class,
+            DocumentTypeSeeder::class,
+            SocialStratumSeeder::class,
         ]);
     }
 }
