@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
             CitySeeder::class,
             DocumentTypeSeeder::class,
             SocialStratumSeeder::class,
+            RhTypeSeeder::class,
+            ScholarshipSeeder::class,
         ]);
     }
 }

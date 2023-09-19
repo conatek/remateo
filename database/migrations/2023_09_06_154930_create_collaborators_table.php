@@ -25,9 +25,9 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('first_surname')->nullable();
             $table->string('second_surname')->nullable();
-            // Sexo: Femenino, Masculino
-            // RH: O-, O+, A-, A+, B-, B+, AB-, AB+
-            // Escolaridad: No aplica, Primaria, Bachiller incompleto, Bachiller, Técnico, Tecnólogo, Profesional, Especialista, Magister, Doctor
+            $table->unsignedBigInteger('sex_type_id')->nullable();
+            $table->unsignedBigInteger('rh_type_id')->nullable();
+            $table->unsignedBigInteger('scholarship_id')->nullable();
             // Url foto
             $table->date('birth_date')->nullable();
             // País de nacimiento
@@ -41,11 +41,14 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('cellphone')->nullable();
             $table->string('email')->nullable();
-            // Observaciones
+            $table->text('observations')->nullable();
 
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('document_province_id')->references('id')->on('provinces')->onDelete('cascade');
             $table->foreign('document_city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreign('sex_type_id')->references('id')->on('sex_types')->onDelete('cascade');
+            $table->foreign('rh_type_id')->references('id')->on('rh_types')->onDelete('cascade');
+            $table->foreign('scholarship_id')->references('id')->on('scholarships')->onDelete('cascade');
             $table->foreign('birth_province_id')->references('id')->on('provinces')->onDelete('cascade');
             $table->foreign('birth_city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('residence_province_id')->references('id')->on('provinces')->onDelete('cascade');
