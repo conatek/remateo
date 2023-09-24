@@ -79,6 +79,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="image" class="form-label">Imagen</label>
+                            <div class="input-group">
+                                <input type="file" name="image" id="image" class="form-control">
+                                @if($errors->has('image'))
+                                    <span class="error text-danger">{{ $errors->first('image') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
                 <hr>
                 <p>Asignar Roles</p>

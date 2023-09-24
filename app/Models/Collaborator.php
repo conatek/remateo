@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Collaborator extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        // Agregar todos los que faltan
+        'image_public_id',
+        'image_url',
+    ];
 }

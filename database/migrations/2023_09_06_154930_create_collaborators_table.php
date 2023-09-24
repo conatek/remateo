@@ -28,7 +28,6 @@ return new class extends Migration
             $table->unsignedBigInteger('sex_type_id')->nullable();
             $table->unsignedBigInteger('rh_type_id')->nullable();
             $table->unsignedBigInteger('scholarship_id')->nullable();
-            // Url foto
             $table->date('birth_date')->nullable();
             // País de nacimiento
             $table->unsignedBigInteger('birth_province_id')->nullable();
@@ -41,6 +40,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('cellphone')->nullable();
             $table->string('email')->nullable();
+            $table->string('image_public_id')->nullable();
+            $table->string('image_url')->nullable();
             $table->text('observations')->nullable();
 
             $table->foreign('company_id')->references('id')->on('companies');

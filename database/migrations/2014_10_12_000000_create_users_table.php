@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('image_public_id')->nullable();
+            $table->string('image_url')->nullable();
             $table->rememberToken();
 
             $table->foreign('company_id')->references('id')->on('companies');
