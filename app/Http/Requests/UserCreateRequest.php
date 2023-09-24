@@ -28,6 +28,7 @@ class UserCreateRequest extends FormRequest
             'email' => 'required|email|unique:users',
             'company_id' => 'required',
             'password' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg|dimensions:max_width=200,max_height=200|max:50',
         ];
     }
 
@@ -45,6 +46,10 @@ class UserCreateRequest extends FormRequest
             'email.unique' => 'El email ya se encuentra registrado.',
             'company_id.required' => 'El campo empresa es requerido.',
             'password.required' => 'El campo contraseña es requerido.',
+            'image.dimensions' => 'Las dimensiones maximas de imagen son 200 x 200',
+            'image.image' => 'El archivo debe ser una imagen.',
+            'image.mimes' => 'Formato de imagen no admitido (usar jpeg, jpg, png).',
+            'image.max' => 'El archivo excede el tamaño permitido (50KB).',
         ];
     }
 }

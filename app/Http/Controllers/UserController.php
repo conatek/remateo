@@ -34,7 +34,7 @@ class UserController extends Controller
         // Las validaciones se realizan en UserCreateRequest
 
         $file = request()->file('image');
-        $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' => 'users']);
+        $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' => 'mh/' . $request['company_id'] . '/users']);
         $image_public_id = $cloudinary_object->getPublicId();
         $image_url = $cloudinary_object->getSecurePath();
 
@@ -75,6 +75,22 @@ class UserController extends Controller
         if($password) {
             $data['password'] = bcrypt($password);
         }
+        
+        $url = $user['image_url'];
+        $public_id = $user['image_public_id'];
+        if($request->hasFile('image')) {
+            Cloudinary::destroy($public_id);
+            $file = request()->file('image');
+            $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' => 'mh/' . $request['company_id'] . '/users']);
+            $image_public_id = $cloudinary_object->getPublicId();
+            $image_url = $cloudinary_object->getSecurePath();
+
+            $data['image_public_id'] = $image_public_id;
+            $data['image_url'] = $image_url;
+        } else {
+            $data['image_public_id'] = $public_id;
+            $data['image_url'] = $url;
+        }
 
         $user->update($data);
         $roles = $request->input('roles', []);
@@ -89,6 +105,8 @@ class UserController extends Controller
             return redirect()->route('users.index');
         }
 
+        $public_id = $user['image_public_id'];
+        Cloudinary::destroy($public_id);
         $user->delete();
         return back()->with('success', 'Usuario eliminado correctamente.');
     }
