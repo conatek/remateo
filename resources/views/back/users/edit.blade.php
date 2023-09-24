@@ -30,7 +30,7 @@
 
     <div class="main-card mb-3 card">
         <div class="card-body">
-            <form action="{{ route('users.update', $user->id) }}" method="post" class="">
+            <form action="{{ route('users.update', $user->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -71,17 +71,6 @@
                     </div>
                     <div class="col-md-6">
                         <div class="position-relative mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input name="password" id="password" type="password" class="form-control" placeholder="Ingrese la contraseña solo si desea modificar">
-                            @if($errors->has('password'))
-                                <span class="error text-danger" for="input-password">{{ $errors->first('password') }}</span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="position-relative mb-3">
                             <label for="image" class="form-label">Imagen</label>
                             <div class="input-group">
                                 <input type="file" name="image" id="image" class="form-control">
@@ -89,6 +78,17 @@
                                     <span class="error text-danger">{{ $errors->first('image') }}</span>
                                 @endif
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input name="password" id="password" type="password" class="form-control" placeholder="Ingrese la contraseña solo si desea modificar">
+                            @if($errors->has('password'))
+                                <span class="error text-danger" for="input-password">{{ $errors->first('password') }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>

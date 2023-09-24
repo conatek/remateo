@@ -6,9 +6,11 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserEditRequest;
 use App\Models\Company;
 use App\Models\User;
+// use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserController extends Controller
 {
@@ -31,11 +33,18 @@ class UserController extends Controller
     {
         // Las validaciones se realizan en UserCreateRequest
 
+        $file = request()->file('image');
+        $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' => 'users']);
+        $image_public_id = $cloudinary_object->getPublicId();
+        $image_url = $cloudinary_object->getSecurePath();
+
         $user = User::create($request->only('name', 'email', 'company_id')
             + [
+                'image_public_id' => $image_public_id,
+                'image_url' => $image_url,
                 'password' => bcrypt($request->input('password')),
             ]);
-
+        
         $roles = $request->input('roles', []);
         $user->syncRoles($roles);
         return redirect()->route('users.show', $user->id)->with('success', 'Usuario creado exitosamente!');
