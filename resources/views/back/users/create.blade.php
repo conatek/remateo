@@ -20,13 +20,13 @@
     </div>
 </div>
 
-<div class="mbg-3 alert alert-info alert-dismissible fade show" role="alert">
+{{-- <div class="mbg-3 alert alert-info alert-dismissible fade show" role="alert">
     <span class="pe-2">
         <i class="fa fa-question-circle"></i>
     </span>
     This dashboard example was created using only the available elements and components, no additional SCSS was
 written!
-</div>
+</div> --}}
 
 <div class="main-card mb-3 card">
     <div class="card-body">
@@ -73,10 +73,10 @@ written!
                         <label for="image" class="form-label">Imagen</label>
                         <div class="input-group">
                             <input type="file" name="image" id="image" class="form-control">
-                            @if($errors->has('image'))
-                                <span class="error text-danger">{{ $errors->first('image') }}</span>
-                            @endif
                         </div>
+                        @if($errors->has('image'))
+                            <span class="error text-danger">{{ $errors->first('image') }}</span>
+                        @endif
                     </div>
                 </div>
             </div>

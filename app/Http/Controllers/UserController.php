@@ -34,7 +34,7 @@ class UserController extends Controller
         // Las validaciones se realizan en UserCreateRequest
 
         $file = request()->file('image');
-        $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' => 'mh/' . $request['company_id'] . '/users']);
+        $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' =>  'mh/' . env("APP_ENV", "local") . '/' . $request['company_id'] . '/users']); // => mh/local/1/users/qxrcxytjrwufqjij9ix3
         $image_public_id = $cloudinary_object->getPublicId();
         $image_url = $cloudinary_object->getSecurePath();
 
@@ -75,13 +75,17 @@ class UserController extends Controller
         if($password) {
             $data['password'] = bcrypt($password);
         }
+
+        // dd($user['image_public_id']);
         
-        $url = $user['image_url'];
-        $public_id = $user['image_public_id'];
+        $url = isset($user['image_url']) ? $user['image_url'] : null;
+        $public_id = isset($user['image_public_id']) ? $user['image_public_id'] : null;
         if($request->hasFile('image')) {
-            Cloudinary::destroy($public_id);
+            if($public_id != null) {
+                Cloudinary::destroy($public_id);
+            }
             $file = request()->file('image');
-            $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' => 'mh/' . $request['company_id'] . '/users']);
+            $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' =>  'mh/' . env("APP_ENV", "local") . '/' . $request['company_id'] . '/users']); // => mh/local/1/users/qxrcxytjrwufqjij9ix3
             $image_public_id = $cloudinary_object->getPublicId();
             $image_url = $cloudinary_object->getSecurePath();
 

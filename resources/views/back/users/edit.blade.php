@@ -28,6 +28,35 @@
         written!
     </div>
 
+    <div class="col-md-12">
+        <div class="card-shadow-primary card-border text-white mb-3 card bg-primary">
+            <div class="card-body mx-auto">
+                <div class="avatar-icon-wrapper avatar-icon-xl d-flex mb-3 justify-content-center">
+                    <div class="avatar-icon">
+                        @if ($user->image_url)
+                            <img src="{{ $user->image_url }}" alt="{{ $user->name }}">
+                        @else
+                            <img src="{{ asset('images/default-profile.jpeg') }}" alt="{{ $user->name }}">
+                        @endif
+                        <img src="{{ $user->image_url }}" alt="{{ $user->name }}">
+                    </div>
+                </div>
+                <div>
+                    <h5 class="menu-header-title text-center">{{ $user->name }}</h5>
+                    <h6 class="menu-header-subtitle text-center">{{ $user->email }}</h6>
+                </div>
+                {{-- <div class="menu-header-btn-pane pt-1">
+                    <button class="btn-icon btn btn-dark btn-sm">
+                        <i class="pe-7s-config btn-icon-wrapper"></i>
+                        View Complete Profile
+                    </button>
+                </div> --}}
+            </div>
+            {{-- <div class="text-center d-block card-footer">
+                <button class="btn-shadow-dark btn-wider btn btn-dark">Send Message</button>
+            </div> --}}
+        </div>
+    </div>
     <div class="main-card mb-3 card">
         <div class="card-body">
             <form action="{{ route('users.update', $user->id) }}" method="post" enctype="multipart/form-data">

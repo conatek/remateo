@@ -39,18 +39,21 @@
                     <div class="menu-header-content btn-pane-right">
                         <div class="avatar-icon-wrapper me-2 avatar-icon-xl">
                             <div class="avatar-icon rounded">
-                                {{-- <img src="../images/avatars/12.jpg" alt="Avatar 5"> --}}
-                                <img src="{{ asset('/images/avatars/12.jpg') }}" alt="Avatar 5">
+                                @if ($user->image_url)
+                                    <img src="{{ $user->image_url }}" alt="{{ $user->name }}">
+                                @else
+                                    <img src="{{ asset('images/default-profile.jpeg') }}" alt="{{ $user->name }}">
+                                @endif
                             </div>
                         </div>
                         <div>
                             <h5 class="menu-header-title">{{ $user->name }}</h5>
-                            <h6 class="menu-header-subtitle">Implementation Specialist</h6>
+                            {{-- <h6 class="menu-header-subtitle">Implementation Specialist</h6> --}}
                             <h6 class="menu-header-subtitle">{{ $user->email }}</h6>
                         </div>
                         <div class="m-4">
                             @forelse($user->roles as $role)
-                                <span class="badge bg-success">{{ $role->name }}</span>
+                                <span class="badge bg-success mx-1">{{ $role->name }}</span>
                             @empty
                                 <span class="badge bg-danger">No roles added</span>
                             @endforelse

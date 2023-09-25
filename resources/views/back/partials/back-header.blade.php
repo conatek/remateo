@@ -733,7 +733,11 @@
                         <div class="widget-content-left">
                             <div class="btn-group">
                                 <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                    <img width="42" class="rounded-circle" src="images/avatars/12.jpg" alt="">
+                                    @if (auth()->user()->image_url)
+                                        <img width="42" class="rounded-circle" src="{{ auth()->user()->image_url }}" alt="">
+                                    @else
+                                        <img width="42" class="rounded-circle" src="{{ asset('images/default-profile.jpeg') }}" alt="">
+                                    @endif
                                     <i class="fa fa-angle-down ms-2 opacity-8"></i>
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true"
@@ -745,8 +749,11 @@
                                                 <div class="widget-content p-0">
                                                     <div class="widget-content-wrapper">
                                                         <div class="widget-content-left me-3">
-                                                            <img width="42" class="rounded-circle"
-                                                                src="images/avatars/12.jpg" alt="">
+                                                            @if (auth()->user()->image_url)
+                                                                <img width="42" class="rounded-circle" src="{{ auth()->user()->image_url }}" alt="">
+                                                            @else
+                                                                <img width="42" class="rounded-circle" src="{{ asset('images/default-profile.jpeg') }}" alt="">
+                                                            @endif
                                                         </div>
                                                         <div class="widget-content-left">
                                                             <div class="widget-heading">{{ auth()->user()->name }}</div>
