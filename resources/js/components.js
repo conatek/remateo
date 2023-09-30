@@ -1,4 +1,7 @@
 import { defineAsyncComponent } from 'vue';
+// import { Bootstrap4Pagination } from 'laravel-vue-pagination';
+// import { Bootstrap5Pagination } from 'laravel-vue-pagination';
+// import { TailwindPagination } from 'laravel-vue-pagination';
 
 
 const components = {
@@ -7,6 +10,9 @@ const components = {
 
     'campus-create': defineAsyncComponent(() => import('./components/campus/CampusCreate.vue')),
     'campus-edit': defineAsyncComponent(() => import('./components/campus/CampusEdit.vue')),
+
+    'collaborator-index': defineAsyncComponent(() => import('./components/collaborators/CollaboratorIndex.vue')),
+    'collaborator-create': defineAsyncComponent(() => import('./components/collaborators/CollaboratorCreate.vue')),
 
 };
 
