@@ -1,8 +1,4 @@
 import { defineAsyncComponent } from 'vue';
-// import { Bootstrap4Pagination } from 'laravel-vue-pagination';
-// import { Bootstrap5Pagination } from 'laravel-vue-pagination';
-// import { TailwindPagination } from 'laravel-vue-pagination';
-
 
 const components = {
     'hello-component': defineAsyncComponent(() => import('./components/Hello.vue')),
