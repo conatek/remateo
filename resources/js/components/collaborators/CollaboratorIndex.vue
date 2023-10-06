@@ -26,7 +26,7 @@
                 <!-- <li class="page-item active">
                     <a href="javascript:void(0);" class="page-link">2</a>
                 </li> -->
-                <li v-for="page in totalPages()" class="page-item" :class="this.currentPage == page ? 'active' : ''">
+                <li v-for="page in totalPages()" class="page-item" :class="currentPage == page ? 'active' : ''">
                     <a @click="getPageData(page)" class="page-link">{{ page }}</a>
                 </li>
                 <li class="page-item">
