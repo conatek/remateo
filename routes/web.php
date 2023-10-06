@@ -68,6 +68,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/campuses/{campus}', [CampusController::class, 'update'])->name('campuses.update');
     Route::delete('/campuses/{campus}', [CampusController::class, 'destroy'])->name('campuses.destroy');
 
+    // Route::get('/collaborators', [CollaboratorController::class, 'getCollaborators'])->name('collaborators');
     Route::get('/collaborators', [CollaboratorController::class, 'index'])->name('collaborators.index');
     Route::get('/collaborators/create', [CollaboratorController::class, 'create'])->name('collaborators.create');
     Route::post('/collaborators', [CollaboratorController::class, 'store'])->name('collaborators.store');

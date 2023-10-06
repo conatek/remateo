@@ -41,6 +41,7 @@
         
         <collaborator-index :company_id="{{ $company_id }}" :collaborators="{{ $collaborators }}"></collaborator-index>
         {{-- <collaborator-index :company_id="{{ $company_id }}" :collaborators="{{ $collaborators }}"></collaborator-index> --}}
+        {{-- <collaborator-index :company_id="{{ $company_id }}" :collaborators="{{ $collaborators }}"></collaborator-index> --}}
 
         {{-- <campus-create :company_id="{{ $company_id }}" :collaborators="{{ $collaborators }}"></campus-create> --}}
         {{-- <collaborator-index :company_id="{{ $company_id }}"></collaborator-index> --}}
