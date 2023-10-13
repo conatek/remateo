@@ -2,8 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CollaboratorCreateRequest;
 use App\Models\Collaborator;
+use App\Models\DocumentType;
+use App\Models\Province;
+use App\Models\RhType;
+use App\Models\Scholarship;
+use App\Models\SexType;
+use App\Models\SocialStratum;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CollaboratorController extends Controller
 {
@@ -11,15 +21,7 @@ class CollaboratorController extends Controller
         $results = [];
         
         $user_company_id = auth()->user()->company_id;
-        // $collaborators = Collaborator::where('company_id', $user_company_id)->paginate(8);
         $collaborators = Collaborator::where('company_id', $user_company_id)->get();
-        // $collaborators->toArray();
-
-        // dd(json_encode($collaborators->toArray()));
-        // dd($collaborators->links());
-
-        // $results['collaborators'] = $collaborators;
-        // $results['collaborators'] = json_encode($collaborators->toArray());
         $results['collaborators'] = $collaborators->toArray();
 
         return $results;
@@ -27,14 +29,108 @@ class CollaboratorController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('user_index'), 403);
+        abort_if(Gate::denies('collaborator_index'), 403);
         $user_company_id = auth()->user()->company_id;
-        $collaborators = Collaborator::where('company_id', $user_company_id)->get();
-        // $collaborators = $collaboratorsData->toArray();
-        // $collaborators = Collaborator::where('company_id', $user_company_id)->paginate(8);
-        // $collaborators = Collaborator::where('company_id', $user_company_id)->paginate(8)->toArray;
-        // dd($collaborators);
+        $collaborators = Collaborator::where('company_id', $user_company_id)->orderBy('created_at', 'desc')->get();
         return view('back.collaborators.index', compact('collaborators'));
-        // return view('back.collaborators.index');
+    }
+
+    public function create()
+    {
+        abort_if(Gate::denies('collaborator_create'), 403);
+
+        $document_types = DocumentType::all();
+        $sex_types = SexType::all();
+        $rh_types = RhType::all();
+        $scholarship_types = Scholarship::all();
+        $stratum_types = SocialStratum::all();
+        $provinces = Province::all();
+
+        return view('back.collaborators.create', compact('document_types','sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'provinces'));
+    }
+
+    public function store(CollaboratorCreateRequest $request)
+    {
+        // Las validaciones se realizan en CollaboratorCreateRequest
+
+        try{
+            $company_id = auth()->user()->company_id;
+    
+            if($request->hasFile('image')) {
+                $file = request()->file('image');
+            }
+
+    
+            $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' =>  'mh/' . env("APP_ENV", "local") . '/' . $company_id . '/collaborators']); // => mh/local/1/collaborators/qxrcxytjrwufqjij9ix3
+            $image_public_id = $cloudinary_object->getPublicId();
+            $image_url = $cloudinary_object->getSecurePath();
+    
+            $data = array(
+                'company_id' => $company_id,
+                'name' => $request->name,
+                'first_surname' => $request->first_surname,
+                'second_surname' => $request->second_surname,
+                'document_type_id' => $request->document_type_id,
+                'document_number' => $request->document_number,
+                'document_province_id' => $request->document_province_id,
+                'document_city_id' => $request->document_city_id,
+                'expedition_date' => $request->expedition_date,
+                'birth_province_id' => $request->birth_province_id,
+                'birth_city_id' => $request->birth_city_id,
+                'birth_date' => $request->birth_date,
+                'sex_type_id' => $request->sex_type_id,
+                'rh_type_id' => $request->rh_type_id,
+                'scholarship_type_id' => $request->scholarship_type_id,
+                'observations' => $request->observations,
+                'residence_province_id' => $request->residence_province_id,
+                'residence_city_id' => $request->residence_city_id,
+                'stratum_type_id' => $request->stratum_type_id,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'cellphone' => $request->cellphone,
+                'email' => $request->email,
+                'image_public_id' => $image_public_id,
+                'image_url' => $image_url,
+            );
+    
+            $collaborator = Collaborator::create($data);
+    
+            return response()->json([
+                'message'=>'Colaborador creado exitosamente!',
+                'collaborator'=>$collaborator
+            ]);
+        } catch(Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function show(Collaborator $collaborator, $message = false)
+    {
+        abort_if(Gate::denies('collaborator_show'), 403);
+
+        if($message == 'success') {
+            // return view('back.collaborators.show', compact('collaborator'))->with('success', 'Colaborador creado exitosamente!');
+            return view('back.collaborators.show')
+                ->with('collaborator', $collaborator)
+                ->with('message', 'Colaborador creado exitosamente!');
+        }
+
+        return view('back.collaborators.show', compact('collaborator'));
+    }
+
+    public function edit(Collaborator $collaborator)
+    {
+        abort_if(Gate::denies('collaborator_edit'), 403);
+
+        $document_types = DocumentType::all();
+        $sex_types = SexType::all();
+        $rh_types = RhType::all();
+        $scholarship_types = Scholarship::all();
+        $stratum_types = SocialStratum::all();
+        $provinces = Province::all();
+
+        return view('back.collaborators.edit', compact('collaborator', 'document_types','sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'provinces'));
     }
 }

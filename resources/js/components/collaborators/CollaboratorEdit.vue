@@ -259,7 +259,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                    <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
                 </form>
             </div>
         </div>
@@ -269,6 +269,9 @@
 <script>
 export default {
     props: {
+        collaborator: {
+            default: null,
+        },
         company_id: {
             default: null,
         },
@@ -293,24 +296,24 @@ export default {
     },
     data() {
         return {
-            name: '',
-            first_surname: '',
-            second_surname: '',
+            name: this.collaborator.name,
+            first_surname: this.collaborator.first_surname,
+            second_surname: this.collaborator.second_surname,
 
-            document_type_id: '',
-            document_number: '',
-            expedition_date: '',
+            document_type_id: this.collaborator.document_type_id,
+            document_number: this.collaborator.document_number,
+            expedition_date: this.collaborator.expedition_date,
             document_province_id: '',
             document_city_id: '',
 
-            birth_date: '',
+            birth_date: this.collaborator.birth_date,
             birth_province_id: '',
             birth_city_id: '',
 
-            sex_type_id: '',
-            rh_type_id: '',
-            scholarship_type_id: '',
-            stratum_type_id: '',
+            sex_type_id: this.collaborator.sex_type_id,
+            rh_type_id: this.collaborator.rh_type_id,
+            scholarship_type_id: this.collaborator.scholarship_type_id,
+            stratum_type_id: this.collaborator.stratum_type_id,
 
             residence_province_id: '',
             residence_city_id: '',
@@ -319,21 +322,34 @@ export default {
             birth_cities: [],
             residence_cities: [],
 
-            address: '',
-            phone: '',
-            cellphone: '',
-            email: '',
+            address: this.collaborator.address,
+            phone: this.collaborator.phone,
+            cellphone: this.collaborator.cellphone,
+            email: this.collaborator.email,
 
-            image: '',
-            observations: '',
+            image: this.collaborator.image_url,
+            observations: this.collaborator.observations,
 
             errors: null,
         }
     },
     mounted () {
-        //
+        this.loadInitialData()
     },
     methods: {
+        loadInitialData() {
+            this.document_province_id = this.collaborator.document_province_id
+            this.getCities(this.document_province_id, 'document')
+            this.document_city_id = this.collaborator.document_city_id
+
+            this.birth_province_id = this.collaborator.birth_province_id
+            this.getCities(this.birth_province_id, 'birth')
+            this.birth_city_id = this.collaborator.birth_city_id
+
+            this.residence_province_id = this.collaborator.residence_province_id
+            this.getCities(this.residence_province_id, 'residence')
+            this.residence_city_id = this.collaborator.residence_city_id
+        },
         getCities(province, type) {
             let dataSend = {
                 "province": province,
@@ -353,7 +369,7 @@ export default {
         onChangeImage(e) {
             this.image = e.target.files[0]
         },
-        storeCollaborator() {
+        updateCollaborator() {
             let fd = new FormData()
 
             fd.append('image', this.image)

@@ -8,16 +8,23 @@
                 <i class="pe-7s-users text-success"></i>
             </div>
             <div>
-                Listado de Colaboradores
+                Editar Colaborador
             </div>
         </div>
         <div class="page-title-actions">
-            {{-- @can('user_create') --}}
-            <a href="{{ route('collaborators.create') }}" type="button" class="btn-shadow me-3 btn btn-info">
-                <i class="fa fa-plus"></i>
-                Agregar
+            <a href="{{ route('collaborators.index') }}" type="button" class="btn-shadow me-3 btn btn-info">
+                <i class="fa fa-list"></i>
+                Ver Listado
             </a>
+
+            {{-- @can('user_create') --}}
+            {{-- <a href="{{ route('collaborators.create') }}" type="button" class="btn-shadow me-3 btn btn-info">
+                <i class="fa fa-plus"></i>
+                Carga Masiva
+            </a> --}}
             {{-- @endcan --}}
+
+            
         </div>
     </div>
 </div>
@@ -36,7 +43,14 @@
     $company_id = auth()->user()->company_id;
 @endphp
 
-
-<collaborator-index :company_id="{{ $company_id }}" :collaborators="{{ $collaborators }}"></collaborator-index>
+<collaborator-edit 
+    :collaborator="{{ $collaborator }}"
+    :document_types="{{ $document_types }}"
+    :sex_types="{{ $sex_types }}"
+    :rh_types="{{ $rh_types }}"
+    :scholarship_types="{{ $scholarship_types }}"
+    :stratum_types="{{ $stratum_types }}"
+    :provinces="{{ $provinces }}"
+></collaborator-edit>
 
 @endsection

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('second_surname')->nullable();
             $table->unsignedBigInteger('sex_type_id');
             $table->unsignedBigInteger('rh_type_id');
-            $table->unsignedBigInteger('scholarship_id');
+            $table->unsignedBigInteger('scholarship_type_id');
             $table->date('birth_date')->nullable();
             // País de nacimiento
             $table->unsignedBigInteger('birth_province_id');
@@ -36,7 +36,7 @@ return new class extends Migration
             $table->unsignedBigInteger('residence_province_id');
             $table->unsignedBigInteger('residence_city_id');
             $table->string('address')->nullable();
-            $table->unsignedBigInteger('social_stratum_id');
+            $table->unsignedBigInteger('stratum_type_id');
             $table->string('phone')->nullable();
             $table->string('cellphone')->nullable();
             $table->string('email')->nullable();
@@ -50,12 +50,12 @@ return new class extends Migration
             $table->foreign('document_city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('sex_type_id')->references('id')->on('sex_types')->onDelete('cascade');
             $table->foreign('rh_type_id')->references('id')->on('rh_types')->onDelete('cascade');
-            $table->foreign('scholarship_id')->references('id')->on('scholarships')->onDelete('cascade');
+            $table->foreign('scholarship_type_id')->references('id')->on('scholarships')->onDelete('cascade');
             $table->foreign('birth_province_id')->references('id')->on('provinces')->onDelete('cascade');
             $table->foreign('birth_city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('residence_province_id')->references('id')->on('provinces')->onDelete('cascade');
             $table->foreign('residence_city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->foreign('social_stratum_id')->references('id')->on('social_strata')->onDelete('cascade');
+            $table->foreign('stratum_type_id')->references('id')->on('social_strata')->onDelete('cascade');
 
             $table->timestamps();
         });

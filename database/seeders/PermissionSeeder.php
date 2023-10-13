@@ -68,6 +68,12 @@ class PermissionSeeder extends Seeder
             'campus_show',
             'campus_edit',
             'campus_destroy',
+
+            'collaborator_index',
+            'collaborator_create',
+            'collaborator_show',
+            'collaborator_edit',
+            'collaborator_destroy',
         ];
 
         foreach ($permissions as $permission) {
