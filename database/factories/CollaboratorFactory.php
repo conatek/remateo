@@ -46,7 +46,7 @@ class CollaboratorFactory extends Factory
             'cellphone' => $this->faker->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             // 'image_public_id' => $this->faker->string,
-            'image_url' => $this->faker->url(),
+            // 'image_url' => $this->faker->url(),
             'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
