@@ -50,7 +50,7 @@
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{  $user->company->name }}</td>
+                        <td>{{ $user->company->name }}</td>
                         <td>
                             @forelse($user->roles as $role)
                                 <span class="badge bg-success">{{ $role->name }}</span>

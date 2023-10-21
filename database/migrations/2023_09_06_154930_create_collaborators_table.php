@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('first_surname');
             $table->string('second_surname')->nullable();
+            $table->unsignedBigInteger('civil_status_type_id');
             $table->unsignedBigInteger('sex_type_id');
             $table->unsignedBigInteger('rh_type_id');
             $table->unsignedBigInteger('scholarship_type_id');
@@ -48,6 +49,7 @@ return new class extends Migration
             $table->foreign('document_type_id')->references('id')->on('document_types');
             $table->foreign('document_province_id')->references('id')->on('provinces')->onDelete('cascade');
             $table->foreign('document_city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreign('civil_status_type_id')->references('id')->on('civil_status_types')->onDelete('cascade');
             $table->foreign('sex_type_id')->references('id')->on('sex_types')->onDelete('cascade');
             $table->foreign('rh_type_id')->references('id')->on('rh_types')->onDelete('cascade');
             $table->foreign('scholarship_type_id')->references('id')->on('scholarships')->onDelete('cascade');

@@ -22,6 +22,7 @@ class Collaborator extends Model
         'birth_province_id',
         'birth_city_id',
         'birth_date',
+        'civil_status_type_id',
         'sex_type_id',
         'rh_type_id',
         'scholarship_type_id',
@@ -36,4 +37,14 @@ class Collaborator extends Model
         'image_public_id',
         'image_url',
     ];
+
+    public function document_type()
+    {
+        return $this->belongsTo(DocumentType::class);
+    }
+
+    public function document_province()
+    {
+        return $this->belongsTo(Province::class);
+    }
 }

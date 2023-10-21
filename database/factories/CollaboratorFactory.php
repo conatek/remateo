@@ -32,6 +32,7 @@ class CollaboratorFactory extends Factory
             'name' => $this->faker->name(),
             'first_surname' => $this->faker->lastName(),
             'second_surname' => $this->faker->lastName(),
+            'civil_status_type_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6]),
             'sex_type_id' => $this->faker->randomElement([1, 2]),
             'rh_type_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8]),
             'scholarship_type_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8]),

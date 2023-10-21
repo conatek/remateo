@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CollaboratorCreateRequest;
+use App\Models\City;
+use App\Models\CivilStatusType;
 use App\Models\Collaborator;
 use App\Models\DocumentType;
 use App\Models\Province;
@@ -44,9 +46,10 @@ class CollaboratorController extends Controller
         $rh_types = RhType::all();
         $scholarship_types = Scholarship::all();
         $stratum_types = SocialStratum::all();
+        $civil_status_types = CivilStatusType::all();
         $provinces = Province::all();
 
-        return view('back.collaborators.create', compact('document_types','sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'provinces'));
+        return view('back.collaborators.create', compact('document_types','sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'civil_status_types', 'provinces'));
     }
 
     public function store(CollaboratorCreateRequest $request)
@@ -78,6 +81,7 @@ class CollaboratorController extends Controller
                 'birth_province_id' => $request->birth_province_id,
                 'birth_city_id' => $request->birth_city_id,
                 'birth_date' => $request->birth_date,
+                'civil_status_type_id' => $request->civil_status_type_id,
                 'sex_type_id' => $request->sex_type_id,
                 'rh_type_id' => $request->rh_type_id,
                 'scholarship_type_id' => $request->scholarship_type_id,
@@ -110,14 +114,34 @@ class CollaboratorController extends Controller
     {
         abort_if(Gate::denies('collaborator_show'), 403);
 
+        $document_type = DocumentType::where('id', $collaborator->document_type_id)->first();
+        $document_province = Province::where('id', $collaborator->document_province_id)->first();
+        $document_city = City::where('id', $collaborator->document_city_id)->first();
+        $birth_province = Province::where('id', $collaborator->birth_province_id)->first();
+        $birth_city = City::where('id', $collaborator->birth_city_id)->first();
+        $civil_status = CivilStatusType::where('id', $collaborator->civil_status_type_id)->first();
+        $sex_type = SexType::where('id', $collaborator->sex_type_id)->first();
+        $rh_type = RhType::where('id', $collaborator->rh_type_id)->first();
+        $scholarship_type = Scholarship::where('id', $collaborator->scholarship_type_id)->first();
+
         if($message == 'success') {
-            // return view('back.collaborators.show', compact('collaborator'))->with('success', 'Colaborador creado exitosamente!');
             return view('back.collaborators.show')
                 ->with('collaborator', $collaborator)
                 ->with('message', 'Colaborador creado exitosamente!');
         }
 
-        return view('back.collaborators.show', compact('collaborator'));
+        return view('back.collaborators.show', compact(
+            'collaborator', 
+            'document_type', 
+            'document_province', 
+            'document_city',
+            'birth_province',
+            'birth_city',
+            'civil_status',
+            'sex_type',
+            'rh_type',
+            'scholarship_type'
+        ));
     }
 
     public function edit(Collaborator $collaborator)
@@ -129,8 +153,18 @@ class CollaboratorController extends Controller
         $rh_types = RhType::all();
         $scholarship_types = Scholarship::all();
         $stratum_types = SocialStratum::all();
+        $civil_status_types = CivilStatusType::all();
         $provinces = Province::all();
 
-        return view('back.collaborators.edit', compact('collaborator', 'document_types','sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'provinces'));
+        return view('back.collaborators.edit', compact(
+            'collaborator', 
+            'document_types',
+            'sex_types', 
+            'rh_types', 
+            'scholarship_types', 
+            'stratum_types', 
+            'civil_status_types', 
+            'provinces'
+        ));
     }
 }
