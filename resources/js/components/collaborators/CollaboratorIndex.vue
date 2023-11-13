@@ -11,8 +11,10 @@
                             </div>
                             <div class="d-block text-end card-footer">
                                 <!-- <a class="me-2 btn btn-link btn-sm">Cancelar</a> -->
-                                <a :href="`/collaborators/${collaborator.id}`" class="btn-shadow-success btn btn-success btn-lg mx-2"><i class="fa fa-eye"></i> Ver detalle</a>
-                                <a :href="`/collaborators/${collaborator.id}/edit`" class="btn-shadow-primary btn btn-primary btn-lg"><i class="fa fa-edit"></i> Editar</a>
+                                <a :href="`/collaborators/${collaborator.id}`" class="btn-shadow-success btn btn-success btn-lg"><i class="fa fa-eye"></i> Ver detalle</a>
+                                <a :href="`/collaborators/${collaborator.id}/edit`" class="btn-shadow-primary btn btn-primary btn-lg mx-2"><i class="fa fa-edit"></i> Editar</a>
+                                <!-- <a :href="`/collaborators/${collaborator.id}/destroy`" class="btn-shadow-danger btn btn-danger btn-lg"><i class="fa fa-trash"></i> Eliminar</a> -->
+                                <a @click="deleteCollaborator(collaborator.id)" class="btn-shadow-danger btn btn-danger btn-lg"><i class="fa fa-trash"></i> Eliminar</a>
                             </div>
                         </div>
                     </div>
@@ -94,6 +96,24 @@ export default {
         },
         editCollaborator(collaborator){
             axios.get(`/collaborators/${collaborator}/edit`)
+        },
+        deleteCollaborator(id){
+            let url = ''
+            axios.delete(`/collaborators/${id}/destroy`).then(
+                (res) => {
+                    // console.log(res)
+                    // url = `/collaborators/${res.data.collaborator.id}-success`
+                    url = `/collaborators?origin=delete`
+                    window.location.href = url
+                    this.errors = null
+                    console.log(this.message);
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log(error.response.data.errors)
+                        this.errors = error.response.data.errors
+                    }
+                })
         },
     },
 }

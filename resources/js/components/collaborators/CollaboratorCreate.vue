@@ -399,7 +399,7 @@ export default {
             axios.post('/collaborators', fd).then(
                 (res) => {
                     console.log(res)
-                    url = `/collaborators/${res.data.collaborator.id}-success`
+                    url = `/collaborators/${res.data.collaborator.id}?origin=store`
                     window.location.href = url
                     this.errors = null
                 }).catch(

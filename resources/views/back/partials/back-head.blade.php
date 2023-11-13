@@ -7,6 +7,9 @@
 <meta name="description" content="Examples of just how powerful ArchitectUI really is!">
 <!-- Disable tap highlight on IE -->
 <meta name="msapplication-tap-highlight" content="no">
+<!-- CSRF Token -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <link rel="stylesheet" href="{{ asset('vendors/@fortawesome/fontawesome-free/css/all.min.css') }}">
 <link rel="stylesheet" href="{{ asset('vendors/ionicons-npm/css/ionicons.css') }}">
 <link rel="stylesheet" href="{{ asset('vendors/linearicons-master/dist/web-font/style.css') }}">

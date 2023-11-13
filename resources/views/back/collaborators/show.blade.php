@@ -20,7 +20,7 @@
     </div>
 </div>
 
-@isset($message)
+@if($message !== '')
     <div class="mbg-3 alert alert-success alert-dismissible fade show" role="alert">
         <span class="pe-2">
             <i class="fa fa-star"></i>
@@ -28,7 +28,9 @@
         </span>
         {{ $message }}
     </div>
-@endisset
+@endif
+
+{{-- {{ dd($document_type) }} --}}
 
 <collaborator-show 
     :collaborator="{{ $collaborator }}"
@@ -37,10 +39,13 @@
     :document_city="{{ $document_city }}"
     :birth_province="{{ $birth_province }}"
     :birth_city="{{ $birth_city }}"
+    :residence_province="{{ $residence_province }}"
+    :residence_city="{{ $residence_city }}"
     :civil_status="{{ $civil_status }}"
     :sex_type="{{ $sex_type }}"
     :rh_type="{{ $rh_type }}"
     :scholarship_type="{{ $scholarship_type }}"
+    :stratum_type="{{ $stratum_type }}"
 ></collaborator-show>
 
 @endsection

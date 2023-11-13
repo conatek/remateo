@@ -47,6 +47,7 @@
     :collaborator="{{ $collaborator }}"
     :document_types="{{ $document_types }}"
     :sex_types="{{ $sex_types }}"
+    :civil_status_types="{{ $civil_status_types }}"
     :rh_types="{{ $rh_types }}"
     :scholarship_types="{{ $scholarship_types }}"
     :stratum_types="{{ $stratum_types }}"

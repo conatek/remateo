@@ -96,11 +96,6 @@ class CampusController extends Controller
     {
         // Las validaciones se realizan en PositionEditRequest
 
-//        $data = $request->all();
-//
-//        $campus->update($data);
-//        return redirect()->route('campuses.show', $campus->id)->with('success', 'Sede actualizada correctamente.');
-
         $data = array(
             'id' => $request->id,
             'company_id' => $request->company_id,

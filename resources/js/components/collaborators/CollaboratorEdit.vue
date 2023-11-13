@@ -2,7 +2,7 @@
     <div>
         <div class="main-card mb-3 card">
             <div class="card-body">
-                <form @submit.prevent="storeCollaborator" enctype="multipart/form-data">
+                <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card-hover-shadow card-border mb-3 card">
@@ -11,7 +11,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="position-relative mb-3">
                                                 <label for="image" class="form-label">Foto</label>
                                                 <div class="input-group">
@@ -20,33 +20,7 @@
                                                 <span v-if="errors && errors.image" class="error text-danger" for="image">{{ errors.image[0] }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="position-relative mb-3">
-                                                <label for="name" class="form-label">Nombres*</label>
-                                                <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese su(s) nombre(s)">
-                                                <span v-if="errors && errors.name" class="error text-danger" for="name">{{ errors.name[0] }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="position-relative mb-3">
-                                                <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese su primer apellido">
-                                                <span v-if="errors && errors.first_surname" class="error text-danger" for="first_surname">{{ errors.first_surname[0] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="position-relative mb-3">
-                                                <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese su segundo apellido">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="position-relative mb-3">
                                                 <label for="document_type_id" class="form-label">Tipo de documento*</label>
                                                 <select v-model="document_type_id" name="document_type_id" class="form-control"  id="document_type_id">
@@ -56,11 +30,34 @@
                                                 <span v-if="errors && errors.document_type_id" class="error text-danger" for="document_type_id">{{ errors.document_type_id[0] }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="position-relative mb-3">
                                                 <label for="document_number" class="form-label">Documento*</label>
                                                 <input v-model="document_number" name="document_number" id="document_number" type="text" class="form-control" placeholder="Ingrese número documento">
                                                 <span v-if="errors && errors.document_number" class="error text-danger" for="document_number">{{ errors.document_number[0] }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="position-relative mb-3">
+                                                <label for="name" class="form-label">Nombres*</label>
+                                                <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese su(s) nombre(s)">
+                                                <span v-if="errors && errors.name" class="error text-danger" for="name">{{ errors.name[0] }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="position-relative mb-3">
+                                                <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese su primer apellido">
+                                                <span v-if="errors && errors.first_surname" class="error text-danger" for="first_surname">{{ errors.first_surname[0] }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="position-relative mb-3">
+                                                <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese su segundo apellido">
                                             </div>
                                         </div>
                                     </div>
@@ -129,6 +126,16 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="position-relative mb-3">
+                                                <label for="civil_status_type_id" class="form-label">Estado civil*</label>
+                                                <select v-model="civil_status_type_id" class="form-control" name="civil_status_type_id" id="civil_status_type_id">
+                                                    <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                    <option v-for="civil_status in civil_status_types" :value="civil_status.id">{{ civil_status.type }}</option>
+                                                </select>
+                                                <span v-if="errors && errors.civil_status_type_id" class="error text-danger" for="civil_status_type_id">{{ errors.civil_status_type_id[0] }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="position-relative mb-3">
                                                 <label for="sex_type_id" class="form-label">Sexo*</label>
                                                 <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
                                                     <option value="" disabled selected hidden>Seleccionar Sexo</option>
@@ -147,6 +154,9 @@
                                                 <span v-if="errors && errors.rh_type_id" class="error text-danger" for="rh_type_id">{{ errors.rh_type_id[0] }}</span>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-md-4">
                                             <div class="position-relative mb-3">
                                                 <label for="scholarship_type_id" class="form-label">Escolaridad*</label>
@@ -281,6 +291,9 @@ export default {
         document_types: {
             default: null,
         },
+        civil_status_types: {
+            default: null,
+        },
         sex_types: {
             default: null,
         },
@@ -310,6 +323,7 @@ export default {
             birth_province_id: '',
             birth_city_id: '',
 
+            civil_status_type_id: this.collaborator.civil_status_type_id,
             sex_type_id: this.collaborator.sex_type_id,
             rh_type_id: this.collaborator.rh_type_id,
             scholarship_type_id: this.collaborator.scholarship_type_id,
@@ -331,6 +345,7 @@ export default {
             observations: this.collaborator.observations,
 
             errors: null,
+            message: '',
         }
     },
     mounted () {
@@ -370,6 +385,15 @@ export default {
             this.image = e.target.files[0]
         },
         updateCollaborator() {
+            let dataSend = {
+                'image': this.image,
+                'name': this.name,
+                'first_surname': this.first_surname,
+                'second_surname': this.second_surname,
+                'document_type_id': this.document_type_id,
+                
+            }
+
             let fd = new FormData()
 
             fd.append('image', this.image)
@@ -384,6 +408,7 @@ export default {
             fd.append('birth_province_id', this.birth_province_id)
             fd.append('birth_city_id', this.birth_city_id)
             fd.append('birth_date', this.birth_date)
+            fd.append('civil_status_type_id', this.civil_status_type_id)
             fd.append('sex_type_id', this.sex_type_id)
             fd.append('rh_type_id', this.rh_type_id)
             fd.append('scholarship_type_id', this.scholarship_type_id)
@@ -395,14 +420,17 @@ export default {
             fd.append('phone', this.phone)
             fd.append('cellphone', this.cellphone)
             fd.append('email', this.email)
+            fd.append('_method', 'PUT')
 
             let url = ''
-            axios.post('/collaborators', fd).then(
+            axios.post(`/collaborators/${this.collaborator.id}`, fd).then(
                 (res) => {
                     console.log(res)
-                    url = `/collaborators/${res.data.collaborator.id}-success`
+                    // url = `/collaborators/${res.data.collaborator.id}-success`
+                    url = `/collaborators/${res.data.collaborator.id}?origin=update`
                     window.location.href = url
                     this.errors = null
+                    console.log(this.message);
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
