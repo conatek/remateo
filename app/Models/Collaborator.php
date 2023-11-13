@@ -29,6 +29,7 @@ class Collaborator extends Model
         'observations',
         'residence_province_id',
         'residence_city_id',
+        'housing_tenure_id',
         'stratum_type_id',
         'address',
         'phone',

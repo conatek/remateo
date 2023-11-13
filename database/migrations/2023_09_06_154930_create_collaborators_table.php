@@ -37,12 +37,14 @@ return new class extends Migration
             $table->unsignedBigInteger('residence_province_id');
             $table->unsignedBigInteger('residence_city_id');
             $table->string('address')->nullable();
+            $table->unsignedBigInteger('housing_tenure_id');
             $table->unsignedBigInteger('stratum_type_id');
             $table->string('phone')->nullable();
             $table->string('cellphone')->nullable();
             $table->string('email')->nullable();
             $table->string('image_public_id')->nullable();
             $table->string('image_url')->nullable();
+            $table->boolean('is_active')->default(1);
             $table->text('observations')->nullable();
 
             $table->foreign('company_id')->references('id')->on('companies');
@@ -57,6 +59,7 @@ return new class extends Migration
             $table->foreign('birth_city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('residence_province_id')->references('id')->on('provinces')->onDelete('cascade');
             $table->foreign('residence_city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreign('housing_tenure_id')->references('id')->on('housing_tenures')->onDelete('cascade');
             $table->foreign('stratum_type_id')->references('id')->on('social_strata')->onDelete('cascade');
 
             $table->timestamps();

@@ -42,6 +42,7 @@ class CollaboratorFactory extends Factory
             'residence_province_id' => $this->faker->randomElement($provinces),
             'residence_city_id' => $this->faker->randomElement($cities),
             'address' => $this->faker->address(),
+            'housing_tenure_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7]),
             'stratum_type_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6]),
             'phone' => $this->faker->phoneNumber(),
             'cellphone' => $this->faker->phoneNumber(),

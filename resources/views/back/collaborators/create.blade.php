@@ -50,6 +50,7 @@
     :rh_types="{{ $rh_types }}"
     :scholarship_types="{{ $scholarship_types }}"
     :stratum_types="{{ $stratum_types }}"
+    :housing_tenure_types="{{ $housing_tenure_types }}"
     :provinces="{{ $provinces }}"
 ></collaborator-create>
 

@@ -221,15 +221,24 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-12">
+                                        <div class="col-md-8">
                                             <div class="position-relative mb-3">
                                                 <label for="address" class="form-label">Dirección*</label>
                                                 <input v-model="address" name="address" id="address" type="text" class="form-control" placeholder="Ingrese su dirección">
                                                 <span v-if="errors && errors.address" class="error text-danger" for="address">{{ errors.address[0] }}</span>
                                             </div>
                                         </div>
+                                        <div class="col-md-4">
+                                            <div class="position-relative mb-3">
+                                                <label for="stratum_type_id" class="form-label">Tenencia*</label>
+                                                <select v-model="housing_tenure_id" class="form-control" name="housing_tenure_id" id="housing_tenure_id">
+                                                    <option value="" disabled selected hidden>Seleccionar Tenencia</option>
+                                                    <option v-for="housing_tenure in housing_tenure_types" :value="housing_tenure.id">{{ housing_tenure.type }}</option>
+                                                </select>
+                                                <span v-if="errors && errors.housing_tenure_id" class="error text-danger" for="housing_tenure_id">{{ errors.housing_tenure_id[0] }}</span>
+                                            </div>
+                                        </div>
                                     </div>
-
                                     
                                 </div>
                             </div>
@@ -303,6 +312,9 @@ export default {
         stratum_types: {
             default: null,
         },
+        housing_tenure_types: {
+            default: null,
+        },
     },
     data() {
         return {
@@ -328,6 +340,7 @@ export default {
 
             residence_province_id: '',
             residence_city_id: '',
+            housing_tenure_id: '',
 
             document_cities: [],
             birth_cities: [],
@@ -390,6 +403,7 @@ export default {
             fd.append('residence_province_id', this.residence_province_id)
             fd.append('residence_city_id', this.residence_city_id)
             fd.append('stratum_type_id', this.stratum_type_id)
+            fd.append('housing_tenure_id', this.housing_tenure_id)
             fd.append('address', this.address)
             fd.append('phone', this.phone)
             fd.append('cellphone', this.cellphone)

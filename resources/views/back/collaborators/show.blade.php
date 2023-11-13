@@ -46,6 +46,7 @@
     :rh_type="{{ $rh_type }}"
     :scholarship_type="{{ $scholarship_type }}"
     :stratum_type="{{ $stratum_type }}"
+    :housing_tenure="{{ $housing_tenure }}"
 ></collaborator-show>
 
 @endsection

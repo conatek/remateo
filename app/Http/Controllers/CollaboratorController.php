@@ -8,6 +8,7 @@ use App\Models\City;
 use App\Models\CivilStatusType;
 use App\Models\Collaborator;
 use App\Models\DocumentType;
+use App\Models\HousingTenure;
 use App\Models\Province;
 use App\Models\RhType;
 use App\Models\Scholarship;
@@ -48,9 +49,10 @@ class CollaboratorController extends Controller
         $scholarship_types = Scholarship::all();
         $stratum_types = SocialStratum::all();
         $civil_status_types = CivilStatusType::all();
+        $housing_tenure_types = HousingTenure::all();
         $provinces = Province::all();
 
-        return view('back.collaborators.create', compact('document_types','sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'civil_status_types', 'provinces'));
+        return view('back.collaborators.create', compact('document_types','sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'civil_status_types', 'housing_tenure_types', 'provinces'));
     }
 
     public function store(CollaboratorCreateRequest $request)
@@ -90,6 +92,7 @@ class CollaboratorController extends Controller
                 'residence_province_id' => $request->residence_province_id,
                 'residence_city_id' => $request->residence_city_id,
                 'stratum_type_id' => $request->stratum_type_id,
+                'housing_tenure_id' => $request->housing_tenure_id,
                 'address' => $request->address,
                 'phone' => $request->phone,
                 'cellphone' => $request->cellphone,
@@ -131,6 +134,7 @@ class CollaboratorController extends Controller
         $rh_type = RhType::where('id', $collaborator->rh_type_id)->first();
         $scholarship_type = Scholarship::where('id', $collaborator->scholarship_type_id)->first();
         $stratum_type = SocialStratum::where('id', $collaborator->stratum_type_id)->first();
+        $housing_tenure = HousingTenure::where('id', $collaborator->housing_tenure_id)->first();
 
         if($origin == 'update') {
             $message = 'Colaborador actualizado exitosamente!';
@@ -152,6 +156,7 @@ class CollaboratorController extends Controller
             'rh_type',
             'scholarship_type',
             'stratum_type',
+            'housing_tenure',
             'message'
         ));
     }
@@ -166,6 +171,7 @@ class CollaboratorController extends Controller
         $scholarship_types = Scholarship::all();
         $stratum_types = SocialStratum::all();
         $civil_status_types = CivilStatusType::all();
+        $housing_tenure_types = HousingTenure::all();
         $provinces = Province::all();
 
         return view('back.collaborators.edit', compact(
@@ -175,7 +181,8 @@ class CollaboratorController extends Controller
             'rh_types', 
             'scholarship_types', 
             'stratum_types', 
-            'civil_status_types', 
+            'civil_status_types',
+            'housing_tenure_types',
             'provinces'
         ));
     }
@@ -208,6 +215,7 @@ class CollaboratorController extends Controller
                 'residence_province_id' => $request->residence_province_id,
                 'residence_city_id' => $request->residence_city_id,
                 'stratum_type_id' => $request->stratum_type_id,
+                'housing_tenure_id' => $request->housing_tenure_id,
                 'address' => $request->address,
                 'phone' => $request->phone,
                 'cellphone' => $request->cellphone,

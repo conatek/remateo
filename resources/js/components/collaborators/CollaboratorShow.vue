@@ -173,6 +173,12 @@
                                 <div class="box-value vl-15">
                                     <p class="">{{ collaborator.address }}</p>
                                 </div>
+                                <div class="box-label lb-16">
+                                    <p class="">Tenencia:</p>
+                                </div>
+                                <div class="box-value vl-16">
+                                    <p class="">{{ housing_tenure.type }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -185,22 +191,22 @@
                         </div>
                         <div class="card-body">
                             <div class="wrapper-contact mt-3">
-                                <div class="box-label lb-16">
+                                <div class="box-label lb-17">
                                     <p class="">Teléfono fijo:</p>
                                 </div>
-                                <div class="box-value vl-16">
+                                <div class="box-value vl-17">
                                     <p class="">{{ collaborator.phone }}</p>
                                 </div>
-                                <div class="box-label lb-17">
+                                <div class="box-label lb-18">
                                     <p class="">Celular:</p>
                                 </div>
-                                <div class="box-value vl-17">
+                                <div class="box-value vl-18">
                                     <p class="">{{ collaborator.cellphone }}</p>
                                 </div>
-                                <div class="box-label lb-18">
+                                <div class="box-label lb-19">
                                     <p class="">Email:</p>
                                 </div>
-                                <div class="box-value vl-18">
+                                <div class="box-value vl-19">
                                     <p class="">{{ collaborator.email }}</p>
                                 </div>
                             </div>
@@ -244,6 +250,7 @@ export default {
         rh_type: { default: null, },
         scholarship_type: { default: null, },
         stratum_type: { default: null, },
+        housing_tenure: {default: null, },
     },
     data() {
         return {
@@ -299,12 +306,12 @@ import '../../assets/input-select.js';
 
     .main-card .wrapper-address {
         grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-13" "vl-13" "lb-14" "vl-14" "lb-15" "vl-15";
+        grid-template-areas:    "lb-13" "vl-13" "lb-14" "vl-14" "lb-15" "vl-15" "lb-16" "vl-16";
     }
 
     .main-card .wrapper-contact {
         grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-16" "vl-16" "lb-17" "vl-17" "lb-18" "vl-18";
+        grid-template-areas:    "lb-17" "vl-17" "lb-18" "vl-18" "lb-19" "vl-19";
     }
 }
 
@@ -326,14 +333,15 @@ import '../../assets/input-select.js';
         grid-template-areas:    "lb-13 vl-13 vl-13 vl-13"
                                 "lb-14 vl-14 vl-14 vl-14"
                                 "lb-15 vl-15 vl-15 vl-15"
+                                "lb-16 vl-16 vl-16 vl-16"
         ;
     }
 
     .main-card .wrapper-contact {
         grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-16 vl-16 vl-16 vl-16"
-                                "lb-17 vl-17 vl-17 vl-17"
+        grid-template-areas:    "lb-17 vl-17 vl-17 vl-17"
                                 "lb-18 vl-18 vl-18 vl-18"
+                                "lb-19 vl-19 vl-19 vl-19"
         ;
     }
 }
@@ -352,13 +360,14 @@ import '../../assets/input-select.js';
         grid-template-columns: repeat(12, 1fr);
         grid-template-areas:    "lb-13 lb-13 lb-13 vl-13 vl-13 vl-13 lb-14 lb-14 lb-14 vl-14 vl-14 vl-14"
                                 "lb-15 lb-15 lb-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15"
+                                "lb-16 lb-16 lb-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16"
         ;
     }
 
     .main-card .wrapper-contact {
         grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-16 lb-16 lb-16 vl-16 vl-16 vl-16 lb-17 lb-17 lb-17 vl-17 vl-17 vl-17"
-                                "lb-18 lb-18 lb-18 vl-18 vl-18 vl-18 vl-18 vl-18 vl-18 vl-18 vl-18 vl-18"
+        grid-template-areas:    "lb-17 lb-17 lb-17 vl-17 vl-17 vl-17 lb-18 lb-18 lb-18 vl-18 vl-18 vl-18"
+                                "lb-19 lb-19 lb-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19"
         ;
     }
 }
@@ -436,11 +445,11 @@ import '../../assets/input-select.js';
 .main-card .wrapper-address .vl-16 { grid-area: vl-16; }
 
 
-.main-card .wrapper-contact .lb-16 { grid-area: lb-16; }
-.main-card .wrapper-contact .vl-16 { grid-area: vl-16; }
 .main-card .wrapper-contact .lb-17 { grid-area: lb-17; }
 .main-card .wrapper-contact .vl-17 { grid-area: vl-17; }
 .main-card .wrapper-contact .lb-18 { grid-area: lb-18; }
 .main-card .wrapper-contact .vl-18 { grid-area: vl-18; }
+.main-card .wrapper-contact .lb-19 { grid-area: lb-19; }
+.main-card .wrapper-contact .vl-19 { grid-area: vl-19; }
 
 </style>

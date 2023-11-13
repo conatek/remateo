@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             RhTypeSeeder::class,
             ScholarshipSeeder::class,
             CivilStatusSeeder::class,
+            HousingTenureSeeder::class,
             CollaboratorSeeder::class,
         ]);
     }
