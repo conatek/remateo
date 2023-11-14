@@ -15,6 +15,30 @@ return new class extends Migration
     {
         Schema::create('collaborator_families', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('collaborator_id');
+            $table->string('name');
+            $table->string('first_surname');
+            $table->string('second_surname')->nullable();
+            $table->unsignedBigInteger('relationship_id');
+            $table->unsignedBigInteger('sex_type_id');
+            $table->unsignedBigInteger('occupation_id');
+            $table->date('birth_date')->nullable();
+
+            $table->foreign('collaborator_id')->references('id')->on('collaborators')->onDelete('cascade');
+            $table->foreign('relationship_id')->references('id')->on('relationships')->onDelete('cascade');
+            $table->foreign('sex_type_id')->references('id')->on('sex_types')->onDelete('cascade');
+            $table->foreign('occupation_id')->references('id')->on('occupations')->onDelete('cascade');
+
+            $table->timestamps();
+        });
+
+        Schema::create('relationships', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('collaborator_id');
+            $table->string('name');
+
+            $table->foreign('collaborator_id')->references('id')->on('collaborators')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
