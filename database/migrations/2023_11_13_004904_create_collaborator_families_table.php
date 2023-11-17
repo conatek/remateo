@@ -31,16 +31,6 @@ return new class extends Migration
 
             $table->timestamps();
         });
-
-        Schema::create('relationships', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('collaborator_id');
-            $table->string('name');
-
-            $table->foreign('collaborator_id')->references('id')->on('collaborators')->onDelete('cascade');
-
-            $table->timestamps();
-        });
     }
 
     /**

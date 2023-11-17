@@ -7,6 +7,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\CampusController;
+use App\Http\Controllers\CollaboratorFamilyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -83,5 +84,10 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Provinces - Cities
     Route::post('/get-cities', [ProvinceController::class, 'getCities'])->name('get_cities');
+
+    Route::get('/relative-data/{collaborator_id}', [CollaboratorFamilyController::class, 'show']);
+    Route::post('/relative-data', [CollaboratorFamilyController::class, 'store']);
+    Route::put('/relative-data-update/{relative_data}', [CollaboratorFamilyController::class, 'update']);
+    Route::delete('/relative-data-delete/{relative_data}', [CollaboratorFamilyController::class, 'destroy']);
 });
 

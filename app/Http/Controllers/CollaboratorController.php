@@ -9,7 +9,9 @@ use App\Models\CivilStatusType;
 use App\Models\Collaborator;
 use App\Models\DocumentType;
 use App\Models\HousingTenure;
+use App\Models\Occupation;
 use App\Models\Province;
+use App\Models\Relationship;
 use App\Models\RhType;
 use App\Models\Scholarship;
 use App\Models\SexType;
@@ -136,6 +138,10 @@ class CollaboratorController extends Controller
         $stratum_type = SocialStratum::where('id', $collaborator->stratum_type_id)->first();
         $housing_tenure = HousingTenure::where('id', $collaborator->housing_tenure_id)->first();
 
+        $relationship_types = Relationship::all();
+        $occupation_types = Occupation::all();
+        $sex_types = SexType::all();
+
         if($origin == 'update') {
             $message = 'Colaborador actualizado exitosamente!';
         } elseif($origin == 'store') {
@@ -157,7 +163,10 @@ class CollaboratorController extends Controller
             'scholarship_type',
             'stratum_type',
             'housing_tenure',
-            'message'
+            'message',
+            'relationship_types',
+            'occupation_types',
+            'sex_types',
         ));
     }
 

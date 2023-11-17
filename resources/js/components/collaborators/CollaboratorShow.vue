@@ -221,10 +221,138 @@
                 <p>Este es el card de Información Contractual</p>
             </div>
         </div>
-        <div v-else-if="card_selected == 'family'" class="main-card mb-3 card">
-            <div class="card-body">
-                <p>Este es el card de Información Familiar</p>
+        <div v-else-if="card_selected == 'family'" >
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <div v-if="relatives_data && relatives_data.length>0" class="row">
+                                <div class="col-md-6">
+                                    <a @click="addRelativeData" class="wrapper-add-relative-data p-2">
+                                        <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                        <p>Agregar Familiar</p>
+                                    </a>
+                                </div>
+                                <div v-for="(item, index) in relatives_data" class="col-md-6">
+                                    <div class="wrapper-relative mb-3 position-relative shadow ">
+                                        <div @click="changeRelativeData(item.id)" class="box box1">
+                                            <div class="preliminary-information">
+                                                <!-- <p class="address text-truncate w-100">{{ item.address }}</p>
+                                                <p class="email text-truncate w-100">{{ item.email }}</p>
+                                                <p class="mobile-number">{{ formatMobileNumber(item.mobile_number) }}</p> -->
+                                            </div>
+                                        </div>
+                                        <div class="box box2">
+                                            <!-- <a class="edit-delivery-data" @click="editDeliveryData(item, index)"><img src="/img-version2/icons/edit-2.svg" alt="edit-2"></a>
+
+                                            <a v-if="personal_data && personal_data.length > 1 && personal_data_default && item.id == personal_data_default.id" class="default-delivery-data"><img src="/img-version2/icons/tick-circle.svg" alt="trash"></a>
+                                            <a v-else class="delete-delivery-data" @click="deleteDeliveryData(item, index)"><img src="/img-version2/icons/trash.svg" alt="trash"></a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="row">
+                                <div class="col-12">
+                                    <a @click="addRelativeData" class="wrapper-add-relative-data p-2">
+                                        <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                        <p>Agregar Familiar</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <div v-if="add_relative_data && !edit_relative_data" class="">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card-hover-shadow card-border mb-3 card">
+                                                <div class="card-header">
+                                                    Información del Familiar
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="name" class="form-label">Nombres*</label>
+                                                                <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
+                                                                <span v-if="errors && errors.name" class="error text-danger" for="name">{{ errors.name[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                                <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
+                                                                <span v-if="errors && errors.first_surname" class="error text-danger" for="first_surname">{{ errors.first_surname[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                                <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="relationship_type_id" class="form-label">Parentesco*</label>
+                                                                <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
+                                                                    <option value="" disabled selected hidden>Seleccionar Parentesco</option>
+                                                                    <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
+                                                                </select>
+                                                                <span v-if="errors && errors.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors.relationship_type_id[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                                <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                                    <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                                    <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                                </select>
+                                                                <span v-if="errors && errors.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors.sex_type_id[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="occupation_type_id" class="form-label">Ocupación*</label>
+                                                                <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
+                                                                    <option value="" disabled selected hidden>Seleccionar Ocupación</option>
+                                                                    <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
+                                                                </select>
+                                                                <span v-if="errors && errors.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors.occupation_type_id[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                                <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                <span v-if="errors && errors.birth_date" class="error text-danger" for="birth_date">{{ errors.birth_date[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
+            
+
+            
         </div>
         <div v-else-if="card_selected == 'documents'" class="main-card mb-3 card">
             <div class="card-body">
@@ -250,19 +378,102 @@ export default {
         rh_type: { default: null, },
         scholarship_type: { default: null, },
         stratum_type: { default: null, },
-        housing_tenure: {default: null, },
+        housing_tenure: { default: null, },
+
+        relationship_types: { default: null, },
+        occupation_types: { default: null, },
+        sex_types: { default: null, },
     },
     data() {
         return {
             card_selected: '',
             message: '',
+
+            name: '',
+            first_surname: '',
+            second_surname: '',
+            relationship_type_id: '',
+            occupation_type_id: '',
+            sex_type_id: '',
+            birth_date: '',
+
+            relatives_data: [],
+            errors_relative_data: [],
+
+            add_relative_data: false,
+            edit_relative_data: false,
+
+            successfully_created_message: true,
+            successfully_updated_message: false,
+            successfully_deleted_message: false,
+
+            errors_relative_data: null,
         }
     },
     mounted () {
-        // 
+        console.log(this.collaborator.id);
+        this.getRelativesData(this.collaborator.id)
     },
     methods: {
-        // 
+        addRelativeData() {
+            if(this.add_relative_data == false) {
+                this.add_relative_data = true
+                this.edit_relative_data = false
+            } else {
+                this.edit_relative_data = false
+            }
+
+            this.name = ''
+            this.first_surname = ''
+            this.second_surname = ''
+            this.relationship_type_id = ''
+            this.occupation_type_id = ''
+            this.sex_type_id = ''
+            this.birth_date = ''
+        },
+        getRelativesData(collaborator_id) {
+            axios.get(`/relative-data/${collaborator_id}`)
+            .then(response => {
+                this.relatives_data = response.data.relatives_data;
+            })
+            .catch(e => {
+                // 
+            })
+        },
+        storeRelativeData() {
+
+            let dataSend = {
+                'collaborator_id': this.collaborator.id,
+                'name': this.name,
+                'first_surname': this.first_surname,
+                'second_surname': this.second_surname,
+                'relationship_type_id': this.relationship_type_id,
+                'occupation_type_id': this.occupation_type_id,
+                'sex_type_id': this.sex_type_id,
+                'birth_date': this.birth_date,
+            }
+
+            let url = ''
+            axios.post('/relative-data', dataSend).then(
+                (response) => {
+                    this.getRelativesData(this.collaborator.id)
+                    this.relative_data = response.data.relative_data;
+                    this.add_relative_data = false
+                    this.edit_relative_data = false
+
+                    this.successfully_created_message = true
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = false
+
+                    this.errors_relative_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log(error.response.data.errors)
+                        this.errors_relative_data = error.response.data.errors
+                    }
+                })
+        },
     },
 }
 </script>
@@ -451,5 +662,108 @@ import '../../assets/input-select.js';
 .main-card .wrapper-contact .vl-18 { grid-area: vl-18; }
 .main-card .wrapper-contact .lb-19 { grid-area: lb-19; }
 .main-card .wrapper-contact .vl-19 { grid-area: vl-19; }
+
+
+/* INFORMACIÓN FAMILIAR */
+.wrapper-add-relative-data {
+    border-radius: 8px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-style: dashed;
+    height: 122px;
+    width: 100%;
+    border-width: 1px;
+    border-color: #3f6ad8;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    /* box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.10); */
+}
+
+.wrapper-add-relative-data p {
+    /* font-family: "gothambold"; */
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 22px;
+    color: #3f6ad8;
+    margin: 0px;
+}
+
+.wrapper-add-relative-data.disabled-add {
+    border-color: #C7C7C7;
+}
+
+.wrapper-add-relative-data.disabled-add p {
+    color: #C7C7C7;
+}
+
+.wrapper-relative {
+    display: grid;
+    grid-template-columns: 90% 10%;
+
+    padding: 16px;
+    background: #fff;
+    border: 2px solid #00660A;
+    border-radius: 8px;
+}
+
+
+        
+    /* .box
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        gap: 5px
+        width: 100%
+        &.box1
+            cursor: pointer
+            .start
+                display: flex
+                flex-direction: column
+                align-items: flex-start
+                width: 5%
+                img
+                    margin-top: 2px
+            .preliminary-information
+                display: flex
+                flex-direction: column
+                align-items: flex-start
+                gap: 16px
+                width: 90%
+                p
+                    margin: 0px
+                    &.address
+                        font-family: var(--bs-font-sans-serif)
+                        font-size: 14px
+                        line-height: 18px
+                        text-decoration: none
+                    &.email
+                        font-family: var(--bs-font-sans-serif)
+                        font-size: 14px
+                        line-height: 18px
+                        font-weight: 325
+                        text-decoration: underline
+                    &.mobile-number
+                        font-family: var(--bs-font-sans-serif)
+                        font-size: 14px
+                        line-height: 18px
+                        font-weight: 325
+                        text-decoration: none
+        &.box2
+            display: flex
+            flex-direction: column
+            justify-content: space-between
+            align-items: flex-start
+            align-self: stretch
+            width: 10%
+            .edit-delivery-data
+                cursor: pointer
+            .delete-delivery-data
+                cursor: pointer
+            .default-delivery-data
+                cursor: auto */
 
 </style>

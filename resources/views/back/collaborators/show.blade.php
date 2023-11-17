@@ -47,6 +47,9 @@
     :scholarship_type="{{ $scholarship_type }}"
     :stratum_type="{{ $stratum_type }}"
     :housing_tenure="{{ $housing_tenure }}"
+    :relationship_types="{{ $relationship_types }}"
+    :occupation_types="{{ $occupation_types }}"
+    :sex_types="{{ $sex_types }}"
 ></collaborator-show>
 
 @endsection
