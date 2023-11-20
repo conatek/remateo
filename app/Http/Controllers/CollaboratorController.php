@@ -142,6 +142,11 @@ class CollaboratorController extends Controller
         $occupation_types = Occupation::all();
         $sex_types = SexType::all();
 
+        $relationship_type = Relationship::where('id', $collaborator->relationship_id)->first();
+        $occupation_type = Occupation::where('id', $collaborator->occupation_id)->first();
+
+        // dd($relationship_type);
+
         if($origin == 'update') {
             $message = 'Colaborador actualizado exitosamente!';
         } elseif($origin == 'store') {
@@ -165,7 +170,9 @@ class CollaboratorController extends Controller
             'housing_tenure',
             'message',
             'relationship_types',
+            'relationship_type',
             'occupation_types',
+            'occupation_type',
             'sex_types',
         ));
     }
