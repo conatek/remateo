@@ -259,8 +259,8 @@
                                             </div>
                                         </div>
                                         <div class="box box2">
-                                            <a class="edit-relative-data" @click="editRelativeData(item, index)"><img src="/images/icons/edit.svg" alt="edit-2"></a>
-                                            <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img src="/images/icons/trash.svg" alt="trash"></a>
+                                            <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit-2"></a>
+                                            <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
                                         </div>
                                     </div>
                                 </div>
