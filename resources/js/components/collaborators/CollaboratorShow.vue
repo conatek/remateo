@@ -222,7 +222,7 @@
             </div>
         </div>
         <div v-else-if="card_selected == 'family'" >
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-sm-12 col-xxl-6">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
@@ -494,7 +494,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div v-else-if="card_selected == 'documents'" class="main-card mb-3 card">
             <div class="card-body">
