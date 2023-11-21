@@ -118,17 +118,3 @@ export default {
     },
 }
 </script>
-
-<script setup>
-// import { ref } from 'vue';
-// import { TailwindPagination } from 'laravel-vue-pagination';
-
-// const laravelData = ref({});
-
-// const getResults = async (page = 1) => {
-//     const response = await fetch(`https://example.com/results?page=${page}`);
-//     laravelData.value = await response.json();
-// }
-
-// getResults();
-</script>

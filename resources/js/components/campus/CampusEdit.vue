@@ -134,8 +134,3 @@ export default {
     },
 }
 </script>
-
-<script setup>
-import '../../assets/select2.js';
-import '../../assets/input-select.js';
-</script>
