@@ -255,12 +255,11 @@
                                                 <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
                                                 <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
                                                 <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
-                                                <!-- <p class="email text-truncate w-100">{{ item.birth_date }}</p> -->
                                             </div>
                                         </div>
                                         <div class="box box2">
-                                            <!-- <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                            <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a> -->
+                                            <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                            <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
                                         </div>
                                     </div>
                                 </div>
