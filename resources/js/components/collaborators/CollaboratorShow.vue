@@ -222,7 +222,7 @@
             </div>
         </div>
         <div v-else-if="card_selected == 'family'" >
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-sm-12 col-xxl-6">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
@@ -274,7 +274,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
                     <div v-if="add_relative_data && !edit_relative_data" class="">
@@ -493,7 +492,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div v-else-if="card_selected == 'documents'" class="main-card mb-3 card">
             <div class="card-body">
@@ -526,6 +525,12 @@ export default {
         occupation_types: { default: null, },
         occupation_type: { default: null, },
         sex_types: { default: null, },
+
+        // :relationship_types="{{ $relationship_types }}"
+        // :relationship_type="{{ $relationship_type }}"
+        // :occupation_types="{{ $occupation_types }}"
+        // :occupation_type="{{ $occupation_type }}"
+        // :sex_types="{{ $sex_types }}"
     },
     data() {
         return {
@@ -605,6 +610,7 @@ export default {
             }
 
             this.selected_relative_data = new_selection_relative_data
+            console.log(this.selected_relative_data);
 
             this.add_relative_data = false
             this.edit_relative_data = false

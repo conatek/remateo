@@ -48,9 +48,9 @@
     :stratum_type="{{ $stratum_type }}"
     :housing_tenure="{{ $housing_tenure }}"
     :relationship_types="{{ $relationship_types }}"
-    :relationship_type="{{ $relationship_type }}"
+    {{-- :relationship_type="{{ $relationship_type }}" --}}
     :occupation_types="{{ $occupation_types }}"
-    :occupation_type="{{ $occupation_type }}"
+    {{-- :occupation_type="{{ $occupation_type }}" --}}
     :sex_types="{{ $sex_types }}"
 ></collaborator-show>
 
