@@ -60,8 +60,8 @@ class CollaboratorFamilyController extends Controller
                 'name' => $request->name,
                 'first_surname' => $request->first_surname,
                 'second_surname' => $request->second_surname,
-                'relationship_id' => $request->relationship_type_id,
-                'occupation_id' => $request->occupation_type_id,
+                'relationship_id' => $request->relationship_id,
+                'occupation_id' => $request->occupation_id,
                 'sex_type_id' => $request->sex_type_id,
                 'birth_date' => $request->birth_date,
             );
