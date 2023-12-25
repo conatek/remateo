@@ -5,6 +5,7 @@
                 <div class="position-relative mb-3">
                     <label for="name" class="form-label">Nombre</label>
                     <input v-model="name" name="name" id="name" placeholder="Ingresar nombre" type="text" class="form-control" autofocus>
+                    <span v-if="errors && errors.name" class="error text-danger" for="name">{{ errors.name[0] }}</span>
                 </div>
             </div>
 
@@ -19,7 +20,6 @@
             <div class="col-md-6">
                 <div class="position-relative mb-3">
                     <label for="area_id" class="form-label">Departamento</label>
-<!--                    <select v-model="province_id" @change="getCities(province_id)" class="multiselect-dropdown form-control" name="province" id="province">-->
                     <select v-model="province_id" @change="getCities(province_id)" class="form-control" name="province" id="province">
                         <option value="">-- Seleccionar Departamento --</option>
                         <option v-for="province in provinces" :value="province.id">{{ province.name }}</option>
@@ -30,7 +30,6 @@
             <div class="col-md-6">
                 <div class="position-relative mb-3">
                     <label for="area_id" class="form-label">Municipio</label>
-<!--                    <select v-model="city_id" class="multiselect-dropdown form-control" name="city" id="city">-->
                     <select v-model="city_id" class="form-control" name="city" id="city">
                         <option value="" :selected="cities === []">-- Seleccionar Municipio --</option>
                         <option v-for="city in cities" :value="city.id">{{ city.name }}</option>
@@ -76,6 +75,8 @@ export default {
             address: '',
             phone: '',
             email: '',
+
+            errors: null,
         }
     },
     mounted () {
@@ -109,10 +110,14 @@ export default {
             axios.post('/campuses', dataSend).then(
                 (res) => {
                     url = `/campuses/${res.data.campus.id}`
-                    window.location.href = url;
+                    // window.location.href = url;
+                    this.errors = null
                 }).catch(
                 (error) => {
-                    console.log(error)
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log(error.response.data.errors)
+                        this.errors = error.response.data.errors
+                    }
                 })
         },
     },

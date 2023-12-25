@@ -5,99 +5,129 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AreaCreateRequest;
 use App\Http\Requests\AreaEditRequest;
 use App\Models\Area;
+use App\Models\Campus;
+use App\Models\Collaborator;
+use App\Models\Company;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class AreaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function getAreas() {
+        $results = [];
+        $user_company_id = auth()->user()->company_id;
+        $areas = Area::where('company_id', $user_company_id)->get();
+        $areas_data = [];
+
+        foreach ($areas as $area) {
+            $data = [];
+
+            $data['id'] = $area->id;
+            $data['company_id'] = $area->company_id;
+            $data['campus_id'] = $area->campus_id;
+            $data['campus'] = Campus::where('id', $area->campus_id)->first();
+            $data['leader_id'] = $area->leader_id;
+            $data['leader'] = Collaborator::where('id', $area->leader_id)->first();
+            $data['name'] = $area->name;
+            $data['description'] = $area->description;
+
+            array_push($areas_data, $data);
+        }
+        
+        
+        $results['areas'] = $areas_data;
+
+        return $results;
+    }
+
     public function index()
     {
         abort_if(Gate::denies('area_index'), 403);
+
+        $user = auth()->user();
+        $company = Company::where('id', $user->company_id)->first();
+
         $areas = Area::all();
-        return view('back.areas.index', compact('areas'));
+        return view('back.areas.index', compact('company', 'areas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         abort_if(Gate::denies('area_create'), 403);
         return view('back.areas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(AreaCreateRequest $request)
     {
         // Las validaciones se realizan en AreaCreateRequest
 
-        $area = Area::create($request->all());
-        return redirect()->route('areas.show', $area->id)->with('success', 'Área creada exitosamente!');
+        $data = array(
+            'company_id' => $request->company_id,
+            'campus_id' => $request->campus_id,
+            'leader_id' => $request->leader_id,
+            'name' => $request->name,
+            'description' => $request->description,
+        );
+
+        $area = Area::create($data);
+
+        return response()->json([
+            'message'=>'Área creada exitosamente!',
+            'area'=>$area
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Area  $area
-     * @return \Illuminate\Http\Response
-     */
     public function show(Area $area)
     {
         abort_if(Gate::denies('area_show'), 403);
         return view('back.areas.show', compact('area'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Area  $area
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Area $area)
     {
         abort_if(Gate::denies('area_edit'), 403);
         return view('back.areas.edit', compact('area'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Area  $area
-     * @return \Illuminate\Http\Response
-     */
     public function update(AreaEditRequest $request, Area $area)
     {
         // Las validaciones se realizan en AreaEditRequest
 
-        $data = $request->only('name');
+        $data = array(
+            'id' => $request->id,
+            'company_id' => $request->company_id,
+            'campus_id' => $request->campus_id,
+            'leader_id' => $request->leader_id,
+            'name' => $request->name,
+            'description' => $request->description,
+        );
 
+        $area = Area::where('id', $data['id'])->first();
         $area->update($data);
-        return redirect()->route('areas.show', $area->id)->with('success', 'Área actualizada correctamente.');
+
+        return response()->json([
+            'message'=>'Área actualizada exitosamente!',
+            'area'=>$data['id']
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Area $area)
+    public function destroy($area_data_id)
     {
-        abort_if(Gate::denies('area_destroy'), 403);
-        $area->delete();
-        return back()->with('success', 'Área eliminada correctamente.');
+        try {
+            $area = Area::where('id', $area_data_id)->first();
+
+            $area->delete();
+            
+            return response()->json([
+                'message'=>'Información de área eliminada exitosamente!',
+                'area'=>$area,
+            ]);
+
+        } catch(Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

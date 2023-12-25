@@ -7,6 +7,7 @@ use App\Http\Requests\CollaboratorEditRequest;
 use App\Models\City;
 use App\Models\CivilStatusType;
 use App\Models\Collaborator;
+use App\Models\Company;
 use App\Models\DocumentType;
 use App\Models\HousingTenure;
 use App\Models\Occupation;
@@ -28,7 +29,20 @@ class CollaboratorController extends Controller
         
         $user_company_id = auth()->user()->company_id;
         $collaborators = Collaborator::where('company_id', $user_company_id)->get();
-        $results['collaborators'] = $collaborators->toArray();
+        $collaborators_data = [];
+
+        foreach ($collaborators as $collaborator) {
+            $data = [];
+
+            $data['id'] = $collaborator->id;
+            $data['name'] = $collaborator->name;
+            $data['first_surname'] = $collaborator->first_surname;
+            $data['second_surname'] = $collaborator->second_surname;
+
+            array_push($collaborators_data, $data);
+        }
+        
+        $results['collaborators'] = $collaborators_data;
 
         return $results;
     }
@@ -36,13 +50,20 @@ class CollaboratorController extends Controller
     public function index()
     {
         abort_if(Gate::denies('collaborator_index'), 403);
-        $user_company_id = auth()->user()->company_id;
-        $collaborators = Collaborator::where('company_id', $user_company_id)->orderBy('created_at', 'desc')->get();
-        return view('back.collaborators.index', compact('collaborators'));
+
+        $user = auth()->user();
+        $company = Company::where('id', $user->company_id)->first();
+
+        // $user_company_id = auth()->user()->company_id;
+        $collaborators = Collaborator::where('company_id', $company->id)->orderBy('created_at', 'desc')->get();
+        return view('back.collaborators.index', compact('company', 'collaborators'));
     }
 
     public function create()
     {
+        $user = auth()->user();
+        $company = Company::where('id', $user->company_id)->first();
+
         abort_if(Gate::denies('collaborator_create'), 403);
 
         $document_types = DocumentType::all();
@@ -54,7 +75,7 @@ class CollaboratorController extends Controller
         $housing_tenure_types = HousingTenure::all();
         $provinces = Province::all();
 
-        return view('back.collaborators.create', compact('document_types','sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'civil_status_types', 'housing_tenure_types', 'provinces'));
+        return view('back.collaborators.create', compact('company', 'document_types', 'sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'civil_status_types', 'housing_tenure_types', 'provinces'));
     }
 
     public function store(CollaboratorCreateRequest $request)
@@ -119,6 +140,9 @@ class CollaboratorController extends Controller
     // public function show(Collaborator $collaborator, $message = false)
     public function show(Collaborator $collaborator, Request $request)
     {
+        $user = auth()->user();
+        $company = Company::where('id', $user->company_id)->first();
+
         $origin = $request->origin;
         $message = '';
 
@@ -154,6 +178,7 @@ class CollaboratorController extends Controller
         }
 
         return view('back.collaborators.show', compact(
+            'company',
             'collaborator', 
             'document_type', 
             'document_province', 
@@ -179,6 +204,9 @@ class CollaboratorController extends Controller
 
     public function edit(Collaborator $collaborator)
     {
+        $user = auth()->user();
+        $company = Company::where('id', $user->company_id)->first();
+        
         abort_if(Gate::denies('collaborator_edit'), 403);
 
         $document_types = DocumentType::all();
@@ -191,6 +219,7 @@ class CollaboratorController extends Controller
         $provinces = Province::all();
 
         return view('back.collaborators.edit', compact(
+            'company',
             'collaborator', 
             'document_types',
             'sex_types', 

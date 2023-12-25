@@ -2,44 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CampusCreateRequest;
+use App\Http\Requests\CampusEditRequest;
 use App\Models\Campus;
+use App\Models\City;
+use App\Models\Company;
 use App\Models\Province;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class CampusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function getCampuses() {
+        $results = [];
+        $user_company_id = auth()->user()->company_id;
+        $campuses = Campus::where('company_id', $user_company_id)->get();
+        $campuses_data = [];
+
+        foreach ($campuses as $campus) {
+            $data = [];
+
+            $data['id'] = $campus->id;
+            $data['company_id'] = $campus->company_id;
+            $data['province_id'] = $campus->province_id;
+            $data['province'] = Province::where('id', $campus->province_id)->first();
+            $data['city_id'] = $campus->city_id;
+            $data['city'] = City::where('id', $campus->city_id)->first();
+            $data['name'] = $campus->name;
+            $data['address'] = $campus->address;
+            $data['phone'] = $campus->phone;
+            $data['email'] = $campus->email;
+
+            array_push($campuses_data, $data);
+        }
+        
+        
+        $results['campuses'] = $campuses_data;
+
+        return $results;
+    }
+
     public function index()
     {
+        $user = auth()->user();
+        $company = Company::where('id', $user->company_id)->first();
+
         abort_if(Gate::denies('campus_index'), 403);
         $campuses = Campus::all()->sortBy('name');
-        return view('back.campuses.index', compact('campuses'));
+        return view('back.campuses.index', compact('company', 'campuses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        $user = auth()->user();
+        $company = Company::where('id', $user->company_id)->first();
+
         abort_if(Gate::denies('campus_create'), 403);
         $provinces = Province::all()->sortBy("name");
-        return view('back.campuses.create', compact('provinces'));
+        return view('back.campuses.create', compact('company', 'provinces'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    // public function store(Request $request)
+    public function store(CampusCreateRequest $request)
     {
         $data = array(
             'company_id' => $request->company_id,
@@ -59,40 +84,21 @@ class CampusController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Campus  $campus
-     * @return \Illuminate\Http\Response
-     */
     public function show(Campus $campus)
     {
         abort_if(Gate::denies('campus_show'), 403);
         return view('back.campuses.show', compact('campus'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Campus  $campus
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Campus $campus)
+    public function edit(Request $campus)
     {
         abort_if(Gate::denies('campus_edit'), 403);
         $provinces = Province::all()->sortBy("name");
         return view('back.campuses.edit', compact('campus', 'provinces'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Campus  $campus
-     * @return \Illuminate\Http\Response
-     */
 //    public function update(Request $request, Campus $campus)
-    public function update(Request $request)
+    public function update(CampusEditRequest $request)
     {
         // Las validaciones se realizan en PositionEditRequest
 
@@ -116,16 +122,29 @@ class CampusController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Campus  $campus
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Campus $campus)
+    // public function destroy(Campus $campus)
+    // {
+    //     abort_if(Gate::denies('campus_destroy'), 403);
+    //     $campus->delete();
+    //     return back()->with('success', 'Sede eliminada correctamente.');
+    // }
+
+    public function destroy($campus_data_id)
     {
-        abort_if(Gate::denies('campus_destroy'), 403);
-        $campus->delete();
-        return back()->with('success', 'Sede eliminada correctamente.');
+        try {
+            $campus = Campus::where('id', $campus_data_id)->first();
+
+            $campus->delete();
+            
+            return response()->json([
+                'message'=>'Información de sede eliminada exitosamente!',
+                'campus'=>$campus,
+            ]);
+
+        } catch(Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

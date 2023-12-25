@@ -7,7 +7,7 @@
                     <div class="menu-header-content btn-pane-right">
                         <div class="avatar-icon-wrapper me-2 avatar-icon-xl">
                             <div v-if="collaborator && collaborator.image_url" class="avatar-icon rounded">
-                                    <img :src="collaborator.image_url" :alt="collaborator.name">
+                                <img :src="collaborator.image_url" :alt="collaborator.name">
                             </div>
                             <div v-else class="avatar-icon rounded">
                                 <img :src="'/images/default-profile.jpeg'" :alt="collaborator.name">
@@ -654,6 +654,19 @@ export default {
                 })
         },
         editRelativeData(item, index) {
+            let new_selection_relative_data;
+            
+            if(this.relatives_data && this.relatives_data.length>0) {
+                this.relatives_data.forEach(element => {
+                    if(element.id !== item.id) {
+                        //
+                    } else {
+                        new_selection_relative_data = element
+                    }
+                }, new_selection_relative_data);
+            }
+            this.selected_relative_data = new_selection_relative_data
+
             this.relative_data_to_edit = item
 
             this.add_relative_data = false

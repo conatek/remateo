@@ -45,13 +45,25 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/companies/{company}', [CompanyController::class, 'update'])->name('companies.update');
     Route::delete('/companies/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy');
 
+
+
+
+
+    Route::get('/company/{company}', [CompanyController::class, 'companyShow'])->name('company.show');
+
+
+
+
+
+    Route::get('/areas-data/{company_id}', [AreaController::class, 'getAreas']);
     Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
     Route::get('/areas/create', [AreaController::class, 'create'])->name('areas.create');
     Route::post('/areas', [AreaController::class, 'store'])->name('areas.store');
     Route::get('/areas/{area}', [AreaController::class, 'show'])->name('areas.show');
     Route::get('/areas/{area}/edit', [AreaController::class, 'edit'])->name('areas.edit');
     Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
-    Route::delete('/areas/{area}', [AreaController::class, 'destroy'])->name('areas.destroy');
+    // Route::delete('/areas/{area}', [AreaController::class, 'destroy'])->name('areas.destroy');
+    Route::delete('/area-data-delete/{area}', [AreaController::class, 'destroy']);
 
     Route::get('/positions', [PositionController::class, 'index'])->name('positions.index');
     Route::get('/positions/create', [PositionController::class, 'create'])->name('positions.create');
@@ -61,15 +73,18 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/positions/{position}', [PositionController::class, 'update'])->name('positions.update');
     Route::delete('/positions/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
 
+    // /campus-data/${company_id}
+    Route::get('/campus-data/{company_id}', [CampusController::class, 'getCampuses']);
     Route::get('/campuses', [CampusController::class, 'index'])->name('campuses.index');
-    Route::get('/campuses/create', [CampusController::class, 'create'])->name('campuses.create');
-    Route::post('/campuses', [CampusController::class, 'store'])->name('campuses.store');
-    Route::get('/campuses/{campus}', [CampusController::class, 'show'])->name('campuses.show');
-    Route::get('/campuses/{campus}/edit', [CampusController::class, 'edit'])->name('campuses.edit');
-    Route::put('/campuses/{campus}', [CampusController::class, 'update'])->name('campuses.update');
-    Route::delete('/campuses/{campus}', [CampusController::class, 'destroy'])->name('campuses.destroy');
+    Route::get('/campuses/create', [CampusController::class, 'create']);
+    Route::post('/campuses', [CampusController::class, 'store']);
+    Route::get('/campuses/{campus}', [CampusController::class, 'show']);
+    Route::get('/campuses/{campus}/edit', [CampusController::class, 'edit']);
+    Route::put('/campuses/{campus}', [CampusController::class, 'update']);
+    // Route::delete('/campuses/{campus}', [CampusController::class, 'destroy'])->name('campuses.destroy');
+    Route::delete('/campus-data-delete/{campus}', [CampusController::class, 'destroy']);
 
-    // Route::get('/collaborators', [CollaboratorController::class, 'getCollaborators'])->name('collaborators');
+    Route::get('/collaborators-data/{company_id}', [CollaboratorController::class, 'getCollaborators']);
     Route::get('/collaborators', [CollaboratorController::class, 'index'])->name('collaborators.index');
     Route::get('/collaborators/create', [CollaboratorController::class, 'create'])->name('collaborators.create');
     Route::post('/collaborators', [CollaboratorController::class, 'store'])->name('collaborators.store');

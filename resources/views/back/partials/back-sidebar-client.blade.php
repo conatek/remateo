@@ -8,6 +8,13 @@
                 </a>
             </li>
 
+            <li class="{{ request()->is('company*') ? 'mm-active' : '' }}">
+                <a href="{{ route('company.show', $company->id) }}" class="{{ request()->is('company*') ? 'mm-active' : '' }}">
+                    <i class="metismenu-icon pe-7s-culture"></i>
+                    Organización
+                </a>
+            </li>
+
             {{-- @can('user_company_index') --}}
             <li class="{{ request()->is('collaborators*') ? 'mm-active' : '' }}">
                 <a href="{{ route('collaborators.index') }}" class="{{ request()->is('collaborators*') ? 'mm-active' : '' }}">

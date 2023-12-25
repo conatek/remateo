@@ -15,8 +15,10 @@ class Area extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'company_id',
+        'campus_id',
+        'leader_id',
+        'name',
         'description',
     ];
 }

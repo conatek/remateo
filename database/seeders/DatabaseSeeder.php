@@ -38,6 +38,8 @@ class DatabaseSeeder extends Seeder
             HousingTenureSeeder::class,
             RelationshipSeeder::class,
             OccupationSeeder::class,
+            PositionCriticalityLevelSeeder::class,
+            PositionRiskClassSeeder::class,
             CollaboratorSeeder::class,
         ]);
     }

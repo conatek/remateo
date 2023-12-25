@@ -8,15 +8,16 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('sex_types', function (Blueprint $table) {
+        Schema::create('position_criticality_levels', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('level');
+            $table->mediumText('description');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('sex_types');
+        Schema::dropIfExists('position_criticality_levels');
     }
 };
