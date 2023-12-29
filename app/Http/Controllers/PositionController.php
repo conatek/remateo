@@ -7,11 +7,48 @@ use App\Http\Requests\PositionEditRequest;
 use App\Models\Area;
 use App\Models\Company;
 use App\Models\Position;
+use App\Models\PositionCriticalityLevel;
+use App\Models\PositionRiskClass;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class PositionController extends Controller
 {
+    public function getPositions() {
+        $results = [];
+        $user_company_id = auth()->user()->company_id;
+        $positions = Position::where('company_id', $user_company_id)->get();
+        $criticality_levels = PositionCriticalityLevel::all();
+        $risk_classes = PositionRiskClass::all();
+        $positions_data = [];
+
+        foreach ($positions as $position) {
+            $data = [];
+
+            $data['id'] = $position->id;
+            $data['company_id'] = $position->company_id;
+            $data['area_id'] = $position->area_id;
+            $data['area'] = Area::where('id', $position->area_id)->first();
+            $data['criticality_level_id'] = $position->criticality_level_id;
+            $data['criticality_level'] = PositionCriticalityLevel::where('id', $position->criticality_level_id)->first();
+            $data['risk_class_id'] = $position->risk_class_id;
+            $data['risk_class'] = PositionRiskClass::where('id', $position->risk_class_id)->first();
+            $data['name'] = $position->name;
+            $data['estimated_salary'] = $position->estimated_salary;
+            $data['description'] = $position->description;
+
+            array_push($positions_data, $data);
+        }
+        
+        
+        $results['positions'] = $positions_data;
+        $results['criticality_levels'] = $criticality_levels;
+        $results['risk_classes'] = $risk_classes;
+
+        return $results;
+    }
+
     public function index()
     {
         abort_if(Gate::denies('position_index'), 403);
@@ -32,8 +69,24 @@ class PositionController extends Controller
 
     public function store(PositionCreateRequest $request)
     {
-        $position = Position::create($request->all());
-        return redirect()->route('positions.show', $position->id)->with('success', 'Cargo creado exitosamente!');
+        // Las validaciones se realizan en PositionCreateRequest
+
+        $data = array(
+            'company_id' => $request->company_id,
+            'area_id' => $request->area_id,
+            'criticality_level_id' => $request->criticality_level_id,
+            'risk_class_id' => $request->risk_class_id,
+            'name' => $request->name,
+            'estimated_salary' => $request->estimated_salary,
+            'description' => $request->description,
+        );
+
+        $position = Position::create($data);
+
+        return response()->json([
+            'message'=>'Cargo creado exitosamente!',
+            'position'=>$position
+        ]);
     }
 
     public function show(Position $position)
@@ -53,16 +106,42 @@ class PositionController extends Controller
     {
         // Las validaciones se realizan en PositionEditRequest
 
-        $data = $request->all();
+        $data = array(
+            'id' => $request->id,
+            'company_id' => $request->company_id,
+            'area_id' => $request->area_id,
+            'criticality_level_id' => $request->criticality_level_id,
+            'risk_class_id' => $request->risk_class_id,
+            'name' => $request->name,
+            'estimated_salary' => $request->estimated_salary,
+            'description' => $request->description,
+        );
 
+        $position = Position::where('id', $data['id'])->first();
         $position->update($data);
-        return redirect()->route('positions.show', $position->id)->with('success', 'Cargo actualizado correctamente.');
+
+        return response()->json([
+            'message'=>'Cargo actualizado exitosamente!',
+            'position'=>$data['id']
+        ]);
     }
 
-    public function destroy(Position $position)
+    public function destroy($position_data_id)
     {
-        abort_if(Gate::denies('position_destroy'), 403);
-        $position->delete();
-        return back()->with('success', 'Cargo eliminado correctamente.');
+        try {
+            $position = Position::where('id', $position_data_id)->first();
+
+            $position->delete();
+            
+            return response()->json([
+                'message'=>'Información de cargo eliminada exitosamente!',
+                'position'=>$position,
+            ]);
+
+        } catch(Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

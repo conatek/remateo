@@ -9,22 +9,16 @@ class Position extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'company_id',
         'area_id',
+        'criticality_level_id',
+        'risk_class_id',
         'estimated_salary',
         'description',
     ];
 
-    /**
-     * Get the area that owns the position.
-     */
     public function area()
     {
         return $this->belongsTo(Area::class);

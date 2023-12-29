@@ -65,13 +65,15 @@ Route::group(['middleware' => 'auth'], function() {
     // Route::delete('/areas/{area}', [AreaController::class, 'destroy'])->name('areas.destroy');
     Route::delete('/area-data-delete/{area}', [AreaController::class, 'destroy']);
 
+    Route::get('/positions-data/{company_id}', [PositionController::class, 'getPositions']);
     Route::get('/positions', [PositionController::class, 'index'])->name('positions.index');
     Route::get('/positions/create', [PositionController::class, 'create'])->name('positions.create');
     Route::post('/positions', [PositionController::class, 'store'])->name('positions.store');
     Route::get('/positions/{position}', [PositionController::class, 'show'])->name('positions.show');
     Route::get('/positions/{position}/edit', [PositionController::class, 'edit'])->name('positions.edit');
     Route::put('/positions/{position}', [PositionController::class, 'update'])->name('positions.update');
-    Route::delete('/positions/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
+    // Route::delete('/positions/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
+    Route::delete('/position-data-delete/{position}', [PositionController::class, 'destroy']);
 
     // /campus-data/${company_id}
     Route::get('/campus-data/{company_id}', [CampusController::class, 'getCampuses']);

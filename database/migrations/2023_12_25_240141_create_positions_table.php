@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigInteger('criticality_level_id')->unsigned();
             $table->bigInteger('risk_class_id')->unsigned();
             $table->string('name');
-            $table->decimal('estimated_salary', 11, 2, true)->nullable();
+            $table->integer('estimated_salary')->nullable();
             $table->mediumText('description')->nullable();
 
             $table->foreign('company_id')->references('id')->on('companies');

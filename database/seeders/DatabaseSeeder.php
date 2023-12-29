@@ -38,8 +38,14 @@ class DatabaseSeeder extends Seeder
             HousingTenureSeeder::class,
             RelationshipSeeder::class,
             OccupationSeeder::class,
+            BankTypeSeeder::class,
+            EpsTypeSeeder::class,
+            AfpTypeSeeder::class,
+            ArlTypeSeeder::class,
+            CcfTypeSeeder::class,
             PositionCriticalityLevelSeeder::class,
             PositionRiskClassSeeder::class,
+            ContractTypeSeeder::class,
             CollaboratorSeeder::class,
         ]);
     }

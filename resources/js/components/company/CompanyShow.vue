@@ -540,15 +540,274 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-                
-
             </div>
         </div>
-        <div v-else-if="card_selected == 'positions'" class="main-card mb-3 card">
-            <div class="card-body">
-                <p>Este es el card de Cargos</p>
+        <div v-else-if="card_selected == 'positions'">
+            <div class="row">
+                <div class="col-sm-12 col-xxl-6">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                <div class="content d-flex align-items-start p-2">
+                                    <p class="mb-0" style="font-size: 14px;"> Cargo <strong>creado</strong> exitosamente!.</p>
+                                </div>
+                            </div>
+                            <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                <div class="content d-flex align-items-start p-2">
+                                    <p class="mb-0" style="font-size: 14px;"> Cargo <strong>actualizado</strong> exitosamente!.</p>
+                                </div>
+                            </div>
+                            <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
+                                <div class="content d-flex align-items-start p-2">
+                                    <p class="mb-0" style="font-size: 14px;"> Cargo <strong>eliminado</strong> exitosamente!.</p>
+                                </div>
+                            </div>
+                            <div v-if="positions_data && positions_data.length>0" class="row"> 
+                                <div class="col-md-12 col-lg-6">
+                                    <a @click="addPositionData" class="wrapper-add-position-data p-2 mb-3" :class="(add_position_data && !edit_position_data) ? 'selected shadow' : ''">
+                                        <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                        <p>Agregar Cargo</p>
+                                    </a>
+                                </div>
+                                <div v-for="(item, index) in positions_data" class="col-md-12 col-lg-6">
+                                    <div class="wrapper-position mb-3 position-relative" :class="(selected_position_data && selected_position_data.id) == item.id ? 'selected shadow' : ''">
+                                        <div @click="changePositionData(item.id, index)" class="box box1">
+                                            <div class="preliminary-information">
+                                                <p class="position-name text-truncate w-100">{{ item.name }}</p>
+                                                <p class="position-campus text-truncate w-100">Área: {{ item.area.name }}</p>
+                                                <p class="position-leader text-truncate w-100">Salario estimado: $ {{ numberFormat(Math.round(item.estimated_salary)) }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="box box2">
+                                            <a class="edit-position-data" @click="editPositionData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                            <a class="delete-position-data" @click="deletePositionData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="row">
+                                <div class="col-md-12">
+                                    <a @click="addPositionData" class="wrapper-add-position-data p-2 mb-3">
+                                        <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                        <p>Agregar Cargo</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
+                    <div v-if="add_position_data && !edit_position_data" class="">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-hover-shadow card-border mb-3 card add-campus-card">
+                                            <div class="card-header">
+                                                Agregar Cargo
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="name" class="form-label">Nombre</label>
+                                                            <input v-model="position_name" name="name" id="name" placeholder="Ingresar nombre" type="text" class="form-control" autofocus>
+                                                            <span v-if="errors_position_data && errors_position_data.name" class="error text-danger" for="name">{{ errors_position_data.name[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="area" class="form-label">Área</label>
+                                                            <select v-model="position_area_id" class="form-control" name="area_id" id="area">
+                                                                <option value="">-- Seleccionar Área --</option>
+                                                                <option v-for="area in areas_data" :value="area.id">{{ area.name }}</option>
+                                                            </select>
+                                                            <span v-if="errors_position_data && errors_position_data.area_id" class="error text-danger" for="area">{{ errors_position_data.area_id[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="estimated_salary" class="form-label">Salario estimado</label>
+                                                            <input v-model="position_estimated_salary" name="estimated_salary" id="estimated_salary" placeholder="Ingresar salario estimado" type="text" class="form-control" autofocus>
+                                                            <span v-if="errors_position_data && errors_position_data.estimated_salary" class="error text-danger" for="estimated_salary">{{ errors_position_data.estimated_salary[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="criticality_level" class="form-label">Nivel de criticidad</label>
+                                                            <select v-model="position_criticality_level_id" class="form-control" name="criticality_level_id" id="criticality_level">
+                                                                <option value="">-- Seleccionar Criticidad --</option>
+                                                                <option v-for="criticality_level in criticality_levels" :value="criticality_level.id">{{ criticality_level.level }}</option>
+                                                            </select>
+                                                            <span v-if="errors_position_data && errors_position_data.criticality_level_id" class="error text-danger" for="criticality_level">{{ errors_position_data.criticality_level_id[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="risk_class" class="form-label">Clase de riesgo</label>
+                                                            <select v-model="position_risk_class_id" class="form-control" name="risk_class_id" id="risk_class">
+                                                                <option value="">-- Seleccionar Riesgo --</option>
+                                                                <option v-for="risk_class in risk_classes" :value="risk_class.id">{{ risk_class.class }} - {{ risk_class.description }}</option>
+                                                            </select>
+                                                            <span v-if="errors_position_data && errors_position_data.risk_class_id" class="error text-danger" for="risk_class">{{ errors_position_data.risk_class_id[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="description" class="form-label">Descripción</label>
+                                                            <input v-model="position_description" name="description" id="description" placeholder="Ingresar descripción" type="text" class="form-control">
+                                                            <span v-if="errors_position_data && errors_position_data.description" class="error text-danger" for="description">{{ errors_position_data.description[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button @click="storePosition()" type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else-if="!add_position_data && edit_position_data" class="">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-hover-shadow card-border mb-3 card add-campus-card">
+                                            <div class="card-header">
+                                                Editar Cargo
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="name" class="form-label">Nombre</label>
+                                                            <input v-model="position_name" name="name" id="name" placeholder="Ingresar nombre" type="text" class="form-control" autofocus>
+                                                            <span v-if="errors_position_data && errors_position_data.name" class="error text-danger" for="name">{{ errors_position_data.name[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="area" class="form-label">Área</label>
+                                                            <select v-model="position_area_id" class="form-control" name="area_id" id="area">
+                                                                <option value="">-- Seleccionar Área --</option>
+                                                                <option v-for="area in areas_data" :value="area.id">{{ area.name }}</option>
+                                                            </select>
+                                                            <span v-if="errors_position_data && errors_position_data.area_id" class="error text-danger" for="area">{{ errors_position_data.area_id[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="estimated_salary" class="form-label">Salario estimado</label>
+                                                            <input v-model="position_estimated_salary" name="estimated_salary" id="estimated_salary" placeholder="Ingresar salario estimado" type="text" class="form-control" autofocus>
+                                                            <span v-if="errors_position_data && errors_position_data.estimated_salary" class="error text-danger" for="estimated_salary">{{ errors_position_data.estimated_salary[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="criticality_level" class="form-label">Nivel de criticidad</label>
+                                                            <select v-model="position_criticality_level_id" class="form-control" name="criticality_level_id" id="criticality_level">
+                                                                <option value="">-- Seleccionar Criticidad --</option>
+                                                                <option v-for="criticality_level in criticality_levels" :value="criticality_level.id">{{ criticality_level.level }}</option>
+                                                            </select>
+                                                            <span v-if="errors_position_data && errors_position_data.criticality_level_id" class="error text-danger" for="criticality_level">{{ errors_position_data.criticality_level_id[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="risk_class" class="form-label">Clase de riesgo</label>
+                                                            <select v-model="position_risk_class_id" class="form-control" name="risk_class_id" id="risk_class">
+                                                                <option value="">-- Seleccionar Riesgo --</option>
+                                                                <option v-for="risk_class in risk_classes" :value="risk_class.id">{{ risk_class.class }} - {{ risk_class.description }}</option>
+                                                            </select>
+                                                            <span v-if="errors_position_data && errors_position_data.risk_class_id" class="error text-danger" for="risk_class">{{ errors_position_data.risk_class_id[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative mb-3">
+                                                            <label for="description" class="form-label">Descripción</label>
+                                                            <input v-model="position_description" name="description" id="description" placeholder="Ingresar descripción" type="text" class="form-control">
+                                                            <span v-if="errors_position_data && errors_position_data.description" class="error text-danger" for="description">{{ errors_position_data.description[0] }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button @click="updatePosition()" type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else-if="!add_position_data && !edit_position_data && selected_position_data" class="">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-hover-shadow card-border mb-3 card edit-area-card">
+                                            <div class="card-header">
+                                                Información del Cargo
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="wrapper-position-data mt-3">
+                                                    <div class="box-label lb-29">
+                                                        <p class="">Nombre:</p>
+                                                    </div>
+                                                    <div class="box-value vl-29">
+                                                        <p class="">{{ selected_position_data.name }}</p>
+                                                    </div>
+                                                    <div class="box-label lb-30">
+                                                        <p class="">Área:</p>
+                                                    </div>
+                                                    <div class="box-value vl-30">
+                                                        <p class="">{{ selected_position_data.area.name }}</p>
+                                                    </div>
+                                                    <div class="box-label lb-31">
+                                                        <p class="">Salario:</p>
+                                                    </div>
+                                                    <div class="box-value vl-31">
+                                                        <p class="">$ {{ numberFormat(selected_position_data.estimated_salary) }}</p>
+                                                    </div>
+                                                    <div class="box-label lb-32">
+                                                        <p class="">Criticidad:</p>
+                                                    </div>
+                                                    <div class="box-value vl-32">
+                                                        <p class="">{{ selected_position_data.criticality_level.level }}</p>
+                                                    </div>
+                                                    <div class="box-label lb-33">
+                                                        <p class="">Riesgo:</p>
+                                                    </div>
+                                                    <div class="box-value vl-33">
+                                                        <p class="">{{ selected_position_data.risk_class.class }} - {{ selected_position_data.risk_class.description }}</p>
+                                                    </div>
+                                                    <div class="box-label lb-34">
+                                                        <p class="">Descripción:</p>
+                                                    </div>
+                                                    <div class="box-value vl-34">
+                                                        <p class="">{{ selected_position_data.description }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -579,8 +838,19 @@ export default {
             area_name: '',
             area_description: '',
 
+            position_area_id: '',
+            position_criticality_level_id: '',
+            position_risk_class_id: '',
+            position_name: '',
+            position_estimated_salary: '',
+            position_description: '',
+
+            criticality_levels: [],
+            risk_classes: [],
+
             campuses_data: [],
             areas_data: [],
+            positions_data: [],
             collaborators_data: [],
 
             add_campus_data: false,
@@ -593,18 +863,25 @@ export default {
             selected_area_data: null,
             area_data_to_edit: null,
 
+            add_position_data: false,
+            edit_position_data: false,
+            selected_position_data: null,
+            position_data_to_edit: null,
+
             successfully_created_message: false,
             successfully_updated_message: false,
             successfully_deleted_message: false,
 
             errors_campus_data: null,
             errors_area_data: null,
+            errors_position_data: null,
         }
     },
     mounted () {
         // console.log(this.company.id);
         this.getCampusesData(this.company.id)
         this.getAreasData(this.company.id)
+        this.getPositionsData(this.company.id)
         this.getCollaboratorsData(this.company.id)
     },
     methods: {
@@ -660,6 +937,27 @@ export default {
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
         },
+        addPositionData() {
+            if(this.add_position_data == false) {
+                this.add_position_data = true
+                this.edit_position_data = false
+            } else {
+                this.edit_position_data = false
+            }
+
+            this.selected_position_data = null
+
+            this.position_area_id = ''
+            this.position_criticality_level_id = ''
+            this.position_risk_class_id = ''
+            this.position_name = ''
+            this.position_estimated_salary = ''
+            this.position_description = ''
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
         getCampusesData(company_id) {
             axios.get(`/campus-data/${company_id}`)
             .then(response => {
@@ -673,6 +971,17 @@ export default {
             axios.get(`/areas-data/${company_id}`)
             .then(response => {
                 this.areas_data = response.data.areas;
+            })
+            .catch(e => {
+                // 
+            })
+        },
+        getPositionsData(company_id) {
+            axios.get(`/positions-data/${company_id}`)
+            .then(response => {
+                this.positions_data = response.data.positions;
+                this.criticality_levels = response.data.criticality_levels;
+                this.risk_classes = response.data.risk_classes;
             })
             .catch(e => {
                 // 
@@ -728,6 +1037,29 @@ export default {
 
             this.add_area_data = false
             this.edit_area_data = false
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
+        changePositionData(id, index) {
+            let new_selection_position_data;
+
+            if(this.positions_data && this.positions_data.length>0) {
+                this.positions_data.forEach(element => {
+                    if(element.id !== id) {
+                        //
+                    } else {
+                        new_selection_position_data = element
+                    }
+                }, new_selection_position_data);
+            }
+
+            this.selected_position_data = new_selection_position_data
+            console.log(this.selected_position_data);
+
+            this.add_position_data = false
+            this.edit_position_data = false
 
             this.successfully_created_message = false
             this.successfully_updated_message = false
@@ -799,6 +1131,40 @@ export default {
                     }
                 })
         },
+        storePosition() {
+            let dataSend = {
+                'company_id': this.company.id,
+                'area_id': this.position_area_id,
+                'criticality_level_id': this.position_criticality_level_id,
+                'risk_class_id': this.position_risk_class_id,
+                'name': this.position_name,
+                'estimated_salary': this.position_estimated_salary,
+                'description': this.position_description,
+            }
+
+            let url = ''
+            axios.post('/positions', dataSend).then(
+                (response) => {
+                    this.getPositionsData(this.company.id)
+                    this.position_data = response.data.position_data;
+                    this.add_position_data = false
+                    this.edit_position_data = false
+
+                    this.successfully_created_message = true
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = false
+
+                    this.errors_position_data = null
+
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log('//////////////////////////////////////////////');
+                        console.log(error.response.data.errors)
+                        this.errors_position_data = error.response.data.errors
+                    }
+                })
+        },
         editCampusData(item, index) {
             let new_selection_campus_data;
             
@@ -850,6 +1216,32 @@ export default {
             this.area_leader_id = item.leader_id
             this.area_name = item.name
             this.area_description = item.description
+        },
+        editPositionData(item, index) {
+            let new_selection_position_data;
+            
+            if(this.positions_data && this.positions_data.length>0) {
+                this.positions_data.forEach(element => {
+                    if(element.id !== item.id) {
+                        //
+                    } else {
+                        new_selection_position_data = element
+                    }
+                }, new_selection_position_data);
+            }
+            this.selected_position_data = new_selection_position_data
+            
+            this.position_data_to_edit = item
+
+            this.add_position_data = false
+            this.edit_position_data = true
+
+            this.position_area_id = item.area_id
+            this.position_criticality_level_id = item.criticality_level_id
+            this.position_risk_class_id = item.risk_class_id
+            this.position_name = item.name
+            this.position_estimated_salary = item.estimated_salary
+            this.position_description = item.description
         },
         updateCampus() {
             let dataSend = {
@@ -915,6 +1307,39 @@ export default {
                     }
                 })
         },
+        updatePosition() {
+            let dataSend = {
+                'id': this.position_data_to_edit.id,
+                'company_id': this.company.id,
+                'area_id': this.position_area_id,
+                'criticality_level_id': this.position_criticality_level_id,
+                'risk_class_id': this.position_risk_class_id,
+                'name': this.position_name,
+                'estimated_salary': this.position_estimated_salary,
+                'description': this.position_description,
+            }
+
+            let url = ''
+            axios.put(`/positions/${this.position_data_to_edit.id}`, dataSend).then(
+                (response) => {
+                    this.getPositionsData(this.company.id)
+
+                    this.add_position_data = false
+                    this.edit_position_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = true
+                    this.successfully_deleted_message = false
+
+                    this.errors_position_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log(error.response.data.errors)
+                        this.errors_position_data = error.response.data.errors
+                    }
+                })
+        },
         deleteCampusData(item, index) {
             
             axios.delete(`/campus-data-delete/${item.id}`).then(
@@ -943,21 +1368,50 @@ export default {
                 (response) => {
                     this.getAreasData(this.company.id)
 
-                    this.add_campus_data = false
-                    this.edit_campus_data = false
+                    this.add_area_data = false
+                    this.edit_area_data = false
 
                     this.successfully_created_message = false
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = true
 
-                    this.errors_campus_data = null
+                    this.errors_area_data = null
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
                         console.log(error.response.data.errors)
-                        this.errors_campus_data = error.response.data.errors
+                        this.errors_area_data = error.response.data.errors
                     }
                 })
+        },
+        deletePositionData(item, index) {
+            
+            axios.delete(`/position-data-delete/${item.id}`).then(
+                (response) => {
+                    this.getPositionsData(this.company.id)
+
+                    this.add_position_data = false
+                    this.edit_position_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = true
+
+                    this.errors_position_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log(error.response.data.errors)
+                        this.errors_position_data = error.response.data.errors
+                    }
+                })
+        },
+        numberFormat(number) {
+            const exp = /(\d)(?=(\d{3})+(?!\d))/g
+            const rep = '$1.'
+            let arr = number.toString().split('.')
+            arr[0] = arr[0].replace(exp,rep)
+            return arr[1] ? arr.join('.'): arr[0]
         },
     },
 }
@@ -977,7 +1431,8 @@ export default {
 .main-card .wrapper-address,
 .main-card .wrapper-contact,
 .main-card .wrapper-campus-data,
-.main-card .wrapper-area-data {
+.main-card .wrapper-area-data,
+.main-card .wrapper-position-data {
     display: grid;
     grid-gap: 1px;
     /* background-color: #dee2e6; */
@@ -1016,6 +1471,11 @@ export default {
     .main-card .wrapper-area-data {
         grid-template-columns: repeat(1, 1fr);
         grid-template-areas:    "lb-25" "vl-25" "lb-26" "vl-26" "lb-27" "vl-27" "lb-28" "vl-28";
+    }
+
+    .main-card .wrapper-position-data {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-29" "vl-29" "lb-30" "vl-30" "lb-31" "vl-31" "lb-32" "vl-32" "lb-33" "vl-33" "lb-34" "vl-34";
     }
 }
 
@@ -1067,6 +1527,17 @@ export default {
                                 "lb-28 vl-28 vl-28 vl-28"
         ;
     }
+
+    .main-card .wrapper-position-data {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:    "lb-29 vl-29 vl-29 vl-29"
+                                "lb-30 vl-30 vl-30 vl-30"
+                                "lb-31 vl-31 vl-31 vl-31"
+                                "lb-32 vl-32 vl-32 vl-32"
+                                "lb-33 vl-33 vl-33 vl-33"
+                                "lb-34 vl-34 vl-34 vl-34"
+        ;
+    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -1109,13 +1580,23 @@ export default {
                                 "lb-28 lb-28 lb-28 vl-28 vl-28 vl-28 vl-28 vl-28 vl-28 vl-28 vl-28 vl-28"
         ;
     }
+
+    .main-card .wrapper-position-data {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-29 lb-29 lb-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29"
+                                "lb-30 lb-30 lb-30 vl-30 vl-30 vl-30 lb-31 lb-31 lb-31 vl-31 vl-31 vl-31"
+                                "lb-32 lb-32 lb-32 vl-32 vl-32 vl-32 lb-33 lb-33 lb-33 vl-33 vl-33 vl-33"
+                                "lb-34 lb-34 lb-34 vl-34 vl-34 vl-34 vl-34 vl-34 vl-34 vl-34 vl-34 vl-34"
+        ;
+    }
 }
 
 .main-card .wrapper-basic .box-label,
 .main-card .wrapper-address .box-label,
 .main-card .wrapper-contact .box-label,
 .main-card .wrapper-campus-data .box-label,
-.main-card .wrapper-area-data .box-label {
+.main-card .wrapper-area-data .box-label,
+.main-card .wrapper-position-data .box-label {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1131,7 +1612,8 @@ export default {
 .main-card .wrapper-address .box-label p,
 .main-card .wrapper-contact .box-label p,
 .main-card .wrapper-campus-data .box-label p,
-.main-card .wrapper-area-data .box-label p {
+.main-card .wrapper-area-data .box-label p,
+.main-card .wrapper-position-data .box-label p {
     margin: 0;
 }
 
@@ -1139,7 +1621,8 @@ export default {
 .main-card .wrapper-address .box-value,
 .main-card .wrapper-contact .box-value,
 .main-card .wrapper-campus-data .box-value,
-.main-card .wrapper-area-data .box-value {
+.main-card .wrapper-area-data .box-value,
+.main-card .wrapper-position-data .box-value {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1153,7 +1636,8 @@ export default {
 .main-card .wrapper-address .box-value p,
 .main-card .wrapper-contact .box-value p,
 .main-card .wrapper-campus-data .box-value p,
-.main-card .wrapper-area-data .box-value p {
+.main-card .wrapper-area-data .box-value p,
+.main-card .wrapper-position-data .box-value p {
     margin: 0;
 }
 
@@ -1220,10 +1704,24 @@ export default {
 .main-card .wrapper-area-data .lb-28 { grid-area: lb-28; }
 .main-card .wrapper-area-data .vl-28 { grid-area: vl-28; }
 
+.main-card .wrapper-position-data .lb-29 { grid-area: lb-29; }
+.main-card .wrapper-position-data .vl-29 { grid-area: vl-29; }
+.main-card .wrapper-position-data .lb-30 { grid-area: lb-30; }
+.main-card .wrapper-position-data .vl-30 { grid-area: vl-30; }
+.main-card .wrapper-position-data .lb-31 { grid-area: lb-31; }
+.main-card .wrapper-position-data .vl-31 { grid-area: vl-31; }
+.main-card .wrapper-position-data .lb-32 { grid-area: lb-32; }
+.main-card .wrapper-position-data .vl-32 { grid-area: vl-32; }
+.main-card .wrapper-position-data .lb-33 { grid-area: lb-33; }
+.main-card .wrapper-position-data .vl-33 { grid-area: vl-33; }
+.main-card .wrapper-position-data .lb-34 { grid-area: lb-34; }
+.main-card .wrapper-position-data .vl-34 { grid-area: vl-34; }
+
 
 /* INFORMACIÓN FAMILIAR */
 .wrapper-add-campus-data,
-.wrapper-add-area-data {
+.wrapper-add-area-data,
+.wrapper-add-position-data {
     border-radius: 8px;
     background-color: #fff;
     display: flex;
@@ -1242,12 +1740,14 @@ export default {
 }
 
 .wrapper-add-campus-data.selected,
-.wrapper-add-area-data.selected {
+.wrapper-add-area-data.selected,
+.wrapper-add-position-data.selected {
     border-width: 2px;
 }
 
 .wrapper-add-campus-data p,
-.wrapper-add-area-data p {
+.wrapper-add-area-data p,
+.wrapper-add-position-data p {
     /* font-family: "gothambold"; */
     font-size: 18px;
     font-weight: bold;
@@ -1257,17 +1757,20 @@ export default {
 }
 
 .wrapper-add-campus-data.disabled-add,
-.wrapper-add-area-data.disabled-add {
+.wrapper-add-area-data.disabled-add,
+.wrapper-add-position-data.disabled-add {
     border-color: #C7C7C7;
 }
 
 .wrapper-add-campus-data.disabled-add p,
-.wrapper-add-area-data.disabled-add p {
+.wrapper-add-area-data.disabled-add p,
+.wrapper-add-position-data.disabled-add p {
     color: #C7C7C7;
 }
 
 .wrapper-campus,
-.wrapper-area {
+.wrapper-area,
+.wrapper-position {
     display: grid;
     grid-template-columns: 90% 10%;
     height: 110px;
@@ -1278,12 +1781,14 @@ export default {
 }
 
 .wrapper-campus.selected,
-.wrapper-area.selected {
+.wrapper-area.selected,
+.wrapper-position.selected {
     border: 2px solid #3f6ad8;
 }
 
 .wrapper-campus .box,
-.wrapper-area .box {
+.wrapper-area .box,
+.wrapper-position .box {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -1292,12 +1797,14 @@ export default {
 }
 
 .wrapper-campus .box.box1,
-.wrapper-area .box.box1 {
+.wrapper-area .box.box1,
+.wrapper-position .box.box1 {
     cursor: pointer;
 }
 
 .wrapper-campus .box.box2,
-.wrapper-area .box.box2 {
+.wrapper-area .box.box2,
+.wrapper-position .box.box2 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1307,7 +1814,8 @@ export default {
 }
 
 .wrapper-campus .box.box1 .preliminary-information,
-.wrapper-area .box.box1 .preliminary-information {
+.wrapper-area .box.box1 .preliminary-information,
+.wrapper-position .box.box1 .preliminary-information {
     display: flex;
     flex-direction: column;
     align-items:center;
@@ -1317,12 +1825,14 @@ export default {
 }
 
 .wrapper-campus .box.box1 .preliminary-information p,
-.wrapper-area .box.box1 .preliminary-information p {
+.wrapper-area .box.box1 .preliminary-information p,
+.wrapper-position .box.box1 .preliminary-information p {
     margin: 0px;
 }
 
 .wrapper-campus .box.box1 .preliminary-information p.campus-name,
-.wrapper-area .box.box1 .preliminary-information p.area-name {
+.wrapper-area .box.box1 .preliminary-information p.area-name,
+.wrapper-position .box.box1 .preliminary-information p.position-name {
     font-weight: bold;
     font-size: 14px;
     line-height: 18px;
@@ -1330,12 +1840,14 @@ export default {
 }
 
 .wrapper-campus .box.box2 .edit-campus-data,
-.wrapper-area .box.box2 .edit-area-data {
+.wrapper-area .box.box2 .edit-area-data,
+.wrapper-position .box.box2 .edit-position-data {
     cursor: pointer
 }
 
 .wrapper-campus .box.box2 .delete-campus-data,
-.wrapper-area .box.box2 .delete-area-data {
+.wrapper-area .box.box2 .delete-area-data,
+.wrapper-position .box.box2 .delete-position-data {
     cursor: pointer
 }
 

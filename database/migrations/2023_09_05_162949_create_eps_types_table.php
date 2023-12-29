@@ -8,14 +8,15 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('collaborator_contracts', function (Blueprint $table) {
+        Schema::create('eps_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('collaborator_contracts');
+        Schema::dropIfExists('eps_types');
     }
 };
