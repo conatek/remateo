@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('collaborator_id')->unsigned();
             $table->bigInteger('position_id')->unsigned();
+            $table->integer('salary')->unsigned();
             $table->bigInteger('contract_type_id')->unsigned();
             $table->date('contract_start_date')->nullable();
             $table->date('contract_end_date')->nullable();

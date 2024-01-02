@@ -1,286 +1,476 @@
 <template>
     <div>
-        <div class="main-card mb-3 card">
-            <div class="card-body">
-                <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card-hover-shadow card-border mb-3 card">
-                                <div class="card-header">
-                                    Información Básica
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="image" class="form-label">Foto</label>
-                                                <div class="input-group">
-                                                    <input @change="onChangeImage" type="file" name="image" id="image" class="form-control">
+        <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+            <li class="nav-item">
+                <a @click="tab_collaborator_status = 'general'" role="tab" class="nav-link" :class="tab_collaborator_status == 'general' ? 'active' : ''" id="tab-0" data-bs-toggle="tab" href="#tab-content-0">
+                    <span>Información General</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a @click="tab_collaborator_status = 'contract'" role="tab" class="nav-link" :class="tab_collaborator_status == 'contract' ? 'active' : ''" id="tab-1" data-bs-toggle="tab" href="#tab-content-1">
+                    <span>Información Contractual</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a @click="tab_collaborator_status = 'documentation'" role="tab" class="nav-link" :class="tab_collaborator_status == 'documentation' ? 'active' : ''" id="tab-2" data-bs-toggle="tab" href="#tab-content-2">
+                    <span>Gestión Documental</span>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane tabs-animation fade" :class="tab_collaborator_status == 'general' ? 'show active' : ''" id="tab-content-0" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-6">
+                                    <div class="card-hover-shadow card-border mb-3 card">
+                                        <div class="card-header">
+                                            Información Básica
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="image" class="form-label">Foto</label>
+                                                        <div class="input-group">
+                                                            <input @change="onChangeImage" type="file" name="image" id="image" class="form-control">
+                                                        </div>
+                                                        <span v-if="errors && errors.image" class="error text-danger" for="image">{{ errors.image[0] }}</span>
+                                                    </div>
                                                 </div>
-                                                <span v-if="errors && errors.image" class="error text-danger" for="image">{{ errors.image[0] }}</span>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="document_type_id" class="form-label">Tipo de documento*</label>
+                                                        <select v-model="document_type_id" name="document_type_id" class="form-control"  id="document_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Tipo Documento</option>
+                                                            <option v-for="document_type in document_types" :value="document_type.id">{{ document_type.type }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.document_type_id" class="error text-danger" for="document_type_id">{{ errors.document_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="document_number" class="form-label">Documento*</label>
+                                                        <input v-model="document_number" name="document_number" id="document_number" type="text" class="form-control" placeholder="Ingrese número documento">
+                                                        <span v-if="errors && errors.document_number" class="error text-danger" for="document_number">{{ errors.document_number[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="civil_status_type_id" class="form-label">Estado civil*</label>
+                                                        <select v-model="civil_status_type_id" class="form-control" name="civil_status_type_id" id="civil_status_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                            <option v-for="civil_status in civil_status_types" :value="civil_status.id">{{ civil_status.type }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.civil_status_type_id" class="error text-danger" for="civil_status_type_id">{{ errors.civil_status_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="document_type_id" class="form-label">Tipo de documento*</label>
-                                                <select v-model="document_type_id" name="document_type_id" class="form-control"  id="document_type_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Tipo Documento</option>
-                                                    <option v-for="document_type in document_types" :value="document_type.id">{{ document_type.type }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.document_type_id" class="error text-danger" for="document_type_id">{{ errors.document_type_id[0] }}</span>
+        
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="name" class="form-label">Nombres*</label>
+                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese su(s) nombre(s)">
+                                                        <span v-if="errors && errors.name" class="error text-danger" for="name">{{ errors.name[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese su primer apellido">
+                                                        <span v-if="errors && errors.first_surname" class="error text-danger" for="first_surname">{{ errors.first_surname[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese su segundo apellido">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors.sex_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="document_number" class="form-label">Documento*</label>
-                                                <input v-model="document_number" name="document_number" id="document_number" type="text" class="form-control" placeholder="Ingrese número documento">
-                                                <span v-if="errors && errors.document_number" class="error text-danger" for="document_number">{{ errors.document_number[0] }}</span>
+        
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="document_province_id" class="form-label">Dpto De Expedición*</label>
+                                                        <select v-model="document_province_id" @change="getCities(document_province_id, 'document')" class="form-control" name="province" id="document_province_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Dpto</option>
+                                                            <option v-for="province in provinces" :value="province.id">{{ province.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.document_province_id" class="error text-danger" for="document_province_id">{{ errors.document_province_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="document_city_id" class="form-label">Municipio de Expedición*</label>
+                                                        <select v-model="document_city_id" class="form-control" name="document_city_id" id="document_city_id">
+                                                            <!-- <option value="" :selected="cities === []" disabled selected hidden>Seleccionar Municipio</option> -->
+                                                            <option value="" disabled selected hidden>Seleccionar Municipio</option>
+                                                            <option v-for="city in document_cities" :value="city.id">{{ city.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.document_city_id" class="error text-danger" for="document_city_id">{{ errors.document_city_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="expedition_date" class="form-label">Fecha de Expedición*</label>
+                                                        <input v-model="expedition_date" name="expedition_date" id="expedition_date" type="date" class="form-control" placeholder="Ingrese fecha expedición documento">
+                                                        <span v-if="errors && errors.expedition_date" class="error text-danger" for="expedition_date">{{ errors.expedition_date[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="rh_type_id" class="form-label">RH*</label>
+                                                        <select v-model="rh_type_id" class="form-control" name="rh_type_id" id="rh_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar RH</option>
+                                                            <option v-for="rh in rh_types" :value="rh.id">{{ rh.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.rh_type_id" class="error text-danger" for="rh_type_id">{{ errors.rh_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="birth_province_id" class="form-label">Dpto De Nacimiento*</label>
+                                                        <select v-model="birth_province_id" @change="getCities(birth_province_id, 'birth')" class="form-control" name="province" id="birth_province_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Dpto</option>
+                                                            <option v-for="province in provinces" :value="province.id">{{ province.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.birth_province_id" class="error text-danger" for="birth_province_id">{{ errors.birth_province_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="birth_city_id" class="form-label">Municipio de Nacimiento*</label>
+                                                        <select v-model="birth_city_id" class="form-control" name="birth_city_id" id="birth_city_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Municipio</option>
+                                                            <option v-for="city in birth_cities" :value="city.id">{{ city.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.birth_city_id" class="error text-danger" for="birth_city_id">{{ errors.birth_city_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control">
+                                                        <span v-if="errors && errors.birth_date" class="error text-danger" for="birth_date">{{ errors.birth_date[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="scholarship_type_id" class="form-label">Escolaridad*</label>
+                                                        <select v-model="scholarship_type_id" class="form-control" name="scholarship_type_id" id="scholarship_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Escolaridad</option>
+                                                            <option v-for="scholarship in scholarship_types" :value="scholarship.id">{{ scholarship.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.scholarship_type_id" class="error text-danger" for="scholarship_type_id">{{ errors.scholarship_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="observations" class="form-label">Observaciones</label>
+                                                        <textarea v-model="observations" name="observations" id="observations" type="text" class="form-control" placeholder="Ingrese sus observaciones" rows="4" cols="50"></textarea>
+                                                        <span v-if="errors && errors.observations" class="error text-danger" for="observations">{{ errors.observations[0] }}</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="name" class="form-label">Nombres*</label>
-                                                <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese su(s) nombre(s)">
-                                                <span v-if="errors && errors.name" class="error text-danger" for="name">{{ errors.name[0] }}</span>
-                                            </div>
+                                </div>
+                                <div class="col-md-12 col-lg-6">
+                                    <div class="card-hover-shadow card-border mb-3 card">
+                                        <div class="card-header">
+                                            Información de Domicilio
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese su primer apellido">
-                                                <span v-if="errors && errors.first_surname" class="error text-danger" for="first_surname">{{ errors.first_surname[0] }}</span>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="residence_province_id" class="form-label">Dpto De Residencia*</label>
+                                                        <select v-model="residence_province_id" @change="getCities(residence_province_id, 'residence')" class="form-control" name="province" id="residence_province_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Dpto</option>
+                                                            <option v-for="province in provinces" :value="province.id">{{ province.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.residence_province_id" class="error text-danger" for="residence_province_id">{{ errors.residence_province_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="residence_city_id" class="form-label">Municipio de Residencia*</label>
+                                                        <select v-model="residence_city_id" class="form-control" name="residence_city_id" id="residence_city_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Municipio</option>
+                                                            <option v-for="city in residence_cities" :value="city.id">{{ city.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.residence_city_id" class="error text-danger" for="residence_city_id">{{ errors.residence_city_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="stratum_type_id" class="form-label">Estrato Social*</label>
+                                                        <select v-model="stratum_type_id" class="form-control" name="stratum_type_id" id="stratum_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Estrato</option>
+                                                            <option v-for="stratum in stratum_types" :value="stratum.id">{{ stratum.id }} - {{ stratum.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.stratum_type_id" class="error text-danger" for="stratum_type_id">{{ errors.stratum_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="stratum_type_id" class="form-label">Tenencia*</label>
+                                                        <select v-model="housing_tenure_id" class="form-control" name="housing_tenure_id" id="housing_tenure_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Tenencia</option>
+                                                            <option v-for="housing_tenure in housing_tenure_types" :value="housing_tenure.id">{{ housing_tenure.type }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.housing_tenure_id" class="error text-danger" for="housing_tenure_id">{{ errors.housing_tenure_id[0] }}</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese su segundo apellido">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="document_province_id" class="form-label">Departamento De Expedición*</label>
-                                                <select v-model="document_province_id" @change="getCities(document_province_id, 'document')" class="form-control" name="province" id="document_province_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Departamento</option>
-                                                    <option v-for="province in provinces" :value="province.id">{{ province.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.document_province_id" class="error text-danger" for="document_province_id">{{ errors.document_province_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="document_city_id" class="form-label">Municipio de Expedición*</label>
-                                                <select v-model="document_city_id" class="form-control" name="document_city_id" id="document_city_id">
-                                                    <!-- <option value="" :selected="cities === []" disabled selected hidden>Seleccionar Municipio</option> -->
-                                                    <option value="" disabled selected hidden>Seleccionar Municipio</option>
-                                                    <option v-for="city in document_cities" :value="city.id">{{ city.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.document_city_id" class="error text-danger" for="document_city_id">{{ errors.document_city_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="expedition_date" class="form-label">Fecha de Expedición*</label>
-                                                <input v-model="expedition_date" name="expedition_date" id="expedition_date" type="date" class="form-control" placeholder="Ingrese fecha expedición documento">
-                                                <span v-if="errors && errors.expedition_date" class="error text-danger" for="expedition_date">{{ errors.expedition_date[0] }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="birth_province_id" class="form-label">Departamento De Nacimiento*</label>
-                                                <select v-model="birth_province_id" @change="getCities(birth_province_id, 'birth')" class="form-control" name="province" id="birth_province_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Departamento</option>
-                                                    <option v-for="province in provinces" :value="province.id">{{ province.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.birth_province_id" class="error text-danger" for="birth_province_id">{{ errors.birth_province_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="birth_city_id" class="form-label">Municipio de Nacimiento*</label>
-                                                <select v-model="birth_city_id" class="form-control" name="birth_city_id" id="birth_city_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Municipio</option>
-                                                    <option v-for="city in birth_cities" :value="city.id">{{ city.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.birth_city_id" class="error text-danger" for="birth_city_id">{{ errors.birth_city_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
-                                                <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control">
-                                                <span v-if="errors && errors.birth_date" class="error text-danger" for="birth_date">{{ errors.birth_date[0] }}</span>
+        
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="address" class="form-label">Dirección*</label>
+                                                        <input v-model="address" name="address" id="address" type="text" class="form-control" placeholder="Ingrese su dirección">
+                                                        <span v-if="errors && errors.address" class="error text-danger" for="address">{{ errors.address[0] }}</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="civil_status_type_id" class="form-label">Estado civil*</label>
-                                                <select v-model="civil_status_type_id" class="form-control" name="civil_status_type_id" id="civil_status_type_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                    <option v-for="civil_status in civil_status_types" :value="civil_status.id">{{ civil_status.type }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.civil_status_type_id" class="error text-danger" for="civil_status_type_id">{{ errors.civil_status_type_id[0] }}</span>
-                                            </div>
+        
+                                    <div class="card-hover-shadow card-border mb-3 card">
+                                        <div class="card-header">
+                                            Información De Contacto
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="sex_type_id" class="form-label">Sexo*</label>
-                                                <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                    <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors.sex_type_id[0] }}</span>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="phone" class="form-label">Teléfono fijo</label>
+                                                        <input v-model="phone" name="phone" id="phone" type="text" class="form-control" placeholder="Ingrese su número fijo">
+                                                        <span v-if="errors && errors.phone" class="error text-danger" for="phone">{{ errors.phone[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="cellphone" class="form-label">Celular*</label>
+                                                        <input v-model="cellphone" name="cellphone" id="cellphone" type="text" class="form-control" placeholder="Ingrese su número celular">
+                                                        <span v-if="errors && errors.cellphone" class="error text-danger" for="cellphone">{{ errors.cellphone[0] }}</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="rh_type_id" class="form-label">RH*</label>
-                                                <select v-model="rh_type_id" class="form-control" name="rh_type_id" id="rh_type_id">
-                                                    <option value="" disabled selected hidden>Seleccionar RH</option>
-                                                    <option v-for="rh in rh_types" :value="rh.id">{{ rh.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.rh_type_id" class="error text-danger" for="rh_type_id">{{ errors.rh_type_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="scholarship_type_id" class="form-label">Escolaridad*</label>
-                                                <select v-model="scholarship_type_id" class="form-control" name="scholarship_type_id" id="scholarship_type_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Escolaridad</option>
-                                                    <option v-for="scholarship in scholarship_types" :value="scholarship.id">{{ scholarship.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.scholarship_type_id" class="error text-danger" for="scholarship_type_id">{{ errors.scholarship_type_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="position-relative mb-3">
-                                                <label for="observations" class="form-label">Observaciones</label>
-                                                <textarea v-model="observations" name="observations" id="observations" type="text" class="form-control" placeholder="Ingrese sus observaciones" rows="4" cols="50"></textarea>
-                                                <span v-if="errors && errors.observations" class="error text-danger" for="observations">{{ errors.observations[0] }}</span>
+        
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="email" class="form-label">Correo electrónico*</label>
+                                                        <input v-model="email" name="email" id="email" type="text" class="form-control" placeholder="Ingrese su correo electrónico">
+                                                        <span v-if="errors && errors.email" class="error text-danger" for="email">{{ errors.email[0] }}</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card-hover-shadow card-border mb-3 card">
-                                <div class="card-header">
-                                    Información de Domicilio
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="residence_province_id" class="form-label">Departamento De Residencia*</label>
-                                                <select v-model="residence_province_id" @change="getCities(residence_province_id, 'residence')" class="form-control" name="province" id="residence_province_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Departamento</option>
-                                                    <option v-for="province in provinces" :value="province.id">{{ province.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.residence_province_id" class="error text-danger" for="residence_province_id">{{ errors.residence_province_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="residence_city_id" class="form-label">Municipio de Residencia*</label>
-                                                <select v-model="residence_city_id" class="form-control" name="residence_city_id" id="residence_city_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Municipio</option>
-                                                    <option v-for="city in residence_cities" :value="city.id">{{ city.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.residence_city_id" class="error text-danger" for="residence_city_id">{{ errors.residence_city_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="stratum_type_id" class="form-label">Estrato Social*</label>
-                                                <select v-model="stratum_type_id" class="form-control" name="stratum_type_id" id="stratum_type_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Estrato</option>
-                                                    <option v-for="stratum in stratum_types" :value="stratum.id">{{ stratum.id }} - {{ stratum.name }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.stratum_type_id" class="error text-danger" for="stratum_type_id">{{ errors.stratum_type_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <div class="position-relative mb-3">
-                                                <label for="address" class="form-label">Dirección*</label>
-                                                <input v-model="address" name="address" id="address" type="text" class="form-control" placeholder="Ingrese su dirección">
-                                                <span v-if="errors && errors.address" class="error text-danger" for="address">{{ errors.address[0] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="position-relative mb-3">
-                                                <label for="stratum_type_id" class="form-label">Tenencia*</label>
-                                                <select v-model="housing_tenure_id" class="form-control" name="housing_tenure_id" id="housing_tenure_id">
-                                                    <option value="" disabled selected hidden>Seleccionar Tenencia</option>
-                                                    <option v-for="housing_tenure in housing_tenure_types" :value="housing_tenure.id">{{ housing_tenure.type }}</option>
-                                                </select>
-                                                <span v-if="errors && errors.housing_tenure_id" class="error text-danger" for="housing_tenure_id">{{ errors.housing_tenure_id[0] }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                </div>
-                            </div>
-
-                            <div class="card-hover-shadow card-border mb-3 card">
-                                <div class="card-header">
-                                    Información De Contacto
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="position-relative mb-3">
-                                                <label for="phone" class="form-label">Teléfono fijo</label>
-                                                <input v-model="phone" name="phone" id="phone" type="text" class="form-control" placeholder="Ingrese su número fijo">
-                                                <span v-if="errors && errors.phone" class="error text-danger" for="phone">{{ errors.phone[0] }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="position-relative mb-3">
-                                                <label for="cellphone" class="form-label">Celular*</label>
-                                                <input v-model="cellphone" name="cellphone" id="cellphone" type="text" class="form-control" placeholder="Ingrese su número celular">
-                                                <span v-if="errors && errors.cellphone" class="error text-danger" for="cellphone">{{ errors.cellphone[0] }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="position-relative mb-3">
-                                                <label for="email" class="form-label">Correo electrónico*</label>
-                                                <input v-model="email" name="email" id="email" type="text" class="form-control" placeholder="Ingrese su correo electrónico">
-                                                <span v-if="errors && errors.email" class="error text-danger" for="email">{{ errors.email[0] }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                        </form>
                     </div>
-                    <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
-                </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="tab-content">
+            <div class="tab-pane tabs-animation fade" :class="tab_collaborator_status == 'contract' ? 'show active' : ''" id="tab-content-1" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <!-- <form @submit.prevent="storeCollaborator" enctype="multipart/form-data"> -->
+                            <div class="row">
+                                <div class="col-md-12 col-lg-6">
+                                    <div class="card-hover-shadow card-border mb-3 card">
+                                        <div class="card-header">
+                                            Información Contractual
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="position_type_id" class="form-label">Cargo*</label>
+                                                        <select v-model="position_type_id" name="position_type_id" class="form-control"  id="position_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Cargo</option>
+                                                            <option v-for="position_type in position_types" :value="position_type.id">{{ position_type.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.position_type_id" class="error text-danger" for="position_type_id">{{ errors.position_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="salary" class="form-label">Salario*</label>
+                                                        <input v-model="salary" name="salary" id="salary" type="text" class="form-control" placeholder="Ingrese el salario">
+                                                        <span v-if="errors && errors.salary" class="error text-danger" for="salary">{{ errors.salary[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="contract_type_id" class="form-label">Tipo de contrato*</label>
+                                                        <select v-model="contract_type_id" name="contract_type_id" class="form-control"  id="contract_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Tipo Contrato</option>
+                                                            <option v-for="contract_type in contract_types" :value="contract_type.id">{{ contract_type.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.contract_type_id" class="error text-danger" for="contract_type_id">{{ errors.contract_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="contract_start_date" class="form-label">Fecha de ingreso*</label>
+                                                        <input v-model="contract_start_date" name="contract_start_date" id="contract_start_date" type="date" class="form-control">
+                                                        <span v-if="errors && errors.contract_start_date" class="error text-danger" for="contract_start_date">{{ errors.contract_start_date[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="contract_end_date" class="form-label">Fecha de terminación</label>
+                                                        <input v-model="contract_end_date" name="contract_end_date" id="contract_end_date" type="date" class="form-control">
+                                                        <span v-if="errors && errors.contract_end_date" class="error text-danger" for="contract_end_date">{{ errors.contract_end_date[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="test_period_end_date" class="form-label">Fecha de terminación prueba</label>
+                                                        <input v-model="test_period_end_date" name="test_period_end_date" id="test_period_end_date" type="date" class="form-control">
+                                                        <span v-if="errors && errors.test_period_end_date" class="error text-danger" for="test_period_end_date">{{ errors.test_period_end_date[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="corporate_email" class="form-label">Correo corporativo</label>
+                                                        <input v-model="corporate_email" name="corporate_email" id="corporate_email" type="text" class="form-control" placeholder="Ingrese correo corporativo">
+                                                        <span v-if="errors && errors.corporate_email" class="error text-danger" for="corporate_email">{{ errors.corporate_email[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="corporate_cellphone" class="form-label">Celular corporativo</label>
+                                                        <input v-model="corporate_cellphone" name="corporate_cellphone" id="corporate_cellphone" type="text" class="form-control" placeholder="Ingrese celular corporativo">
+                                                        <span v-if="errors && errors.corporate_cellphone" class="error text-danger" for="corporate_cellphone">{{ errors.corporate_cellphone[0] }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-6">
+                                    <div class="card-hover-shadow card-border mb-3 card">
+                                        <div class="card-header">
+                                            Entidades Relacionadas
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="bank_type_id" class="form-label">Banco*</label>
+                                                        <select v-model="bank_type_id" name="bank_type_id" class="form-control"  id="bank_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar Banco</option>
+                                                            <option v-for="bank_type in bank_types" :value="bank_type.id">{{ bank_type.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.bank_type_id" class="error text-danger" for="bank_type_id">{{ errors.bank_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="bank_account" class="form-label">Número de cuenta*</label>
+                                                        <input v-model="bank_account" name="bank_account" id="bank_account" type="text" class="form-control" placeholder="Ingrese número de cuenta">
+                                                        <span v-if="errors && errors.bank_account" class="error text-danger" for="bank_account">{{ errors.bank_account[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="eps_type_id" class="form-label">EPS*</label>
+                                                        <select v-model="eps_type_id" name="eps_type_id" class="form-control"  id="eps_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar EPS</option>
+                                                            <option v-for="eps_type in eps_types" :value="eps_type.id">{{ eps_type.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.eps_type_id" class="error text-danger" for="eps_type_id">{{ errors.eps_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="afp_type_id" class="form-label">AFP*</label>
+                                                        <select v-model="afp_type_id" name="afp_type_id" class="form-control"  id="afp_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar AFP</option>
+                                                            <option v-for="afp_type in afp_types" :value="afp_type.id">{{ afp_type.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.afp_type_id" class="error text-danger" for="afp_type_id">{{ errors.afp_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="arl_type_id" class="form-label">ARL*</label>
+                                                        <select v-model="arl_type_id" name="arl_type_id" class="form-control"  id="arl_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar ARL</option>
+                                                            <option v-for="arl_type in arl_types" :value="arl_type.id">{{ arl_type.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.arl_type_id" class="error text-danger" for="arl_type_id">{{ errors.arl_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="ccf_type_id" class="form-label">Caja de compensación familiar*</label>
+                                                        <select v-model="ccf_type_id" name="ccf_type_id" class="form-control"  id="ccf_type_id">
+                                                            <option value="" disabled selected hidden>Seleccionar caja de compensación</option>
+                                                            <option v-for="ccf_type in ccf_types" :value="ccf_type.id">{{ ccf_type.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.ccf_type_id" class="error text-danger" for="ccf_type_id">{{ errors.ccf_type_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane tabs-animation fade" :class="tab_collaborator_status == 'documentation' ? 'show active' : ''" id="tab-content-2" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <!-- <form @submit.prevent="storeCollaborator" enctype="multipart/form-data"> -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-hover-shadow card-border mb-3 card">
+                                        <div class="card-header">
+                                            Gestión Documental
+                                        </div>
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -318,10 +508,33 @@ export default {
         },
         housing_tenure_types: {
             default: null,
-        }
+        },
+        position_types: {
+            default: null,
+        },
+        contract_types: {
+            default: null,
+        },
+        bank_types: {
+            default: null,
+        },
+        eps_types: {
+            default: null,
+        },
+        afp_types: {
+            default: null,
+        },
+        arl_types: {
+            default: null,
+        },
+        ccf_types: {
+            default: null,
+        },
     },
     data() {
         return {
+            tab_collaborator_status: 'general',
+
             name: this.collaborator.name,
             first_surname: this.collaborator.first_surname,
             second_surname: this.collaborator.second_surname,
@@ -357,6 +570,22 @@ export default {
 
             image: this.collaborator.image_url,
             observations: this.collaborator.observations,
+
+            // contract_type_id: this.contract.contract_type_id,
+            contract_type_id: '',
+            position_type_id: '',
+            salary: '',
+            contract_start_date: '',
+            contract_end_date: '',
+            test_period_end_date: '',
+            corporate_email: '',
+            corporate_cellphone: '',
+            bank_type_id: '',
+            bank_account: '',
+            eps_type_id: '',
+            afp_type_id: '',
+            arl_type_id: '',
+            ccf_type_id: '',
 
             errors: null,
             message: '',

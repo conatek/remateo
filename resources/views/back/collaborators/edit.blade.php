@@ -53,6 +53,13 @@
     :stratum_types="{{ $stratum_types }}"
     :housing_tenure_types="{{ $housing_tenure_types }}"
     :provinces="{{ $provinces }}"
+    :position_types="{{ $position_types }}"
+    :contract_types="{{ $contract_types }}"
+    :bank_types="{{ $bank_types }}"
+    :eps_types="{{ $eps_types }}"
+    :afp_types="{{ $afp_types }}"
+    :arl_types="{{ $arl_types }}"
+    :ccf_types="{{ $ccf_types }}"
 ></collaborator-edit>
 
 @endsection

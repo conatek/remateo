@@ -4,13 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CollaboratorCreateRequest;
 use App\Http\Requests\CollaboratorEditRequest;
+use App\Models\AfpType;
+use App\Models\ArlType;
+use App\Models\BankType;
+use App\Models\CcfType;
 use App\Models\City;
 use App\Models\CivilStatusType;
 use App\Models\Collaborator;
 use App\Models\Company;
+use App\Models\ContractType;
 use App\Models\DocumentType;
+use App\Models\EpsType;
 use App\Models\HousingTenure;
 use App\Models\Occupation;
+use App\Models\Position;
 use App\Models\Province;
 use App\Models\Relationship;
 use App\Models\RhType;
@@ -217,6 +224,13 @@ class CollaboratorController extends Controller
         $civil_status_types = CivilStatusType::all();
         $housing_tenure_types = HousingTenure::all();
         $provinces = Province::all();
+        $position_types = Position::where('company_id',$company->id)->get();
+        $contract_types = ContractType::all();
+        $bank_types = BankType::all();
+        $eps_types = EpsType::all();
+        $afp_types = AfpType::all();
+        $arl_types = ArlType::all();
+        $ccf_types = CcfType::all();
 
         return view('back.collaborators.edit', compact(
             'company',
@@ -228,7 +242,14 @@ class CollaboratorController extends Controller
             'stratum_types', 
             'civil_status_types',
             'housing_tenure_types',
-            'provinces'
+            'provinces',
+            'position_types',
+            'contract_types',
+            'bank_types',
+            'eps_types',
+            'afp_types',
+            'arl_types',
+            'ccf_types',
         ));
     }
 
