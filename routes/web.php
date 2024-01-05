@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::delete('/campus-data-delete/{campus}', [CampusController::class, 'destroy']);
 
     Route::get('/collaborators-data/{company_id}', [CollaboratorController::class, 'getCollaborators']);
+    Route::get('/contractual-information/{collaborator_id}', [CollaboratorController::class, 'getContractualInformation']);
     Route::get('/collaborators', [CollaboratorController::class, 'index'])->name('collaborators.index');
     Route::get('/collaborators/create', [CollaboratorController::class, 'create'])->name('collaborators.create');
     Route::post('/collaborators', [CollaboratorController::class, 'store'])->name('collaborators.store');
@@ -95,6 +96,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/collaborators/{collaborator}/edit', [CollaboratorController::class, 'edit'])->name('collaborators.edit');
     Route::put('/collaborators/{collaborator}', [CollaboratorController::class, 'update'])->name('collaborators.update');
     Route::delete('/collaborators/{collaborator}/destroy', [CollaboratorController::class, 'destroy'])->name('collaborators.destroy');
+
+    
+    Route::post('/collaborators/{collaborator}/contractual-information', [CollaboratorController::class, 'storeContractualInformation']);
 
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);

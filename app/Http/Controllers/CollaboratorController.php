@@ -11,6 +11,7 @@ use App\Models\CcfType;
 use App\Models\City;
 use App\Models\CivilStatusType;
 use App\Models\Collaborator;
+use App\Models\CollaboratorContract;
 use App\Models\Company;
 use App\Models\ContractType;
 use App\Models\DocumentType;
@@ -50,6 +51,16 @@ class CollaboratorController extends Controller
         }
         
         $results['collaborators'] = $collaborators_data;
+
+        return $results;
+    }
+
+    public function getContractualInformation($id) {
+        $results = [];
+
+        $contractual_information = CollaboratorContract::where('collaborator_id', $id)->first();
+        
+        $results['contractual_information'] = $contractual_information;
 
         return $results;
     }
@@ -144,6 +155,54 @@ class CollaboratorController extends Controller
         }
     }
 
+    public function storeContractualInformation(Request $request, $id) {
+        $user = auth()->user();
+        $company = Company::where('id', $user->company_id)->first();
+
+        // dd('Tamos dentro de storeContractualInformation');
+
+        // $data = request()->validate([
+        //     'collaborator_id' => 'required',
+        //     'position_id' => 'required',
+        //     'contract_type_id' => 'required',
+        //     'contract_start_date' => 'required',
+        //     'contract_end_date' => 'required',
+        //     'salary' => 'required',
+        //     'bank_type_id' => 'required',
+        //     'bank_account_number' => 'required',
+        //     'eps_type_id' => 'required',
+        //     'afp_type_id' => 'required',
+        //     'arl_type_id' => 'required',
+        //     'ccf_type_id' => 'required',
+        // ]);
+
+        $data = array(
+            'collaborator_id' => $id,
+            'position_id' => $request->position_id,
+            'salary' => $request->salary,
+            'contract_type_id' => $request->contract_type_id,
+            'contract_start_date' => $request->contract_start_date,
+            'contract_end_date' => $request->contract_end_date,
+            'test_period_end_date' => $request->test_period_end_date,
+            'corporate_email' => $request->corporate_email,
+            'corporate_cellphone' => $request->corporate_cellphone,
+            'bank_id' => $request->bank_id,
+            'bank_account_number' => $request->bank_account_number,
+            'eps_id' => $request->eps_id,
+            'afp_pension_id' => $request->afp_pension_id,
+            'afp_saving_id' => $request->afp_saving_id,
+            'arl_id' => $request->arl_id,
+            'ccf_id' => $request->ccf_id,
+        );
+
+        $collaborator_contract = CollaboratorContract::create($data);
+
+        return response()->json([
+            'message'=>'Información contractual creada exitosamente!',
+            'collaborator_contract'=>$collaborator_contract
+        ]);
+    }
+
     // public function show(Collaborator $collaborator, $message = false)
     public function show(Collaborator $collaborator, Request $request)
     {
@@ -224,6 +283,10 @@ class CollaboratorController extends Controller
         $civil_status_types = CivilStatusType::all();
         $housing_tenure_types = HousingTenure::all();
         $provinces = Province::all();
+        // $contractual_information = CollaboratorContract::where('collaborator_id', $collaborator->id)->first();
+
+        // dd($contractual_information);
+
         $position_types = Position::where('company_id',$company->id)->get();
         $contract_types = ContractType::all();
         $bank_types = BankType::all();
@@ -243,6 +306,7 @@ class CollaboratorController extends Controller
             'civil_status_types',
             'housing_tenure_types',
             'provinces',
+            // 'contractual_information',
             'position_types',
             'contract_types',
             'bank_types',

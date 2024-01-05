@@ -53,6 +53,7 @@
     :stratum_types="{{ $stratum_types }}"
     :housing_tenure_types="{{ $housing_tenure_types }}"
     :provinces="{{ $provinces }}"
+    {{-- :contractual_information="{{ $contractual_information }}" --}}
     :position_types="{{ $position_types }}"
     :contract_types="{{ $contract_types }}"
     :bank_types="{{ $bank_types }}"

@@ -302,7 +302,7 @@
             <div class="tab-pane tabs-animation fade" :class="tab_collaborator_status == 'contract' ? 'show active' : ''" id="tab-content-1" role="tabpanel">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
-                        <!-- <form @submit.prevent="storeCollaborator" enctype="multipart/form-data"> -->
+                        <form @submit.prevent="actionContractualInformation" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-12 col-lg-6">
                                     <div class="card-hover-shadow card-border mb-3 card">
@@ -314,7 +314,7 @@
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
                                                         <label for="position_type_id" class="form-label">Cargo*</label>
-                                                        <select v-model="position_type_id" name="position_type_id" class="form-control"  id="position_type_id">
+                                                        <select v-model="position_id" name="position_type_id" class="form-control"  id="position_type_id">
                                                             <option value="" disabled selected hidden>Seleccionar Cargo</option>
                                                             <option v-for="position_type in position_types" :value="position_type.id">{{ position_type.name }}</option>
                                                         </select>
@@ -386,12 +386,12 @@
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
-                                                        <label for="bank_type_id" class="form-label">Banco*</label>
-                                                        <select v-model="bank_type_id" name="bank_type_id" class="form-control"  id="bank_type_id">
+                                                        <label for="bank_id" class="form-label">Banco*</label>
+                                                        <select v-model="bank_id" name="bank_id" class="form-control"  id="bank_id">
                                                             <option value="" disabled selected hidden>Seleccionar Banco</option>
                                                             <option v-for="bank_type in bank_types" :value="bank_type.id">{{ bank_type.name }}</option>
                                                         </select>
-                                                        <span v-if="errors && errors.bank_type_id" class="error text-danger" for="bank_type_id">{{ errors.bank_type_id[0] }}</span>
+                                                        <span v-if="errors && errors.bank_id" class="error text-danger" for="bank_id">{{ errors.bank_id[0] }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -403,42 +403,52 @@
                                                 </div>
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
-                                                        <label for="eps_type_id" class="form-label">EPS*</label>
-                                                        <select v-model="eps_type_id" name="eps_type_id" class="form-control"  id="eps_type_id">
+                                                        <label for="eps_id" class="form-label">EPS*</label>
+                                                        <select v-model="eps_id" name="eps_id" class="form-control"  id="eps_id">
                                                             <option value="" disabled selected hidden>Seleccionar EPS</option>
                                                             <option v-for="eps_type in eps_types" :value="eps_type.id">{{ eps_type.name }}</option>
                                                         </select>
-                                                        <span v-if="errors && errors.eps_type_id" class="error text-danger" for="eps_type_id">{{ errors.eps_type_id[0] }}</span>
+                                                        <span v-if="errors && errors.eps_id" class="error text-danger" for="eps_id">{{ errors.eps_id[0] }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
-                                                        <label for="afp_type_id" class="form-label">AFP*</label>
-                                                        <select v-model="afp_type_id" name="afp_type_id" class="form-control"  id="afp_type_id">
-                                                            <option value="" disabled selected hidden>Seleccionar AFP</option>
-                                                            <option v-for="afp_type in afp_types" :value="afp_type.id">{{ afp_type.name }}</option>
-                                                        </select>
-                                                        <span v-if="errors && errors.afp_type_id" class="error text-danger" for="afp_type_id">{{ errors.afp_type_id[0] }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                                    <div class="position-relative mb-3">
-                                                        <label for="arl_type_id" class="form-label">ARL*</label>
-                                                        <select v-model="arl_type_id" name="arl_type_id" class="form-control"  id="arl_type_id">
+                                                        <label for="arl_id" class="form-label">ARL*</label>
+                                                        <select v-model="arl_id" name="arl_id" class="form-control"  id="arl_id">
                                                             <option value="" disabled selected hidden>Seleccionar ARL</option>
                                                             <option v-for="arl_type in arl_types" :value="arl_type.id">{{ arl_type.name }}</option>
                                                         </select>
-                                                        <span v-if="errors && errors.arl_type_id" class="error text-danger" for="arl_type_id">{{ errors.arl_type_id[0] }}</span>
+                                                        <span v-if="errors && errors.arl_id" class="error text-danger" for="arl_id">{{ errors.arl_id[0] }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
-                                                        <label for="ccf_type_id" class="form-label">Caja de compensación familiar*</label>
-                                                        <select v-model="ccf_type_id" name="ccf_type_id" class="form-control"  id="ccf_type_id">
+                                                        <label for="afp_pension_id" class="form-label">AFP Pensiones*</label>
+                                                        <select v-model="afp_pension_id" name="afp_pension_id" class="form-control"  id="afp_pension_id">
+                                                            <option value="" disabled selected hidden>Seleccionar AFP</option>
+                                                            <option v-for="afp_type in afp_types" :value="afp_type.id">{{ afp_type.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.afp_pension_id" class="error text-danger" for="afp_pension_id">{{ errors.afp_pension_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="afp_saving_id" class="form-label">AFP Cesantías*</label>
+                                                        <select v-model="afp_saving_id" name="afp_saving_id" class="form-control"  id="afp_saving_id">
+                                                            <option value="" disabled selected hidden>Seleccionar AFP</option>
+                                                            <option v-for="afp_type in afp_types" :value="afp_type.id">{{ afp_type.name }}</option>
+                                                        </select>
+                                                        <span v-if="errors && errors.afp_saving_id" class="error text-danger" for="afp_saving_id">{{ errors.afp_saving_id[0] }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                    <div class="position-relative mb-3">
+                                                        <label for="ccf_id" class="form-label">Caja de compensación familiar*</label>
+                                                        <select v-model="ccf_id" name="ccf_id" class="form-control"  id="ccf_id">
                                                             <option value="" disabled selected hidden>Seleccionar caja de compensación</option>
                                                             <option v-for="ccf_type in ccf_types" :value="ccf_type.id">{{ ccf_type.name }}</option>
                                                         </select>
-                                                        <span v-if="errors && errors.ccf_type_id" class="error text-danger" for="ccf_type_id">{{ errors.ccf_type_id[0] }}</span>
+                                                        <span v-if="errors && errors.ccf_id" class="error text-danger" for="ccf_id">{{ errors.ccf_id[0] }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -446,7 +456,9 @@
                                     </div>
                                 </div>
                             </div>
-                        <!-- </form> -->
+                            <button v-if="contractual_information == null || contractual_information == ''" type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                            <button v-else type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -509,6 +521,9 @@ export default {
         housing_tenure_types: {
             default: null,
         },
+        // contractual_information: {
+        //     default: null,
+        // },
         position_types: {
             default: null,
         },
@@ -571,21 +586,22 @@ export default {
             image: this.collaborator.image_url,
             observations: this.collaborator.observations,
 
-            // contract_type_id: this.contract.contract_type_id,
-            contract_type_id: '',
-            position_type_id: '',
+            contractual_information: '',
+            position_id: '',
             salary: '',
+            contract_type_id: '',
             contract_start_date: '',
             contract_end_date: '',
             test_period_end_date: '',
             corporate_email: '',
             corporate_cellphone: '',
-            bank_type_id: '',
+            bank_id: '',
             bank_account: '',
-            eps_type_id: '',
-            afp_type_id: '',
-            arl_type_id: '',
-            ccf_type_id: '',
+            eps_id: '',
+            afp_pension_id: '',
+            afp_saving_id: '',
+            arl_id: '',
+            ccf_id: '',
 
             errors: null,
             message: '',
@@ -593,6 +609,7 @@ export default {
     },
     mounted () {
         this.loadInitialData()
+        this.getContractualInformation(this.collaborator.id)
     },
     methods: {
         loadInitialData() {
@@ -626,6 +643,31 @@ export default {
         },
         onChangeImage(e) {
             this.image = e.target.files[0]
+        },
+        getContractualInformation(collaborator_id) {
+            axios.get(`/contractual-information/${collaborator_id}`)
+            .then(response => {
+                this.contractual_information = response.data.contractual_information;
+
+                this.position_id = this.contractual_information.position_id;
+                this.salary = this.contractual_information.salary;
+                this.contract_type_id = this.contractual_information.contract_type_id;
+                this.contract_start_date = this.contractual_information.contract_start_date;
+                this.contract_end_date = this.contractual_information.contract_end_date;
+                this.test_period_end_date = this.contractual_information.test_period_end_date;
+                this.corporate_email = this.contractual_information.corporate_email;
+                this.corporate_cellphone = this.contractual_information.corporate_cellphone;
+                this.bank_id = this.contractual_information.bank_id;
+                this.bank_account = this.contractual_information.bank_account;
+                this.eps_id = this.contractual_information.eps_id;
+                this.afp_pension_id = this.contractual_information.afp_pension_id;
+                this.afp_saving_id = this.contractual_information.afp_saving_id;
+                this.arl_id = this.contractual_information.arl_id;
+                this.ccf_id = this.contractual_information.ccf_id;
+            })
+            .catch(e => {
+                // 
+            })
         },
         updateCollaborator() {
             let dataSend = {
@@ -682,6 +724,83 @@ export default {
                         this.errors = error.response.data.errors
                     }
                 })
+        },
+        actionContractualInformation() {
+            if(this.contractual_information == null || this.contractual_information == '') {
+                this.storeContractualInformation()
+            } else {
+                this.updateContractualInformation()
+            }
+        },
+        storeContractualInformation() {
+            console.log('Store Contractual Information');
+
+            let dataSend = {
+                'position_id': this.position_id,
+                'salary': this.salary,
+                'contract_type_id': this.contract_type_id,
+                'contract_start_date': this.contract_start_date,
+                'contract_end_date': this.contract_end_date,
+                'test_period_end_date': this.test_period_end_date,
+                'corporate_email': this.corporate_email,
+                'corporate_cellphone': this.corporate_cellphone,
+                'bank_id': this.bank_id,
+                'bank_account': this.bank_account,
+                'eps_id': this.eps_id,
+                'afp_pension_id': this.afp_pension_id,
+                'afp_saving_id': this.afp_saving_id,
+                'arl_id': this.arl_id,
+                'ccf_id': this.ccf_id,
+            }
+
+            axios.post(`/collaborators/${this.collaborator.id}/contractual-information`, dataSend).then(
+                (res) => {
+                    this.getContractualInformation(this.collaborator.id)
+                    // console.log(res)
+                    this.errors = null
+                    this.message = 'Información contractual actualizada correctamente'
+                    console.log(this.message);
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        // console.log(error.response.data.errors)
+                        this.errors = error.response.data.errors
+                    }
+                })
+        },
+        updateContractualInformation() {
+            console.log('Store Contractual Information');
+
+            // let dataSend = {
+            //     'position_type_id': this.position_type_id,
+            //     'salary': this.salary,
+            //     'contract_type_id': this.contract_type_id,
+            //     'contract_start_date': this.contract_start_date,
+            //     'contract_end_date': this.contract_end_date,
+            //     'test_period_end_date': this.test_period_end_date,
+            //     'corporate_email': this.corporate_email,
+            //     'corporate_cellphone': this.corporate_cellphone,
+            //     'bank_type_id': this.bank_type_id,
+            //     'bank_account': this.bank_account,
+            //     'eps_type_id': this.eps_type_id,
+            //     'afp_type_id': this.afp_type_id,
+            //     'arl_type_id': this.arl_type_id,
+            //     'ccf_type_id': this.ccf_type_id,
+            // }
+
+            // axios.post(`/collaborators/${this.collaborator.id}/contractual-information`, dataSend).then(
+            //     (res) => {
+            //         console.log(res)
+            //         this.errors = null
+            //         this.message = 'Información contractual actualizada correctamente'
+            //         console.log(this.message);
+            //     }).catch(
+            //     (error) => {
+            //         if(error && error.response && error.response.data && error.response.data.errors) {
+            //             console.log(error.response.data.errors)
+            //             this.errors = error.response.data.errors
+            //         }
+            //     })
         },
     },
 }
