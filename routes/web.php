@@ -99,6 +99,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     
     Route::post('/collaborators/{collaborator}/contractual-information', [CollaboratorController::class, 'storeContractualInformation']);
+    Route::put('/collaborators/{collaborator}/contractual-information', [CollaboratorController::class, 'updateContractualInformation']);
 
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);

@@ -43,9 +43,9 @@
                                 </a>
                             </div>
                             <div class="col-sm-6">
-                                <a @click="card_selected = 'family'" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
-                                    <i class="lnr-heart btn-icon-wrapper btn-icon-lg mb-3"></i>
-                                    Información Familiar
+                                <a @click="card_selected = 'additional'" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                    <i class="lnr-frame-expand btn-icon-wrapper btn-icon-lg mb-3"></i>
+                                    Información Adicional
                                 </a>
                             </div>
                             <div class="col-sm-6">
@@ -221,7 +221,120 @@
                 <p>Este es el card de Información Contractual</p>
             </div>
         </div>
-        <div v-else-if="card_selected == 'family'" >
+        <div v-else-if="card_selected == 'additional'" >
+            <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+                <li class="nav-item">
+                    <a @click="tab_additional_info_status = 'family_information'" role="tab" class="nav-link" :class="tab_additional_info_status == 'family_information' ? 'active' : ''" id="tab-0" data-bs-toggle="tab" href="#tab-content-0">
+                        <span>Información Familiar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a @click="tab_additional_info_status = 'academic_information'" role="tab" class="nav-link" :class="tab_additional_info_status == 'academic_information' ? 'active' : ''" id="tab-1" data-bs-toggle="tab" href="#tab-content-1">
+                        <span>Información Académica</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a @click="tab_additional_info_status = 'medical_information'" role="tab" class="nav-link" :class="tab_additional_info_status == 'medical_information' ? 'active' : ''" id="tab-2" data-bs-toggle="tab" href="#tab-content-2">
+                        <span>Información Médica</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a @click="tab_additional_info_status = 'home_visities'" role="tab" class="nav-link" :class="tab_additional_info_status == 'home_visities' ? 'active' : ''" id="tab-3" data-bs-toggle="tab" href="#tab-content-3">
+                        <span>Visitas Domiciliarias</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'family_information' ? 'show active' : ''" id="tab-content-0" role="tabpanel">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="card-hover-shadow card-border mb-3 card">
+                                            <div class="card-header">
+                                                Información Familiar
+                                            </div>
+                                            <div class="card-body">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'academic_information' ? 'show active' : ''" id="tab-content-1" role="tabpanel">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="card-hover-shadow card-border mb-3 card">
+                                            <div class="card-header">
+                                                Información Académica
+                                            </div>
+                                            <div class="card-body">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'medical_information' ? 'show active' : ''" id="tab-content-2" role="tabpanel">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="card-hover-shadow card-border mb-3 card">
+                                            <div class="card-header">
+                                                Información Médica
+                                            </div>
+                                            <div class="card-body">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'home_visities' ? 'show active' : ''" id="tab-content-3" role="tabpanel">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="card-hover-shadow card-border mb-3 card">
+                                            <div class="card-header">
+                                                Visitas Domiciliarias
+                                            </div>
+                                            <div class="card-body">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
             <div class="row">
                 <div class="col-sm-12 col-xxl-6">
                     <div class="main-card mb-3 card">
@@ -534,6 +647,8 @@ export default {
     },
     data() {
         return {
+            tab_additional_info_status: 'family_information',
+
             card_selected: '',
             message: '',
 
@@ -1000,7 +1115,6 @@ export default {
 }
 
 .wrapper-add-relative-data p {
-    /* font-family: "gothambold"; */
     font-size: 18px;
     font-weight: bold;
     line-height: 22px;

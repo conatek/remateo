@@ -4,7 +4,7 @@
     </button>
     <div class="theme-settings__inner">
         <div class="scrollbar-container">
-            <div class="theme-settings__options-wrapper">
+            {{-- <div class="theme-settings__options-wrapper">
                 <h3 class="themeoptions-heading">Layout Options</h3>
                 <div class="p-3">
                     <ul class="list-group">
@@ -195,7 +195,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

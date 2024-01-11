@@ -313,12 +313,12 @@
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
-                                                        <label for="position_type_id" class="form-label">Cargo*</label>
-                                                        <select v-model="position_id" name="position_type_id" class="form-control"  id="position_type_id">
+                                                        <label for="position_id" class="form-label">Cargo*</label>
+                                                        <select v-model="position_id" name="position_id" class="form-control"  id="position_id">
                                                             <option value="" disabled selected hidden>Seleccionar Cargo</option>
                                                             <option v-for="position_type in position_types" :value="position_type.id">{{ position_type.name }}</option>
                                                         </select>
-                                                        <span v-if="errors && errors.position_type_id" class="error text-danger" for="position_type_id">{{ errors.position_type_id[0] }}</span>
+                                                        <span v-if="errors && errors.position_id" class="error text-danger" for="position_id">{{ errors.position_id[0] }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -751,6 +751,7 @@ export default {
                 'afp_saving_id': this.afp_saving_id,
                 'arl_id': this.arl_id,
                 'ccf_id': this.ccf_id,
+                '_method': 'PUT',
             }
 
             axios.post(`/collaborators/${this.collaborator.id}/contractual-information`, dataSend).then(
@@ -769,38 +770,39 @@ export default {
                 })
         },
         updateContractualInformation() {
-            console.log('Store Contractual Information');
+            console.log('Update Contractual Information');
 
-            // let dataSend = {
-            //     'position_type_id': this.position_type_id,
-            //     'salary': this.salary,
-            //     'contract_type_id': this.contract_type_id,
-            //     'contract_start_date': this.contract_start_date,
-            //     'contract_end_date': this.contract_end_date,
-            //     'test_period_end_date': this.test_period_end_date,
-            //     'corporate_email': this.corporate_email,
-            //     'corporate_cellphone': this.corporate_cellphone,
-            //     'bank_type_id': this.bank_type_id,
-            //     'bank_account': this.bank_account,
-            //     'eps_type_id': this.eps_type_id,
-            //     'afp_type_id': this.afp_type_id,
-            //     'arl_type_id': this.arl_type_id,
-            //     'ccf_type_id': this.ccf_type_id,
-            // }
+            let dataSend = {
+                'position_id': this.position_id,
+                'salary': this.salary,
+                'contract_type_id': this.contract_type_id,
+                'contract_start_date': this.contract_start_date,
+                'contract_end_date': this.contract_end_date,
+                'test_period_end_date': this.test_period_end_date,
+                'corporate_email': this.corporate_email,
+                'corporate_cellphone': this.corporate_cellphone,
+                'bank_id': this.bank_id,
+                'bank_account': this.bank_account,
+                'eps_id': this.eps_id,
+                'afp_pension_id': this.afp_pension_id,
+                'afp_saving_id': this.afp_saving_id,
+                'arl_id': this.arl_id,
+                'ccf_id': this.ccf_id,
+            }
 
-            // axios.post(`/collaborators/${this.collaborator.id}/contractual-information`, dataSend).then(
-            //     (res) => {
-            //         console.log(res)
-            //         this.errors = null
-            //         this.message = 'Información contractual actualizada correctamente'
-            //         console.log(this.message);
-            //     }).catch(
-            //     (error) => {
-            //         if(error && error.response && error.response.data && error.response.data.errors) {
-            //             console.log(error.response.data.errors)
-            //             this.errors = error.response.data.errors
-            //         }
-            //     })
+            axios.put(`/collaborators/${this.collaborator.id}/contractual-information`, dataSend).then(
+                (res) => {
+                    console.log(res)
+                    this.errors = null
+                    this.message = 'Información contractual actualizada correctamente'
+                    console.log(this.message);
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log(error.response.data.errors)
+                        this.errors = error.response.data.errors
+                    }
+                })
         },
     },
 }

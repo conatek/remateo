@@ -7,7 +7,7 @@
         </button>
     </div>
     <div class="drawer-content-wrapper">
-        <div class="scrollbar-container">
+        {{-- <div class="scrollbar-container">
             <h3 class="drawer-heading">Servers Status</h3>
             <div class="drawer-section">
                 <div class="row">
@@ -415,6 +415,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>

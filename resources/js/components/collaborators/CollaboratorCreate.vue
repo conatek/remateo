@@ -6,7 +6,7 @@
                     <span>Información General</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a @click="tab_collaborator_status = 'contract'" role="tab" class="nav-link" :class="tab_collaborator_status == 'contract' ? 'active' : ''" id="tab-1" data-bs-toggle="tab" href="#tab-content-1">
                     <span>Información Contractual</span>
                 </a>
@@ -15,7 +15,7 @@
                 <a @click="tab_collaborator_status = 'documentation'" role="tab" class="nav-link" :class="tab_collaborator_status == 'documentation' ? 'active' : ''" id="tab-2" data-bs-toggle="tab" href="#tab-content-2">
                     <span>Gestión Documental</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
         <div class="tab-content">
             <div class="tab-pane tabs-animation fade" :class="tab_collaborator_status == 'general' ? 'show active' : ''" id="tab-content-0" role="tabpanel">

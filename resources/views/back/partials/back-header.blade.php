@@ -31,7 +31,7 @@
     </div>
     <div class="app-header__content">
         <div class="app-header-left">
-            <div class="search-wrapper">
+            {{-- <div class="search-wrapper">
                 <div class="input-holder">
                     <input type="text" class="search-input" placeholder="Type to search">
                     <button class="search-icon">
@@ -210,10 +210,10 @@
                         </button>
                     </div>
                 </li>
-            </ul>
+            </ul> --}}
         </div>
         <div class="app-header-right">
-            <div class="header-dots">
+            {{-- <div class="header-dots">
                 <div class="dropdown">
                     <button type="button" aria-haspopup="true" aria-expanded="false"
                         data-bs-toggle="dropdown" class="p-0 me-2 btn btn-link">
@@ -726,7 +726,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="header-btn-lg pe-0">
                 <div class="widget-content p-0">
                     <div class="widget-content-wrapper">
@@ -839,17 +839,19 @@
                         </div>
                         <div class="widget-content-left  ms-3 header-user-info">
                             <div class="widget-heading"> {{ auth()->user()->name }}</div>
-                            <div class="widget-subheading"> VP People Manager</div>
+                            <div class="widget-subheading"> Rol: ADMINISTRADOR</div>
                         </div>
-                        <div class="widget-content-right header-user-info ms-3">
+
+                        {{-- <div class="widget-content-right header-user-info ms-3">
                             <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
                                 <i class="fa text-white fa-calendar pe-1 ps-1"></i>
                             </button>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
             <div class="header-btn-lg">
+                {{-- Este botón remite a: resources\views\back\partials\back-drawer-wrapper.blade.php --}}
                 <button type="button" class="hamburger hamburger--elastic open-right-drawer">
                     <span class="hamburger-box">
                         <span class="hamburger-inner"></span>

@@ -14,9 +14,9 @@ return new class extends Migration
             $table->bigInteger('position_id')->unsigned();
             $table->integer('salary')->unsigned();
             $table->bigInteger('contract_type_id')->unsigned();
-            $table->date('contract_start_date')->nullable();
+            $table->date('contract_start_date');
             $table->date('contract_end_date')->nullable();
-            $table->date('test_period_end_date')->nullable();
+            $table->date('test_period_end_date');
             $table->string('corporate_email')->nullable();
             $table->string('corporate_cellphone')->nullable();
             $table->bigInteger('bank_id')->unsigned();
