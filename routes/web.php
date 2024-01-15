@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 
 
-
+    // AREAS DATA
     Route::get('/areas-data/{company_id}', [AreaController::class, 'getAreas']);
     Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
     Route::get('/areas/create', [AreaController::class, 'create'])->name('areas.create');
@@ -62,9 +62,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/areas/{area}', [AreaController::class, 'show'])->name('areas.show');
     Route::get('/areas/{area}/edit', [AreaController::class, 'edit'])->name('areas.edit');
     Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
-    // Route::delete('/areas/{area}', [AreaController::class, 'destroy'])->name('areas.destroy');
     Route::delete('/area-data-delete/{area}', [AreaController::class, 'destroy']);
 
+    // POSITIONS DATA
     Route::get('/positions-data/{company_id}', [PositionController::class, 'getPositions']);
     Route::get('/positions', [PositionController::class, 'index'])->name('positions.index');
     Route::get('/positions/create', [PositionController::class, 'create'])->name('positions.create');
@@ -72,10 +72,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/positions/{position}', [PositionController::class, 'show'])->name('positions.show');
     Route::get('/positions/{position}/edit', [PositionController::class, 'edit'])->name('positions.edit');
     Route::put('/positions/{position}', [PositionController::class, 'update'])->name('positions.update');
-    // Route::delete('/positions/{position}', [PositionController::class, 'destroy'])->name('positions.destroy');
     Route::delete('/position-data-delete/{position}', [PositionController::class, 'destroy']);
 
-    // /campus-data/${company_id}
+    // CAMPUSES DATA
     Route::get('/campus-data/{company_id}', [CampusController::class, 'getCampuses']);
     Route::get('/campuses', [CampusController::class, 'index'])->name('campuses.index');
     Route::get('/campuses/create', [CampusController::class, 'create']);
@@ -83,11 +82,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/campuses/{campus}', [CampusController::class, 'show']);
     Route::get('/campuses/{campus}/edit', [CampusController::class, 'edit']);
     Route::put('/campuses/{campus}', [CampusController::class, 'update']);
-    // Route::delete('/campuses/{campus}', [CampusController::class, 'destroy'])->name('campuses.destroy');
     Route::delete('/campus-data-delete/{campus}', [CampusController::class, 'destroy']);
 
+    // COLLABORATORS DATA
     Route::get('/collaborators-data/{company_id}', [CollaboratorController::class, 'getCollaborators']);
-    Route::get('/contractual-information/{collaborator_id}', [CollaboratorController::class, 'getContractualInformation']);
     Route::get('/collaborators', [CollaboratorController::class, 'index'])->name('collaborators.index');
     Route::get('/collaborators/create', [CollaboratorController::class, 'create'])->name('collaborators.create');
     Route::post('/collaborators', [CollaboratorController::class, 'store'])->name('collaborators.store');
@@ -97,16 +95,19 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/collaborators/{collaborator}', [CollaboratorController::class, 'update'])->name('collaborators.update');
     Route::delete('/collaborators/{collaborator}/destroy', [CollaboratorController::class, 'destroy'])->name('collaborators.destroy');
 
-    
+    // CONTRACTUAL INFORMATION
+    Route::get('/contractual-information/{collaborator_id}', [CollaboratorController::class, 'getContractualInformation']);
     Route::post('/collaborators/{collaborator}/contractual-information', [CollaboratorController::class, 'storeContractualInformation']);
     Route::put('/collaborators/{collaborator}/contractual-information', [CollaboratorController::class, 'updateContractualInformation']);
 
+    // ROLES AND PERMISSIONS
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
 
-    // Provinces - Cities
+    // PROVINCES AND CITIES
     Route::post('/get-cities', [ProvinceController::class, 'getCities'])->name('get_cities');
 
+    // RELATIVE DATA
     Route::get('/relative-data/{collaborator_id}', [CollaboratorFamilyController::class, 'show']);
     Route::post('/relative-data', [CollaboratorFamilyController::class, 'store']);
     Route::put('/relative-data-update/{relative_data}', [CollaboratorFamilyController::class, 'update']);

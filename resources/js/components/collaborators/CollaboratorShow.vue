@@ -216,9 +216,97 @@
             </div>
             
         </div>
-        <div v-else-if="card_selected == 'contract'" class="main-card mb-3 card">
-            <div class="card-body">
-                <p>Este es el card de Información Contractual</p>
+        <div v-else-if="card_selected == 'contract'">
+            <div class="row">
+                <div class="col-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-header">
+                            Información Contractual
+                        </div>
+                        <div class="card-body">
+                            <div class="wrapper-contract-information mt-3">
+                                <div class="box-label lb-25">
+                                    <p class="">Cargo:</p>
+                                </div>
+                                <div class="box-value vl-25">
+                                    <p class="">{{ contractual_information.position.name }}</p>
+                                </div>
+                                <div class="box-label lb-26">
+                                    <p class="">Salario:</p>
+                                </div>
+                                <div class="box-value vl-26">
+                                    <p class="">$ {{ numberFormat(Math.round(contractual_information.salary)) }}</p>
+                                </div>
+                                <div class="box-label lb-27">
+                                    <p class="">Tipo de contrato:</p>
+                                </div>
+                                <div class="box-value vl-27">
+                                    <p class="">{{ contractual_information.contract_type.name }}</p>
+                                </div>
+                                <div class="box-label lb-28">
+                                    <p class="">Fecha inicio:</p>
+                                </div>
+                                <div class="box-value vl-28">
+                                    <p class="">{{ contractual_information.contract_start_date }}</p>
+                                </div>
+                                <div class="box-label lb-29">
+                                    <p class="">Fecha fin:</p>
+                                </div>
+                                <div class="box-value vl-29">
+                                    <p class="">{{ contractual_information.contract_end_date }}</p>
+                                </div>
+                                <div class="box-label lb-30">
+                                    <p class="">Fecha fin prueba:</p>
+                                </div>
+                                <div class="box-value vl-30">
+                                    <p class="">{{ contractual_information.test_period_end_date }}</p>
+                                </div>
+                                <div class="box-label lb-31">
+                                    <p class="">Caja de compensación:</p>
+                                </div>
+                                <div class="box-value vl-31">
+                                    <p class="">{{ contractual_information.ccf.name }}</p>
+                                </div>
+                                <div class="box-label lb-32">
+                                    <p class="">EPS:</p>
+                                </div>
+                                <div class="box-value vl-32">
+                                    <p class="">{{ contractual_information.eps.name }}</p>
+                                </div>
+                                <div class="box-label lb-33">
+                                    <p class="">AFP Pensiones:</p>
+                                </div>
+                                <div class="box-value vl-33">
+                                    <p class="">{{ contractual_information.afp_pension.name }}</p>
+                                </div>
+                                <div class="box-label lb-34">
+                                    <p class="">AFP Cesantías:</p>
+                                </div>
+                                <div class="box-value vl-34">
+                                    <p class="">{{ contractual_information.afp_saving.name }}</p>
+                                </div>
+                                <div class="box-label lb-35">
+                                    <p class="">ARL:</p>
+                                </div>
+                                <div class="box-value vl-35">
+                                    <p class="">{{ contractual_information.arl.name }}</p>
+                                </div>
+                                <div class="box-label lb-36">
+                                    <p class="">Email corp.:</p>
+                                </div>
+                                <div class="box-value vl-36">
+                                    <p class="">{{ contractual_information.corporate_email }}</p>
+                                </div>
+                                <div class="box-label lb-37">
+                                    <p class="">Celular corp.:</p>
+                                </div>
+                                <div class="box-value vl-37">
+                                    <p class="">{{ contractual_information.corporate_cellphone }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div v-else-if="card_selected == 'additional'" >
@@ -244,357 +332,1139 @@
                     </a>
                 </li>
             </ul>
+
             <div class="tab-content">
                 <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'family_information' ? 'show active' : ''" id="tab-content-0" role="tabpanel">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body">
-                            <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-6">
-                                        <div class="card-hover-shadow card-border mb-3 card">
-                                            <div class="card-header">
-                                                Información Familiar
+                    <div class="row">
+                        <div class="col-sm-12 col-xxl-6">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>creada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>actualizada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>eliminada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="relatives_data && relatives_data.length>0" class="row"> 
+                                        <div class="col-md-12 col-lg-6">
+                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                                <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                                <p>Agregar Familiar</p>
+                                            </a>
+                                        </div>
+                                        <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
+                                            <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
+                                                <div @click="changeRelativeData(item.id, index)" class="box box1">
+                                                    <div class="preliminary-information">
+                                                        <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
+                                                        <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
+                                                        <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                    </div>
+                                                </div>
+                                                <div class="box box2">
+                                                    <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                                    <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                </div>
                                             </div>
-                                            <div class="card-body">
+                                        </div>
+                                    </div>
+                                    <div v-else class="row">
+                                        <div class="col-md-12">
+                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3">
+                                                <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                                <p>Agregar Familiar</p>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <table v-if="relatives_data && relatives_data.length>0" style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Parentesco</th>
+                                                <th>Edad</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
+                                                <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
+                                                    <div @click="changeRelativeData(item.id, index)" class="box box1">
+                                                        <div class="preliminary-information">
+                                                            <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
+                                                            <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
+                                                            <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="box box2">
+                                                        <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                                        <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <tr v-for="(item, index) in relatives_data">
+                                                <td>{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</td>
+                                                <td>{{ item.relationship }}</td>
+                                                <td>{{ getAge(item.birth_date) }}</td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                        <!-- <tfoot>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Parentesco</th>
+                                                <th>Edad</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </tfoot> -->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
+                            <div v-if="add_relative_data && !edit_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card-hover-shadow card-border mb-3 card add-relative-card">
+                                                        <div class="card-header">
+                                                            Agregar Familiar
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="name" class="form-label">Nombres*</label>
+                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
+                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
+                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
+                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
+                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else-if="!add_relative_data && edit_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <form @submit.prevent="updateRelativeData" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                        <div class="card-header">
+                                                            Editar Familiar
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="name" class="form-label">Nombres*</label>
+                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
+                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
+                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
+                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
+                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else-if="!add_relative_data && !edit_relative_data && selected_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                    <div class="card-header">
+                                                        Información del Familiar
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="wrapper-relative-data mt-3">
+                                                            <div class="box-label lb-20">
+                                                                <p class="">Nombre:</p>
+                                                            </div>
+                                                            <div class="box-value vl-20">
+                                                                <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-21">
+                                                                <p class="">Parentesco:</p>
+                                                            </div>
+                                                            <div class="box-value vl-21">
+                                                                <p class="">{{ selected_relative_data.relationship }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-22">
+                                                                <p class="">Sexo:</p>
+                                                            </div>
+                                                            <div class="box-value vl-22">
+                                                                <p class="">{{ selected_relative_data.sex }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-23">
+                                                                <p class="">Ocupación:</p>
+                                                            </div>
+                                                            <div class="box-value vl-23">
+                                                                <p class="">{{ selected_relative_data.occupation }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-24">
+                                                                <p class="">Fecha de nacimiento:</p>
+                                                            </div>
+                                                            <div class="box-value vl-24">
+                                                                <p class="">{{ selected_relative_data.birth_date }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="tab-content">
                 <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'academic_information' ? 'show active' : ''" id="tab-content-1" role="tabpanel">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body">
-                            <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-6">
-                                        <div class="card-hover-shadow card-border mb-3 card">
-                                            <div class="card-header">
-                                                Información Académica
+                    <div class="row">
+                        <div class="col-sm-12 col-xxl-6">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>creada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>actualizada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>eliminada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="relatives_data && relatives_data.length>0" class="row"> 
+                                        <div class="col-md-12 col-lg-6">
+                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                                <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                                <p>Agregar Logro</p>
+                                            </a>
+                                        </div>
+                                        <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
+                                            <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
+                                                <div @click="changeRelativeData(item.id, index)" class="box box1">
+                                                    <div class="preliminary-information">
+                                                        <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
+                                                        <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
+                                                        <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                    </div>
+                                                </div>
+                                                <div class="box box2">
+                                                    <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                                    <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                </div>
                                             </div>
-                                            <div class="card-body">
+                                        </div>
+                                    </div>
+                                    <div v-else class="row">
+                                        <div class="col-md-12">
+                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3">
+                                                <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                                <p>Agregar Logro</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
+                            <div v-if="add_relative_data && !edit_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card-hover-shadow card-border mb-3 card add-relative-card">
+                                                        <div class="card-header">
+                                                            Agregar Logro Académico
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="name" class="form-label">Nombres*</label>
+                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
+                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
+                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
+                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
+                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else-if="!add_relative_data && edit_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <form @submit.prevent="updateRelativeData" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                        <div class="card-header">
+                                                            Editar Logro Académico
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="name" class="form-label">Nombres*</label>
+                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
+                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
+                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
+                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
+                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else-if="!add_relative_data && !edit_relative_data && selected_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                    <div class="card-header">
+                                                        Información del Logro
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="wrapper-relative-data mt-3">
+                                                            <div class="box-label lb-20">
+                                                                <p class="">Nombre:</p>
+                                                            </div>
+                                                            <div class="box-value vl-20">
+                                                                <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-21">
+                                                                <p class="">Parentesco:</p>
+                                                            </div>
+                                                            <div class="box-value vl-21">
+                                                                <p class="">{{ selected_relative_data.relationship }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-22">
+                                                                <p class="">Sexo:</p>
+                                                            </div>
+                                                            <div class="box-value vl-22">
+                                                                <p class="">{{ selected_relative_data.sex }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-23">
+                                                                <p class="">Ocupación:</p>
+                                                            </div>
+                                                            <div class="box-value vl-23">
+                                                                <p class="">{{ selected_relative_data.occupation }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-24">
+                                                                <p class="">Fecha de nacimiento:</p>
+                                                            </div>
+                                                            <div class="box-value vl-24">
+                                                                <p class="">{{ selected_relative_data.birth_date }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="tab-content">
                 <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'medical_information' ? 'show active' : ''" id="tab-content-2" role="tabpanel">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body">
-                            <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-6">
-                                        <div class="card-hover-shadow card-border mb-3 card">
-                                            <div class="card-header">
-                                                Información Médica
+                    <div class="row">
+                        <div class="col-sm-12 col-xxl-6">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>creada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>actualizada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>eliminada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="relatives_data && relatives_data.length>0" class="row"> 
+                                        <div class="col-md-12 col-lg-6">
+                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                                <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                                <p>Agregar Información de Salud</p>
+                                            </a>
+                                        </div>
+                                        <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
+                                            <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
+                                                <div @click="changeRelativeData(item.id, index)" class="box box1">
+                                                    <div class="preliminary-information">
+                                                        <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
+                                                        <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
+                                                        <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                    </div>
+                                                </div>
+                                                <div class="box box2">
+                                                    <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                                    <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                </div>
                                             </div>
-                                            <div class="card-body">
+                                        </div>
+                                    </div>
+                                    <div v-else class="row">
+                                        <div class="col-md-12">
+                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3">
+                                                <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                                <p>Agregar Información de Salud</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
+                            <div v-if="add_relative_data && !edit_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card-hover-shadow card-border mb-3 card add-relative-card">
+                                                        <div class="card-header">
+                                                            Agregar Información de Salud
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="name" class="form-label">Nombres*</label>
+                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
+                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
+                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
+                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
+                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else-if="!add_relative_data && edit_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <form @submit.prevent="updateRelativeData" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                        <div class="card-header">
+                                                            Editar Información de Salud
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="name" class="form-label">Nombres*</label>
+                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
+                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
+                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
+                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
+                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else-if="!add_relative_data && !edit_relative_data && selected_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                    <div class="card-header">
+                                                        Información de Salud
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="wrapper-relative-data mt-3">
+                                                            <div class="box-label lb-20">
+                                                                <p class="">Nombre:</p>
+                                                            </div>
+                                                            <div class="box-value vl-20">
+                                                                <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-21">
+                                                                <p class="">Parentesco:</p>
+                                                            </div>
+                                                            <div class="box-value vl-21">
+                                                                <p class="">{{ selected_relative_data.relationship }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-22">
+                                                                <p class="">Sexo:</p>
+                                                            </div>
+                                                            <div class="box-value vl-22">
+                                                                <p class="">{{ selected_relative_data.sex }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-23">
+                                                                <p class="">Ocupación:</p>
+                                                            </div>
+                                                            <div class="box-value vl-23">
+                                                                <p class="">{{ selected_relative_data.occupation }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-24">
+                                                                <p class="">Fecha de nacimiento:</p>
+                                                            </div>
+                                                            <div class="box-value vl-24">
+                                                                <p class="">{{ selected_relative_data.birth_date }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="tab-content">
                 <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'home_visities' ? 'show active' : ''" id="tab-content-3" role="tabpanel">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body">
-                            <form @submit.prevent="updateCollaborator" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-6">
-                                        <div class="card-hover-shadow card-border mb-3 card">
-                                            <div class="card-header">
-                                                Visitas Domiciliarias
-                                            </div>
-                                            <div class="card-body">
-                                            </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xxl-6">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>creada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
-                                </div>
-                                <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="row">
-                <div class="col-sm-12 col-xxl-6">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body">
-                            <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
-                                <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>creada</strong> exitosamente!.</p>
-                                </div>
-                            </div>
-                            <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
-                                <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>actualizada</strong> exitosamente!.</p>
-                                </div>
-                            </div>
-                            <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
-                                <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>eliminada</strong> exitosamente!.</p>
-                                </div>
-                            </div>
-                            <div v-if="relatives_data && relatives_data.length>0" class="row"> 
-                                <div class="col-md-12 col-lg-6">
-                                    <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
-                                        <p><i class="fa fa-plus" aria-hidden="true"></i></p>
-                                        <p>Agregar Familiar</p>
-                                    </a>
-                                </div>
-                                <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
-                                    <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
-                                        <div @click="changeRelativeData(item.id, index)" class="box box1">
-                                            <div class="preliminary-information">
-                                                <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
-                                                <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
-                                                <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
-                                            </div>
-                                        </div>
-                                        <div class="box box2">
-                                            <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                            <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                    <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>actualizada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div v-else class="row">
-                                <div class="col-md-12">
-                                    <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3">
-                                        <p><i class="fa fa-plus" aria-hidden="true"></i></p>
-                                        <p>Agregar Familiar</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
-                    <div v-if="add_relative_data && !edit_relative_data" class="">
-                        <div class="main-card mb-3 card">
-                            <div class="card-body">
-                                <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="card-hover-shadow card-border mb-3 card add-relative-card">
-                                                <div class="card-header">
-                                                    Agregar Familiar
+                                    <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
+                                        <div class="content d-flex align-items-start p-2">
+                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>eliminada</strong> exitosamente!.</p>
+                                        </div>
+                                    </div>
+                                    <div v-if="relatives_data && relatives_data.length>0" class="row"> 
+                                        <div class="col-md-12 col-lg-6">
+                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                                <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                                <p>Agregar Visita</p>
+                                            </a>
+                                        </div>
+                                        <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
+                                            <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
+                                                <div @click="changeRelativeData(item.id, index)" class="box box1">
+                                                    <div class="preliminary-information">
+                                                        <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
+                                                        <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
+                                                        <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                    </div>
                                                 </div>
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="name" class="form-label">Nombres*</label>
-                                                                <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
-                                                                <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
-                                                            </div>
+                                                <div class="box box2">
+                                                    <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                                    <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-else class="row">
+                                        <div class="col-md-12">
+                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3">
+                                                <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                                <p>Agregar Visita</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
+                            <div v-if="add_relative_data && !edit_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card-hover-shadow card-border mb-3 card add-relative-card">
+                                                        <div class="card-header">
+                                                            Agregar Visita Domiciliaria
                                                         </div>
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                                <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
-                                                                <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="name" class="form-label">Nombres*</label>
+                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                                <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
+                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
+                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
+                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
+                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="relationship_type_id" class="form-label">Parentesco*</label>
-                                                                <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
-                                                                    <option value="" disabled selected hidden>Seleccionar Parentesco</option>
-                                                                    <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
-                                                                </select>
-                                                                <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="sex_type_id" class="form-label">Sexo*</label>
-                                                                <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
-                                                                    <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                                    <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
-                                                                </select>
-                                                                <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="occupation_type_id" class="form-label">Ocupación*</label>
-                                                                <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
-                                                                    <option value="" disabled selected hidden>Seleccionar Ocupación</option>
-                                                                    <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
-                                                                </select>
-                                                                <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
-                                                                <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
-                                                                <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <button type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                                        </form>
                                     </div>
-                                    <button type="submit" class="mt-2 btn btn-primary">Guardar</button>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div v-else-if="!add_relative_data && edit_relative_data" class="">
-                        <div class="main-card mb-3 card">
-                            <div class="card-body">
-                                <form @submit.prevent="updateRelativeData" enctype="multipart/form-data">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
-                                                <div class="card-header">
-                                                    Editar Familiar
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="name" class="form-label">Nombres*</label>
-                                                                <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
-                                                                <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
-                                                            </div>
+                            <div v-else-if="!add_relative_data && edit_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <form @submit.prevent="updateRelativeData" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                        <div class="card-header">
+                                                            Editar Visita Domiciliaria
                                                         </div>
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                                <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
-                                                                <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="name" class="form-label">Nombres*</label>
+                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
+                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
+                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                                <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
+                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
+                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
+                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
+                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
+                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
+                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="relationship_type_id" class="form-label">Parentesco*</label>
-                                                                <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
-                                                                    <option value="" disabled selected hidden>Seleccionar Parentesco</option>
-                                                                    <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
-                                                                </select>
-                                                                <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="sex_type_id" class="form-label">Sexo*</label>
-                                                                <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
-                                                                    <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                                    <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
-                                                                </select>
-                                                                <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="occupation_type_id" class="form-label">Ocupación*</label>
-                                                                <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
-                                                                    <option value="" disabled selected hidden>Seleccionar Ocupación</option>
-                                                                    <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
-                                                                </select>
-                                                                <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="position-relative mb-3">
-                                                                <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
-                                                                <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
-                                                                <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
+                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                                        </form>
                                     </div>
-                                    <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div v-else-if="!add_relative_data && !edit_relative_data && selected_relative_data" class="">
-                        <div class="main-card mb-3 card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
-                                            <div class="card-header">
-                                                Información del Familiar
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="wrapper-relative-data mt-3">
-                                                    <div class="box-label lb-20">
-                                                        <p class="">Nombre:</p>
+                            <div v-else-if="!add_relative_data && !edit_relative_data && selected_relative_data" class="">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                    <div class="card-header">
+                                                        Información de Visita Domiciliaria
                                                     </div>
-                                                    <div class="box-value vl-20">
-                                                        <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-21">
-                                                        <p class="">Parentesco:</p>
-                                                    </div>
-                                                    <div class="box-value vl-21">
-                                                        <p class="">{{ selected_relative_data.relationship }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-22">
-                                                        <p class="">Sexo:</p>
-                                                    </div>
-                                                    <div class="box-value vl-22">
-                                                        <p class="">{{ selected_relative_data.sex }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-23">
-                                                        <p class="">Ocupación:</p>
-                                                    </div>
-                                                    <div class="box-value vl-23">
-                                                        <p class="">{{ selected_relative_data.occupation }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-24">
-                                                        <p class="">Fecha de nacimiento:</p>
-                                                    </div>
-                                                    <div class="box-value vl-24">
-                                                        <p class="">{{ selected_relative_data.birth_date }}</p>
+                                                    <div class="card-body">
+                                                        <div class="wrapper-relative-data mt-3">
+                                                            <div class="box-label lb-20">
+                                                                <p class="">Nombre:</p>
+                                                            </div>
+                                                            <div class="box-value vl-20">
+                                                                <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-21">
+                                                                <p class="">Parentesco:</p>
+                                                            </div>
+                                                            <div class="box-value vl-21">
+                                                                <p class="">{{ selected_relative_data.relationship }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-22">
+                                                                <p class="">Sexo:</p>
+                                                            </div>
+                                                            <div class="box-value vl-22">
+                                                                <p class="">{{ selected_relative_data.sex }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-23">
+                                                                <p class="">Ocupación:</p>
+                                                            </div>
+                                                            <div class="box-value vl-23">
+                                                                <p class="">{{ selected_relative_data.occupation }}</p>
+                                                            </div>
+                                                            <div class="box-label lb-24">
+                                                                <p class="">Fecha de nacimiento:</p>
+                                                            </div>
+                                                            <div class="box-value vl-24">
+                                                                <p class="">{{ selected_relative_data.birth_date }}</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -619,6 +1489,7 @@
 export default {
     props: {
         collaborator: { default: null, },
+        collaborator_contract: { default: null, },
         document_type: { default: null, },
         document_province: { default: null, },
         document_city: { default: null, },
@@ -638,12 +1509,6 @@ export default {
         occupation_types: { default: null, },
         occupation_type: { default: null, },
         sex_types: { default: null, },
-
-        // :relationship_types="{{ $relationship_types }}"
-        // :relationship_type="{{ $relationship_type }}"
-        // :occupation_types="{{ $occupation_types }}"
-        // :occupation_type="{{ $occupation_type }}"
-        // :sex_types="{{ $sex_types }}"
     },
     data() {
         return {
@@ -659,6 +1524,8 @@ export default {
             occupation_type_id: '',
             sex_type_id: '',
             birth_date: '',
+
+            contractual_information: '',
 
             relatives_data: [],
             errors_relative_data: [],
@@ -677,9 +1544,35 @@ export default {
     },
     mounted () {
         console.log(this.collaborator.id);
+        this.getContractualInformation(this.collaborator.id)
         this.getRelativesData(this.collaborator.id)
     },
     methods: {
+        getContractualInformation(collaborator_id) {
+            axios.get(`/contractual-information/${collaborator_id}`)
+            .then(response => {
+                this.contractual_information = response.data.contractual_information;
+
+                this.position_id = this.contractual_information.position_id;
+                this.salary = this.contractual_information.salary;
+                this.contract_type_id = this.contractual_information.contract_type_id;
+                this.contract_start_date = this.contractual_information.contract_start_date;
+                this.contract_end_date = this.contractual_information.contract_end_date;
+                this.test_period_end_date = this.contractual_information.test_period_end_date;
+                this.corporate_email = this.contractual_information.corporate_email;
+                this.corporate_cellphone = this.contractual_information.corporate_cellphone;
+                this.bank_id = this.contractual_information.bank_id;
+                this.bank_account = this.contractual_information.bank_account;
+                this.eps_id = this.contractual_information.eps_id;
+                this.afp_pension_id = this.contractual_information.afp_pension_id;
+                this.afp_saving_id = this.contractual_information.afp_saving_id;
+                this.arl_id = this.contractual_information.arl_id;
+                this.ccf_id = this.contractual_information.ccf_id;
+            })
+            .catch(e => {
+                // 
+            })
+        },
         addRelativeData() {
             if(this.add_relative_data == false) {
                 this.add_relative_data = true
@@ -865,6 +1758,13 @@ export default {
             }
             return edad
         },
+        numberFormat(number) {
+            const exp = /(\d)(?=(\d{3})+(?!\d))/g
+            const rep = '$1.'
+            let arr = number.toString().split('.')
+            arr[0] = arr[0].replace(exp,rep)
+            return arr[1] ? arr.join('.'): arr[0]
+        },
     },
 }
 </script>
@@ -882,7 +1782,8 @@ export default {
 .main-card .wrapper-basic,
 .main-card .wrapper-address,
 .main-card .wrapper-contact,
-.main-card .wrapper-relative-data {
+.main-card .wrapper-relative-data,
+.main-card .wrapper-contract-information {
     display: grid;
     grid-gap: 1px;
     /* background-color: #dee2e6; */
@@ -916,6 +1817,24 @@ export default {
     .main-card .wrapper-relative-data {
         grid-template-columns: repeat(1, 1fr);
         grid-template-areas:    "lb-20" "vl-20" "lb-21" "vl-21" "lb-22" "vl-22" "lb-23" "vl-23" "lb-24" "vl-24";
+    }
+
+    .main-card .wrapper-contract-information {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-25" "vl-25" 
+                                "lb-26" "vl-26" 
+                                "lb-27" "vl-27" 
+                                "lb-28" "vl-28" 
+                                "lb-29" "vl-29" 
+                                "lb-30" "vl-30" 
+                                "lb-31" "vl-31" 
+                                "lb-32" "vl-32" 
+                                "lb-33" "vl-33" 
+                                "lb-34" "vl-34" 
+                                "lb-35" "vl-35" 
+                                "lb-36" "vl-36" 
+                                "lb-37" "vl-37"
+                                ;
     }
 }
 
@@ -958,6 +1877,18 @@ export default {
                                 "lb-24 vl-24 vl-24 vl-24"
         ;
     }
+
+    .main-card .wrapper-contract-information {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25"
+                                "lb-26 lb-26 lb-26 vl-26 vl-26 vl-26 lb-27 lb-27 lb-27 vl-27 vl-27 vl-27"
+                                "lb-28 lb-28 lb-28 vl-28 vl-28 vl-28 lb-29 lb-29 lb-29 vl-29 vl-29 vl-29"
+                                "lb-30 lb-30 lb-30 vl-30 vl-30 vl-30 lb-31 lb-31 lb-31 vl-31 vl-31 vl-31"
+                                "lb-32 lb-32 lb-32 vl-32 vl-32 vl-32 lb-33 lb-33 lb-33 vl-33 vl-33 vl-33"
+                                "lb-34 lb-34 lb-34 vl-34 vl-34 vl-34 lb-35 lb-35 lb-35 vl-35 vl-35 vl-35"
+                                "lb-36 lb-36 lb-36 vl-36 vl-36 vl-36 lb-37 lb-37 lb-37 vl-37 vl-37 vl-37"
+        ;
+    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -992,12 +1923,22 @@ export default {
                                 "lb-23 lb-23 lb-23 vl-23 vl-23 vl-23 lb-24 lb-24 lb-24 vl-24 vl-24 vl-24"
         ;
     }
+
+    .main-card .wrapper-contract-information {
+        grid-template-columns: repeat(24, 1fr);
+        grid-template-areas:    "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 lb-26 lb-26 lb-26 vl-26 vl-26 vl-26 lb-27 lb-27 lb-27 vl-27 vl-27 vl-27"
+                                "lb-28 lb-28 lb-28 vl-28 vl-28 vl-28 lb-29 lb-29 lb-29 vl-29 vl-29 vl-29 lb-30 lb-30 lb-30 vl-30 vl-30 vl-30 lb-31 lb-31 lb-31 vl-31 vl-31 vl-31"
+                                "lb-32 lb-32 lb-32 vl-32 vl-32 vl-32 lb-33 lb-33 lb-33 vl-33 vl-33 vl-33 lb-34 lb-34 lb-34 vl-34 vl-34 vl-34 lb-35 lb-35 lb-35 vl-35 vl-35 vl-35"
+                                "lb-36 lb-36 lb-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 lb-37 lb-37 lb-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37"
+        ;
+    }
 }
 
 .main-card .wrapper-basic .box-label,
 .main-card .wrapper-address .box-label,
 .main-card .wrapper-contact .box-label,
-.main-card .wrapper-relative-data .box-label {
+.main-card .wrapper-relative-data .box-label,
+.main-card .wrapper-contract-information .box-label {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1012,14 +1953,16 @@ export default {
 .main-card .wrapper-basic .box-label p,
 .main-card .wrapper-address .box-label p,
 .main-card .wrapper-contact .box-label p,
-.main-card .wrapper-relative-data .box-label p {
+.main-card .wrapper-relative-data .box-label p,
+.main-card .wrapper-contract-information .box-label p {
     margin: 0;
 }
 
 .main-card .wrapper-basic .box-value,
 .main-card .wrapper-address .box-value,
 .main-card .wrapper-contact .box-value,
-.main-card .wrapper-relative-data .box-value {
+.main-card .wrapper-relative-data .box-value,
+.main-card .wrapper-contract-information .box-value {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1032,7 +1975,8 @@ export default {
 .main-card .wrapper-basic .box-value p,
 .main-card .wrapper-address .box-value p,
 .main-card .wrapper-contact .box-value p,
-.main-card .wrapper-relative-data .box-value p {
+.main-card .wrapper-relative-data .box-value p,
+.main-card .wrapper-contract-information .box-value p {
     margin: 0;
 }
 
@@ -1089,6 +2033,33 @@ export default {
 .main-card .wrapper-relative-data .vl-23 { grid-area: vl-23; }
 .main-card .wrapper-relative-data .lb-24 { grid-area: lb-24; }
 .main-card .wrapper-relative-data .vl-24 { grid-area: vl-24; }
+
+.main-card .wrapper-contract-information .lb-25 { grid-area: lb-25; }
+.main-card .wrapper-contract-information .vl-25 { grid-area: vl-25; }
+.main-card .wrapper-contract-information .lb-26 { grid-area: lb-26; }
+.main-card .wrapper-contract-information .vl-26 { grid-area: vl-26; }
+.main-card .wrapper-contract-information .lb-27 { grid-area: lb-27; }
+.main-card .wrapper-contract-information .vl-27 { grid-area: vl-27; }
+.main-card .wrapper-contract-information .lb-28 { grid-area: lb-28; }
+.main-card .wrapper-contract-information .vl-28 { grid-area: vl-28; }
+.main-card .wrapper-contract-information .lb-29 { grid-area: lb-29; }
+.main-card .wrapper-contract-information .vl-29 { grid-area: vl-29; }
+.main-card .wrapper-contract-information .lb-30 { grid-area: lb-30; }
+.main-card .wrapper-contract-information .vl-30 { grid-area: vl-30; }
+.main-card .wrapper-contract-information .lb-31 { grid-area: lb-31; }
+.main-card .wrapper-contract-information .vl-31 { grid-area: vl-31; }
+.main-card .wrapper-contract-information .lb-32 { grid-area: lb-32; }
+.main-card .wrapper-contract-information .vl-32 { grid-area: vl-32; }
+.main-card .wrapper-contract-information .lb-33 { grid-area: lb-33; }
+.main-card .wrapper-contract-information .vl-33 { grid-area: vl-33; }
+.main-card .wrapper-contract-information .lb-34 { grid-area: lb-34; }
+.main-card .wrapper-contract-information .vl-34 { grid-area: vl-34; }
+.main-card .wrapper-contract-information .lb-35 { grid-area: lb-35; }
+.main-card .wrapper-contract-information .vl-35 { grid-area: vl-35; }
+.main-card .wrapper-contract-information .lb-36 { grid-area: lb-36; }
+.main-card .wrapper-contract-information .vl-36 { grid-area: vl-36; }
+.main-card .wrapper-contract-information .lb-37 { grid-area: lb-37; }
+.main-card .wrapper-contract-information .vl-37 { grid-area: vl-37; }
 
 
 /* INFORMACIÓN FAMILIAR */

@@ -34,6 +34,7 @@
 
 <collaborator-show 
     :collaborator="{{ $collaborator }}"
+    :collaborator_contract="{{ $collaborator_contract }}"
     :document_type="{{ $document_type }}"
     :document_province="{{ $document_province }}"
     :document_city="{{ $document_city }}"

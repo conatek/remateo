@@ -61,6 +61,26 @@ class CollaboratorController extends Controller
         $results = [];
 
         $contractual_information = CollaboratorContract::where('collaborator_id', $id)->first();
+
+        if($contractual_information != null) {
+            $position = Position::where('id', $contractual_information->position_id)->first();
+            $contract_type = ContractType::where('id', $contractual_information->contract_type_id)->first();
+            $bank = BankType::where('id', $contractual_information->bank_id)->first();
+            $eps = EpsType::where('id', $contractual_information->eps_id)->first();
+            $afp_pension = AfpType::where('id', $contractual_information->afp_pension_id)->first();
+            $afp_saving = AfpType::where('id', $contractual_information->afp_saving_id)->first();
+            $arl = ArlType::where('id', $contractual_information->arl_id)->first();
+            $ccf = CcfType::where('id', $contractual_information->ccf_id)->first();
+
+            $contractual_information['position'] = $position;
+            $contractual_information['contract_type'] = $contract_type;
+            $contractual_information['bank'] = $bank;
+            $contractual_information['eps'] = $eps;
+            $contractual_information['afp_pension'] = $afp_pension;
+            $contractual_information['afp_saving'] = $afp_saving;
+            $contractual_information['arl'] = $arl;
+            $contractual_information['ccf'] = $ccf;
+        }
         
         $results['contractual_information'] = $contractual_information;
 
@@ -201,6 +221,7 @@ class CollaboratorController extends Controller
 
         abort_if(Gate::denies('collaborator_show'), 403);
 
+        $collaborator_contract = CollaboratorContract::where('collaborator_id', $collaborator->id)->first();
         $document_type = DocumentType::where('id', $collaborator->document_type_id)->first();
         $document_province = Province::where('id', $collaborator->document_province_id)->first();
         $document_city = City::where('id', $collaborator->document_city_id)->first();
@@ -222,7 +243,7 @@ class CollaboratorController extends Controller
         $relationship_type = Relationship::where('id', $collaborator->relationship_id)->first();
         $occupation_type = Occupation::where('id', $collaborator->occupation_id)->first();
 
-        // dd($relationship_type);
+        // $position_type = Position::where('id', $collaborator_contract->position_id)->first();
 
         if($origin == 'update') {
             $message = 'Colaborador actualizado exitosamente!';
@@ -233,6 +254,7 @@ class CollaboratorController extends Controller
         return view('back.collaborators.show', compact(
             'company',
             'collaborator', 
+            'collaborator_contract', 
             'document_type', 
             'document_province', 
             'document_city',
