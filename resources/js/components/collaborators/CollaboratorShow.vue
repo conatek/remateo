@@ -130,10 +130,10 @@
                                     <p class="">{{ rh_type.name }}</p>
                                 </div>
                                 <div class="box-label lb-11">
-                                    <p class="">Escolaridad:</p>
+                                    <p class="">Mayor logro académico:</p>
                                 </div>
                                 <div class="box-value vl-11">
-                                    <p class="">{{ scholarship_type.name }}</p>
+                                    <!-- <p class="">{{ scholarship_type.name }}</p> -->
                                 </div>
                                 <div class="box-label lb-12">
                                     <p class="">Observaciones</p>
@@ -219,7 +219,7 @@
         <div v-else-if="card_selected == 'contract'">
             <div class="row">
                 <div class="col-12">
-                    <div class="main-card mb-3 card">
+                    <div v-if="contractual_information !== null" class="main-card mb-3 card">
                         <div class="card-header">
                             Información Contractual
                         </div>
@@ -229,83 +229,92 @@
                                     <p class="">Cargo:</p>
                                 </div>
                                 <div class="box-value vl-25">
-                                    <p class="">{{ contractual_information.position.name }}</p>
+                                    <p v-if="contractual_information && contractual_information.position && contractual_information.position.name" class="">{{ contractual_information.position.name }}</p>
                                 </div>
                                 <div class="box-label lb-26">
                                     <p class="">Salario:</p>
                                 </div>
                                 <div class="box-value vl-26">
-                                    <p class="">$ {{ numberFormat(Math.round(contractual_information.salary)) }}</p>
+                                    <p v-if="contractual_information && contractual_information.salary" class="">$ {{ numberFormat(Math.round(contractual_information.salary)) }}</p>
                                 </div>
                                 <div class="box-label lb-27">
                                     <p class="">Tipo de contrato:</p>
                                 </div>
                                 <div class="box-value vl-27">
-                                    <p class="">{{ contractual_information.contract_type.name }}</p>
+                                    <p v-if="contractual_information && contractual_information.contract_type && contractual_information.contract_type.name" class="">{{ contractual_information.contract_type.name }}</p>
                                 </div>
                                 <div class="box-label lb-28">
                                     <p class="">Fecha inicio:</p>
                                 </div>
                                 <div class="box-value vl-28">
-                                    <p class="">{{ contractual_information.contract_start_date }}</p>
+                                    <p v-if="contractual_information && contractual_information.contract_start_date" class="">{{ contractual_information.contract_start_date }}</p>
                                 </div>
                                 <div class="box-label lb-29">
                                     <p class="">Fecha fin:</p>
                                 </div>
                                 <div class="box-value vl-29">
-                                    <p class="">{{ contractual_information.contract_end_date }}</p>
+                                    <p v-if="contractual_information && contractual_information.contract_end_date" class="">{{ contractual_information.contract_end_date }}</p>
                                 </div>
                                 <div class="box-label lb-30">
                                     <p class="">Fecha fin prueba:</p>
                                 </div>
                                 <div class="box-value vl-30">
-                                    <p class="">{{ contractual_information.test_period_end_date }}</p>
+                                    <p v-if="contractual_information && contractual_information.test_period_end_date" class="">{{ contractual_information.test_period_end_date }}</p>
                                 </div>
                                 <div class="box-label lb-31">
                                     <p class="">Caja de compensación:</p>
                                 </div>
                                 <div class="box-value vl-31">
-                                    <p class="">{{ contractual_information.ccf.name }}</p>
+                                    <p v-if="contractual_information && contractual_information.ccf && contractual_information.ccf.name" class="">{{ contractual_information.ccf.name }}</p>
                                 </div>
                                 <div class="box-label lb-32">
                                     <p class="">EPS:</p>
                                 </div>
                                 <div class="box-value vl-32">
-                                    <p class="">{{ contractual_information.eps.name }}</p>
+                                    <p v-if="contractual_information && contractual_information.eps && contractual_information.eps.name" class="">{{ contractual_information.eps.name }}</p>
                                 </div>
                                 <div class="box-label lb-33">
                                     <p class="">AFP Pensiones:</p>
                                 </div>
                                 <div class="box-value vl-33">
-                                    <p class="">{{ contractual_information.afp_pension.name }}</p>
+                                    <p v-if="contractual_information && contractual_information.afp_pension && contractual_information.afp_pension.name" class="">{{ contractual_information.afp_pension.name }}</p>
                                 </div>
                                 <div class="box-label lb-34">
                                     <p class="">AFP Cesantías:</p>
                                 </div>
                                 <div class="box-value vl-34">
-                                    <p class="">{{ contractual_information.afp_saving.name }}</p>
+                                    <p v-if="contractual_information && contractual_information.afp_saving && contractual_information.afp_saving.name" class="">{{ contractual_information.afp_saving.name }}</p>
                                 </div>
                                 <div class="box-label lb-35">
                                     <p class="">ARL:</p>
                                 </div>
                                 <div class="box-value vl-35">
-                                    <p class="">{{ contractual_information.arl.name }}</p>
+                                    <p v-if="contractual_information && contractual_information.arl && contractual_information.arl.name" class="">{{ contractual_information.arl.name }}</p>
                                 </div>
                                 <div class="box-label lb-36">
                                     <p class="">Email corp.:</p>
                                 </div>
                                 <div class="box-value vl-36">
-                                    <p class="">{{ contractual_information.corporate_email }}</p>
+                                    <p v-if="contractual_information && contractual_information.corporate_email" class="">{{ contractual_information.corporate_email }}</p>
                                 </div>
                                 <div class="box-label lb-37">
                                     <p class="">Celular corp.:</p>
                                 </div>
                                 <div class="box-value vl-37">
-                                    <p class="">{{ contractual_information.corporate_cellphone }}</p>
+                                    <p v-if="contractual_information && contractual_information.corporate_cellphone" class="">{{ contractual_information.corporate_cellphone }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div v-else class="main-card mb-3 card">
+                        <div class="card-header">
+                            Información Contractual No Disponible
+                        </div>
+                        <!-- <div class="card-body">
+                            <p>No hay información disponible en <strong>Información Contractual</strong></p>
+                        </div>  -->
+                    </div> 
+
                 </div>
             </div>
         </div>
@@ -356,66 +365,54 @@
                                     </div>
                                     <div v-if="relatives_data && relatives_data.length>0" class="row"> 
                                         <div class="col-md-12 col-lg-6">
-                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Familiar</p>
                                             </a>
                                         </div>
                                         <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
-                                            <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
+                                            <div class="wrapper-data mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
                                                 <div @click="changeRelativeData(item.id, index)" class="box box1">
                                                     <div class="preliminary-information">
-                                                        <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
-                                                        <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
-                                                        <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                        <p class="data-position-one text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
+                                                        <p class="data-position-two text-truncate w-100">{{ item.relationship }}</p>
+                                                        <p class="data-position-three text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
                                                     </div>
                                                 </div>
                                                 <div class="box box2">
-                                                    <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                                    <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                    <a class="edit-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                                    <a class="delete-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div v-else class="row">
                                         <div class="col-md-12">
-                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3">
+                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Familiar</p>
                                             </a>
                                         </div>
                                     </div>
 
-                                    <table v-if="relatives_data && relatives_data.length>0" style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
+                                    <table v-if="relatives_data && relatives_data.length>0" style="width: 100%;" id="example" class="table table-hover table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
                                                 <th>Parentesco</th>
                                                 <th>Edad</th>
-                                                <th>Acciones</th>
+                                                <th style="text-align: right;">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
-                                                <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
-                                                    <div @click="changeRelativeData(item.id, index)" class="box box1">
-                                                        <div class="preliminary-information">
-                                                            <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
-                                                            <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
-                                                            <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="box box2">
-                                                        <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                                        <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                            <tr v-for="(item, index) in relatives_data">
-                                                <td>{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</td>
-                                                <td>{{ item.relationship }}</td>
-                                                <td>{{ getAge(item.birth_date) }}</td>
-                                                <td></td>
+                                            <tr v-for="(item, index) in relatives_data" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
+                                                <td @click="changeRelativeData(item.id, index)" style="cursor: pointer;">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</td>
+                                                <td @click="changeRelativeData(item.id, index)" style="cursor: pointer;">{{ item.relationship }}</td>
+                                                <td @click="changeRelativeData(item.id, index)" style="cursor: pointer;">{{ getAge(item.birth_date) }}</td>
+                                                <td style="text-align: right;">
+                                                    <a class="btn btn-sm btn-primary mx-1 my-1" @click="editRelativeData(item, index)" style="    width: 70px;">Editar</a>
+                                                    <a class="btn btn-sm btn-danger mx-1 my-1" @click="deleteRelativeData(item, index)" style="    width: 70px;">Eliminar</a>
+                                                </td>
                                             </tr>
                                         </tbody>
                                         <!-- <tfoot>
@@ -423,7 +420,7 @@
                                                 <th>Nombre</th>
                                                 <th>Parentesco</th>
                                                 <th>Edad</th>
-                                                <th>Acciones</th>
+                                                <th style="text-align: right;">Acciones</th>
                                             </tr>
                                         </tfoot> -->
                                     </table>
@@ -659,45 +656,45 @@
                                 <div class="card-body">
                                     <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
                                         <div class="content d-flex align-items-start p-2">
-                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>creada</strong> exitosamente!.</p>
+                                            <p class="mb-0" style="font-size: 14px;"> Información académica <strong>creada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
                                     <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
                                         <div class="content d-flex align-items-start p-2">
-                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>actualizada</strong> exitosamente!.</p>
+                                            <p class="mb-0" style="font-size: 14px;"> Información académica <strong>actualizada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
                                     <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
                                         <div class="content d-flex align-items-start p-2">
-                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>eliminada</strong> exitosamente!.</p>
+                                            <p class="mb-0" style="font-size: 14px;"> Información académica <strong>eliminada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
-                                    <div v-if="relatives_data && relatives_data.length>0" class="row"> 
+                                    <div v-if="academic_achivements_data && academic_achivements_data.length>0" class="row"> 
                                         <div class="col-md-12 col-lg-6">
-                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                            <a @click="addAcademicData" class="wrapper-add-data p-2 mb-3" :class="(add_academic_data && !edit_academic_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Logro</p>
                                             </a>
                                         </div>
-                                        <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
-                                            <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
-                                                <div @click="changeRelativeData(item.id, index)" class="box box1">
+                                        <div v-for="(item, index) in academic_achivements_data" class="col-md-12 col-lg-6">
+                                            <div class="wrapper-data mb-3 position-relative" :class="(selected_academic_data && selected_academic_data.id) == item.id ? 'selected shadow' : ''">
+                                                <div @click="changeAcademicData(item.id, index)" class="box box1">
                                                     <div class="preliminary-information">
-                                                        <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
-                                                        <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
-                                                        <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                        <p class="data-position-one text-truncate w-100">{{ item.degree }}</p>
+                                                        <p class="data-position-two text-truncate w-100">{{ item.achievement_type }}</p>
+                                                        <p class="data-position-three text-truncate w-100">Fecha: {{ item.end_date }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="box box2">
-                                                    <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                                    <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                    <a class="edit-data" @click="editAcademicData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                                    <a class="delete-data" @click="deleteAcademicData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div v-else class="row">
                                         <div class="col-md-12">
-                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3">
+                                            <a @click="addAcademicData" class="wrapper-add-data p-2 mb-3" :class="(add_academic_data && !edit_academic_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Logro</p>
                                             </a>
@@ -707,10 +704,10 @@
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
-                            <div v-if="add_relative_data && !edit_relative_data" class="">
+                            <div v-if="add_academic_data && !edit_academic_data" class="">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
-                                        <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
+                                        <form @submit.prevent="storeAcademicData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="card-hover-shadow card-border mb-3 card add-relative-card">
@@ -719,65 +716,50 @@
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="name" class="form-label">Nombres*</label>
-                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                        <label for="degree" class="form-label">Título obtenido*</label>
+                                                                        <input v-model="degree" name="degree" id="degree" type="text" class="form-control" placeholder="Ingrese título obtenido">
+                                                                        <span v-if="errors_academic_data && errors_academic_data.degree" class="error text-danger" for="degree">{{ errors_academic_data.degree[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
-                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
-                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
-                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
-                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
-                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                        <label for="institution" class="form-label">Institución*</label>
+                                                                        <input v-model="institution" name="institution" id="institution" type="text" class="form-control" placeholder="Ingrese institución">
+                                                                        <span v-if="errors_academic_data && errors_academic_data.institution" class="error text-danger" for="institution">{{ errors_academic_data.institution[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
-                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                        <label for="achievement_type_id" class="form-label">Nivel de formación*</label>
+                                                                        <select v-model="achievement_type_id" class="form-control" name="achievement_type_id" id="achievement_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Tipo de Logro</option>
+                                                                            <option v-for="achievement_type in achievement_types" :value="achievement_type.id">{{ achievement_type.type }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_academic_data && errors_academic_data.achievement_type_id" class="error text-danger" for="achievement_type_id">{{ errors_academic_data.achievement_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="end_date" class="form-label">Fecha de terminación*</label>
+                                                                        <input v-model="end_date" name="end_date" id="end_date" type="date" class="form-control">
+                                                                        <span v-if="errors_academic_data && errors_academic_data.end_date" class="error text-danger" for="end_date">{{ errors_academic_data.end_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="certificate" class="form-label">Certificado</label>
+                                                                        <div class="input-group">
+                                                                            <input @change="onChangeCertificate" type="file" name="certificate" id="certificate" class="form-control">
+                                                                        </div>
+                                                                        <span v-if="errors_academic_data && errors_academic_data.certificate" class="error text-danger" for="certificate">{{ errors_academic_data.certificate[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -790,10 +772,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="!add_relative_data && edit_relative_data" class="">
+                            <div v-else-if="!add_academic_data && edit_academic_data" class="">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
-                                        <form @submit.prevent="updateRelativeData" enctype="multipart/form-data">
+                                        <form @submit.prevent="updateAcademicData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
@@ -802,65 +784,50 @@
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="name" class="form-label">Nombres*</label>
-                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                        <label for="degree" class="form-label">Título obtenido*</label>
+                                                                        <input v-model="degree" name="degree" id="degree" type="text" class="form-control" placeholder="Ingrese título obtenido">
+                                                                        <span v-if="errors_academic_data && errors_academic_data.degree" class="error text-danger" for="degree">{{ errors_academic_data.degree[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
-                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
-                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
-                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
-                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
-                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                        <label for="institution" class="form-label">Institución*</label>
+                                                                        <input v-model="institution" name="institution" id="institution" type="text" class="form-control" placeholder="Ingrese institución">
+                                                                        <span v-if="errors_academic_data && errors_academic_data.institution" class="error text-danger" for="institution">{{ errors_academic_data.institution[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
-                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                        <label for="achievement_type_id" class="form-label">Nivel de formación*</label>
+                                                                        <select v-model="achievement_type_id" class="form-control" name="achievement_type_id" id="achievement_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Tipo de Logro</option>
+                                                                            <option v-for="achievement_type in achievement_types" :value="achievement_type.id">{{ achievement_type.type }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_academic_data && errors_academic_data.achievement_type_id" class="error text-danger" for="achievement_type_id">{{ errors_academic_data.achievement_type_id[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="end_date" class="form-label">Fecha de terminación*</label>
+                                                                        <input v-model="end_date" name="end_date" id="end_date" type="date" class="form-control">
+                                                                        <span v-if="errors_academic_data && errors_academic_data.end_date" class="error text-danger" for="end_date">{{ errors_academic_data.end_date[0] }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                                                    <div class="position-relative mb-3">
+                                                                        <label for="certificate" class="form-label">Certificado</label>
+                                                                        <div class="input-group">
+                                                                            <input @change="onChangeCertificate" type="file" name="certificate" id="certificate" class="form-control">
+                                                                        </div>
+                                                                        <span v-if="errors_academic_data && errors_academic_data.certificate" class="error text-danger" for="certificate">{{ errors_academic_data.certificate[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -873,7 +840,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="!add_relative_data && !edit_relative_data && selected_relative_data" class="">
+                            <div v-else-if="!add_academic_data && !edit_academic_data && selected_academic_data" class="">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
                                         <div class="row">
@@ -883,38 +850,37 @@
                                                         Información del Logro
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="wrapper-relative-data mt-3">
-                                                            <div class="box-label lb-20">
-                                                                <p class="">Nombre:</p>
+                                                        <div class="wrapper-academic-data my-3">
+                                                            <div class="box-label lb-38">
+                                                                <p class="">Título:</p>
                                                             </div>
-                                                            <div class="box-value vl-20">
-                                                                <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
+                                                            <div class="box-value vl-38">
+                                                                <p class="">{{ selected_academic_data.degree }}</p>
                                                             </div>
-                                                            <div class="box-label lb-21">
-                                                                <p class="">Parentesco:</p>
+                                                            <div class="box-label lb-39">
+                                                                <p class="">Institución:</p>
                                                             </div>
-                                                            <div class="box-value vl-21">
-                                                                <p class="">{{ selected_relative_data.relationship }}</p>
+                                                            <div class="box-value vl-39">
+                                                                <p class="">{{ selected_academic_data.institution }}</p>
                                                             </div>
-                                                            <div class="box-label lb-22">
-                                                                <p class="">Sexo:</p>
+                                                            <div class="box-label lb-40">
+                                                                <p class="">Nivel de formación:</p>
                                                             </div>
-                                                            <div class="box-value vl-22">
-                                                                <p class="">{{ selected_relative_data.sex }}</p>
+                                                            <div class="box-value vl-40">
+                                                                <p class="">{{ selected_academic_data.achievement_type }}</p>
                                                             </div>
-                                                            <div class="box-label lb-23">
-                                                                <p class="">Ocupación:</p>
+                                                            <div class="box-label lb-41">
+                                                                <p class="">Fecha de grado:</p>
                                                             </div>
-                                                            <div class="box-value vl-23">
-                                                                <p class="">{{ selected_relative_data.occupation }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-24">
-                                                                <p class="">Fecha de nacimiento:</p>
-                                                            </div>
-                                                            <div class="box-value vl-24">
-                                                                <p class="">{{ selected_relative_data.birth_date }}</p>
+                                                            <div class="box-value vl-41">
+                                                                <p class="">{{ selected_academic_data.end_date }}</p>
                                                             </div>
                                                         </div>
+
+                                                        <button v-if="selected_academic_data && selected_academic_data.certificate_url" @click="downloadAcademicCertificate(selected_academic_data.id)" class="mb-2 mr-2 btn-icon btn btn-primary">
+                                                            <i class="pe-7s-download btn-icon-wrapper"> </i>
+                                                            Descargar Certificado
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -934,45 +900,45 @@
                                 <div class="card-body">
                                     <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
                                         <div class="content d-flex align-items-start p-2">
-                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>creada</strong> exitosamente!.</p>
+                                            <p class="mb-0" style="font-size: 14px;"> Información médica <strong>creada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
                                     <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
                                         <div class="content d-flex align-items-start p-2">
-                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>actualizada</strong> exitosamente!.</p>
+                                            <p class="mb-0" style="font-size: 14px;"> Información médica <strong>actualizada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
                                     <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
                                         <div class="content d-flex align-items-start p-2">
-                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>eliminada</strong> exitosamente!.</p>
+                                            <p class="mb-0" style="font-size: 14px;"> Información médica <strong>eliminada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
                                     <div v-if="relatives_data && relatives_data.length>0" class="row"> 
                                         <div class="col-md-12 col-lg-6">
-                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Información de Salud</p>
                                             </a>
                                         </div>
                                         <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
-                                            <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
+                                            <div class="wrapper-data mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
                                                 <div @click="changeRelativeData(item.id, index)" class="box box1">
                                                     <div class="preliminary-information">
-                                                        <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
-                                                        <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
-                                                        <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                        <p class="data-position-one text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
+                                                        <p class="data-position-two text-truncate w-100">{{ item.relationship }}</p>
+                                                        <p class="data-position-three text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
                                                     </div>
                                                 </div>
                                                 <div class="box box2">
-                                                    <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                                    <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                    <a class="edit-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                                    <a class="delete-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div v-else class="row">
                                         <div class="col-md-12">
-                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3">
+                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Información de Salud</p>
                                             </a>
@@ -1209,45 +1175,45 @@
                                 <div class="card-body">
                                     <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
                                         <div class="content d-flex align-items-start p-2">
-                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>creada</strong> exitosamente!.</p>
+                                            <p class="mb-0" style="font-size: 14px;"> Información de visita <strong>creada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
                                     <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
                                         <div class="content d-flex align-items-start p-2">
-                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>actualizada</strong> exitosamente!.</p>
+                                            <p class="mb-0" style="font-size: 14px;"> Información de visita <strong>actualizada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
                                     <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
                                         <div class="content d-flex align-items-start p-2">
-                                            <p class="mb-0" style="font-size: 14px;"> Información del familiar <strong>eliminada</strong> exitosamente!.</p>
+                                            <p class="mb-0" style="font-size: 14px;"> Información de visita <strong>eliminada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
                                     <div v-if="relatives_data && relatives_data.length>0" class="row"> 
                                         <div class="col-md-12 col-lg-6">
-                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Visita</p>
                                             </a>
                                         </div>
                                         <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
-                                            <div class="wrapper-relative mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
+                                            <div class="wrapper-data mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
                                                 <div @click="changeRelativeData(item.id, index)" class="box box1">
                                                     <div class="preliminary-information">
-                                                        <p class="relative-name text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
-                                                        <p class="relative-relationship text-truncate w-100">{{ item.relationship }}</p>
-                                                        <p class="relative-age text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                        <p class="data-position-one text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
+                                                        <p class="data-position-two text-truncate w-100">{{ item.relationship }}</p>
+                                                        <p class="data-position-three text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
                                                     </div>
                                                 </div>
                                                 <div class="box box2">
-                                                    <a class="edit-relative-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                                    <a class="delete-relative-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                    <a class="edit-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
+                                                    <a class="delete-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div v-else class="row">
                                         <div class="col-md-12">
-                                            <a @click="addRelativeData" class="wrapper-add-relative-data p-2 mb-3">
+                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Visita</p>
                                             </a>
@@ -1500,7 +1466,6 @@ export default {
         civil_status: { default: null, },
         sex_type: { default: null, },
         rh_type: { default: null, },
-        scholarship_type: { default: null, },
         stratum_type: { default: null, },
         housing_tenure: { default: null, },
 
@@ -1509,6 +1474,7 @@ export default {
         occupation_types: { default: null, },
         occupation_type: { default: null, },
         sex_types: { default: null, },
+        achievement_types: { default: null, },
     },
     data() {
         return {
@@ -1525,29 +1491,54 @@ export default {
             sex_type_id: '',
             birth_date: '',
 
+            achievement_type_id: '',
+            degree: '',
+            institution: '',
+            end_date: '',
+            certificate: null,
+
             contractual_information: '',
 
             relatives_data: [],
             errors_relative_data: [],
+
+            academic_achivements_data: [],
+            errors_academic_data: [],
 
             add_relative_data: false,
             edit_relative_data: false,
             selected_relative_data: null,
             relative_data_to_edit: null,
 
+            add_academic_data: false,
+            edit_academic_data: false,
+            selected_academic_data: null,
+            academic_data_to_edit: null,
+
             successfully_created_message: false,
             successfully_updated_message: false,
             successfully_deleted_message: false,
 
-            errors_relative_data: null,
+            // errors_relative_data: null,
         }
     },
     mounted () {
         console.log(this.collaborator.id);
         this.getContractualInformation(this.collaborator.id)
         this.getRelativesData(this.collaborator.id)
+        this.getAcademicData(this.collaborator.id)
     },
     methods: {
+        downloadAcademicCertificate(academic_achievement_id) {
+            axios.get(`/download-academic-certificate/${academic_achievement_id}`)
+            .then(response => {
+                // Trigger download
+                window.open(response.data.certificate_download_url, '_blank');
+            })
+            .catch(e => {
+                // 
+            })
+        },
         getContractualInformation(collaborator_id) {
             axios.get(`/contractual-information/${collaborator_id}`)
             .then(response => {
@@ -1595,10 +1586,39 @@ export default {
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
         },
+        addAcademicData() {
+            if(this.add_academic_data == false) {
+                this.add_academic_data = true
+                this.edit_academic_data = false
+            } else {
+                this.edit_academic_data = false
+            }
+
+            this.selected_academic_data = null
+
+            this.achievement_type_id = ''
+            this.degree = ''
+            this.institution = ''
+            this.end_date = ''
+            this.certificate = null
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
         getRelativesData(collaborator_id) {
             axios.get(`/relative-data/${collaborator_id}`)
             .then(response => {
                 this.relatives_data = response.data.relatives_data;
+            })
+            .catch(e => {
+                // 
+            })
+        },
+        getAcademicData(collaborator_id) {
+            axios.get(`/academic-data/${collaborator_id}`)
+            .then(response => {
+                this.academic_achivements_data = response.data.academic_achivements_data;
             })
             .catch(e => {
                 // 
@@ -1622,6 +1642,29 @@ export default {
 
             this.add_relative_data = false
             this.edit_relative_data = false
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
+        changeAcademicData(id, index) {
+            let new_selection_academic_data;
+
+            if(this.academic_achivements_data && this.academic_achivements_data.length>0) {
+                this.academic_achivements_data.forEach(element => {
+                    if(element.id !== id) {
+                        //
+                    } else {
+                        new_selection_academic_data = element
+                    }
+                }, new_selection_academic_data);
+            }
+
+            this.selected_academic_data = new_selection_academic_data
+            console.log(this.selected_academic_data);
+
+            this.add_academic_data = false
+            this.edit_academic_data = false
 
             this.successfully_created_message = false
             this.successfully_updated_message = false
@@ -1661,6 +1704,40 @@ export default {
                     }
                 })
         },
+        onChangeCertificate(e) {
+            this.certificate = e.target.files[0]
+        },
+        storeAcademicData() {
+            let fd = new FormData()
+
+            fd.append('collaborator_id', this.collaborator.id)
+            fd.append('achievement_type_id', this.achievement_type_id)
+            fd.append('degree', this.degree)
+            fd.append('institution', this.institution)
+            fd.append('end_date', this.end_date)
+            fd.append('certificate', this.certificate)
+
+            let url = ''
+            axios.post('/academic-data', fd).then(
+                (response) => {
+                    this.getAcademicData(this.collaborator.id)
+                    this.academic_achivements_data = response.data.academic_achivements_data;
+                    this.add_academic_data = false
+                    this.edit_academic_data = false
+
+                    this.successfully_created_message = true
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = false
+
+                    this.errors_academic_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log(error.response.data.errors)
+                        this.errors_academic_data = error.response.data.errors
+                    }
+                })
+        },
         editRelativeData(item, index) {
             let new_selection_relative_data;
             
@@ -1689,6 +1766,33 @@ export default {
             this.birth_date = item.birth_date
             
         },
+        editAcademicData(item, index) {
+            let new_selection_academic_data;
+            
+            if(this.academic_achivements_data && this.academic_achivements_data.length>0) {
+                this.academic_achivements_data.forEach(element => {
+                    if(element.id !== item.id) {
+                        //
+                    } else {
+                        new_selection_academic_data = element
+                    }
+                }, new_selection_academic_data);
+            }
+            this.selected_academic_data = new_selection_academic_data
+
+            this.academic_data_to_edit = item
+
+            this.add_academic_data = false
+            this.edit_academic_data = true
+
+            this.achievement_type_id = item.achievement_type_id
+            this.degree = item.degree
+            this.institution = item.institution
+            this.end_date = item.end_date
+            this.certificate = null
+            
+            this.errors_academic_data = null
+        },
         updateRelativeData(){
             let dataSend = {
                 'id': this.relative_data_to_edit.id,
@@ -1714,12 +1818,44 @@ export default {
                     this.successfully_updated_message = true
                     this.successfully_deleted_message = false
 
-                    this.errors_personal_data = null
+                    this.errors_academic_data = null
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
                         console.log(error.response.data.errors)
                         this.errors_relative_data = error.response.data.errors
+                    }
+                })
+        },
+        updateAcademicData(){
+            let fd = new FormData()
+
+            fd.append('collaborator_id', this.collaborator.id)
+            fd.append('achievement_type_id', this.achievement_type_id)
+            fd.append('degree', this.degree)
+            fd.append('institution', this.institution)
+            fd.append('end_date', this.end_date)
+            fd.append('certificate', this.certificate)
+            fd.append('_method', 'PUT')
+
+            let url = ''
+            axios.post(`/academic-data-update/${this.academic_data_to_edit.id}`, fd).then(
+                (response) => {
+                    this.getAcademicData(this.collaborator.id)
+
+                    this.add_academic_data = false
+                    this.edit_academic_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = true
+                    this.successfully_deleted_message = false
+
+                    this.errors_personal_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log(error.response.data.errors)
+                        this.errors_academic_data = error.response.data.errors
                     }
                 })
         },
@@ -1783,6 +1919,7 @@ export default {
 .main-card .wrapper-address,
 .main-card .wrapper-contact,
 .main-card .wrapper-relative-data,
+.main-card .wrapper-academic-data,
 .main-card .wrapper-contract-information {
     display: grid;
     grid-gap: 1px;
@@ -1817,6 +1954,11 @@ export default {
     .main-card .wrapper-relative-data {
         grid-template-columns: repeat(1, 1fr);
         grid-template-areas:    "lb-20" "vl-20" "lb-21" "vl-21" "lb-22" "vl-22" "lb-23" "vl-23" "lb-24" "vl-24";
+    }
+
+    .main-card .wrapper-academic-data {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-38" "vl-38" "lb-39" "vl-39" "lb-40" "vl-40" "lb-41" "vl-41";
     }
 
     .main-card .wrapper-contract-information {
@@ -1878,6 +2020,15 @@ export default {
         ;
     }
 
+    .main-card .wrapper-academic-data {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:    "lb-38 vl-38 vl-38 vl-38"
+                                "lb-39 vl-39 vl-39 vl-39"
+                                "lb-40 vl-40 vl-40 vl-40"
+                                "lb-41 vl-41 vl-41 vl-41"
+        ;
+    }
+
     .main-card .wrapper-contract-information {
         grid-template-columns: repeat(12, 1fr);
         grid-template-areas:    "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25"
@@ -1924,6 +2075,14 @@ export default {
         ;
     }
 
+    .main-card .wrapper-academic-data {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-38 lb-38 lb-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38"
+                                "lb-39 lb-39 lb-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39"
+                                "lb-40 lb-40 lb-40 vl-40 vl-40 vl-40 lb-41 lb-41 lb-41 vl-41 vl-41 vl-41"
+        ;
+    }
+
     .main-card .wrapper-contract-information {
         grid-template-columns: repeat(24, 1fr);
         grid-template-areas:    "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 lb-26 lb-26 lb-26 vl-26 vl-26 vl-26 lb-27 lb-27 lb-27 vl-27 vl-27 vl-27"
@@ -1938,6 +2097,7 @@ export default {
 .main-card .wrapper-address .box-label,
 .main-card .wrapper-contact .box-label,
 .main-card .wrapper-relative-data .box-label,
+.main-card .wrapper-academic-data .box-label,
 .main-card .wrapper-contract-information .box-label {
     display: flex;
     flex-direction: row;
@@ -1954,6 +2114,7 @@ export default {
 .main-card .wrapper-address .box-label p,
 .main-card .wrapper-contact .box-label p,
 .main-card .wrapper-relative-data .box-label p,
+.main-card .wrapper-academic-data .box-label p,
 .main-card .wrapper-contract-information .box-label p {
     margin: 0;
 }
@@ -1962,6 +2123,7 @@ export default {
 .main-card .wrapper-address .box-value,
 .main-card .wrapper-contact .box-value,
 .main-card .wrapper-relative-data .box-value,
+.main-card .wrapper-academic-data .box-value,
 .main-card .wrapper-contract-information .box-value {
     display: flex;
     flex-direction: row;
@@ -1976,6 +2138,7 @@ export default {
 .main-card .wrapper-address .box-value p,
 .main-card .wrapper-contact .box-value p,
 .main-card .wrapper-relative-data .box-value p,
+.main-card .wrapper-academic-data .box-value p,
 .main-card .wrapper-contract-information .box-value p {
     margin: 0;
 }
@@ -2061,9 +2224,18 @@ export default {
 .main-card .wrapper-contract-information .lb-37 { grid-area: lb-37; }
 .main-card .wrapper-contract-information .vl-37 { grid-area: vl-37; }
 
+.main-card .wrapper-academic-data .lb-38 { grid-area: lb-38; }
+.main-card .wrapper-academic-data .vl-38 { grid-area: vl-38; }
+.main-card .wrapper-academic-data .lb-39 { grid-area: lb-39; }
+.main-card .wrapper-academic-data .vl-39 { grid-area: vl-39; }
+.main-card .wrapper-academic-data .lb-40 { grid-area: lb-40; }
+.main-card .wrapper-academic-data .vl-40 { grid-area: vl-40; }
+.main-card .wrapper-academic-data .lb-41 { grid-area: lb-41; }
+.main-card .wrapper-academic-data .vl-41 { grid-area: vl-41; }
+
 
 /* INFORMACIÓN FAMILIAR */
-.wrapper-add-relative-data {
+.wrapper-add-data {
     border-radius: 8px;
     background-color: #fff;
     display: flex;
@@ -2081,11 +2253,11 @@ export default {
     /* box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.10); */
 }
 
-.wrapper-add-relative-data.selected {
+.wrapper-add-data.selected {
     border-width: 2px;
 }
 
-.wrapper-add-relative-data p {
+.wrapper-add-data p {
     font-size: 18px;
     font-weight: bold;
     line-height: 22px;
@@ -2093,15 +2265,15 @@ export default {
     margin: 0px;
 }
 
-.wrapper-add-relative-data.disabled-add {
+.wrapper-add-data.disabled-add {
     border-color: #C7C7C7;
 }
 
-.wrapper-add-relative-data.disabled-add p {
+.wrapper-add-data.disabled-add p {
     color: #C7C7C7;
 }
 
-.wrapper-relative {
+.wrapper-data {
     display: grid;
     grid-template-columns: 90% 10%;
     height: 110px;
@@ -2111,11 +2283,17 @@ export default {
     border-radius: 8px;
 }
 
-.wrapper-relative.selected {
+.wrapper-data.selected {
     border: 2px solid #3f6ad8;
+    background-color: #f1f2ff;
 }
 
-.wrapper-relative .box {
+tr.selected {
+    border: 2px solid #3f6ad8;
+    background-color: #f1f2ff;
+}
+
+.wrapper-data .box {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -2136,31 +2314,32 @@ export default {
     width: 10%;
 }
 
-.wrapper-relative .box.box1 .preliminary-information {
+.wrapper-data .box.box1 .preliminary-information {
     display: flex;
     flex-direction: column;
     align-items:center;
     justify-content: space-between;
     gap: 5px;
     width: 90%;
+    cursor: pointer;
 }
 
-.wrapper-relative .box.box1 .preliminary-information p {
+.wrapper-data .box.box1 .preliminary-information p {
     margin: 0px;
 }
 
-.wrapper-relative .box.box1 .preliminary-information p.relative-name {
+.wrapper-data .box.box1 .preliminary-information p.data-position-one {
     font-weight: bold;
     font-size: 14px;
     line-height: 18px;
     text-decoration: none;
 }
 
-.wrapper-relative .box.box2 .edit-relative-data {
+.wrapper-data .box.box2 .edit-data {
     cursor: pointer
 }
 
-.wrapper-relative .box.box2 .delete-relative-data {
+.wrapper-data .box.box2 .delete-data {
     cursor: pointer
 }
 
@@ -2181,7 +2360,5 @@ export default {
     font-size: 16px;
     line-height: 16px;
 }
-
-/* wrapper-relative-data */
 
 </style>

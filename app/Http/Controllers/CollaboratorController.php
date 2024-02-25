@@ -6,6 +6,7 @@ use App\Http\Requests\CollaboratorContractCreateRequest;
 use App\Http\Requests\CollaboratorContractEditRequest;
 use App\Http\Requests\CollaboratorCreateRequest;
 use App\Http\Requests\CollaboratorEditRequest;
+use App\Models\AcademicAchievementType;
 use App\Models\AfpType;
 use App\Models\ArlType;
 use App\Models\BankType;
@@ -109,13 +110,13 @@ class CollaboratorController extends Controller
         $document_types = DocumentType::all();
         $sex_types = SexType::all();
         $rh_types = RhType::all();
-        $scholarship_types = Scholarship::all();
+        // $academic_achievement_types = AcademicAchievementType::all();
         $stratum_types = SocialStratum::all();
         $civil_status_types = CivilStatusType::all();
         $housing_tenure_types = HousingTenure::all();
         $provinces = Province::all();
 
-        return view('back.collaborators.create', compact('company', 'document_types', 'sex_types', 'rh_types', 'scholarship_types', 'stratum_types', 'civil_status_types', 'housing_tenure_types', 'provinces'));
+        return view('back.collaborators.create', compact('company', 'document_types', 'sex_types', 'rh_types', 'stratum_types', 'civil_status_types', 'housing_tenure_types', 'provinces'));
     }
 
     public function store(CollaboratorCreateRequest $request)
@@ -150,7 +151,7 @@ class CollaboratorController extends Controller
                 'civil_status_type_id' => $request->civil_status_type_id,
                 'sex_type_id' => $request->sex_type_id,
                 'rh_type_id' => $request->rh_type_id,
-                'scholarship_type_id' => $request->scholarship_type_id,
+                // 'academic_achievement_type_id' => $request->academic_achievement_type_id,
                 'observations' => $request->observations,
                 'residence_province_id' => $request->residence_province_id,
                 'residence_city_id' => $request->residence_city_id,
@@ -233,12 +234,14 @@ class CollaboratorController extends Controller
         $sex_type = SexType::where('id', $collaborator->sex_type_id)->first();
         $rh_type = RhType::where('id', $collaborator->rh_type_id)->first();
         $scholarship_type = Scholarship::where('id', $collaborator->scholarship_type_id)->first();
+        // $highest_academic_achievement = AcademicAchievementType::where('id', $collaborator->academic_achievement_type_id)->first();
         $stratum_type = SocialStratum::where('id', $collaborator->stratum_type_id)->first();
         $housing_tenure = HousingTenure::where('id', $collaborator->housing_tenure_id)->first();
 
         $relationship_types = Relationship::all();
         $occupation_types = Occupation::all();
         $sex_types = SexType::all();
+        $achievement_types = AcademicAchievementType::all();
 
         $relationship_type = Relationship::where('id', $collaborator->relationship_id)->first();
         $occupation_type = Occupation::where('id', $collaborator->occupation_id)->first();
@@ -265,7 +268,8 @@ class CollaboratorController extends Controller
             'civil_status',
             'sex_type',
             'rh_type',
-            'scholarship_type',
+            // 'scholarship_type',
+            // 'highest_academic_achievement',
             'stratum_type',
             'housing_tenure',
             'message',
@@ -274,6 +278,7 @@ class CollaboratorController extends Controller
             'occupation_types',
             'occupation_type',
             'sex_types',
+            'achievement_types',
         ));
     }
 
@@ -287,7 +292,7 @@ class CollaboratorController extends Controller
         $document_types = DocumentType::all();
         $sex_types = SexType::all();
         $rh_types = RhType::all();
-        $scholarship_types = Scholarship::all();
+        // $academic_achievement_types = AcademicAchievementType::all();
         $stratum_types = SocialStratum::all();
         $civil_status_types = CivilStatusType::all();
         $housing_tenure_types = HousingTenure::all();
@@ -310,7 +315,7 @@ class CollaboratorController extends Controller
             'document_types',
             'sex_types', 
             'rh_types', 
-            'scholarship_types', 
+            // 'academic_achievement_types', 
             'stratum_types', 
             'civil_status_types',
             'housing_tenure_types',

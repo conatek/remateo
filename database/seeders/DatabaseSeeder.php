@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             SexTypeSeeder::class,
             RhTypeSeeder::class,
             ScholarshipSeeder::class,
+            AcademicAchievementTypeSeeder::class,
             CivilStatusSeeder::class,
             HousingTenureSeeder::class,
             RelationshipSeeder::class,

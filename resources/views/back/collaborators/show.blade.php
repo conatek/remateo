@@ -30,8 +30,6 @@
     </div>
 @endif
 
-{{-- {{ dd($document_type) }} --}}
-
 <collaborator-show 
     :collaborator="{{ $collaborator }}"
     :collaborator_contract="{{ $collaborator_contract }}"
@@ -45,12 +43,12 @@
     :civil_status="{{ $civil_status }}"
     :sex_type="{{ $sex_type }}"
     :rh_type="{{ $rh_type }}"
-    :scholarship_type="{{ $scholarship_type }}"
     :stratum_type="{{ $stratum_type }}"
     :housing_tenure="{{ $housing_tenure }}"
     :relationship_types="{{ $relationship_types }}"
     :occupation_types="{{ $occupation_types }}"
     :sex_types="{{ $sex_types }}"
+    :achievement_types="{{ $achievement_types }}"
 ></collaborator-show>
 
 @endsection

@@ -170,16 +170,6 @@
                                                         <span v-if="errors && errors.birth_date" class="error text-danger" for="birth_date">{{ errors.birth_date[0] }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                                    <div class="position-relative mb-3">
-                                                        <label for="scholarship_type_id" class="form-label">Escolaridad*</label>
-                                                        <select v-model="scholarship_type_id" class="form-control" name="scholarship_type_id" id="scholarship_type_id">
-                                                            <option value="" disabled selected hidden>Seleccionar Escolaridad</option>
-                                                            <option v-for="scholarship in scholarship_types" :value="scholarship.id">{{ scholarship.name }}</option>
-                                                        </select>
-                                                        <span v-if="errors && errors.scholarship_type_id" class="error text-danger" for="scholarship_type_id">{{ errors.scholarship_type_id[0] }}</span>
-                                                    </div>
-                                                </div>
                                             </div>
         
                                             <div class="row">
@@ -512,18 +502,12 @@ export default {
         rh_types: {
             default: null,
         },
-        scholarship_types: {
-            default: null,
-        },
         stratum_types: {
             default: null,
         },
         housing_tenure_types: {
             default: null,
         },
-        // contractual_information: {
-        //     default: null,
-        // },
         position_types: {
             default: null,
         },
@@ -567,7 +551,6 @@ export default {
             civil_status_type_id: this.collaborator.civil_status_type_id,
             sex_type_id: this.collaborator.sex_type_id,
             rh_type_id: this.collaborator.rh_type_id,
-            scholarship_type_id: this.collaborator.scholarship_type_id,
             stratum_type_id: this.collaborator.stratum_type_id,
 
             residence_province_id: '',
@@ -696,7 +679,6 @@ export default {
             fd.append('civil_status_type_id', this.civil_status_type_id)
             fd.append('sex_type_id', this.sex_type_id)
             fd.append('rh_type_id', this.rh_type_id)
-            fd.append('scholarship_type_id', this.scholarship_type_id)
             fd.append('observations', this.observations)
             fd.append('residence_province_id', this.residence_province_id)
             fd.append('residence_city_id', this.residence_city_id)

@@ -35,7 +35,7 @@ class CollaboratorFactory extends Factory
             'civil_status_type_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6]),
             'sex_type_id' => $this->faker->randomElement([1, 2]),
             'rh_type_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8]),
-            'scholarship_type_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8]),
+            // 'academic_achievement_type_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]),
             'birth_date' => $this->faker->dateTime(),
             'birth_province_id' => $this->faker->randomElement($provinces),
             'birth_city_id' => $this->faker->randomElement($cities),

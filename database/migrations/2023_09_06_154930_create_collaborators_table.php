@@ -23,7 +23,6 @@ return new class extends Migration
             $table->unsignedBigInteger('civil_status_type_id');
             $table->unsignedBigInteger('sex_type_id');
             $table->unsignedBigInteger('rh_type_id');
-            $table->unsignedBigInteger('scholarship_type_id');
             $table->date('birth_date')->nullable();
             // País de nacimiento
             $table->unsignedBigInteger('birth_province_id');
@@ -49,7 +48,6 @@ return new class extends Migration
             $table->foreign('civil_status_type_id')->references('id')->on('civil_status_types')->onDelete('cascade');
             $table->foreign('sex_type_id')->references('id')->on('sex_types')->onDelete('cascade');
             $table->foreign('rh_type_id')->references('id')->on('rh_types')->onDelete('cascade');
-            $table->foreign('scholarship_type_id')->references('id')->on('scholarships')->onDelete('cascade');
             $table->foreign('birth_province_id')->references('id')->on('provinces')->onDelete('cascade');
             $table->foreign('birth_city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('residence_province_id')->references('id')->on('provinces')->onDelete('cascade');

@@ -7,6 +7,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\CampusController;
+use App\Http\Controllers\CollaboratorAcademicAchievementController;
 use App\Http\Controllers\CollaboratorFamilyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
@@ -112,5 +113,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/relative-data', [CollaboratorFamilyController::class, 'store']);
     Route::put('/relative-data-update/{relative_data}', [CollaboratorFamilyController::class, 'update']);
     Route::delete('/relative-data-delete/{relative_data}', [CollaboratorFamilyController::class, 'destroy']);
-});
 
+    // ACADEMIC DATA
+    Route::get('/academic-data/{collaborator_id}', [CollaboratorAcademicAchievementController::class, 'show']);
+    Route::post('/academic-data', [CollaboratorAcademicAchievementController::class, 'store']);
+    Route::put('/academic-data-update/{academic_data}', [CollaboratorAcademicAchievementController::class, 'update']);
+    Route::get('/download-academic-certificate/{academic_data_id}', [CollaboratorAcademicAchievementController::class, 'downloadCertificate']);
+    // Route::delete('/academic-data-delete/{academic_data}', [CollaboratorAcademicAchievementController::class, 'destroy']);
+});
