@@ -16,4 +16,6 @@ const components = {
 
 };
 
+// Vue.component('font-awesome-icon', FontAwesomeIcon);
+
 export default components;

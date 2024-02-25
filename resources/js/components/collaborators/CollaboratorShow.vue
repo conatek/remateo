@@ -685,9 +685,9 @@
                                                         <p class="data-position-three text-truncate w-100">Fecha: {{ item.end_date }}</p>
                                                     </div>
                                                 </div>
-                                                <div class="box box2">
-                                                    <a class="edit-data" @click="editAcademicData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                                    <a class="delete-data" @click="deleteAcademicData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                <div class="box box2" style="display: flex; flex-direction: column; justify-content: space-between;">
+                                                    <a class="edit-data" @click="editAcademicData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></a>
+                                                    <a class="delete-data" @click="deleteAcademicData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'trash-can']" /></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1452,6 +1452,12 @@
 </template>
 
 <script>
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { FontAwesomeIconCore } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIconBrand } from '@fortawesome/free-brands-svg-icons'
+// import { FontAwesomeIconRegular } from '@fortawesome/free-regular-svg-icons'
+// import { FontAwesomeIconSolid } from '@fortawesome/free-solid-svg-icons'
+
 export default {
     props: {
         collaborator: { default: null, },
@@ -2285,12 +2291,14 @@ export default {
 
 .wrapper-data.selected {
     border: 2px solid #3f6ad8;
-    background-color: #f1f2ff;
+    /* background-color: #f1f2ff; */
+    background-color: #e0f3ff;
 }
 
 tr.selected {
     border: 2px solid #3f6ad8;
-    background-color: #f1f2ff;
+    /* background-color: #f1f2ff; */
+    background-color: #e0f3ff;
 }
 
 .wrapper-data .box {
