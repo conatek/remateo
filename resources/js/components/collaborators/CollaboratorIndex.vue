@@ -106,10 +106,6 @@ export default {
         }
     },
     mounted () {
-        // if(this.collaborators === null) {
-        //     this.getCollaborators(1)
-        // }
-        console.log(this.collaborators);
         this.getPageData(1)
     },
     methods: {
@@ -142,16 +138,12 @@ export default {
             let url = ''
             axios.delete(`/collaborators/${id}/destroy`).then(
                 (res) => {
-                    // console.log(res)
-                    // url = `/collaborators/${res.data.collaborator.id}-success`
                     url = `/collaborators?origin=delete`
                     window.location.href = url
                     this.errors = null
-                    console.log(this.message);
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        console.log(error.response.data.errors)
                         this.errors = error.response.data.errors
                     }
                 })

@@ -91,42 +91,42 @@
                                                                         <div class="avatar-wrapper mt-2 avatar-wrapper-overlap">
                                                                             <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                 <div class="avatar-icon">
-                                                                                    <img src="images/avatars/1.jpg" alt="">
+                                                                                    {{-- <img src="images/avatars/1.jpg" alt=""> --}}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                 <div class="avatar-icon">
-                                                                                    <img src="images/avatars/2.jpg" alt="">
+                                                                                    {{-- <img src="images/avatars/2.jpg" alt=""> --}}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                 <div class="avatar-icon">
-                                                                                    <img src="images/avatars/3.jpg" alt="">
+                                                                                    {{-- <img src="images/avatars/3.jpg" alt=""> --}}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                 <div class="avatar-icon">
-                                                                                    <img src="images/avatars/4.jpg" alt="">
+                                                                                    {{-- <img src="images/avatars/4.jpg" alt=""> --}}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                 <div class="avatar-icon">
-                                                                                    <img src="images/avatars/5.jpg" alt="">
+                                                                                    {{-- <img src="images/avatars/5.jpg" alt=""> --}}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                 <div class="avatar-icon">
-                                                                                    <img src="images/avatars/9.jpg" alt="">
+                                                                                    {{-- <img src="images/avatars/9.jpg" alt=""> --}}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                 <div class="avatar-icon">
-                                                                                    <img src="images/avatars/7.jpg" alt="">
+                                                                                    {{-- <img src="images/avatars/7.jpg" alt=""> --}}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                 <div class="avatar-icon">
-                                                                                    <img src="images/avatars/8.jpg" alt="">
+                                                                                    {{-- <img src="images/avatars/8.jpg" alt=""> --}}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="avatar-icon-wrapper avatar-icon-sm avatar-icon-add">

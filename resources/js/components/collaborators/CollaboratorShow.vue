@@ -3,7 +3,7 @@
         <div class="card-shadow-primary profile-responsive card-border mb-3 card">
             <div class="dropdown-menu-header">
                 <div class="dropdown-menu-header-inner bg-focus">
-                    <div class="menu-header-image opacity-3" style="background-image: url('images/dropdown-header/city4.jpg');"></div>
+                    <div class="menu-header-image opacity-3" style="background-image: url('');"></div>
                     <div class="menu-header-content btn-pane-right">
                         <div class="avatar-icon-wrapper me-2 avatar-icon-xl">
                             <div v-if="collaborator && collaborator.image_url" class="avatar-icon rounded">
@@ -37,7 +37,8 @@
                                 </a>
                             </div>
                             <div class="col-sm-6">
-                                <a @click="card_selected = 'contract'" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <!-- <a @click="card_selected = 'contract'" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link"> -->
+                                <a @click="getContractualInformation(collaborator.id)" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
                                     <i class="lnr-layers btn-icon-wrapper btn-icon-lg mb-3"></i>
                                     Información Contractual
                                 </a>
@@ -133,7 +134,7 @@
                                     <p class="">Mayor logro académico:</p>
                                 </div>
                                 <div class="box-value vl-11">
-                                    <!-- <p class="">{{ scholarship_type.name }}</p> -->
+                                    
                                 </div>
                                 <div class="box-label lb-12">
                                     <p class="">Observaciones</p>
@@ -219,7 +220,7 @@
         <div v-else-if="card_selected == 'contract'">
             <div class="row">
                 <div class="col-12">
-                    <div v-if="contractual_information !== null" class="main-card mb-3 card">
+                    <div v-if="contractual_information !== null && contractual_information !== ''" class="main-card mb-3 card">
                         <div class="card-header">
                             Información Contractual
                         </div>
@@ -310,9 +311,6 @@
                         <div class="card-header">
                             Información Contractual No Disponible
                         </div>
-                        <!-- <div class="card-body">
-                            <p>No hay información disponible en <strong>Información Contractual</strong></p>
-                        </div>  -->
                     </div> 
 
                 </div>
@@ -415,14 +413,6 @@
                                                 </td>
                                             </tr>
                                         </tbody>
-                                        <!-- <tfoot>
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>Parentesco</th>
-                                                <th>Edad</th>
-                                                <th style="text-align: right;">Acciones</th>
-                                            </tr>
-                                        </tfoot> -->
                                     </table>
                                 </div>
                             </div>
@@ -1461,7 +1451,7 @@
 export default {
     props: {
         collaborator: { default: null, },
-        collaborator_contract: { default: null, },
+        // collaborator_contract: { default: null, },
         document_type: { default: null, },
         document_province: { default: null, },
         document_city: { default: null, },
@@ -1504,6 +1494,22 @@ export default {
             certificate: null,
 
             contractual_information: '',
+            position_id: '',
+            salary: '',
+            contract_type_id: '',
+            contract_start_date: '',
+            contract_end_date: '',
+            test_period_end_date: '',
+            corporate_email: '',
+            corporate_cellphone: '',
+            bank_id: '',
+            bank_account: '',
+            eps_id: '',
+            afp_pension_id: '',
+            afp_saving_id: '',
+            arl_id: '',
+            ccf_id: '',
+
 
             relatives_data: [],
             errors_relative_data: [],
@@ -1524,13 +1530,10 @@ export default {
             successfully_created_message: false,
             successfully_updated_message: false,
             successfully_deleted_message: false,
-
-            // errors_relative_data: null,
         }
     },
     mounted () {
-        console.log(this.collaborator.id);
-        this.getContractualInformation(this.collaborator.id)
+        // this.getContractualInformation(this.collaborator.id)
         this.getRelativesData(this.collaborator.id)
         this.getAcademicData(this.collaborator.id)
     },
@@ -1538,11 +1541,10 @@ export default {
         downloadAcademicCertificate(academic_achievement_id) {
             axios.get(`/download-academic-certificate/${academic_achievement_id}`)
             .then(response => {
-                // Trigger download
                 window.open(response.data.certificate_download_url, '_blank');
             })
             .catch(e => {
-                // 
+                console.error('Error:', e); 
             })
         },
         getContractualInformation(collaborator_id) {
@@ -1550,24 +1552,30 @@ export default {
             .then(response => {
                 this.contractual_information = response.data.contractual_information;
 
-                this.position_id = this.contractual_information.position_id;
-                this.salary = this.contractual_information.salary;
-                this.contract_type_id = this.contractual_information.contract_type_id;
-                this.contract_start_date = this.contractual_information.contract_start_date;
-                this.contract_end_date = this.contractual_information.contract_end_date;
-                this.test_period_end_date = this.contractual_information.test_period_end_date;
-                this.corporate_email = this.contractual_information.corporate_email;
-                this.corporate_cellphone = this.contractual_information.corporate_cellphone;
-                this.bank_id = this.contractual_information.bank_id;
-                this.bank_account = this.contractual_information.bank_account;
-                this.eps_id = this.contractual_information.eps_id;
-                this.afp_pension_id = this.contractual_information.afp_pension_id;
-                this.afp_saving_id = this.contractual_information.afp_saving_id;
-                this.arl_id = this.contractual_information.arl_id;
-                this.ccf_id = this.contractual_information.ccf_id;
+                if(this.contractual_information !== null) {
+                    this.position_id = this.contractual_information.position_id;
+                    this.salary = this.contractual_information.salary;
+                    this.contract_type_id = this.contractual_information.contract_type_id;
+                    this.contract_start_date = this.contractual_information.contract_start_date;
+                    this.contract_end_date = this.contractual_information.contract_end_date;
+                    this.test_period_end_date = this.contractual_information.test_period_end_date;
+                    this.corporate_email = this.contractual_information.corporate_email;
+                    this.corporate_cellphone = this.contractual_information.corporate_cellphone;
+                    this.bank_id = this.contractual_information.bank_id;
+                    this.bank_account = this.contractual_information.bank_account;
+                    this.eps_id = this.contractual_information.eps_id;
+                    this.afp_pension_id = this.contractual_information.afp_pension_id;
+                    this.afp_saving_id = this.contractual_information.afp_saving_id;
+                    this.arl_id = this.contractual_information.arl_id;
+                    this.ccf_id = this.contractual_information.ccf_id;
+                }
+
+                this.card_selected = 'contract';
             })
             .catch(e => {
-                // 
+                console.error('Error:', e);  
+
+                this.card_selected = 'contract';
             })
         },
         addRelativeData() {
@@ -1618,7 +1626,7 @@ export default {
                 this.relatives_data = response.data.relatives_data;
             })
             .catch(e => {
-                // 
+                console.error('Error:', e);  
             })
         },
         getAcademicData(collaborator_id) {
@@ -1627,7 +1635,7 @@ export default {
                 this.academic_achivements_data = response.data.academic_achivements_data;
             })
             .catch(e => {
-                // 
+                console.error('Error:', e);  
             })
         },
         changeRelativeData(id, index) {
@@ -1636,7 +1644,7 @@ export default {
             if(this.relatives_data && this.relatives_data.length>0) {
                 this.relatives_data.forEach(element => {
                     if(element.id !== id) {
-                        //
+                        
                     } else {
                         new_selection_relative_data = element
                     }
@@ -1644,7 +1652,6 @@ export default {
             }
 
             this.selected_relative_data = new_selection_relative_data
-            console.log(this.selected_relative_data);
 
             this.add_relative_data = false
             this.edit_relative_data = false
@@ -1659,7 +1666,7 @@ export default {
             if(this.academic_achivements_data && this.academic_achivements_data.length>0) {
                 this.academic_achivements_data.forEach(element => {
                     if(element.id !== id) {
-                        //
+                        
                     } else {
                         new_selection_academic_data = element
                     }
@@ -1667,7 +1674,6 @@ export default {
             }
 
             this.selected_academic_data = new_selection_academic_data
-            console.log(this.selected_academic_data);
 
             this.add_academic_data = false
             this.edit_academic_data = false
@@ -1705,7 +1711,6 @@ export default {
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        console.log(error.response.data.errors)
                         this.errors_relative_data = error.response.data.errors
                     }
                 })
@@ -1739,7 +1744,6 @@ export default {
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        console.log(error.response.data.errors)
                         this.errors_academic_data = error.response.data.errors
                     }
                 })
@@ -1750,7 +1754,7 @@ export default {
             if(this.relatives_data && this.relatives_data.length>0) {
                 this.relatives_data.forEach(element => {
                     if(element.id !== item.id) {
-                        //
+                        
                     } else {
                         new_selection_relative_data = element
                     }
@@ -1778,7 +1782,7 @@ export default {
             if(this.academic_achivements_data && this.academic_achivements_data.length>0) {
                 this.academic_achivements_data.forEach(element => {
                     if(element.id !== item.id) {
-                        //
+                        
                     } else {
                         new_selection_academic_data = element
                     }
@@ -1828,7 +1832,6 @@ export default {
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        console.log(error.response.data.errors)
                         this.errors_relative_data = error.response.data.errors
                     }
                 })
@@ -1860,7 +1863,6 @@ export default {
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        console.log(error.response.data.errors)
                         this.errors_academic_data = error.response.data.errors
                     }
                 })
@@ -1882,7 +1884,6 @@ export default {
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        console.log(error.response.data.errors)
                         this.errors_personal_data = error.response.data.errors
                     }
                 })

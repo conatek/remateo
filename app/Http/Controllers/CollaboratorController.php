@@ -222,7 +222,7 @@ class CollaboratorController extends Controller
 
         abort_if(Gate::denies('collaborator_show'), 403);
 
-        $collaborator_contract = CollaboratorContract::where('collaborator_id', $collaborator->id)->first();
+        // $collaborator_contract = CollaboratorContract::where('collaborator_id', $collaborator->id)->first();
         $document_type = DocumentType::where('id', $collaborator->document_type_id)->first();
         $document_province = Province::where('id', $collaborator->document_province_id)->first();
         $document_city = City::where('id', $collaborator->document_city_id)->first();
@@ -257,7 +257,7 @@ class CollaboratorController extends Controller
         return view('back.collaborators.show', compact(
             'company',
             'collaborator', 
-            'collaborator_contract', 
+            // 'collaborator_contract', 
             'document_type', 
             'document_province', 
             'document_city',
@@ -425,8 +425,12 @@ class CollaboratorController extends Controller
                 'arl_id' => $request->arl_id,
                 'ccf_id' => $request->ccf_id,
             );
-    
-            $collaborator_contract->update($data);
+
+            if(isset($collaborator_contract['id'])) {
+                $collaborator_contract->update($data);
+            } else {
+                $collaborator_contract = CollaboratorContract::create($data);
+            }
     
             return response()->json([
                 'message'=>'Información contractual actualizada exitosamente!',

@@ -35,7 +35,7 @@
         <div class="card-shadow-primary profile-responsive card-border mb-3 card">
             <div class="dropdown-menu-header">
                 <div class="dropdown-menu-header-inner bg-focus">
-                    <div class="menu-header-image opacity-3" style="background-image: url('images/dropdown-header/city4.jpg');"></div>
+                    <div class="menu-header-image opacity-3" style="background-image: url('');"></div>
                     <div class="menu-header-content btn-pane-right">
                         <div class="avatar-icon-wrapper me-2 avatar-icon-xl">
                             <div class="avatar-icon rounded">

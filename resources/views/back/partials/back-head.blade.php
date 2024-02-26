@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="{{ asset('vendors/@fortawesome/fontawesome-free/css/all.min.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('vendors/@fortawesome/fontawesome-free/css/all.min.css') }}"> --}}
-<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+{{-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> --}}
 <link rel="stylesheet" href="{{ asset('vendors/ionicons-npm/css/ionicons.css') }}">
 <link rel="stylesheet" href="{{ asset('vendors/linearicons-master/dist/web-font/style.css') }}">
 <link rel="stylesheet" href="{{ asset('vendors/pixeden-stroke-7-icon-master/pe-icon-7-stroke/dist/pe-icon-7-stroke.css') }}">
