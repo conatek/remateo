@@ -20844,7 +20844,7 @@ div.fixed-table-scroll-outer {
 @font-face {
   font-family: 'Linearicons-Free';
   src: url("../scss/components/icons/linearicons/Linearicons-Free.eot");
-  src: url("../scss/components/icons/linearicons/Linearicons-Free.eot") format("embedded-opentype"), url("../scss/components/icons/linearicons/Linearicons-Free.woff2") format("woff2"), url("../scss/components/icons/linearicons/Linearicons-Free.woff") format("woff"), url("../scss/components/icons/linearicons/Linearicons-Free.ttf") format("truetype"), url("../scss/components/icons/linearicons/Linearicons-Free.svg#Linearicons-Free") format("svg");
+  src: url("../scss/components/icons/linearicons/Linearicons-Free.eot") format("embedded-opentype");
   font-weight: normal;
   font-style: normal; }
 
