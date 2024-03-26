@@ -21,4 +21,11 @@ export default defineConfig({
             '@': path.resolve(__dirname, './resources/js'),
         }
     },
+    build: {
+        rollupOptions: {
+            external: [
+                '@fortawesome/fontawesome-svg-core',
+            ]
+        }
+      }
 });
