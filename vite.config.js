@@ -24,8 +24,11 @@ export default defineConfig({
     build: {
         rollupOptions: {
             external: [
-                '@fortawesome/fontawesome-svg-core',
-            ]
+                'node_modules/@fortawesome/fontawesome-svg-core',
+                'node_modules/@fortawesome/free-solid-svg-icons',
+                'node_modules/@fortawesome/free-regular-svg-icons',
+                'node_modules/@fortawesome/vue-fontawesome',
+            ],
         }
       }
 });
