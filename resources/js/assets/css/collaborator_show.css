@@ -1,0 +1,536 @@
+.main-card {
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
+    padding: 0px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.main-card .wrapper-basic,
+.main-card .wrapper-address,
+.main-card .wrapper-contact,
+.main-card .wrapper-relative-data,
+.main-card .wrapper-academic-data,
+.main-card .wrapper-medical-examination-data,
+.main-card .wrapper-home-visit-data,
+.main-card .wrapper-document-data,
+.main-card .wrapper-contract-information {
+    display: grid;
+    grid-gap: 1px;
+    background-color: #555f78;
+    border: 1px solid #555f78;
+}
+
+.frame-information-card {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+@media screen and (min-width: 300px) {
+    .main-card .wrapper-basic {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-1" "vl-1" "lb-2" "vl-2" "lb-3" "vl-3" "lb-4" "vl-4" "lb-5" "vl-5" "lb-6" "vl-6" "lb-7" "vl-7" "lb-8" "vl-8" "lb-9" "vl-9" "lb-10" "vl-10" "lb-11" "vl-11" "lb-12" "vl-12";
+    }
+
+    .main-card .wrapper-address {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-13" "vl-13" "lb-14" "vl-14" "lb-15" "vl-15" "lb-16" "vl-16";
+    }
+
+    .main-card .wrapper-contact {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-17" "vl-17" "lb-18" "vl-18" "lb-19" "vl-19";
+    }
+
+    .main-card .wrapper-relative-data {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-20" "vl-20" "lb-21" "vl-21" "lb-22" "vl-22" "lb-23" "vl-23" "lb-24" "vl-24";
+    }
+
+    .main-card .wrapper-academic-data {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-38" "vl-38" "lb-39" "vl-39" "lb-40" "vl-40" "lb-41" "vl-41";
+    }
+
+    .main-card .wrapper-medical-examination-data {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-42" "vl-42" "lb-43" "vl-43" "lb-44" "vl-44";
+    }
+
+    .main-card .wrapper-home-visit-data {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-45" "vl-45" "lb-46" "vl-46" "lb-47" "vl-47" "lb-48" "vl-48";
+    }
+
+    .main-card .wrapper-document-data {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-49" "vl-49" "lb-50" "vl-50";
+    }
+
+    .main-card .wrapper-contract-information {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:    "lb-25" "vl-25" 
+                                "lb-26" "vl-26" 
+                                "lb-27" "vl-27" 
+                                "lb-28" "vl-28" 
+                                "lb-29" "vl-29" 
+                                "lb-30" "vl-30" 
+                                "lb-31" "vl-31" 
+                                "lb-32" "vl-32" 
+                                "lb-33" "vl-33" 
+                                "lb-34" "vl-34" 
+                                "lb-35" "vl-35" 
+                                "lb-36" "vl-36" 
+                                "lb-37" "vl-37"
+                                ;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .main-card .wrapper-basic {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-1 lb-1 lb-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1"
+                                "lb-2 lb-2 lb-2 vl-2 vl-2 vl-2 lb-3 lb-3 lb-3 vl-3 vl-3 vl-3"
+                                "lb-4 lb-4 lb-4 vl-4 vl-4 vl-4 lb-5 lb-5 lb-5 vl-5 vl-5 vl-5"
+                                "lb-6 lb-6 lb-6 vl-6 vl-6 vl-6 lb-7 lb-7 lb-7 vl-7 vl-7 vl-7"
+                                "lb-8 lb-8 lb-8 vl-8 vl-8 vl-8 lb-9 lb-9 lb-9 vl-9 vl-9 vl-9"
+                                "lb-10 lb-10 lb-10 vl-10 vl-10 vl-10 lb-11 lb-11 lb-11 vl-11 vl-11 vl-11"
+                                "lb-12 lb-12 lb-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12"
+        ;
+    }
+
+    .main-card .wrapper-address {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:    "lb-13 vl-13 vl-13 vl-13"
+                                "lb-14 vl-14 vl-14 vl-14"
+                                "lb-15 vl-15 vl-15 vl-15"
+                                "lb-16 vl-16 vl-16 vl-16"
+        ;
+    }
+
+    .main-card .wrapper-contact {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:    "lb-17 vl-17 vl-17 vl-17"
+                                "lb-18 vl-18 vl-18 vl-18"
+                                "lb-19 vl-19 vl-19 vl-19"
+        ;
+    }
+
+    .main-card .wrapper-relative-data {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:    "lb-20 vl-20 vl-20 vl-20"
+                                "lb-21 vl-21 vl-21 vl-21"
+                                "lb-22 vl-22 vl-22 vl-22"
+                                "lb-23 vl-23 vl-23 vl-23"
+                                "lb-24 vl-24 vl-24 vl-24"
+        ;
+    }
+
+    .main-card .wrapper-academic-data {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:    "lb-38 vl-38 vl-38 vl-38"
+                                "lb-39 vl-39 vl-39 vl-39"
+                                "lb-40 vl-40 vl-40 vl-40"
+                                "lb-41 vl-41 vl-41 vl-41"
+        ;
+    }
+
+    .main-card .wrapper-medical-examination-data {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:    "lb-42 vl-42 vl-42 vl-42"
+                                "lb-43 vl-43 vl-43 vl-43"
+                                "lb-44 vl-44 vl-44 vl-44"
+        ;
+    }
+
+    .main-card .wrapper-home-visit-data {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:    "lb-45 vl-45 vl-45 vl-45"
+                                "lb-46 vl-46 vl-46 vl-46"
+                                "lb-47 vl-47 vl-47 vl-47"
+                                "lb-48 vl-48 vl-48 vl-48"
+        ;
+    }
+
+    .main-card .wrapper-document-data {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:    "lb-49 vl-49 vl-49 vl-49"
+                                "lb-50 vl-50 vl-50 vl-50"
+        ;
+    }
+
+    .main-card .wrapper-contract-information {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25"
+                                "lb-26 lb-26 lb-26 vl-26 vl-26 vl-26 lb-27 lb-27 lb-27 vl-27 vl-27 vl-27"
+                                "lb-28 lb-28 lb-28 vl-28 vl-28 vl-28 lb-29 lb-29 lb-29 vl-29 vl-29 vl-29"
+                                "lb-30 lb-30 lb-30 vl-30 vl-30 vl-30 lb-31 lb-31 lb-31 vl-31 vl-31 vl-31"
+                                "lb-32 lb-32 lb-32 vl-32 vl-32 vl-32 lb-33 lb-33 lb-33 vl-33 vl-33 vl-33"
+                                "lb-34 lb-34 lb-34 vl-34 vl-34 vl-34 lb-35 lb-35 lb-35 vl-35 vl-35 vl-35"
+                                "lb-36 lb-36 lb-36 vl-36 vl-36 vl-36 lb-37 lb-37 lb-37 vl-37 vl-37 vl-37"
+        ;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .main-card .wrapper-basic {
+        grid-template-columns: repeat(24, 1fr);
+        grid-template-areas:    "lb-1 lb-1 lb-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 lb-2 lb-2 lb-2 vl-2 vl-2 vl-2 lb-3 lb-3 lb-3 vl-3 vl-3 vl-3"
+                                "lb-4 lb-4 lb-4 vl-4 vl-4 vl-4 lb-5 lb-5 lb-5 vl-5 vl-5 vl-5 lb-6 lb-6 lb-6 vl-6 vl-6 vl-6 lb-7 lb-7 lb-7 vl-7 vl-7 vl-7"
+                                "lb-8 lb-8 lb-8 vl-8 vl-8 vl-8 lb-9 lb-9 lb-9 vl-9 vl-9 vl-9 lb-10 lb-10 lb-10 vl-10 vl-10 vl-10 lb-11 lb-11 lb-11 vl-11 vl-11 vl-11"
+                                "lb-12 lb-12 lb-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12"
+        ;
+    }
+
+    .main-card .wrapper-address {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-13 lb-13 lb-13 vl-13 vl-13 vl-13 lb-14 lb-14 lb-14 vl-14 vl-14 vl-14"
+                                "lb-15 lb-15 lb-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15"
+                                "lb-16 lb-16 lb-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16"
+        ;
+    }
+
+    .main-card .wrapper-contact {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-17 lb-17 lb-17 vl-17 vl-17 vl-17 lb-18 lb-18 lb-18 vl-18 vl-18 vl-18"
+                                "lb-19 lb-19 lb-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19"
+        ;
+    }
+
+    .main-card .wrapper-relative-data {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-20 lb-20 lb-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20"
+                                "lb-21 lb-21 lb-21 vl-21 vl-21 vl-21 lb-22 lb-22 lb-22 vl-22 vl-22 vl-22"
+                                "lb-23 lb-23 lb-23 vl-23 vl-23 vl-23 lb-24 lb-24 lb-24 vl-24 vl-24 vl-24"
+        ;
+    }
+
+    .main-card .wrapper-academic-data {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-38 lb-38 lb-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38"
+                                "lb-39 lb-39 lb-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39"
+                                "lb-40 lb-40 lb-40 vl-40 vl-40 vl-40 lb-41 lb-41 lb-41 vl-41 vl-41 vl-41"
+        ;
+    }
+
+    .main-card .wrapper-medical-examination-data {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-42 lb-42 lb-42 vl-42 vl-42 vl-42 vl-42 vl-42 vl-42 vl-42 vl-42 vl-42"
+                                "lb-43 lb-43 lb-43 vl-43 vl-43 vl-43 vl-43 vl-43 vl-43 vl-43 vl-43 vl-43"
+                                "lb-44 lb-44 lb-44 vl-44 vl-44 vl-44 vl-44 vl-44 vl-44 vl-44 vl-44 vl-44"
+        ;
+    }
+
+    .main-card .wrapper-home-visit-data {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-45 lb-45 lb-45 vl-45 vl-45 vl-45 vl-45 vl-45 vl-45 vl-45 vl-45 vl-45"
+                                "lb-46 lb-46 lb-46 vl-46 vl-46 vl-46 lb-47 lb-47 lb-47 vl-47 vl-47 vl-47"
+                                "lb-48 lb-48 lb-48 vl-48 vl-48 vl-48 vl-48 vl-48 vl-48 vl-48 vl-48 vl-48"
+        ;
+    }
+
+    .main-card .wrapper-document-data {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-areas:    "lb-49 lb-49 lb-49 vl-49 vl-49 vl-49 vl-49 vl-49 vl-49 vl-49 vl-49 vl-49"
+                                "lb-50 lb-50 lb-50 vl-50 vl-50 vl-50 vl-50 vl-50 vl-50 vl-50 vl-50 vl-50"
+        ;
+    }
+
+    .main-card .wrapper-contract-information {
+        grid-template-columns: repeat(24, 1fr);
+        grid-template-areas:    "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 lb-26 lb-26 lb-26 vl-26 vl-26 vl-26 lb-27 lb-27 lb-27 vl-27 vl-27 vl-27"
+                                "lb-28 lb-28 lb-28 vl-28 vl-28 vl-28 lb-29 lb-29 lb-29 vl-29 vl-29 vl-29 lb-30 lb-30 lb-30 vl-30 vl-30 vl-30 lb-31 lb-31 lb-31 vl-31 vl-31 vl-31"
+                                "lb-32 lb-32 lb-32 vl-32 vl-32 vl-32 lb-33 lb-33 lb-33 vl-33 vl-33 vl-33 lb-34 lb-34 lb-34 vl-34 vl-34 vl-34 lb-35 lb-35 lb-35 vl-35 vl-35 vl-35"
+                                "lb-36 lb-36 lb-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 lb-37 lb-37 lb-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37"
+        ;
+    }
+}
+
+.main-card .wrapper-basic .box-label,
+.main-card .wrapper-address .box-label,
+.main-card .wrapper-contact .box-label,
+.main-card .wrapper-relative-data .box-label,
+.main-card .wrapper-academic-data .box-label,
+.main-card .wrapper-medical-examination-data .box-label,
+.main-card .wrapper-home-visit-data .box-label,
+.main-card .wrapper-document-data .box-label,
+.main-card .wrapper-contract-information .box-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #e0f3ff;
+    padding: 5px;
+    color: #6c757d;
+    font-weight: bold;
+}
+
+.main-card .wrapper-basic .box-label p,
+.main-card .wrapper-address .box-label p,
+.main-card .wrapper-contact .box-label p,
+.main-card .wrapper-relative-data .box-label p,
+.main-card .wrapper-academic-data .box-label p,
+.main-card .wrapper-medical-examination-data .box-label p,
+.main-card .wrapper-home-visit-data .box-label p,
+.main-card .wrapper-document-data .box-label p,
+.main-card .wrapper-contract-information .box-label p {
+    margin: 0;
+}
+
+.main-card .wrapper-basic .box-value,
+.main-card .wrapper-address .box-value,
+.main-card .wrapper-contact .box-value,
+.main-card .wrapper-relative-data .box-value,
+.main-card .wrapper-academic-data .box-value,
+.main-card .wrapper-medical-examination-data .box-value,
+.main-card .wrapper-home-visit-data .box-value,
+.main-card .wrapper-document-data .box-value,
+.main-card .wrapper-contract-information .box-value {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 5px;
+    text-align: center;
+}
+
+.main-card .wrapper-basic .box-value p,
+.main-card .wrapper-address .box-value p,
+.main-card .wrapper-contact .box-value p,
+.main-card .wrapper-relative-data .box-value p,
+.main-card .wrapper-academic-data .box-value p,
+.main-card .wrapper-medical-examination-data .box-value p,
+.main-card .wrapper-home-visit-data .box-value p,
+.main-card .wrapper-document-data .box-value p,
+.main-card .wrapper-contract-information .box-value p {
+    margin: 0;
+}
+
+.main-card .wrapper-basic .lb-1 { grid-area: lb-1; }
+.main-card .wrapper-basic .vl-1 { grid-area: vl-1; }
+.main-card .wrapper-basic .lb-2 { grid-area: lb-2; }
+.main-card .wrapper-basic .vl-2 { grid-area: vl-2; }
+.main-card .wrapper-basic .lb-3 { grid-area: lb-3; }
+.main-card .wrapper-basic .vl-3 { grid-area: vl-3; }
+.main-card .wrapper-basic .lb-4 { grid-area: lb-4; }
+.main-card .wrapper-basic .vl-4 { grid-area: vl-4; }
+.main-card .wrapper-basic .lb-5 { grid-area: lb-5; }
+.main-card .wrapper-basic .vl-5 { grid-area: vl-5; }
+.main-card .wrapper-basic .lb-6 { grid-area: lb-6; }
+.main-card .wrapper-basic .vl-6 { grid-area: vl-6; }
+.main-card .wrapper-basic .lb-7 { grid-area: lb-7; }
+.main-card .wrapper-basic .vl-7 { grid-area: vl-7; }
+.main-card .wrapper-basic .lb-8 { grid-area: lb-8; }
+.main-card .wrapper-basic .vl-8 { grid-area: vl-8; }
+.main-card .wrapper-basic .lb-9 { grid-area: lb-9; }
+.main-card .wrapper-basic .vl-9 { grid-area: vl-9; }
+.main-card .wrapper-basic .lb-10 { grid-area: lb-10; }
+.main-card .wrapper-basic .vl-10 { grid-area: vl-10; }
+.main-card .wrapper-basic .lb-11 { grid-area: lb-11; }
+.main-card .wrapper-basic .vl-11 { grid-area: vl-11; }
+.main-card .wrapper-basic .lb-12 { grid-area: lb-12; }
+.main-card .wrapper-basic .vl-12 { grid-area: vl-12; }
+
+
+.main-card .wrapper-address .lb-13 { grid-area: lb-13; }
+.main-card .wrapper-address .vl-13 { grid-area: vl-13; }
+.main-card .wrapper-address .lb-14 { grid-area: lb-14; }
+.main-card .wrapper-address .vl-14 { grid-area: vl-14; }
+.main-card .wrapper-address .lb-15 { grid-area: lb-15; }
+.main-card .wrapper-address .vl-15 { grid-area: vl-15; }
+.main-card .wrapper-address .lb-16 { grid-area: lb-16; }
+.main-card .wrapper-address .vl-16 { grid-area: vl-16; }
+
+
+.main-card .wrapper-contact .lb-17 { grid-area: lb-17; }
+.main-card .wrapper-contact .vl-17 { grid-area: vl-17; }
+.main-card .wrapper-contact .lb-18 { grid-area: lb-18; }
+.main-card .wrapper-contact .vl-18 { grid-area: vl-18; }
+.main-card .wrapper-contact .lb-19 { grid-area: lb-19; }
+.main-card .wrapper-contact .vl-19 { grid-area: vl-19; }
+
+
+.main-card .wrapper-relative-data .lb-20 { grid-area: lb-20; }
+.main-card .wrapper-relative-data .vl-20 { grid-area: vl-20; }
+.main-card .wrapper-relative-data .lb-21 { grid-area: lb-21; }
+.main-card .wrapper-relative-data .vl-21 { grid-area: vl-21; }
+.main-card .wrapper-relative-data .lb-22 { grid-area: lb-22; }
+.main-card .wrapper-relative-data .vl-22 { grid-area: vl-22; }
+.main-card .wrapper-relative-data .lb-23 { grid-area: lb-23; }
+.main-card .wrapper-relative-data .vl-23 { grid-area: vl-23; }
+.main-card .wrapper-relative-data .lb-24 { grid-area: lb-24; }
+.main-card .wrapper-relative-data .vl-24 { grid-area: vl-24; }
+
+
+.main-card .wrapper-contract-information .lb-25 { grid-area: lb-25; }
+.main-card .wrapper-contract-information .vl-25 { grid-area: vl-25; }
+.main-card .wrapper-contract-information .lb-26 { grid-area: lb-26; }
+.main-card .wrapper-contract-information .vl-26 { grid-area: vl-26; }
+.main-card .wrapper-contract-information .lb-27 { grid-area: lb-27; }
+.main-card .wrapper-contract-information .vl-27 { grid-area: vl-27; }
+.main-card .wrapper-contract-information .lb-28 { grid-area: lb-28; }
+.main-card .wrapper-contract-information .vl-28 { grid-area: vl-28; }
+.main-card .wrapper-contract-information .lb-29 { grid-area: lb-29; }
+.main-card .wrapper-contract-information .vl-29 { grid-area: vl-29; }
+.main-card .wrapper-contract-information .lb-30 { grid-area: lb-30; }
+.main-card .wrapper-contract-information .vl-30 { grid-area: vl-30; }
+.main-card .wrapper-contract-information .lb-31 { grid-area: lb-31; }
+.main-card .wrapper-contract-information .vl-31 { grid-area: vl-31; }
+.main-card .wrapper-contract-information .lb-32 { grid-area: lb-32; }
+.main-card .wrapper-contract-information .vl-32 { grid-area: vl-32; }
+.main-card .wrapper-contract-information .lb-33 { grid-area: lb-33; }
+.main-card .wrapper-contract-information .vl-33 { grid-area: vl-33; }
+.main-card .wrapper-contract-information .lb-34 { grid-area: lb-34; }
+.main-card .wrapper-contract-information .vl-34 { grid-area: vl-34; }
+.main-card .wrapper-contract-information .lb-35 { grid-area: lb-35; }
+.main-card .wrapper-contract-information .vl-35 { grid-area: vl-35; }
+.main-card .wrapper-contract-information .lb-36 { grid-area: lb-36; }
+.main-card .wrapper-contract-information .vl-36 { grid-area: vl-36; }
+.main-card .wrapper-contract-information .lb-37 { grid-area: lb-37; }
+.main-card .wrapper-contract-information .vl-37 { grid-area: vl-37; }
+
+
+.main-card .wrapper-academic-data .lb-38 { grid-area: lb-38; }
+.main-card .wrapper-academic-data .vl-38 { grid-area: vl-38; }
+.main-card .wrapper-academic-data .lb-39 { grid-area: lb-39; }
+.main-card .wrapper-academic-data .vl-39 { grid-area: vl-39; }
+.main-card .wrapper-academic-data .lb-40 { grid-area: lb-40; }
+.main-card .wrapper-academic-data .vl-40 { grid-area: vl-40; }
+.main-card .wrapper-academic-data .lb-41 { grid-area: lb-41; }
+.main-card .wrapper-academic-data .vl-41 { grid-area: vl-41; }
+
+
+.main-card .wrapper-medical-examination-data .lb-42 { grid-area: lb-42; }
+.main-card .wrapper-medical-examination-data .vl-42 { grid-area: vl-42; }
+.main-card .wrapper-medical-examination-data .lb-43 { grid-area: lb-43; }
+.main-card .wrapper-medical-examination-data .vl-43 { grid-area: vl-43; }
+.main-card .wrapper-medical-examination-data .lb-44 { grid-area: lb-44; }
+.main-card .wrapper-medical-examination-data .vl-44 { grid-area: vl-44; }
+
+.main-card .wrapper-home-visit-data .lb-45 { grid-area: lb-45; }
+.main-card .wrapper-home-visit-data .vl-45 { grid-area: vl-45; }
+.main-card .wrapper-home-visit-data .lb-46 { grid-area: lb-46; }
+.main-card .wrapper-home-visit-data .vl-46 { grid-area: vl-46; }
+.main-card .wrapper-home-visit-data .lb-47 { grid-area: lb-47; }
+.main-card .wrapper-home-visit-data .vl-47 { grid-area: vl-47; }
+.main-card .wrapper-home-visit-data .lb-48 { grid-area: lb-48; }
+.main-card .wrapper-home-visit-data .vl-48 { grid-area: vl-48; }
+
+.main-card .wrapper-document-data .lb-49 { grid-area: lb-49; }
+.main-card .wrapper-document-data .vl-49 { grid-area: vl-49; }
+.main-card .wrapper-document-data .lb-50 { grid-area: lb-50; }
+.main-card .wrapper-document-data .vl-50 { grid-area: vl-50; }
+
+
+.wrapper-add-data {
+    border-radius: 8px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-style: dashed;
+    height: 110px;
+    width: 100%;
+    border-width: 1px;
+    border-color: #3f6ad8;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    /* box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.10); */
+}
+
+.wrapper-add-data.selected {
+    border-width: 2px;
+}
+
+.wrapper-add-data p {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 22px;
+    color: #3f6ad8;
+    margin: 0px;
+}
+
+.wrapper-add-data.disabled-add {
+    border-color: #C7C7C7;
+}
+
+.wrapper-add-data.disabled-add p {
+    color: #C7C7C7;
+}
+
+.wrapper-data {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    height: 110px;
+    padding: 16px;
+    background: #fff;
+    border: 1px solid #3f6ad8;
+    border-radius: 8px;
+}
+
+.wrapper-data.selected {
+    border: 2px solid #3f6ad8;
+    background-color: #e0f3ff;
+}
+
+tr.selected {
+    border: 2px solid #3f6ad8;
+    background-color: #e0f3ff;
+}
+
+.wrapper-data .box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    width: 100%;
+}
+
+.wrapper-data .box.box1 .preliminary-information {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-between;
+    gap: 5px;
+    width: 90%;
+    cursor: pointer;
+}
+
+.wrapper-data .box.box1 .preliminary-information p {
+    margin: 0px;
+}
+
+.wrapper-data .box.box1 .preliminary-information p.data-position-one {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    text-decoration: none;
+}
+
+.wrapper-data .box.box2 .edit-data {
+    cursor: pointer
+}
+
+.wrapper-data .box.box2 .delete-data {
+    cursor: pointer
+}
+
+.message-success {
+    width: 100%;
+    background: #D8FFDC;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.message-success .content {
+    align-items: flex-start;
+    justify-content: center;
+    border-left: 5px solid #00660A;
+}
+
+.message-success .content p {
+    font-size: 16px;
+    line-height: 16px;
+}

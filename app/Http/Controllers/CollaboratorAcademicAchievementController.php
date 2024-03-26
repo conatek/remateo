@@ -15,7 +15,7 @@ class CollaboratorAcademicAchievementController extends Controller
     public function show($collaborator_id) {
         try{
             $academic_achievements = CollaboratorAcademicAchievement::where('collaborator_id', $collaborator_id)->orderBy('achievement_type_id', 'desc')->orderBy('end_date', 'desc')->get();
-            $academic_achivements_data = [];
+            $academic_achievements_data = [];
 
             // dd($relatives);
 
@@ -32,11 +32,11 @@ class CollaboratorAcademicAchievementController extends Controller
                 $data['certificate_url'] = $academic_achievement->certificate_url;
                 $data['status'] = '';
 
-                array_push($academic_achivements_data, $data);
+                array_push($academic_achievements_data, $data);
             }
 
             return response()->json([
-                'academic_achivements_data' => $academic_achivements_data,
+                'academic_achievements_data' => $academic_achievements_data,
             ]);
         } catch(Exception $e) {
             return response()->json([
@@ -149,6 +149,30 @@ class CollaboratorAcademicAchievementController extends Controller
 
             return response()->json([
                 'certificate_download_url' => $certificate_download_url
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function destroy($academic_achievement_id)
+    {
+        // abort_if(Gate::denies('collaborator_destroy'), 403);
+
+        try {
+            $academic_achievement = CollaboratorAcademicAchievement::where('id', $academic_achievement_id)->first();
+            if(isset($academic_achievement['certificate_public_id'])) {
+                $public_id = $academic_achievement['certificate_public_id'];
+                Cloudinary::destroy($public_id);
+            }
+    
+            $academic_achievement->delete();
+
+            return response()->json([
+                'message'=>'Información académica eliminada exitosamente!',
+                'academic_achievement'=>$academic_achievement
             ]);
         } catch (Exception $e) {
             return response()->json([

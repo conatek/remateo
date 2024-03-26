@@ -17,9 +17,12 @@ use App\Models\Collaborator;
 use App\Models\CollaboratorContract;
 use App\Models\Company;
 use App\Models\ContractType;
+use App\Models\ContractualDocumentType;
 use App\Models\DocumentType;
 use App\Models\EpsType;
+use App\Models\HomeVisitType;
 use App\Models\HousingTenure;
+use App\Models\MedicalExaminationType;
 use App\Models\Occupation;
 use App\Models\Position;
 use App\Models\Province;
@@ -242,6 +245,11 @@ class CollaboratorController extends Controller
         $occupation_types = Occupation::all();
         $sex_types = SexType::all();
         $achievement_types = AcademicAchievementType::all();
+        $examination_types = MedicalExaminationType::all();
+        $home_visit_types = HomeVisitType::all();
+        $contractual_documents_types = ContractualDocumentType::all();
+
+        // dd($achievement_types);
 
         $relationship_type = Relationship::where('id', $collaborator->relationship_id)->first();
         $occupation_type = Occupation::where('id', $collaborator->occupation_id)->first();
@@ -279,6 +287,9 @@ class CollaboratorController extends Controller
             'occupation_type',
             'sex_types',
             'achievement_types',
+            'examination_types',
+            'home_visit_types',
+            'contractual_documents_types',
         ));
     }
 
@@ -464,7 +475,5 @@ class CollaboratorController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-        
-        // return back()->with('success', 'Colaborador eliminado correctamente!');
     }
 }

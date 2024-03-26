@@ -5,17 +5,19 @@
     <div class="page-title-wrapper">
         <div class="page-title-heading">
             <div class="page-title-icon">
-                <i class="pe-7s-graph2 text-success"></i>
+                <i class="pe-7s-users text-success"></i>
             </div>
             <div>
-                Perfil Sociodemográfico
+                Listado de Colaboradores
             </div>
         </div>
         <div class="page-title-actions">
-            {{-- <a href="{{ route('collaborators.create') }}" type="button" class="btn-shadow me-3 btn btn-info">
+            {{-- @can('user_create') --}}
+            <a href="{{ route('collaborators.create') }}" type="button" class="btn-shadow me-3 btn btn-info">
                 <i class="fa fa-plus"></i>
                 Agregar
-            </a> --}}
+            </a>
+            {{-- @endcan --}}
         </div>
     </div>
 </div>
@@ -35,7 +37,6 @@
 @endphp
 
 
-{{-- <collaborator-index :company_id="{{ $company_id }}" :collaborators="{{ $collaborators }}"></collaborator-index> --}}
-<sociodemographic-profile></sociodemographic-profile>
+<collaborator-index :company_id="{{ $company_id }}" :collaborators="{{ $collaborators }}"></collaborator-index>
 
 @endsection

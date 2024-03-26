@@ -8,7 +8,10 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\CampusController;
 use App\Http\Controllers\CollaboratorAcademicAchievementController;
+use App\Http\Controllers\CollaboratorDocumentController;
 use App\Http\Controllers\CollaboratorFamilyController;
+use App\Http\Controllers\CollaboratorHomeVisitController;
+use App\Http\Controllers\CollaboratorMedicalExaminationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -119,5 +122,26 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/academic-data', [CollaboratorAcademicAchievementController::class, 'store']);
     Route::put('/academic-data-update/{academic_data}', [CollaboratorAcademicAchievementController::class, 'update']);
     Route::get('/download-academic-certificate/{academic_data_id}', [CollaboratorAcademicAchievementController::class, 'downloadCertificate']);
-    // Route::delete('/academic-data-delete/{academic_data}', [CollaboratorAcademicAchievementController::class, 'destroy']);
+    Route::delete('/academic-data-delete/{academic_data}', [CollaboratorAcademicAchievementController::class, 'destroy']);
+
+    // MEDICAL EXAMINATION DATA
+    Route::get('/medical-examination-data/{collaborator_id}', [CollaboratorMedicalExaminationController::class, 'show']);
+    Route::post('/medical-examination-data', [CollaboratorMedicalExaminationController::class, 'store']);
+    Route::put('/medical-examination-data-update/{medical_examination_data}', [CollaboratorMedicalExaminationController::class, 'update']);
+    Route::get('/download-medical-examination-result/{medical_examination_data}', [CollaboratorMedicalExaminationController::class, 'downloadResult']);
+    Route::delete('/medical-examination-data-delete/{medical_examination_data}', [CollaboratorMedicalExaminationController::class, 'destroy']);
+
+    // HOME VISIT DATA
+    Route::get('/home-visit-data/{collaborator_id}', [CollaboratorHomeVisitController::class, 'show']);
+    Route::post('/home-visit-data', [CollaboratorHomeVisitController::class, 'store']);
+    Route::put('/home-visit-data-update/{home_visit_data}', [CollaboratorHomeVisitController::class, 'update']);
+    Route::get('/download-home-visit-report/{home_visit_data}', [CollaboratorHomeVisitController::class, 'downloadReport']);
+    Route::delete('/home-visit-data-delete/{home_visit_data}', [CollaboratorHomeVisitController::class, 'destroy']);
+
+    // DOCUMENT DATA
+    Route::get('/document-data/{collaborator_id}', [CollaboratorDocumentController::class, 'show']);
+    Route::post('/document-data', [CollaboratorDocumentController::class, 'store']);
+    Route::put('/document-data-update/{document_data}', [CollaboratorDocumentController::class, 'update']);
+    Route::get('/download-document/{document_data}', [CollaboratorDocumentController::class, 'downloadDocument']);
+    Route::delete('/document-data-delete/{document_data}', [CollaboratorDocumentController::class, 'destroy']);
 });

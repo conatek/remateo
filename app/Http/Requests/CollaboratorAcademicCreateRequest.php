@@ -13,7 +13,6 @@ class CollaboratorAcademicCreateRequest extends FormRequest
 
     public function rules()
     {
-        // dd($this->request->get('certificate'));
         if($this->request->get('certificate') != "null"){
             return [
                 'achievement_type_id' => 'required',

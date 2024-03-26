@@ -8,6 +8,7 @@ const components = {
     'campus-edit': defineAsyncComponent(() => import('./components/campus/CampusEdit.vue')),
 
     'company-show': defineAsyncComponent(() => import('./components/company/CompanyShow.vue')),
+    'sociodemographic-profile': defineAsyncComponent(() => import('./components/company/SociodemographicProfile.vue')),
 
     'collaborator-index': defineAsyncComponent(() => import('./components/collaborators/CollaboratorIndex.vue')),
     'collaborator-create': defineAsyncComponent(() => import('./components/collaborators/CollaboratorCreate.vue')),

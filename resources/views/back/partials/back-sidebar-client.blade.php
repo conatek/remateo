@@ -3,8 +3,8 @@
         <ul class="vertical-nav-menu">
             <li class="{{ request()->is('home') ? 'mm-active' : '' }}">
                 <a href="{{ route('home') }}" class="{{ request()->is('home') ? 'mm-active' : '' }}">
-                    <i class="metismenu-icon pe-7s-box2"></i>
-                    Panel de Control - Cliente
+                    <i class="metismenu-icon pe-7s-graph2"></i>
+                    Perfil Sociodemográfico
                 </a>
             </li>
 

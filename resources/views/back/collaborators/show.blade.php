@@ -51,6 +51,9 @@
     :occupation_types="{{ $occupation_types }}"
     :sex_types="{{ $sex_types }}"
     :achievement_types="{{ $achievement_types }}"
+    :examination_types="{{ $examination_types }}"
+    :home_visit_types="{{ $home_visit_types }}"
+    :contractual_documents_types="{{ $contractual_documents_types }}"
 ></collaborator-show>
 
 @endsection

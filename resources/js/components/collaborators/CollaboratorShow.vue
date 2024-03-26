@@ -319,22 +319,22 @@
         <div v-else-if="card_selected == 'additional'" >
             <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
                 <li class="nav-item">
-                    <a @click="tab_additional_info_status = 'family_information'" role="tab" class="nav-link" :class="tab_additional_info_status == 'family_information' ? 'active' : ''" id="tab-0" data-bs-toggle="tab" href="#tab-content-0">
+                    <a @click="change_tab_additional_info_status('family_information')" role="tab" class="nav-link" :class="tab_additional_info_status == 'family_information' ? 'active' : ''" id="tab-0" data-bs-toggle="tab" href="#tab-content-0">
                         <span>Información Familiar</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a @click="tab_additional_info_status = 'academic_information'" role="tab" class="nav-link" :class="tab_additional_info_status == 'academic_information' ? 'active' : ''" id="tab-1" data-bs-toggle="tab" href="#tab-content-1">
+                    <a @click="change_tab_additional_info_status('academic_information')" role="tab" class="nav-link" :class="tab_additional_info_status == 'academic_information' ? 'active' : ''" id="tab-1" data-bs-toggle="tab" href="#tab-content-1">
                         <span>Información Académica</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a @click="tab_additional_info_status = 'medical_information'" role="tab" class="nav-link" :class="tab_additional_info_status == 'medical_information' ? 'active' : ''" id="tab-2" data-bs-toggle="tab" href="#tab-content-2">
+                    <a @click="change_tab_additional_info_status('medical_information')" role="tab" class="nav-link" :class="tab_additional_info_status == 'medical_information' ? 'active' : ''" id="tab-2" data-bs-toggle="tab" href="#tab-content-2">
                         <span>Información Médica</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a @click="tab_additional_info_status = 'home_visities'" role="tab" class="nav-link" :class="tab_additional_info_status == 'home_visities' ? 'active' : ''" id="tab-3" data-bs-toggle="tab" href="#tab-content-3">
+                    <a @click="change_tab_additional_info_status('home_visit')" role="tab" class="nav-link" :class="tab_additional_info_status == 'home_visities' ? 'active' : ''" id="tab-3" data-bs-toggle="tab" href="#tab-content-3">
                         <span>Visitas Domiciliarias</span>
                     </a>
                 </li>
@@ -377,9 +377,9 @@
                                                         <p class="data-position-three text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
                                                     </div>
                                                 </div>
-                                                <div class="box box2">
-                                                    <a class="edit-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                                    <a class="delete-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                <div class="box box2" style="display: flex; flex-direction: column; justify-content: space-between;">
+                                                    <a class="edit-data" @click="editRelativeData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></a>
+                                                    <a class="delete-data" @click="deleteRelativeData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'trash-can']" /></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -393,7 +393,7 @@
                                         </div>
                                     </div>
 
-                                    <table v-if="relatives_data && relatives_data.length>0" style="width: 100%;" id="example" class="table table-hover table-bordered">
+                                    <!-- <table v-if="relatives_data && relatives_data.length>0" style="width: 100%;" id="example" class="table table-hover table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
@@ -408,12 +408,12 @@
                                                 <td @click="changeRelativeData(item.id, index)" style="cursor: pointer;">{{ item.relationship }}</td>
                                                 <td @click="changeRelativeData(item.id, index)" style="cursor: pointer;">{{ getAge(item.birth_date) }}</td>
                                                 <td style="text-align: right;">
-                                                    <a class="btn btn-sm btn-primary mx-1 my-1" @click="editRelativeData(item, index)" style="    width: 70px;">Editar</a>
-                                                    <a class="btn btn-sm btn-danger mx-1 my-1" @click="deleteRelativeData(item, index)" style="    width: 70px;">Eliminar</a>
+                                                    <a class="btn btn-sm btn-primary mx-1 my-1" @click="editRelativeData(item, index)" style="width: 80px;"><font-awesome-icon :icon="['fas', 'pen-to-square']" /> Editar</a>
+                                                    <a class="btn btn-sm btn-danger mx-1 my-1" @click="deleteRelativeData(item, index)" style="width: 80px;"><font-awesome-icon :icon="['fas', 'trash-can']" /> Eliminar</a>
                                                 </td>
                                             </tr>
                                         </tbody>
-                                    </table>
+                                    </table> -->
                                 </div>
                             </div>
                         </div>
@@ -424,7 +424,7 @@
                                         <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="card-hover-shadow card-border mb-3 card add-relative-card">
+                                                    <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                         <div class="card-header">
                                                             Agregar Familiar
                                                         </div>
@@ -507,7 +507,7 @@
                                         <form @submit.prevent="updateRelativeData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                    <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                         <div class="card-header">
                                                             Editar Familiar
                                                         </div>
@@ -589,7 +589,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                     <div class="card-header">
                                                         Información del Familiar
                                                     </div>
@@ -659,14 +659,14 @@
                                             <p class="mb-0" style="font-size: 14px;"> Información académica <strong>eliminada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
-                                    <div v-if="academic_achivements_data && academic_achivements_data.length>0" class="row"> 
+                                    <div v-if="academic_achievements_data && academic_achievements_data.length>0" class="row"> 
                                         <div class="col-md-12 col-lg-6">
                                             <a @click="addAcademicData" class="wrapper-add-data p-2 mb-3" :class="(add_academic_data && !edit_academic_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Logro</p>
                                             </a>
                                         </div>
-                                        <div v-for="(item, index) in academic_achivements_data" class="col-md-12 col-lg-6">
+                                        <div v-for="(item, index) in academic_achievements_data" class="col-md-12 col-lg-6">
                                             <div class="wrapper-data mb-3 position-relative" :class="(selected_academic_data && selected_academic_data.id) == item.id ? 'selected shadow' : ''">
                                                 <div @click="changeAcademicData(item.id, index)" class="box box1">
                                                     <div class="preliminary-information">
@@ -700,7 +700,7 @@
                                         <form @submit.prevent="storeAcademicData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="card-hover-shadow card-border mb-3 card add-relative-card">
+                                                    <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                         <div class="card-header">
                                                             Agregar Logro Académico
                                                         </div>
@@ -768,7 +768,7 @@
                                         <form @submit.prevent="updateAcademicData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                    <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                         <div class="card-header">
                                                             Editar Logro Académico
                                                         </div>
@@ -835,7 +835,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                     <div class="card-header">
                                                         Información del Logro
                                                     </div>
@@ -868,8 +868,7 @@
                                                         </div>
 
                                                         <button v-if="selected_academic_data && selected_academic_data.certificate_url" @click="downloadAcademicCertificate(selected_academic_data.id)" class="mb-2 mr-2 btn-icon btn btn-primary">
-                                                            <i class="pe-7s-download btn-icon-wrapper"> </i>
-                                                            Descargar Certificado
+                                                            <font-awesome-icon :icon="['fas', 'download']" /> Descargar Certificado
                                                         </button>
                                                     </div>
                                                 </div>
@@ -903,34 +902,34 @@
                                             <p class="mb-0" style="font-size: 14px;"> Información médica <strong>eliminada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
-                                    <div v-if="relatives_data && relatives_data.length>0" class="row"> 
+                                    <div v-if="medical_examination_data && medical_examination_data.length>0" class="row"> 
                                         <div class="col-md-12 col-lg-6">
-                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                            <a @click="addMedicalExaminationData" class="wrapper-add-data p-2 mb-3" :class="(add_medical_examination_data && !edit_medical_examination_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
-                                                <p>Agregar Información de Salud</p>
+                                                <p>Agregar Examen Médico</p>
                                             </a>
                                         </div>
-                                        <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
-                                            <div class="wrapper-data mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
-                                                <div @click="changeRelativeData(item.id, index)" class="box box1">
+                                        <div v-for="(item, index) in medical_examination_data" class="col-md-12 col-lg-6">
+                                            <div class="wrapper-data mb-3 position-relative" :class="(selected_medical_examination_data && selected_medical_examination_data.id) == item.id ? 'selected shadow' : ''">
+                                                <div @click="changeMedicalExaminationData(item.id, index)" class="box box1">
                                                     <div class="preliminary-information">
-                                                        <p class="data-position-one text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
-                                                        <p class="data-position-two text-truncate w-100">{{ item.relationship }}</p>
-                                                        <p class="data-position-three text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                        <p class="data-position-one text-truncate w-100">{{ item.examination_type }}</p>
+                                                        <p class="data-position-two text-truncate w-100">Fecha: {{ item.examination_date }}</p>
+                                                        <p class="data-position-three text-truncate w-100">Observaciones: {{ item.examination_observations ? item.examination_observations : 'Ninguna' }}</p>
                                                     </div>
                                                 </div>
-                                                <div class="box box2">
-                                                    <a class="edit-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                                    <a class="delete-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                <div class="box box2" style="display: flex; flex-direction: column; justify-content: space-between;">
+                                                    <a class="edit-data" @click="editMedicalExaminationData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></a>
+                                                    <a class="delete-data" @click="deleteMedicalExaminationData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'trash-can']" /></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div v-else class="row">
                                         <div class="col-md-12">
-                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                            <a @click="addMedicalExaminationData" class="wrapper-add-data p-2 mb-3" :class="(add_medical_examination_data && !edit_medical_examination_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
-                                                <p>Agregar Información de Salud</p>
+                                                <p>Agregar Examen Médico</p>
                                             </a>
                                         </div>
                                     </div>
@@ -938,77 +937,53 @@
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
-                            <div v-if="add_relative_data && !edit_relative_data" class="">
+                            <div v-if="add_medical_examination_data && !edit_medical_examination_data" class="">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
-                                        <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
+                                        <form @submit.prevent="storeMedicalExaminationData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="card-hover-shadow card-border mb-3 card add-relative-card">
+                                                    <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                         <div class="card-header">
-                                                            Agregar Información de Salud
+                                                            Agregar Examen Médico
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="name" class="form-label">Nombres*</label>
-                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                        <label for="examination_type_id" class="form-label">Tipo de Evaluación Médica*</label>
+                                                                        <select v-model="examination_type_id" class="form-control" name="examination_type_id" id="examination_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Tipo de Examen</option>
+                                                                            <option v-for="examination in examination_types" :value="examination.id">{{ examination.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_medical_examination_data && errors_medical_examination_data.examination_type_id" class="error text-danger" for="examination_type_id">{{ errors_medical_examination_data.examination_type_id[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
-                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
-                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                        <label for="examination_date" class="form-label">Fecha*</label>
+                                                                        <input v-model="examination_date" name="examination_date" id="examination_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_medical_examination_data && errors_medical_examination_data.examination_date" class="error text-danger" for="examination_date">{{ errors_medical_examination_data.examination_date[0] }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
-                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
-                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
-                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                        <label for="examination_result" class="form-label">Resultado</label>
+                                                                        <div class="input-group">
+                                                                            <input @change="onChangeExaminationResult" type="file" name="examination_result" id="examination_result" class="form-control">
+                                                                        </div>
+                                                                        <span v-if="errors_medical_examination_data && errors_medical_examination_data.examination_result" class="error text-danger" for="examination_result">{{ errors_medical_examination_data.examination_result[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
-                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                        <label for="examination_observations" class="form-label">Observaciones</label>
+                                                                        <input v-model="examination_observations" name="examination_observations" id="examination_observations" type="text" class="form-control" placeholder="Ingrese observaciones">
+                                                                        <span v-if="errors_medical_examination_data && errors_medical_examination_data.examination_observations" class="error text-danger" for="examination_observations">{{ errors_medical_examination_data.examination_observations[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1021,77 +996,53 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="!add_relative_data && edit_relative_data" class="">
+                            <div v-else-if="!add_medical_examination_data && edit_medical_examination_data" class="">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
-                                        <form @submit.prevent="updateRelativeData" enctype="multipart/form-data">
+                                        <form @submit.prevent="updateMedicalExaminationData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                    <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                         <div class="card-header">
                                                             Editar Información de Salud
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="name" class="form-label">Nombres*</label>
-                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                        <label for="examination_type_id" class="form-label">Tipo de Evaluación Médica*</label>
+                                                                        <select v-model="examination_type_id" class="form-control" name="examination_type_id" id="examination_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Tipo de Examen</option>
+                                                                            <option v-for="examination in examination_types" :value="examination.id">{{ examination.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_medical_examination_data && errors_medical_examination_data.examination_type_id" class="error text-danger" for="examination_type_id">{{ errors_medical_examination_data.examination_type_id[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
-                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
-                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                        <label for="examination_date" class="form-label">Fecha*</label>
+                                                                        <input v-model="examination_date" name="examination_date" id="examination_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
+                                                                        <span v-if="errors_medical_examination_data && errors_medical_examination_data.examination_date" class="error text-danger" for="examination_date">{{ errors_medical_examination_data.examination_date[0] }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
-                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
-                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
-                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                        <label for="examination_result" class="form-label">Resultado</label>
+                                                                        <div class="input-group">
+                                                                            <input @change="onChangeExaminationResult" type="file" name="examination_result" id="examination_result" class="form-control">
+                                                                        </div>
+                                                                        <span v-if="errors_medical_examination_data && errors_medical_examination_data.examination_result" class="error text-danger" for="examination_result">{{ errors_medical_examination_data.examination_result[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
-                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                        <label for="examination_observations" class="form-label">Observaciones</label>
+                                                                        <input v-model="examination_observations" name="examination_observations" id="examination_observations" type="text" class="form-control" placeholder="Ingrese observaciones">
+                                                                        <span v-if="errors_medical_examination_data && errors_medical_examination_data.examination_observations" class="error text-danger" for="examination_observations">{{ errors_medical_examination_data.examination_observations[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1104,48 +1055,40 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="!add_relative_data && !edit_relative_data && selected_relative_data" class="">
+                            <div v-else-if="!add_medical_examination_data && !edit_medical_examination_data && selected_medical_examination_data" class="">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                     <div class="card-header">
                                                         Información de Salud
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="wrapper-relative-data mt-3">
-                                                            <div class="box-label lb-20">
-                                                                <p class="">Nombre:</p>
+                                                        <div class="wrapper-medical-examination-data my-3">
+                                                            <div class="box-label lb-42">
+                                                                <p class="">Tipo de evaluación:</p>
                                                             </div>
-                                                            <div class="box-value vl-20">
-                                                                <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
+                                                            <div class="box-value vl-42">
+                                                                <p class="">{{ selected_medical_examination_data.examination_type }}</p>
                                                             </div>
-                                                            <div class="box-label lb-21">
-                                                                <p class="">Parentesco:</p>
+                                                            <div class="box-label lb-43">
+                                                                <p class="">Fecha:</p>
                                                             </div>
-                                                            <div class="box-value vl-21">
-                                                                <p class="">{{ selected_relative_data.relationship }}</p>
+                                                            <div class="box-value vl-43">
+                                                                <p class="">{{ selected_medical_examination_data.examination_date }}</p>
                                                             </div>
-                                                            <div class="box-label lb-22">
-                                                                <p class="">Sexo:</p>
+                                                            <div class="box-label lb-44">
+                                                                <p class="">Observaciones:</p>
                                                             </div>
-                                                            <div class="box-value vl-22">
-                                                                <p class="">{{ selected_relative_data.sex }}</p>
+                                                            <div class="box-value vl-44">
+                                                                <p class="">{{ selected_medical_examination_data.examination_observations }}</p>
                                                             </div>
-                                                            <div class="box-label lb-23">
-                                                                <p class="">Ocupación:</p>
-                                                            </div>
-                                                            <div class="box-value vl-23">
-                                                                <p class="">{{ selected_relative_data.occupation }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-24">
-                                                                <p class="">Fecha de nacimiento:</p>
-                                                            </div>
-                                                            <div class="box-value vl-24">
-                                                                <p class="">{{ selected_relative_data.birth_date }}</p>
-                                                            </div>
+
                                                         </div>
+                                                        <button v-if="selected_medical_examination_data && selected_medical_examination_data.result_url" @click="downloadMedicalExaminationResult(selected_medical_examination_data.id)" class="mb-2 mr-2 btn-icon btn btn-primary">
+                                                            <font-awesome-icon :icon="['fas', 'download']" /> Descargar Resultado
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1158,7 +1101,7 @@
                 </div>
             </div>
             <div class="tab-content">
-                <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'home_visities' ? 'show active' : ''" id="tab-content-3" role="tabpanel">
+                <div class="tab-pane tabs-animation fade" :class="tab_additional_info_status == 'home_visit' ? 'show active' : ''" id="tab-content-3" role="tabpanel">
                     <div class="row">
                         <div class="col-sm-12 col-xxl-6">
                             <div class="main-card mb-3 card">
@@ -1178,32 +1121,32 @@
                                             <p class="mb-0" style="font-size: 14px;"> Información de visita <strong>eliminada</strong> exitosamente!.</p>
                                         </div>
                                     </div>
-                                    <div v-if="relatives_data && relatives_data.length>0" class="row"> 
+                                    <div v-if="home_visit_data && home_visit_data.length>0" class="row"> 
                                         <div class="col-md-12 col-lg-6">
-                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                            <a @click="addHomeVisitData" class="wrapper-add-data p-2 mb-3" :class="(add_home_visit_data && !edit_home_visit_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Visita</p>
                                             </a>
                                         </div>
-                                        <div v-for="(item, index) in relatives_data" class="col-md-12 col-lg-6">
-                                            <div class="wrapper-data mb-3 position-relative" :class="(selected_relative_data && selected_relative_data.id) == item.id ? 'selected shadow' : ''">
-                                                <div @click="changeRelativeData(item.id, index)" class="box box1">
+                                        <div v-for="(item, index) in home_visit_data" class="col-md-12 col-lg-6">
+                                            <div class="wrapper-data mb-3 position-relative" :class="(selected_home_visit_data && selected_home_visit_data.id == item.id) ? 'selected shadow' : ''">
+                                                <div @click="changeHomeVisitData(item.id, index)" class="box box1">
                                                     <div class="preliminary-information">
-                                                        <p class="data-position-one text-truncate w-100">{{ item.name }} {{ item.first_surname }} {{ item.second_surname }}</p>
-                                                        <p class="data-position-two text-truncate w-100">{{ item.relationship }}</p>
-                                                        <p class="data-position-three text-truncate w-100">Edad: {{ getAge(item.birth_date) }} años</p>
+                                                        <p class="data-position-one text-truncate w-100">Motivo: {{ item.home_visit_type  }}</p>
+                                                        <p class="data-position-two text-truncate w-100">Fecha: {{ item.visit_date }}</p>
+                                                        <p class="data-position-three text-truncate w-100">Observaciones: {{ item.observations ? item.observations : 'Ninguna' }}</p>
                                                     </div>
                                                 </div>
-                                                <div class="box box2">
-                                                    <a class="edit-data" @click="editRelativeData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                                    <a class="delete-data" @click="deleteRelativeData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                                <div class="box box2" style="display: flex; flex-direction: column; justify-content: space-between;">
+                                                    <a class="edit-data" @click="editHomeVisitData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></a>
+                                                    <a class="delete-data" @click="deleteHomeVisitData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'trash-can']" /></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div v-else class="row">
                                         <div class="col-md-12">
-                                            <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
+                                            <a @click="addHomeVisitData" class="wrapper-add-data p-2 mb-3" :class="(add_home_visit_data && !edit_home_visit_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                                 <p>Agregar Visita</p>
                                             </a>
@@ -1213,77 +1156,62 @@
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
-                            <div v-if="add_relative_data && !edit_relative_data" class="">
+                            <div v-if="add_home_visit_data && !edit_home_visit_data" class="">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
-                                        <form @submit.prevent="storeRelativeData" enctype="multipart/form-data">
+                                        <form @submit.prevent="storeHomeVisitData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="card-hover-shadow card-border mb-3 card add-relative-card">
+                                                    <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                         <div class="card-header">
                                                             Agregar Visita Domiciliaria
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="name" class="form-label">Nombres*</label>
-                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                        <label for="home_visit_type_id" class="form-label">Motivo de visita*</label>
+                                                                        <select v-model="home_visit_type_id" class="form-control" name="home_visit_type_id" id="home_visit_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Motivo de Visita</option>
+                                                                            <option v-for="home_visit in home_visit_types" :value="home_visit.id">{{ home_visit.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.home_visit_type_id" class="error text-danger" for="home_visit_type_id">{{ errors_home_visit_data.home_visit_type_id[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
-                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
-                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                        <label for="visit_date" class="form-label">Fecha de visita*</label>
+                                                                        <input v-model="visit_date" name="visit_date" id="visit_date" type="date" class="form-control">
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.visit_date" class="error text-danger" for="visit_date">{{ errors_home_visit_data.visit_date[0] }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
-                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                        <label for="next_visit_date" class="form-label">Próxima visita</label>
+                                                                        <input v-model="next_visit_date" name="next_visit_date" id="next_visit_date" type="date" class="form-control">
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.next_visit_date" class="error text-danger" for="next_visit_date">{{ errors_home_visit_data.next_visit_date[0] }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                            </div> 
+                                                            <div class="row">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
-                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
-                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                        <label for="observations" class="form-label">Observaciones</label>
+                                                                        <input v-model="observations" name="observations" id="observations" type="text" class="form-control" placeholder="Ingrese observaciones">
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.observations" class="error text-danger" for="observations">{{ errors_home_visit_data.observations[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
-                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                        <label for="home_visit_report" class="form-label">Reporte</label>
+                                                                        <div class="input-group">
+                                                                            <input @change="onChangeHomeVisitReport" type="file" name="home_visit_report" id="home_visit_report" class="form-control">
+                                                                        </div>
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.home_visit_report" class="error text-danger" for="home_visit_report">{{ errors_home_visit_data.home_visit_report[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1296,77 +1224,62 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="!add_relative_data && edit_relative_data" class="">
+                            <div v-else-if="!add_home_visit_data && edit_home_visit_data" class="">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
-                                        <form @submit.prevent="updateRelativeData" enctype="multipart/form-data">
+                                        <form @submit.prevent="updateHomeVisitData" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                    <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                         <div class="card-header">
                                                             Editar Visita Domiciliaria
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="name" class="form-label">Nombres*</label>
-                                                                        <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingrese nombre(s)">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.name" class="error text-danger" for="name">{{ errors_relative_data.name[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="first_surname" class="form-label">Primer apellido*</label>
-                                                                        <input v-model="first_surname" name="first_surname" id="first_surname" type="text" class="form-control" placeholder="Ingrese primer apellido">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.first_surname" class="error text-danger" for="first_surname">{{ errors_relative_data.first_surname[0] }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="position-relative mb-3">
-                                                                        <label for="second_surname" class="form-label">Segundo apellido</label>
-                                                                        <input v-model="second_surname" name="second_surname" id="second_surname" type="text" class="form-control" placeholder="Ingrese segundo apellido">
+                                                                        <label for="home_visit_type_id" class="form-label">Motivo de visita*</label>
+                                                                        <select v-model="home_visit_type_id" class="form-control" name="home_visit_type_id" id="home_visit_type_id">
+                                                                            <option value="" disabled selected hidden>Seleccionar Motivo de Visita</option>
+                                                                            <option v-for="home_visit in home_visit_types" :value="home_visit.id">{{ home_visit.name }}</option>
+                                                                        </select>
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.home_visit_type_id" class="error text-danger" for="home_visit_type_id">{{ errors_home_visit_data.home_visit_type_id[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="relationship_type_id" class="form-label">Parentesco*</label>
-                                                                        <select v-model="relationship_type_id" class="form-control" name="relationship_type_id" id="relationship_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Parentesco</option>
-                                                                            <option v-for="relationship in relationship_types" :value="relationship.id">{{ relationship.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.relationship_type_id" class="error text-danger" for="relationship_type_id">{{ errors_relative_data.relationship_type_id[0] }}</span>
+                                                                        <label for="visit_date" class="form-label">Fecha de visita*</label>
+                                                                        <input v-model="visit_date" name="visit_date" id="visit_date" type="date" class="form-control">
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.visit_date" class="error text-danger" for="visit_date">{{ errors_home_visit_data.visit_date[0] }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="sex_type_id" class="form-label">Sexo*</label>
-                                                                        <select v-model="sex_type_id" class="form-control" name="sex_type_id" id="sex_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Sexo</option>
-                                                                            <option v-for="sex in sex_types" :value="sex.id">{{ sex.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.sex_type_id" class="error text-danger" for="sex_type_id">{{ errors_relative_data.sex_type_id[0] }}</span>
+                                                                        <label for="next_visit_date" class="form-label">Próxima visita</label>
+                                                                        <input v-model="next_visit_date" name="next_visit_date" id="next_visit_date" type="date" class="form-control">
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.next_visit_date" class="error text-danger" for="next_visit_date">{{ errors_home_visit_data.next_visit_date[0] }}</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                            </div> 
+                                                            <div class="row">
+                                                                <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="occupation_type_id" class="form-label">Ocupación*</label>
-                                                                        <select v-model="occupation_type_id" class="form-control" name="occupation_type_id" id="occupation_type_id">
-                                                                            <option value="" disabled selected hidden>Seleccionar Ocupación</option>
-                                                                            <option v-for="occupation in occupation_types" :value="occupation.id">{{ occupation.name }}</option>
-                                                                        </select>
-                                                                        <span v-if="errors_relative_data && errors_relative_data.occupation_type_id" class="error text-danger" for="occupation_type_id">{{ errors_relative_data.occupation_type_id[0] }}</span>
+                                                                        <label for="observations" class="form-label">Observaciones</label>
+                                                                        <input v-model="home_visit_observations" name="observations" id="observations" type="text" class="form-control" placeholder="Ingrese observaciones">
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.observations" class="error text-danger" for="observations">{{ errors_home_visit_data.observations[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-4">
+                                                                <div class="col-sm-12 col-md-6 col-lg-6">
                                                                     <div class="position-relative mb-3">
-                                                                        <label for="birth_date" class="form-label">Fecha de Nacimiento*</label>
-                                                                        <input v-model="birth_date" name="birth_date" id="birth_date" type="date" class="form-control" placeholder="Ingrese fecha de nacimiento">
-                                                                        <span v-if="errors_relative_data && errors_relative_data.birth_date" class="error text-danger" for="birth_date">{{ errors_relative_data.birth_date[0] }}</span>
+                                                                        <label for="home_visit_report" class="form-label">Reporte</label>
+                                                                        <div class="input-group">
+                                                                            <input @change="onChangeHomeVisitReport" type="file" name="home_visit_report" id="home_visit_report" class="form-control">
+                                                                        </div>
+                                                                        <span v-if="errors_home_visit_data && errors_home_visit_data.home_visit_report" class="error text-danger" for="home_visit_report">{{ errors_home_visit_data.home_visit_report[0] }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1379,48 +1292,45 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="!add_relative_data && !edit_relative_data && selected_relative_data" class="">
+                            <div v-else-if="!add_home_visit_data && !edit_home_visit_data && selected_home_visit_data" class="">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="card-hover-shadow card-border mb-3 card edit-relative-card">
+                                                <div class="card-hover-shadow card-border mb-3 card frame-information-card">
                                                     <div class="card-header">
                                                         Información de Visita Domiciliaria
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="wrapper-relative-data mt-3">
-                                                            <div class="box-label lb-20">
-                                                                <p class="">Nombre:</p>
+                                                        <div class="wrapper-home-visit-data my-3">
+                                                            <div class="box-label lb-45">
+                                                                <p class="">Motivo de visita:</p>
                                                             </div>
-                                                            <div class="box-value vl-20">
-                                                                <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
+                                                            <div class="box-value vl-45">
+                                                                <p class="">{{ selected_home_visit_data.home_visit_type }}</p>
                                                             </div>
-                                                            <div class="box-label lb-21">
-                                                                <p class="">Parentesco:</p>
+                                                            <div class="box-label lb-46">
+                                                                <p class="">Fecha visita:</p>
                                                             </div>
-                                                            <div class="box-value vl-21">
-                                                                <p class="">{{ selected_relative_data.relationship }}</p>
+                                                            <div class="box-value vl-46">
+                                                                <p class="">{{ selected_home_visit_data.visit_date }}</p>
                                                             </div>
-                                                            <div class="box-label lb-22">
-                                                                <p class="">Sexo:</p>
+                                                            <div class="box-label lb-47">
+                                                                <p class="">Fecha próxima:</p>
                                                             </div>
-                                                            <div class="box-value vl-22">
-                                                                <p class="">{{ selected_relative_data.sex }}</p>
+                                                            <div class="box-value vl-47">
+                                                                <p class="">{{ selected_home_visit_data.next_visit_date }}</p>
                                                             </div>
-                                                            <div class="box-label lb-23">
-                                                                <p class="">Ocupación:</p>
+                                                            <div class="box-label lb-48">
+                                                                <p class="">Observaciones:</p>
                                                             </div>
-                                                            <div class="box-value vl-23">
-                                                                <p class="">{{ selected_relative_data.occupation }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-24">
-                                                                <p class="">Fecha de nacimiento:</p>
-                                                            </div>
-                                                            <div class="box-value vl-24">
-                                                                <p class="">{{ selected_relative_data.birth_date }}</p>
+                                                            <div class="box-value vl-48">
+                                                                <p class="">{{ selected_home_visit_data.observations ? selected_home_visit_data.observations : 'Ninguna' }}</p>
                                                             </div>
                                                         </div>
+                                                        <button v-if="selected_home_visit_data && selected_home_visit_data.report_url" @click="downloadHomeVisitReport(selected_home_visit_data.id)" class="mb-2 mr-2 btn-icon btn btn-primary">
+                                                            <font-awesome-icon :icon="['fas', 'download']" /> Descargar Reporte
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1433,21 +1343,207 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="card_selected == 'documents'" class="main-card mb-3 card">
-            <div class="card-body">
-                <p>Este es el card de Documentos</p>
+        <div v-else-if="card_selected == 'documents'">
+            <div class="row">
+                <div class="col-sm-12 col-xxl-6">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                <div class="content d-flex align-items-start p-2">
+                                    <p class="mb-0" style="font-size: 14px;"> Documento <strong>creado</strong> exitosamente!.</p>
+                                </div>
+                            </div>
+                            <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                                <div class="content d-flex align-items-start p-2">
+                                    <p class="mb-0" style="font-size: 14px;"> Documento <strong>actualizado</strong> exitosamente!.</p>
+                                </div>
+                            </div>
+                            <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
+                                <div class="content d-flex align-items-start p-2">
+                                    <p class="mb-0" style="font-size: 14px;"> Documento <strong>eliminado</strong> exitosamente!.</p>
+                                </div>
+                            </div>
+                            <div v-if="document_data && document_data.length>0" class="row"> 
+                                <div class="col-md-12 col-lg-6">
+                                    <a @click="addDocumentData" class="wrapper-add-data p-2 mb-3" :class="(add_document_data && !edit_document_data) ? 'selected shadow' : ''">
+                                        <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                        <p>Agregar Documento</p>
+                                    </a>
+                                </div>
+                                <div v-for="(item, index) in document_data" class="col-md-12 col-lg-6">
+                                    <div class="wrapper-data mb-3 position-relative" :class="(selected_document_data && selected_document_data.id == item.id) ? 'selected shadow' : ''">
+                                        <div @click="changeDocumentData(item.id, index)" class="box box1">
+                                            <div class="preliminary-information">
+                                                <p class="data-position-one text-truncate w-100">{{ item.document_type  }}</p>
+                                                <!-- <p class="data-position-two text-truncate w-100">Fecha: {{ item.visit_date }}</p> -->
+                                                <p class="data-position-three text-truncate w-100">Observaciones: {{ item.observations ? item.observations : 'Ninguna' }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="box box2" style="display: flex; flex-direction: column; justify-content: space-between;">
+                                            <a class="edit-data" @click="editDocumentData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></a>
+                                            <a class="delete-data" @click="deleteDocumentData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'trash-can']" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="row">
+                                <div class="col-md-12">
+                                    <a @click="addDocumentData" class="wrapper-add-data p-2 mb-3" :class="(add_document_data && !edit_document_data) ? 'selected shadow' : ''">
+                                        <p><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                        <p>Agregar Documento</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
+                    <div v-if="add_document_data && !edit_document_data" class="">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <form @submit.prevent="storeDocumentData" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card-hover-shadow card-border mb-3 card frame-information-card">
+                                                <div class="card-header">
+                                                    Agregar Documento
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="document_type_id" class="form-label">Tipo de documento*</label>
+                                                                <select v-model="contractual_document_type_id" class="form-control" name="document_type_id" id="document_type_id">
+                                                                    <option value="" disabled selected hidden>Seleccionar Tipo de Documento</option>
+                                                                    <option v-for="document in contractual_documents_types" :value="document.id">{{ document.name }}</option>
+                                                                </select>
+                                                                <span v-if="errors_document_data && errors_document_data.document_type_id" class="error text-danger" for="document_type_id">{{ errors_document_data.document_type_id[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="document_observations" class="form-label">Observaciones</label>
+                                                                <input v-model="document_observations" name="document_observations" id="document_observations" type="text" class="form-control" placeholder="Ingrese observaciones">
+                                                                <span v-if="errors_document_data && errors_document_data.document_observations" class="error text-danger" for="document_observations">{{ errors_document_data.document_observations[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="document" class="form-label">Documento</label>
+                                                                <div class="input-group">
+                                                                    <input @change="onChangeDocument" type="file" name="document" id="document" class="form-control">
+                                                                </div>
+                                                                <span v-if="errors_document_data && errors_document_data.document" class="error text-danger" for="document">{{ errors_document_data.document[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else-if="!add_document_data && edit_document_data" class="">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <form @submit.prevent="updateDocumentData" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card-hover-shadow card-border mb-3 card frame-information-card">
+                                                <div class="card-header">
+                                                    Editar Documento
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="document_type_id" class="form-label">Tipo de documento*</label>
+                                                                <!-- <select v-model="contractual_document_type_id" class="form-control" name="document_type_id" id="document_type_id"> -->
+                                                                <select v-model="document_data_to_edit.document_type_id" class="form-control" name="document_type_id" id="document_type_id">
+                                                                    <option value="" disabled selected hidden>Seleccionar Tipo de Documento</option>
+                                                                    <option v-for="document in contractual_documents_types" :value="document.id">{{ document.name }}</option>
+                                                                </select>
+                                                                <span v-if="errors_document_data && errors_document_data.document_type_id" class="error text-danger" for="document_type_id">{{ errors_document_data.document_type_id[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="document_observations" class="form-label">Observaciones</label>
+                                                                <input v-model="document_data_to_edit.observations" name="document_observations" id="document_observations" type="text" class="form-control" placeholder="Ingrese observaciones">
+                                                                <span v-if="errors_document_data && errors_document_data.document_observations" class="error text-danger" for="document_observations">{{ errors_document_data.document_observations[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                                            <div class="position-relative mb-3">
+                                                                <label for="document" class="form-label">Documento</label>
+                                                                <div class="input-group">
+                                                                    <input @change="onChangeDocument" type="file" name="document" id="document" class="form-control">
+                                                                </div>
+                                                                <span v-if="errors_document_data && errors_document_data.document" class="error text-danger" for="document">{{ errors_document_data.document[0] }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else-if="!add_document_data && !edit_document_data && selected_document_data" class="">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-hover-shadow card-border mb-3 card frame-information-card">
+                                            <div class="card-header">
+                                                Información de Documento
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="wrapper-document-data my-3">
+                                                    <div class="box-label lb-49">
+                                                        <p class="">Tipo de documento:</p>
+                                                    </div>
+                                                    <div class="box-value vl-49">
+                                                        <p class="">{{ selected_document_data.document_type }}</p>
+                                                    </div>
+                                                    <div class="box-label lb-50">
+                                                        <p class="">Observaciones:</p>
+                                                    </div>
+                                                    <div class="box-value vl-50">
+                                                        <p class="">{{ selected_document_data.observations ? selected_document_data.observations : 'Ninguna' }}</p>
+                                                    </div>
+                                                </div>
+                                                <button v-if="selected_document_data && selected_document_data.document_url" @click="downloadDocument(selected_document_data.id)" class="mb-2 mr-2 btn-icon btn btn-primary">
+                                                    <font-awesome-icon :icon="['fas', 'download']" /> Descargar Documento
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import { FontAwesomeIconCore } from '@fortawesome/fontawesome-svg-core'
-// import { FontAwesomeIconBrand } from '@fortawesome/free-brands-svg-icons'
-// import { FontAwesomeIconRegular } from '@fortawesome/free-regular-svg-icons'
-// import { FontAwesomeIconSolid } from '@fortawesome/free-solid-svg-icons'
-
 export default {
     props: {
         collaborator: { default: null, },
@@ -1471,6 +1567,9 @@ export default {
         occupation_type: { default: null, },
         sex_types: { default: null, },
         achievement_types: { default: null, },
+        examination_types: { default: null, },
+        home_visit_types: { default: null, },
+        contractual_documents_types: { default: null, },
     },
     data() {
         return {
@@ -1493,6 +1592,21 @@ export default {
             end_date: '',
             certificate: null,
 
+            examination_type_id: '',
+            examination_date: '',
+            examination_result: '',
+            examination_observations: '',
+
+            home_visit_type_id: '',
+            visit_date: '',
+            next_visit_date: '',
+            home_visit_observations: '',
+            home_visit_report: null,
+
+            contractual_document_type_id: '',
+            document_observations: '',
+            document: null,
+
             contractual_information: '',
             position_id: '',
             salary: '',
@@ -1514,8 +1628,17 @@ export default {
             relatives_data: [],
             errors_relative_data: [],
 
-            academic_achivements_data: [],
+            academic_achievements_data: [],
             errors_academic_data: [],
+
+            medical_examination_data: [],
+            errors_medical_examination_data: [],
+
+            home_visit_data: [],
+            errors_home_visit_data: [],
+
+            document_data: [],
+            errors_document_data: [],
 
             add_relative_data: false,
             edit_relative_data: false,
@@ -1527,6 +1650,21 @@ export default {
             selected_academic_data: null,
             academic_data_to_edit: null,
 
+            add_medical_examination_data: false,
+            edit_medical_examination_data: false,
+            selected_medical_examination_data: null,
+            medical_examination_data_to_edit: null,
+
+            add_home_visit_data: false,
+            edit_home_visit_data: false,
+            selected_home_visit_data: null,
+            home_visit_data_to_edit: null,
+
+            add_document_data: false,
+            edit_document_data: false,
+            selected_document_data: null,
+            document_data_to_edit: null,
+
             successfully_created_message: false,
             successfully_updated_message: false,
             successfully_deleted_message: false,
@@ -1536,12 +1674,42 @@ export default {
         // this.getContractualInformation(this.collaborator.id)
         this.getRelativesData(this.collaborator.id)
         this.getAcademicData(this.collaborator.id)
+        this.getMedicalExaminationData(this.collaborator.id)
+        this.getHomeVisitData(this.collaborator.id)
+        this.getDocumentData(this.collaborator.id)
     },
     methods: {
         downloadAcademicCertificate(academic_achievement_id) {
             axios.get(`/download-academic-certificate/${academic_achievement_id}`)
             .then(response => {
                 window.open(response.data.certificate_download_url, '_blank');
+            })
+            .catch(e => {
+                console.error('Error:', e); 
+            })
+        },
+        downloadMedicalExaminationResult(medical_examination_id) {
+            axios.get(`/download-medical-examination-result/${medical_examination_id}`)
+            .then(response => {
+                window.open(response.data.result_download_url, '_blank');
+            })
+            .catch(e => {
+                console.error('Error:', e); 
+            })
+        },
+        downloadHomeVisitReport(home_visit_id) {
+            axios.get(`/download-home-visit-report/${home_visit_id}`)
+            .then(response => {
+                window.open(response.data.report_download_url, '_blank');
+            })
+            .catch(e => {
+                console.error('Error:', e); 
+            })
+        },
+        downloadDocument(document_id) {
+            axios.get(`/download-document/${document_id}`)
+            .then(response => {
+                window.open(response.data.document_download_url, '_blank');
             })
             .catch(e => {
                 console.error('Error:', e); 
@@ -1596,6 +1764,9 @@ export default {
             this.sex_type_id = ''
             this.birth_date = ''
 
+            this.selected_relative_data = null
+            this.errors_relative_data = []
+
             this.successfully_created_message = false
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
@@ -1616,6 +1787,75 @@ export default {
             this.end_date = ''
             this.certificate = null
 
+            this.selected_academic_data = null
+            this.errors_academic_data = []
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
+        addMedicalExaminationData() {
+            if(this.add_medical_examination_data == false) {
+                this.add_medical_examination_data = true
+                this.edit_medical_examination_data = false
+            } else {
+                this.edit_medical_examination_data = false
+            }
+
+            this.selected_medical_examination_data = null
+
+            this.examination_type_id = ''
+            this.examination_date = ''
+            this.examination_observations = ''
+            this.examination_result = null
+
+            this.selected_medical_examination_data = null
+            this.errors_medical_examination_data = []
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
+        addHomeVisitData() {
+            if(this.add_home_visit_data == false) {
+                this.add_home_visit_data = true
+                this.edit_home_visit_data = false
+            } else {
+                this.edit_home_visit_data = false
+            }
+
+            this.selected_home_visit_data = null
+
+            this.home_visit_type_id = ''
+            this.visit_date = ''
+            this.next_visit_date = ''
+            this.home_visit_observations = ''
+            this.home_visit_report = null
+
+            this.selected_home_visit_data = null
+            this.errors_home_visit_data = []
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
+        addDocumentData() {
+            if(this.add_document_data == false) {
+                this.add_document_data = true
+                this.edit_document_data = false
+            } else {
+                this.edit_document_data = false
+            }
+
+            this.selected_document_data = null
+
+            this.document_type_id = ''
+            this.document_observations = ''
+            this.document = null
+
+            this.selected_document_data = null
+            this.errors_document_data = []
+
             this.successfully_created_message = false
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
@@ -1632,11 +1872,59 @@ export default {
         getAcademicData(collaborator_id) {
             axios.get(`/academic-data/${collaborator_id}`)
             .then(response => {
-                this.academic_achivements_data = response.data.academic_achivements_data;
+                this.academic_achievements_data = response.data.academic_achievements_data;
             })
             .catch(e => {
                 console.error('Error:', e);  
             })
+        },
+        getMedicalExaminationData(collaborator_id) {
+            axios.get(`/medical-examination-data/${collaborator_id}`)
+            .then(response => {
+                this.medical_examination_data = response.data.medical_examination_data;
+            })
+            .catch(e => {
+                console.error('Error:', e);  
+            })
+        },
+        getHomeVisitData(collaborator_id) {
+            axios.get(`/home-visit-data/${collaborator_id}`)
+            .then(response => {
+                this.home_visit_data = response.data.home_visit_data;
+            })
+            .catch(e => {
+                console.error('Error:', e);  
+            })
+        },
+        getDocumentData(collaborator_id) {
+            axios.get(`/document-data/${collaborator_id}`)
+            .then(response => {
+                this.document_data = response.data.document_data;
+            })
+            .catch(e => {
+                console.error('Error:', e);  
+            })
+        },
+        change_tab_additional_info_status(status) {
+            this.tab_additional_info_status = status
+
+            this.add_relative_data = false
+            this.edit_relative_data = false
+            this.add_academic_data = false
+            this.edit_academic_data = false
+            this.add_medical_examination_data = false
+            this.edit_medical_examination_data = false
+            this.add_home_visit_data = false
+            this.edit_home_visit_data = false
+
+            this.selected_relative_data = null
+            this.selected_academic_data = null
+            this.selected_medical_examination_data = null
+            this.selected_home_visit_data = null
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
         },
         changeRelativeData(id, index) {
             let new_selection_relative_data;
@@ -1663,8 +1951,8 @@ export default {
         changeAcademicData(id, index) {
             let new_selection_academic_data;
 
-            if(this.academic_achivements_data && this.academic_achivements_data.length>0) {
-                this.academic_achivements_data.forEach(element => {
+            if(this.academic_achievements_data && this.academic_achievements_data.length>0) {
+                this.academic_achievements_data.forEach(element => {
                     if(element.id !== id) {
                         
                     } else {
@@ -1681,6 +1969,84 @@ export default {
             this.successfully_created_message = false
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
+        },
+        changeMedicalExaminationData(id, index) {
+            let new_selection_medical_examination_data;
+
+            if(this.medical_examination_data && this.medical_examination_data.length>0) {
+                this.medical_examination_data.forEach(element => {
+                    if(element.id !== id) {
+                        
+                    } else {
+                        new_selection_medical_examination_data = element
+                    }
+                }, new_selection_medical_examination_data);
+            }
+
+            this.selected_medical_examination_data = new_selection_medical_examination_data
+
+            this.add_medical_examination_data = false
+            this.edit_medical_examination_data = false
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
+        changeHomeVisitData(id, index) {
+            let new_selection_home_visit_data;
+
+            if(this.home_visit_data && this.home_visit_data.length>0) {
+                this.home_visit_data.forEach(element => {
+                    if(element.id !== id) {
+                        
+                    } else {
+                        new_selection_home_visit_data = element
+                    }
+                }, new_selection_home_visit_data);
+            }
+
+            this.selected_home_visit_data = new_selection_home_visit_data
+
+            this.add_home_visit_data = false
+            this.edit_home_visit_data = false
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
+        changeDocumentData(id, index) {
+            let new_selection_document_data;
+
+            if(this.document_data && this.document_data.length>0) {
+                this.document_data.forEach(element => {
+                    if(element.id !== id) {
+                        
+                    } else {
+                        new_selection_document_data = element
+                    }
+                }, new_selection_document_data);
+            }
+
+            this.selected_document_data = new_selection_document_data
+
+            this.add_document_data = false
+            this.edit_document_data = false
+
+            this.successfully_created_message = false
+            this.successfully_updated_message = false
+            this.successfully_deleted_message = false
+        },
+        onChangeCertificate(e) {
+            this.certificate = e.target.files[0]
+        },
+        onChangeExaminationResult(e) {
+            this.examination_result = e.target.files[0]
+        },
+        onChangeHomeVisitReport(e) {
+            this.home_visit_report = e.target.files[0]
+        },
+        onChangeDocument(e) {
+            this.document = e.target.files[0]
         },
         storeRelativeData() {
 
@@ -1707,6 +2073,12 @@ export default {
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = false
 
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
                     this.errors_relative_data = null
                 }).catch(
                 (error) => {
@@ -1714,9 +2086,6 @@ export default {
                         this.errors_relative_data = error.response.data.errors
                     }
                 })
-        },
-        onChangeCertificate(e) {
-            this.certificate = e.target.files[0]
         },
         storeAcademicData() {
             let fd = new FormData()
@@ -1732,7 +2101,7 @@ export default {
             axios.post('/academic-data', fd).then(
                 (response) => {
                     this.getAcademicData(this.collaborator.id)
-                    this.academic_achivements_data = response.data.academic_achivements_data;
+                    this.academic_achievements_data = response.data.academic_achievements_data;
                     this.add_academic_data = false
                     this.edit_academic_data = false
 
@@ -1740,11 +2109,124 @@ export default {
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = false
 
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
                     this.errors_academic_data = null
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
                         this.errors_academic_data = error.response.data.errors
+                    }
+                })
+        },
+        storeMedicalExaminationData() {
+            let fd = new FormData()
+
+            fd.append('collaborator_id', this.collaborator.id)
+            fd.append('examination_type_id', this.examination_type_id)
+            fd.append('examination_date', this.examination_date)
+            fd.append('examination_result', this.examination_result)
+            fd.append('examination_observations', this.examination_observations)
+
+            let url = ''
+            axios.post('/medical-examination-data', fd).then(
+                (response) => {
+                    this.getMedicalExaminationData(this.collaborator.id)
+                    this.medical_examination_data = response.data.medical_examination_data;
+                    this.add_medical_examination_data = false
+                    this.edit_medical_examination_data = false
+
+                    this.successfully_created_message = true
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = false
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.errors_medical_examination_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_medical_examination_data = error.response.data.errors
+                    }
+                })
+        },
+        storeHomeVisitData() {
+            let fd = new FormData()
+
+            fd.append('collaborator_id', this.collaborator.id)
+            fd.append('home_visit_type_id', this.home_visit_type_id)
+            fd.append('visit_date', this.visit_date)
+            fd.append('next_visit_date', this.next_visit_date)
+            fd.append('home_visit_observations', this.home_visit_observations)
+            fd.append('home_visit_report', this.home_visit_report)
+
+            let url = ''
+            axios.post('/home-visit-data', fd).then(
+                (response) => {
+                    this.getHomeVisitData(this.collaborator.id)
+                    this.home_visit_data = response.data.home_visit_data;
+                    this.add_home_visit_data = false
+                    this.edit_home_visit_data = false
+
+                    this.successfully_created_message = true
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = false
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.errors_home_visit_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_home_visit_data = error.response.data.errors
+                    }
+                })
+        },
+        storeDocumentData() {
+            let fd = new FormData()
+
+            fd.append('collaborator_id', this.collaborator.id)
+            fd.append('document_type_id', this.contractual_document_type_id)
+            fd.append('document_observations', this.document_observations)
+            if(this.document) {
+                fd.append('document', this.document)
+            }
+
+            let url = ''
+            axios.post('/document-data', fd).then(
+                (response) => {
+                    this.getDocumentData(this.collaborator.id)
+                    this.document_data = response.data.document_data;
+                    this.add_document_data = false
+                    this.edit_document_data = false
+
+                    this.successfully_created_message = true
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = false
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.errors_document_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_document_data = error.response.data.errors
                     }
                 })
         },
@@ -1774,13 +2256,14 @@ export default {
             this.occupation_type_id = item.occupation_id
             this.sex_type_id = item.sex_id
             this.birth_date = item.birth_date
-            
+
+            this.errors_relative_data = null
         },
         editAcademicData(item, index) {
             let new_selection_academic_data;
             
-            if(this.academic_achivements_data && this.academic_achivements_data.length>0) {
-                this.academic_achivements_data.forEach(element => {
+            if(this.academic_achievements_data && this.academic_achievements_data.length>0) {
+                this.academic_achievements_data.forEach(element => {
                     if(element.id !== item.id) {
                         
                     } else {
@@ -1802,6 +2285,84 @@ export default {
             this.certificate = null
             
             this.errors_academic_data = null
+        },       
+        editMedicalExaminationData(item, index) {
+            let new_selection_medical_examination_data;
+            
+            if(this.medical_examination_data && this.medical_examination_data.length>0) {
+                this.medical_examination_data.forEach(element => {
+                    if(element.id !== item.id) {
+                        
+                    } else {
+                        new_selection_medical_examination_data = element
+                    }
+                }, new_selection_medical_examination_data);
+            }
+            this.selected_medical_examination_data = new_selection_medical_examination_data
+
+            this.medical_examination_data_to_edit = item
+
+            this.add_medical_examination_data = false
+            this.edit_medical_examination_data = true
+
+            this.examination_type_id = item.examination_type_id
+            this.examination_date = item.examination_date
+            this.examination_observations = item.examination_observations
+            this.examination_result = null
+            
+            this.errors_medical_examination_data = null
+        },
+        editHomeVisitData(item, index) {
+            let new_selection_home_visit_data;
+            
+            if(this.home_visit_data && this.home_visit_data.length>0) {
+                this.home_visit_data.forEach(element => {
+                    if(element.id !== item.id) {
+                        
+                    } else {
+                        new_selection_home_visit_data = element
+                    }
+                }, new_selection_home_visit_data);
+            }
+            this.selected_home_visit_data = new_selection_home_visit_data
+
+            this.home_visit_data_to_edit = item
+
+            this.add_home_visit_data = false
+            this.edit_home_visit_data = true
+
+            this.home_visit_type_id = item.home_visit_type_id
+            this.visit_date = item.visit_date
+            this.next_visit_date = item.next_visit_date
+            this.home_visit_observations = item.observations
+            this.home_visit_report = null
+            
+            this.errors_home_visit_data = null
+        },
+        editDocumentData(item, index) {
+            let new_selection_document_data;
+            
+            if(this.document_data && this.document_data.length>0) {
+                this.document_data.forEach(element => {
+                    if(element.id !== item.id) {
+                        
+                    } else {
+                        new_selection_document_data = element
+                    }
+                }, new_selection_document_data);
+            }
+            this.selected_document_data = new_selection_document_data
+
+            this.document_data_to_edit = item
+
+            this.add_document_data = false
+            this.edit_document_data = true
+
+            this.document_type_id = item.document_type_id
+            this.document_observations = item.observations
+            this.document = null
+            
+            this.errors_document_data = null
         },
         updateRelativeData(){
             let dataSend = {
@@ -1821,12 +2382,20 @@ export default {
                 (response) => {
                     this.getRelativesData(this.collaborator.id)
 
+                    this.selected_relative_data = null
+
                     this.add_relative_data = false
                     this.edit_relative_data = false
 
                     this.successfully_created_message = false
                     this.successfully_updated_message = true
                     this.successfully_deleted_message = false
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
 
                     this.errors_academic_data = null
                 }).catch(
@@ -1852,6 +2421,8 @@ export default {
                 (response) => {
                     this.getAcademicData(this.collaborator.id)
 
+                    this.selected_academic_data = null
+
                     this.add_academic_data = false
                     this.edit_academic_data = false
 
@@ -1859,11 +2430,131 @@ export default {
                     this.successfully_updated_message = true
                     this.successfully_deleted_message = false
 
-                    this.errors_personal_data = null
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.errors_academic_data = null
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
                         this.errors_academic_data = error.response.data.errors
+                    }
+                })
+        },
+        updateMedicalExaminationData(){
+            let fd = new FormData()
+
+            fd.append('collaborator_id', this.collaborator.id)
+            fd.append('examination_type_id', this.examination_type_id)
+            fd.append('examination_date', this.examination_date)
+            fd.append('examination_observations', this.examination_observations)
+            fd.append('examination_result', this.examination_result)
+            fd.append('_method', 'PUT')
+
+            let url = ''
+            axios.post(`/medical-examination-data-update/${this.medical_examination_data_to_edit.id}`, fd).then(
+                (response) => {
+                    this.getMedicalExaminationData(this.collaborator.id)
+
+                    this.selected_medical_examination_data = null
+
+                    this.add_medical_examination_data = false
+                    this.edit_medical_examination_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = true
+                    this.successfully_deleted_message = false
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.errors_medical_examination_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_medical_examination_data = error.response.data.errors
+                    }
+                })
+        },
+        updateHomeVisitData(){
+            let fd = new FormData()
+
+            fd.append('collaborator_id', this.collaborator.id)
+            fd.append('home_visit_type_id', this.home_visit_type_id)
+            fd.append('visit_date', this.visit_date)
+            fd.append('next_visit_date', this.next_visit_date)
+            fd.append('home_visit_observations', this.home_visit_observations)
+            fd.append('home_visit_report', this.home_visit_report)
+            fd.append('_method', 'PUT')
+
+            let url = ''
+            axios.post(`/home-visit-data-update/${this.home_visit_data_to_edit.id}`, fd).then(
+                (response) => {
+                    this.getHomeVisitData(this.collaborator.id)
+
+                    this.selected_home_visit_data = null
+
+                    this.add_home_visit_data = false
+                    this.edit_home_visit_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = true
+                    this.successfully_deleted_message = false
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.errors_home_visit_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_home_visit_data = error.response.data.errors
+                    }
+                })
+        },
+        updateDocumentData(){
+            let fd = new FormData()
+
+            fd.append('collaborator_id', this.collaborator.id)
+            fd.append('document_type_id', this.document_data_to_edit.document_type_id)
+            fd.append('document_observations', this.document_data_to_edit.observations != null ? this.document_data_to_edit.observations : '')
+            fd.append('document', this.document)
+            fd.append('_method', 'PUT')
+
+            let url = ''
+            axios.post(`/document-data-update/${this.document_data_to_edit.id}`, fd).then(
+                (response) => {
+                    this.getDocumentData(this.collaborator.id)
+
+                    this.selected_document_data = null
+
+                    this.add_document_data = false
+                    this.edit_document_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = true
+                    this.successfully_deleted_message = false
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.errors_document_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_document_data = error.response.data.errors
                     }
                 })
         },
@@ -1880,11 +2571,131 @@ export default {
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = true
 
-                    this.errors_personal_data = null
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.selected_relative_data = null
+
+                    this.errors_relative_data = null
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        this.errors_personal_data = error.response.data.errors
+                        this.errors_relative_data = error.response.data.errors
+                    }
+                })
+        },
+        deleteAcademicData(item, index) {
+            axios.delete(`/academic-data-delete/${item.id}`).then(
+                (response) => {
+                    this.getAcademicData(this.collaborator.id)
+
+                    this.add_academic_data = false
+                    this.edit_academic_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = true
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.selected_academic_data = null
+
+                    this.errors_academic_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_academic_data = error.response.data.errors
+                    }
+                })
+        },
+        deleteMedicalExaminationData(item, index) {
+            axios.delete(`/medical-examination-data-delete/${item.id}`).then(
+                (response) => {
+                    this.getMedicalExaminationData(this.collaborator.id)
+
+                    this.add_medical_examination_data = false
+                    this.edit_medical_examination_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = true
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.selected_medical_examination_data = null
+
+                    this.errors_medical_examination_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_medical_examination_data = error.response.data.errors
+                    }
+                })
+        },
+        deleteHomeVisitData(item, index) {
+            axios.delete(`/home-visit-data-delete/${item.id}`).then(
+                (response) => {
+                    this.getHomeVisitData(this.collaborator.id)
+
+                    this.add_home_visit_data = false
+                    this.edit_home_visit_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = true
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.selected_home_visit_data = null
+
+                    this.errors_home_visit_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_home_visit_data = error.response.data.errors
+                    }
+                })
+        },
+        deleteDocumentData(item, index) {
+            axios.delete(`/document-data-delete/${item.id}`).then(
+                (response) => {
+                    this.getDocumentData(this.collaborator.id)
+
+                    this.add_document_data = false
+                    this.edit_document_data = false
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = true
+
+                    setTimeout(() => {
+                        this.successfully_created_message = false
+                        this.successfully_updated_message = false
+                        this.successfully_deleted_message = false
+                    }, 5000);
+
+                    this.selected_document_data = null
+
+                    this.errors_document_data = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors_document_data = error.response.data.errors
                     }
                 })
         },
@@ -1913,461 +2724,5 @@ export default {
 </script>
 
 <style scoped>
-
-.main-card {
-    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
-    padding: 0px;
-    border-radius: 5px;
-    background-color: #ffffff;
-    margin-bottom: 10px;
-}
-
-.main-card .wrapper-basic,
-.main-card .wrapper-address,
-.main-card .wrapper-contact,
-.main-card .wrapper-relative-data,
-.main-card .wrapper-academic-data,
-.main-card .wrapper-contract-information {
-    display: grid;
-    grid-gap: 1px;
-    /* background-color: #dee2e6; */
-    background-color: #555f78;
-    /* border: 1px solid #dee2e6; */
-    border: 1px solid #555f78;
-}
-
-.add-relative-card,
-.edit-relative-card {
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-}
-
-@media screen and (min-width: 300px) {
-    .main-card .wrapper-basic {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-1" "vl-1" "lb-2" "vl-2" "lb-3" "vl-3" "lb-4" "vl-4" "lb-5" "vl-5" "lb-6" "vl-6" "lb-7" "vl-7" "lb-8" "vl-8" "lb-9" "vl-9" "lb-10" "vl-10" "lb-11" "vl-11" "lb-12" "vl-12";
-    }
-
-    .main-card .wrapper-address {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-13" "vl-13" "lb-14" "vl-14" "lb-15" "vl-15" "lb-16" "vl-16";
-    }
-
-    .main-card .wrapper-contact {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-17" "vl-17" "lb-18" "vl-18" "lb-19" "vl-19";
-    }
-
-    .main-card .wrapper-relative-data {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-20" "vl-20" "lb-21" "vl-21" "lb-22" "vl-22" "lb-23" "vl-23" "lb-24" "vl-24";
-    }
-
-    .main-card .wrapper-academic-data {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-38" "vl-38" "lb-39" "vl-39" "lb-40" "vl-40" "lb-41" "vl-41";
-    }
-
-    .main-card .wrapper-contract-information {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-25" "vl-25" 
-                                "lb-26" "vl-26" 
-                                "lb-27" "vl-27" 
-                                "lb-28" "vl-28" 
-                                "lb-29" "vl-29" 
-                                "lb-30" "vl-30" 
-                                "lb-31" "vl-31" 
-                                "lb-32" "vl-32" 
-                                "lb-33" "vl-33" 
-                                "lb-34" "vl-34" 
-                                "lb-35" "vl-35" 
-                                "lb-36" "vl-36" 
-                                "lb-37" "vl-37"
-                                ;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .main-card .wrapper-basic {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-1 lb-1 lb-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1"
-                                "lb-2 lb-2 lb-2 vl-2 vl-2 vl-2 lb-3 lb-3 lb-3 vl-3 vl-3 vl-3"
-                                "lb-4 lb-4 lb-4 vl-4 vl-4 vl-4 lb-5 lb-5 lb-5 vl-5 vl-5 vl-5"
-                                "lb-6 lb-6 lb-6 vl-6 vl-6 vl-6 lb-7 lb-7 lb-7 vl-7 vl-7 vl-7"
-                                "lb-8 lb-8 lb-8 vl-8 vl-8 vl-8 lb-9 lb-9 lb-9 vl-9 vl-9 vl-9"
-                                "lb-10 lb-10 lb-10 vl-10 vl-10 vl-10 lb-11 lb-11 lb-11 vl-11 vl-11 vl-11"
-                                "lb-12 lb-12 lb-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12"
-        ;
-    }
-
-    .main-card .wrapper-address {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-13 vl-13 vl-13 vl-13"
-                                "lb-14 vl-14 vl-14 vl-14"
-                                "lb-15 vl-15 vl-15 vl-15"
-                                "lb-16 vl-16 vl-16 vl-16"
-        ;
-    }
-
-    .main-card .wrapper-contact {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-17 vl-17 vl-17 vl-17"
-                                "lb-18 vl-18 vl-18 vl-18"
-                                "lb-19 vl-19 vl-19 vl-19"
-        ;
-    }
-
-    .main-card .wrapper-relative-data {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-20 vl-20 vl-20 vl-20"
-                                "lb-21 vl-21 vl-21 vl-21"
-                                "lb-22 vl-22 vl-22 vl-22"
-                                "lb-23 vl-23 vl-23 vl-23"
-                                "lb-24 vl-24 vl-24 vl-24"
-        ;
-    }
-
-    .main-card .wrapper-academic-data {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-38 vl-38 vl-38 vl-38"
-                                "lb-39 vl-39 vl-39 vl-39"
-                                "lb-40 vl-40 vl-40 vl-40"
-                                "lb-41 vl-41 vl-41 vl-41"
-        ;
-    }
-
-    .main-card .wrapper-contract-information {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25"
-                                "lb-26 lb-26 lb-26 vl-26 vl-26 vl-26 lb-27 lb-27 lb-27 vl-27 vl-27 vl-27"
-                                "lb-28 lb-28 lb-28 vl-28 vl-28 vl-28 lb-29 lb-29 lb-29 vl-29 vl-29 vl-29"
-                                "lb-30 lb-30 lb-30 vl-30 vl-30 vl-30 lb-31 lb-31 lb-31 vl-31 vl-31 vl-31"
-                                "lb-32 lb-32 lb-32 vl-32 vl-32 vl-32 lb-33 lb-33 lb-33 vl-33 vl-33 vl-33"
-                                "lb-34 lb-34 lb-34 vl-34 vl-34 vl-34 lb-35 lb-35 lb-35 vl-35 vl-35 vl-35"
-                                "lb-36 lb-36 lb-36 vl-36 vl-36 vl-36 lb-37 lb-37 lb-37 vl-37 vl-37 vl-37"
-        ;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .main-card .wrapper-basic {
-        grid-template-columns: repeat(24, 1fr);
-        grid-template-areas:    "lb-1 lb-1 lb-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 lb-2 lb-2 lb-2 vl-2 vl-2 vl-2 lb-3 lb-3 lb-3 vl-3 vl-3 vl-3"
-                                "lb-4 lb-4 lb-4 vl-4 vl-4 vl-4 lb-5 lb-5 lb-5 vl-5 vl-5 vl-5 lb-6 lb-6 lb-6 vl-6 vl-6 vl-6 lb-7 lb-7 lb-7 vl-7 vl-7 vl-7"
-                                "lb-8 lb-8 lb-8 vl-8 vl-8 vl-8 lb-9 lb-9 lb-9 vl-9 vl-9 vl-9 lb-10 lb-10 lb-10 vl-10 vl-10 vl-10 lb-11 lb-11 lb-11 vl-11 vl-11 vl-11"
-                                "lb-12 lb-12 lb-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12"
-        ;
-    }
-
-    .main-card .wrapper-address {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-13 lb-13 lb-13 vl-13 vl-13 vl-13 lb-14 lb-14 lb-14 vl-14 vl-14 vl-14"
-                                "lb-15 lb-15 lb-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15"
-                                "lb-16 lb-16 lb-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16"
-        ;
-    }
-
-    .main-card .wrapper-contact {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-17 lb-17 lb-17 vl-17 vl-17 vl-17 lb-18 lb-18 lb-18 vl-18 vl-18 vl-18"
-                                "lb-19 lb-19 lb-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19"
-        ;
-    }
-
-    .main-card .wrapper-relative-data {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-20 lb-20 lb-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20"
-                                "lb-21 lb-21 lb-21 vl-21 vl-21 vl-21 lb-22 lb-22 lb-22 vl-22 vl-22 vl-22"
-                                "lb-23 lb-23 lb-23 vl-23 vl-23 vl-23 lb-24 lb-24 lb-24 vl-24 vl-24 vl-24"
-        ;
-    }
-
-    .main-card .wrapper-academic-data {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-38 lb-38 lb-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38 vl-38"
-                                "lb-39 lb-39 lb-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39 vl-39"
-                                "lb-40 lb-40 lb-40 vl-40 vl-40 vl-40 lb-41 lb-41 lb-41 vl-41 vl-41 vl-41"
-        ;
-    }
-
-    .main-card .wrapper-contract-information {
-        grid-template-columns: repeat(24, 1fr);
-        grid-template-areas:    "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 vl-25 lb-26 lb-26 lb-26 vl-26 vl-26 vl-26 lb-27 lb-27 lb-27 vl-27 vl-27 vl-27"
-                                "lb-28 lb-28 lb-28 vl-28 vl-28 vl-28 lb-29 lb-29 lb-29 vl-29 vl-29 vl-29 lb-30 lb-30 lb-30 vl-30 vl-30 vl-30 lb-31 lb-31 lb-31 vl-31 vl-31 vl-31"
-                                "lb-32 lb-32 lb-32 vl-32 vl-32 vl-32 lb-33 lb-33 lb-33 vl-33 vl-33 vl-33 lb-34 lb-34 lb-34 vl-34 vl-34 vl-34 lb-35 lb-35 lb-35 vl-35 vl-35 vl-35"
-                                "lb-36 lb-36 lb-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 lb-37 lb-37 lb-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37 vl-37"
-        ;
-    }
-}
-
-.main-card .wrapper-basic .box-label,
-.main-card .wrapper-address .box-label,
-.main-card .wrapper-contact .box-label,
-.main-card .wrapper-relative-data .box-label,
-.main-card .wrapper-academic-data .box-label,
-.main-card .wrapper-contract-information .box-label {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: #e0f3ff;
-    /* background-color: #444054; */
-    padding: 5px;
-    color: #6c757d;
-    /* color: #fff; */
-    font-weight: bold;
-}
-
-.main-card .wrapper-basic .box-label p,
-.main-card .wrapper-address .box-label p,
-.main-card .wrapper-contact .box-label p,
-.main-card .wrapper-relative-data .box-label p,
-.main-card .wrapper-academic-data .box-label p,
-.main-card .wrapper-contract-information .box-label p {
-    margin: 0;
-}
-
-.main-card .wrapper-basic .box-value,
-.main-card .wrapper-address .box-value,
-.main-card .wrapper-contact .box-value,
-.main-card .wrapper-relative-data .box-value,
-.main-card .wrapper-academic-data .box-value,
-.main-card .wrapper-contract-information .box-value {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
-    padding: 5px;
-    text-align: center;
-}
-
-.main-card .wrapper-basic .box-value p,
-.main-card .wrapper-address .box-value p,
-.main-card .wrapper-contact .box-value p,
-.main-card .wrapper-relative-data .box-value p,
-.main-card .wrapper-academic-data .box-value p,
-.main-card .wrapper-contract-information .box-value p {
-    margin: 0;
-}
-
-.main-card .wrapper-basic .lb-1 { grid-area: lb-1; }
-.main-card .wrapper-basic .vl-1 { grid-area: vl-1; }
-.main-card .wrapper-basic .lb-2 { grid-area: lb-2; }
-.main-card .wrapper-basic .vl-2 { grid-area: vl-2; }
-.main-card .wrapper-basic .lb-3 { grid-area: lb-3; }
-.main-card .wrapper-basic .vl-3 { grid-area: vl-3; }
-.main-card .wrapper-basic .lb-4 { grid-area: lb-4; }
-.main-card .wrapper-basic .vl-4 { grid-area: vl-4; }
-.main-card .wrapper-basic .lb-5 { grid-area: lb-5; }
-.main-card .wrapper-basic .vl-5 { grid-area: vl-5; }
-.main-card .wrapper-basic .lb-6 { grid-area: lb-6; }
-.main-card .wrapper-basic .vl-6 { grid-area: vl-6; }
-.main-card .wrapper-basic .lb-7 { grid-area: lb-7; }
-.main-card .wrapper-basic .vl-7 { grid-area: vl-7; }
-.main-card .wrapper-basic .lb-8 { grid-area: lb-8; }
-.main-card .wrapper-basic .vl-8 { grid-area: vl-8; }
-.main-card .wrapper-basic .lb-9 { grid-area: lb-9; }
-.main-card .wrapper-basic .vl-9 { grid-area: vl-9; }
-.main-card .wrapper-basic .lb-10 { grid-area: lb-10; }
-.main-card .wrapper-basic .vl-10 { grid-area: vl-10; }
-.main-card .wrapper-basic .lb-11 { grid-area: lb-11; }
-.main-card .wrapper-basic .vl-11 { grid-area: vl-11; }
-.main-card .wrapper-basic .lb-12 { grid-area: lb-12; }
-.main-card .wrapper-basic .vl-12 { grid-area: vl-12; }
-
-
-.main-card .wrapper-address .lb-13 { grid-area: lb-13; }
-.main-card .wrapper-address .vl-13 { grid-area: vl-13; }
-.main-card .wrapper-address .lb-14 { grid-area: lb-14; }
-.main-card .wrapper-address .vl-14 { grid-area: vl-14; }
-.main-card .wrapper-address .lb-15 { grid-area: lb-15; }
-.main-card .wrapper-address .vl-15 { grid-area: vl-15; }
-.main-card .wrapper-address .lb-16 { grid-area: lb-16; }
-.main-card .wrapper-address .vl-16 { grid-area: vl-16; }
-
-
-.main-card .wrapper-contact .lb-17 { grid-area: lb-17; }
-.main-card .wrapper-contact .vl-17 { grid-area: vl-17; }
-.main-card .wrapper-contact .lb-18 { grid-area: lb-18; }
-.main-card .wrapper-contact .vl-18 { grid-area: vl-18; }
-.main-card .wrapper-contact .lb-19 { grid-area: lb-19; }
-.main-card .wrapper-contact .vl-19 { grid-area: vl-19; }
-
-.main-card .wrapper-relative-data .lb-20 { grid-area: lb-20; }
-.main-card .wrapper-relative-data .vl-20 { grid-area: vl-20; }
-.main-card .wrapper-relative-data .lb-21 { grid-area: lb-21; }
-.main-card .wrapper-relative-data .vl-21 { grid-area: vl-21; }
-.main-card .wrapper-relative-data .lb-22 { grid-area: lb-22; }
-.main-card .wrapper-relative-data .vl-22 { grid-area: vl-22; }
-.main-card .wrapper-relative-data .lb-23 { grid-area: lb-23; }
-.main-card .wrapper-relative-data .vl-23 { grid-area: vl-23; }
-.main-card .wrapper-relative-data .lb-24 { grid-area: lb-24; }
-.main-card .wrapper-relative-data .vl-24 { grid-area: vl-24; }
-
-.main-card .wrapper-contract-information .lb-25 { grid-area: lb-25; }
-.main-card .wrapper-contract-information .vl-25 { grid-area: vl-25; }
-.main-card .wrapper-contract-information .lb-26 { grid-area: lb-26; }
-.main-card .wrapper-contract-information .vl-26 { grid-area: vl-26; }
-.main-card .wrapper-contract-information .lb-27 { grid-area: lb-27; }
-.main-card .wrapper-contract-information .vl-27 { grid-area: vl-27; }
-.main-card .wrapper-contract-information .lb-28 { grid-area: lb-28; }
-.main-card .wrapper-contract-information .vl-28 { grid-area: vl-28; }
-.main-card .wrapper-contract-information .lb-29 { grid-area: lb-29; }
-.main-card .wrapper-contract-information .vl-29 { grid-area: vl-29; }
-.main-card .wrapper-contract-information .lb-30 { grid-area: lb-30; }
-.main-card .wrapper-contract-information .vl-30 { grid-area: vl-30; }
-.main-card .wrapper-contract-information .lb-31 { grid-area: lb-31; }
-.main-card .wrapper-contract-information .vl-31 { grid-area: vl-31; }
-.main-card .wrapper-contract-information .lb-32 { grid-area: lb-32; }
-.main-card .wrapper-contract-information .vl-32 { grid-area: vl-32; }
-.main-card .wrapper-contract-information .lb-33 { grid-area: lb-33; }
-.main-card .wrapper-contract-information .vl-33 { grid-area: vl-33; }
-.main-card .wrapper-contract-information .lb-34 { grid-area: lb-34; }
-.main-card .wrapper-contract-information .vl-34 { grid-area: vl-34; }
-.main-card .wrapper-contract-information .lb-35 { grid-area: lb-35; }
-.main-card .wrapper-contract-information .vl-35 { grid-area: vl-35; }
-.main-card .wrapper-contract-information .lb-36 { grid-area: lb-36; }
-.main-card .wrapper-contract-information .vl-36 { grid-area: vl-36; }
-.main-card .wrapper-contract-information .lb-37 { grid-area: lb-37; }
-.main-card .wrapper-contract-information .vl-37 { grid-area: vl-37; }
-
-.main-card .wrapper-academic-data .lb-38 { grid-area: lb-38; }
-.main-card .wrapper-academic-data .vl-38 { grid-area: vl-38; }
-.main-card .wrapper-academic-data .lb-39 { grid-area: lb-39; }
-.main-card .wrapper-academic-data .vl-39 { grid-area: vl-39; }
-.main-card .wrapper-academic-data .lb-40 { grid-area: lb-40; }
-.main-card .wrapper-academic-data .vl-40 { grid-area: vl-40; }
-.main-card .wrapper-academic-data .lb-41 { grid-area: lb-41; }
-.main-card .wrapper-academic-data .vl-41 { grid-area: vl-41; }
-
-
-/* INFORMACIÓN FAMILIAR */
-.wrapper-add-data {
-    border-radius: 8px;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-style: dashed;
-    height: 110px;
-    width: 100%;
-    border-width: 1px;
-    border-color: #3f6ad8;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    /* box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.10); */
-}
-
-.wrapper-add-data.selected {
-    border-width: 2px;
-}
-
-.wrapper-add-data p {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 22px;
-    color: #3f6ad8;
-    margin: 0px;
-}
-
-.wrapper-add-data.disabled-add {
-    border-color: #C7C7C7;
-}
-
-.wrapper-add-data.disabled-add p {
-    color: #C7C7C7;
-}
-
-.wrapper-data {
-    display: grid;
-    grid-template-columns: 90% 10%;
-    height: 110px;
-    padding: 16px;
-    background: #fff;
-    border: 1px solid #3f6ad8;
-    border-radius: 8px;
-}
-
-.wrapper-data.selected {
-    border: 2px solid #3f6ad8;
-    /* background-color: #f1f2ff; */
-    background-color: #e0f3ff;
-}
-
-tr.selected {
-    border: 2px solid #3f6ad8;
-    /* background-color: #f1f2ff; */
-    background-color: #e0f3ff;
-}
-
-.wrapper-data .box {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 5px;
-    width: 100%;
-}
-
-.wrapper-relative .box.box1 {
-    cursor: pointer;
-}
-
-.wrapper-relative .box.box2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    align-self: stretch;
-    width: 10%;
-}
-
-.wrapper-data .box.box1 .preliminary-information {
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    justify-content: space-between;
-    gap: 5px;
-    width: 90%;
-    cursor: pointer;
-}
-
-.wrapper-data .box.box1 .preliminary-information p {
-    margin: 0px;
-}
-
-.wrapper-data .box.box1 .preliminary-information p.data-position-one {
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 18px;
-    text-decoration: none;
-}
-
-.wrapper-data .box.box2 .edit-data {
-    cursor: pointer
-}
-
-.wrapper-data .box.box2 .delete-data {
-    cursor: pointer
-}
-
-.message-success {
-    width: 100%;
-    background: #D8FFDC;
-    border-radius: 4px;
-    padding: 10px;
-}
-
-.message-success .content {
-    align-items: flex-start;
-    justify-content: center;
-    border-left: 5px solid #00660A;
-}
-
-.message-success .content p {
-    font-size: 16px;
-    line-height: 16px;
-}
-
+    @import './../../assets/css/collaborator_show.css';
 </style>
