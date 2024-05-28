@@ -8,7 +8,7 @@
                 <i class="pe-7s-graph2 text-success"></i>
             </div>
             <div>
-                Perfil Sociodemográfico
+                Panel de Control
             </div>
         </div>
         <div class="page-title-actions">
@@ -34,8 +34,6 @@
     $company_id = auth()->user()->company_id;
 @endphp
 
-
-{{-- <collaborator-index :company_id="{{ $company_id }}" :collaborators="{{ $collaborators }}"></collaborator-index> --}}
-<sociodemographic-profile></sociodemographic-profile>
+<control-panel :company_id="{{ $company_id }}"></control-panel>
 
 @endsection

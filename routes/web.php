@@ -54,6 +54,14 @@ Route::group(['middleware' => 'auth'], function() {
 
 
     Route::get('/company/{company}', [CompanyController::class, 'companyShow'])->name('company.show');
+    Route::get('/gender-data/{company_id}', [CompanyController::class, 'getGenderData']);
+    Route::get('/civil-status-data/{company_id}', [CompanyController::class, 'getCivilStatusData']);
+    Route::get('/age-ranges-data/{company_id}', [CompanyController::class, 'getAgeRangesData']);
+    Route::get('/academic-level-data/{company_id}', [CompanyController::class, 'getAcademicLevelData']);
+    Route::get('/social-strata-data/{company_id}', [CompanyController::class, 'getSocialStrataData']);
+    Route::get('/length-service-data/{company_id}', [CompanyController::class, 'getLengthServiceData']);
+    Route::get('/get-next-birthdays/{company_id}', [CompanyController::class, 'getNextBirthdays']);
+    Route::get('/get-expiring-contracts/{company_id}', [CompanyController::class, 'getExpiringContracts']);
 
 
 

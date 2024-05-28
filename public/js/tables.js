@@ -1,27 +1,24 @@
 // Datatables
 
 $(document).ready(() => {
-    $("#dt_users").DataTable({
-        responsive: true,
+    $("#dt_contracts").DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": true,
+        "searching": true,
+        "ordering": false,
+        "language": {
+            "zeroRecords": "No se encontraron resultados",
+            "search": "Buscar:",
+            "lengthMenu":     "Mostrar _MENU_ registros",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+        }
     });
-
-  setTimeout(function () {
-    // $("#dt_users").DataTable({
-    //   responsive: true,
-    // });
-
-    // $('#dt_users').DataTable({
-    //   processing: true,
-    //   serverSide: true,
-    //   ajax: '../server_side/scripts/server_processing.php',
-    // });
-
-    $("#example2").DataTable({
-      scrollY: "292px",
-      scrollCollapse: true,
-      paging: false,
-      searching: false,
-      info: false,
-    });
-  }, 2000);
 });
