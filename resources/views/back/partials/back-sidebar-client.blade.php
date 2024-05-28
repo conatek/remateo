@@ -4,7 +4,7 @@
             <li class="{{ request()->is('home') ? 'mm-active' : '' }}">
                 <a href="{{ route('home') }}" class="{{ request()->is('home') ? 'mm-active' : '' }}">
                     <i class="metismenu-icon pe-7s-graph2"></i>
-                    Perfil Sociodemográfico
+                    Panel de Control
                 </a>
             </li>
 

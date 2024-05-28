@@ -365,7 +365,7 @@ class CollaboratorController extends Controller
                 'civil_status_type_id' => $request->civil_status_type_id,
                 'sex_type_id' => $request->sex_type_id,
                 'rh_type_id' => $request->rh_type_id,
-                'scholarship_type_id' => $request->scholarship_type_id,
+                // 'scholarship_type_id' => $request->scholarship_type_id,
                 'observations' => $request->observations,
                 'residence_province_id' => $request->residence_province_id,
                 'residence_city_id' => $request->residence_city_id,
