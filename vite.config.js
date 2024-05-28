@@ -22,6 +22,8 @@ export default defineConfig({
         }
     },
     build: {
+        manifest: true,
+        outDir: 'public/build',
         rollupOptions: {
             external: [
                 'node_modules/@fortawesome/fontawesome-svg-core',
