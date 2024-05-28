@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "heroku-postbuild": "npm run build"
     },
     "devDependencies": {
         "@popperjs/core": "^2.10.2",
@@ -27,6 +28,7 @@
         "vue-loader": "^17.1.1"
     },
     "engines": {
-        "node": ">=20.x"
+        "node": "^20.9.0",
+        "npm": "^10.1.0"
     }
 }
