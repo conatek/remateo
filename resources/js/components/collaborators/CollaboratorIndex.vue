@@ -99,7 +99,7 @@ export default {
         return {
             loading: 0,
             collaboratorsData: null,
-            collaboratorsPerPage: 10,
+            collaboratorsPerPage: 12,
             collaboratorsWithFilter: false,
             paginatedData: [],
             currentPage: 1,

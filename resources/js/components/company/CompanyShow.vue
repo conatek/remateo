@@ -12,10 +12,17 @@
                             <div v-else class="avatar-icon rounded">
                                 <img :src="'/images/default-profile.jpeg'" :alt="collaborator.name">
                             </div> -->
+
+                            <div class="avatar-icon rounded">
+                                <img :src="'/images/default-profile.jpeg'" :alt="company_logo">
+                            </div>
                         </div>
                         <div>
                             <!-- <h5 class="menu-header-title">{{ collaborator.name }}</h5>
                             <h6 class="menu-header-subtitle">{{ collaborator.email }}</h6> -->
+
+                            <h5 class="menu-header-title">Nombre de la empresa</h5>
+                            <h6 class="menu-header-subtitle">Información complementaria</h6>
                         </div>
                         <div class="menu-header-btn-pane">
                             <!-- <a :href="`/collaborators/${collaborator.id}/edit`" class="ladda-button btn btn-pill btn-light" data-style="slide-right">

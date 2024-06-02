@@ -214,14 +214,10 @@ class CollaboratorController extends Controller
         ]);
     }
 
-    // public function show(Collaborator $collaborator, $message = false)
-    public function show(Collaborator $collaborator, Request $request)
+    public function show(Collaborator $collaborator)
     {
         $user = auth()->user();
         $company = Company::where('id', $user->company_id)->first();
-
-        $origin = $request->origin;
-        $message = '';
 
         abort_if(Gate::denies('collaborator_show'), 403);
 
@@ -249,18 +245,10 @@ class CollaboratorController extends Controller
         $home_visit_types = HomeVisitType::all();
         $contractual_documents_types = ContractualDocumentType::all();
 
-        // dd($achievement_types);
-
         $relationship_type = Relationship::where('id', $collaborator->relationship_id)->first();
         $occupation_type = Occupation::where('id', $collaborator->occupation_id)->first();
 
         // $position_type = Position::where('id', $collaborator_contract->position_id)->first();
-
-        if($origin == 'update') {
-            $message = 'Colaborador actualizado exitosamente!';
-        } elseif($origin == 'store') {
-            $message = 'Colaborador creado exitosamente!';
-        }
 
         return view('back.collaborators.show', compact(
             'company',
@@ -280,7 +268,6 @@ class CollaboratorController extends Controller
             // 'highest_academic_achievement',
             'stratum_type',
             'housing_tenure',
-            'message',
             'relationship_types',
             'relationship_type',
             'occupation_types',

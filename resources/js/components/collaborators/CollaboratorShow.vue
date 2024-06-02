@@ -1,5 +1,12 @@
 <template>
     <div>
+        <div v-if="origin == 'updated'" class="mbg-3 alert alert-success alert-dismissible fade show" role="alert">
+            <span class="pe-2">
+                <i class="fa fa-star"></i>
+            </span>
+            Colaborador actualizado exitosamente!
+        </div>
+
         <div class="card-shadow-primary profile-responsive card-border mb-3 card">
             <div class="dropdown-menu-header">
                 <div class="dropdown-menu-header-inner bg-focus">
@@ -1668,10 +1675,13 @@ export default {
             successfully_created_message: false,
             successfully_updated_message: false,
             successfully_deleted_message: false,
+
+            origin: '',
         }
     },
     mounted () {
-        // this.getContractualInformation(this.collaborator.id)
+        this.getOrigin()
+
         this.getRelativesData(this.collaborator.id)
         this.getAcademicData(this.collaborator.id)
         this.getMedicalExaminationData(this.collaborator.id)
@@ -1679,6 +1689,16 @@ export default {
         this.getDocumentData(this.collaborator.id)
     },
     methods: {
+        getOrigin() {
+            const origin = localStorage.getItem('origin');
+            if (origin !== null) {
+                this.origin = origin;
+                localStorage.removeItem('origin');
+            }
+            setTimeout(() => {
+                this.origin = '';
+            }, 3000);
+        },
         downloadAcademicCertificate(academic_achievement_id) {
             axios.get(`/download-academic-certificate/${academic_achievement_id}`)
             .then(response => {

@@ -20,15 +20,14 @@
     </div>
 </div>
 
-@if($message !== '')
+{{-- @if($message !== '')
     <div class="mbg-3 alert alert-success alert-dismissible fade show" role="alert">
         <span class="pe-2">
             <i class="fa fa-star"></i>
-            {{-- <i class="pe-7s-star"></i> --}}
         </span>
         {{ $message }}
     </div>
-@endif
+@endif --}}
 
 {{-- {{ dd($collaborator_contract) }}  --}}
 

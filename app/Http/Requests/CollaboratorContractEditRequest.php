@@ -15,7 +15,7 @@ class CollaboratorContractEditRequest extends FormRequest
     {
         return [
             'position_id' => 'required',
-            'salary' => 'required',
+            'salary' => 'required|numeric',
             'contract_type_id' => 'required',
             'contract_start_date' => 'required',
             // 'contract_end_date' => 'required',
@@ -23,7 +23,7 @@ class CollaboratorContractEditRequest extends FormRequest
             // 'corporate_email' => 'required',
             // 'corporate_cellphone' => 'required',
             'bank_id' => 'required',
-            'bank_account' => 'required',
+            'bank_account' => 'required|numeric',
             'eps_id' => 'required',
             'afp_pension_id' => 'required',
             'afp_saving_id' => 'required',
@@ -37,6 +37,7 @@ class CollaboratorContractEditRequest extends FormRequest
         return [
             'position_id.required' => 'El cargo es requerido.',
             'salary.required' => 'El salario es requerido.',
+            'salary.numeric' => 'El salario debe ser un número.',
             'contract_type_id.required' => 'El tipo de contrato es requerido.',
             'contract_start_date.required' => 'La fecha de inicio de contrato es requerida.',
             // 'contract_end_date.required' => 'La fecha de fin de contrato es requerida.',
@@ -45,6 +46,7 @@ class CollaboratorContractEditRequest extends FormRequest
             // 'corporate_cellphone.required' => 'El celular corporativo es requerido.',
             'bank_id.required' => 'El banco es requerido.',
             'bank_account.required' => 'La cuenta bancaria es requerida.',
+            'bank_account.numeric' => 'La número de cuenta bancaria debe ser un número.',
             'eps_id.required' => 'La EPS es requerida.',
             'afp_pension_id.required' => 'La AFP de pensiones es requerida.',
             'afp_saving_id.required' => 'La AFP de cesantías es requerida.',

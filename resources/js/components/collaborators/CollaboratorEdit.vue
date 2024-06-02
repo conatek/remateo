@@ -693,12 +693,11 @@ export default {
             let url = ''
             axios.post(`/collaborators/${this.collaborator.id}`, fd).then(
                 (res) => {
-                    console.log(res)
-                    // url = `/collaborators/${res.data.collaborator.id}-success`
-                    url = `/collaborators/${res.data.collaborator.id}?origin=update`
+                    localStorage.setItem('origin', 'updated');
+
+                    url = `/collaborators/${res.data.collaborator.id}`
                     window.location.href = url
                     this.errors = null
-                    console.log(this.message);
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {

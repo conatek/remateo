@@ -15,7 +15,7 @@ class CollaboratorContractCreateRequest extends FormRequest
     {
         return [
             'position_id' => 'required',
-            'salary' => 'required',
+            'salary' => 'required|numeric',
             'contract_type_id' => 'required',
             'contract_start_date' => 'required',
             // 'contract_end_date' => 'required',
@@ -37,6 +37,7 @@ class CollaboratorContractCreateRequest extends FormRequest
         return [
             'position_id.required' => 'El cargo es requerido.',
             'salary.required' => 'El salario es requerido.',
+            'salary.numeric' => 'El salario debe ser un número.',
             'contract_type_id.required' => 'El tipo de contrato es requerido.',
             'contract_start_date.required' => 'La fecha de inicio de contrato es requerida.',
             // 'contract_end_date.required' => 'La fecha de fin de contrato es requerida.',
