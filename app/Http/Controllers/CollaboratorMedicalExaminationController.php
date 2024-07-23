@@ -23,7 +23,7 @@ class CollaboratorMedicalExaminationController extends Controller
                 $data['id'] = $medical_examination->id;
                 $data['examination_type'] = MedicalExaminationType::where('id', $medical_examination->examination_type_id)->first()->name;
                 $data['examination_type_id'] = $medical_examination->examination_type_id;
-                $data['examination_observations'] = $medical_examination->observations;
+                $data['observations'] = $medical_examination->observations;
                 $data['examination_date'] = $medical_examination->examination_date;
                 $data['result_public_id'] = $medical_examination->result_public_id;
                 $data['result_url'] = $medical_examination->result_url;
@@ -74,10 +74,15 @@ class CollaboratorMedicalExaminationController extends Controller
             }
 
             $medical_examination_data = CollaboratorMedicalExamination::create($data);
+            
+            $examination_type = MedicalExaminationType::where('id', $medical_examination_data->examination_type_id)->first();
+
+            $data['id'] = $medical_examination_data->id;
+            $data['examination_type'] = $examination_type->name;
     
             return response()->json([
                 'message'=>'Examen médico ingresado exitosamente!',
-                'medical_examination_data'=>$medical_examination_data,
+                'medical_examination_data'=>$data,
             ]);
         } catch(Exception $e) {
             return response()->json([
@@ -91,14 +96,14 @@ class CollaboratorMedicalExaminationController extends Controller
         // Las validaciones se realizan en CollaboratorMedicalExaminationEditRequest
 
         try {
-            $medical_examination = CollaboratorMedicalExamination::where('id', $medical_examination_id)->first();
             $company_id = auth()->user()->company_id;
 
             $data = array(
+                'id' => $medical_examination_id,
                 'collaborator_id' => $request->collaborator_id,
                 'examination_type_id' => $request->examination_type_id,
                 'examination_date' => $request->examination_date,
-                'examination_observations' => $request->examination_observations,
+                'observations' => $request->examination_observations,
             );
     
             $url = isset($medical_examination['result_url']) ? $medical_examination['result_url'] : null;
@@ -118,12 +123,18 @@ class CollaboratorMedicalExaminationController extends Controller
                 $data['result_public_id'] = $public_id;
                 $data['result_url'] = $url;
             }
-    
+
+            
+            $medical_examination = CollaboratorMedicalExamination::where('id', $medical_examination_id)->first();
             $medical_examination->update($data);
+
+            $examination_type = MedicalExaminationType::where('id', $request->examination_type_id)->first();
+
+            $data['examination_type'] = $examination_type->name;
     
             return response()->json([
                 'message'=>'Evaluación médica actualizada exitosamente!',
-                'medical_examination'=>$medical_examination
+                'medical_examination'=>$data
             ]);
         } catch (Exception $e) {
             return response()->json([

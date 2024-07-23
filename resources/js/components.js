@@ -11,6 +11,7 @@ const components = {
     'control-panel': defineAsyncComponent(() => import('./components/company/ControlPanel.vue')),
     'sociodemographic-profile': defineAsyncComponent(() => import('./components/company/SociodemographicProfile.vue')),
     'alerts': defineAsyncComponent(() => import('./components/company/Alerts.vue')),
+    'indicators': defineAsyncComponent(() => import('./components/company/Indicators.vue')),
 
     'collaborator-index': defineAsyncComponent(() => import('./components/collaborators/CollaboratorIndex.vue')),
     'collaborator-create': defineAsyncComponent(() => import('./components/collaborators/CollaboratorCreate.vue')),

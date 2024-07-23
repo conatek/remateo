@@ -23,13 +23,12 @@
         <div class="tab-content">
             <div v-if="selected_tab == 0" class="tab-pane tabs-animation fade" :class="selected_tab == 0 ? 'show active' : ''" id="tab-content-0" role="tabpanel">
                 <sociodemographic-profile :company_id="company_id"></sociodemographic-profile>
-                <!-- <alerts :company_id="company_id"></alerts> -->
             </div>
             <div v-else-if="selected_tab == 1" class="tab-pane tabs-animation fade"  :class="selected_tab == 1 ? 'show active' : ''" id="tab-content-1" role="tabpanel">
                 <alerts :company_id="company_id"></alerts>
             </div>
             <div v-else-if="selected_tab == 2" class="tab-pane tabs-animation fade"  :class="selected_tab == 2 ? 'show active' : ''" id="tab-content-2" role="tabpanel">
-                <h2>En este espacio ubicaremos los indicadores</h2>
+                <indicators :company_id="company_id"></indicators> 
             </div>
         </div>
     </div>

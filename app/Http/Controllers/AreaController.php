@@ -62,6 +62,9 @@ class AreaController extends Controller
     {
         // Las validaciones se realizan en AreaCreateRequest
 
+        $campus = Campus::where('id', $request->campus_id)->first();
+        $leader = Collaborator::where('id', $request->leader_id)->first();
+
         $data = array(
             'company_id' => $request->company_id,
             'campus_id' => $request->campus_id,
@@ -72,9 +75,13 @@ class AreaController extends Controller
 
         $area = Area::create($data);
 
+        $data['id'] = $area->id;
+        $data['campus'] = $campus;
+        $data['leader'] = $leader;
+
         return response()->json([
             'message'=>'Área creada exitosamente!',
-            'area'=>$area
+            'area'=>$data
         ]);
     }
 
@@ -94,6 +101,9 @@ class AreaController extends Controller
     {
         // Las validaciones se realizan en AreaEditRequest
 
+        $campus = Campus::where('id', $request->campus_id)->first();
+        $leader = Collaborator::where('id', $request->leader_id)->first();
+
         $data = array(
             'id' => $request->id,
             'company_id' => $request->company_id,
@@ -106,9 +116,12 @@ class AreaController extends Controller
         $area = Area::where('id', $data['id'])->first();
         $area->update($data);
 
+        $data['campus'] = $campus;
+        $data['leader'] = $leader;
+
         return response()->json([
             'message'=>'Área actualizada exitosamente!',
-            'area'=>$data['id']
+            'area'=>$data
         ]);
     }
 
@@ -120,7 +133,7 @@ class AreaController extends Controller
             $area->delete();
             
             return response()->json([
-                'message'=>'Información de área eliminada exitosamente!',
+                'message'=>'Área eliminada exitosamente!',
                 'area'=>$area,
             ]);
 

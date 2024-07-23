@@ -21,7 +21,7 @@
                             <!-- <h5 class="menu-header-title">{{ collaborator.name }}</h5>
                             <h6 class="menu-header-subtitle">{{ collaborator.email }}</h6> -->
 
-                            <h5 class="menu-header-title">Nombre de la empresa</h5>
+                            <h5 class="menu-header-title">{{ company.name }}</h5>
                             <h6 class="menu-header-subtitle">Información complementaria</h6>
                         </div>
                         <div class="menu-header-btn-pane">
@@ -38,26 +38,26 @@
                     <div class="grid-menu grid-menu-2col">
                         <div class="g-0 row">
                             <div class="col-sm-6">
-                                <a @click="card_selected = 'general'" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <a @click="changeMainTab('general')" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
                                     <i class="lnr-apartment btn-icon-wrapper btn-icon-lg mb-3"></i>
                                     <!-- <span class="lnr lnr-apartment"></span> -->
                                     Información General
                                 </a>
                             </div>
                             <div class="col-sm-6">
-                                <a @click="card_selected = 'campus'" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <a @click="changeMainTab('campus')" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
                                     <i class="lnr-pushpin btn-icon-wrapper btn-icon-lg mb-3"></i>
                                     Sedes
                                 </a>
                             </div>
                             <div class="col-sm-6">
-                                <a @click="card_selected = 'areas'" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <a @click="changeMainTab('areas')" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
                                     <i class="lnr-crop btn-icon-wrapper btn-icon-lg mb-3"></i>
                                     Áreas
                                 </a>
                             </div>
                             <div class="col-sm-6">
-                                <a @click="card_selected = 'positions'" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
+                                <a @click="changeMainTab('positions')" class="btn-icon-vertical btn-square btn-transition btn btn-outline-link">
                                     <i class="lnr-rocket btn-icon-wrapper btn-icon-lg mb-3"></i>
                                     Cargos
                                 </a>
@@ -78,40 +78,30 @@
                 <div class="col-sm-12 col-xxl-6">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                            <div v-if="message" class="message-success mb-3">
                                 <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Sede <strong>creada</strong> exitosamente!.</p>
-                                </div>
-                            </div>
-                            <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
-                                <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Sede <strong>actualizada</strong> exitosamente!.</p>
-                                </div>
-                            </div>
-                            <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
-                                <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Sede <strong>eliminada</strong> exitosamente!.</p>
+                                    <p class="mb-0" style="font-size: 14px;"> {{ this.message }}</p>
                                 </div>
                             </div>
                             <div v-if="campuses_data && campuses_data.length>0" class="row"> 
                                 <div class="col-md-12 col-lg-6">
-                                    <a @click="addCampusData" class="wrapper-add-campus-data p-2 mb-3" :class="(add_campus_data && !edit_campus_data) ? 'selected shadow' : ''">
+                                    <a @click="addCampusData" class="wrapper-add-data p-2 mb-3" :class="(add_campus_data && !edit_campus_data) ? 'selected shadow' : ''">
                                         <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                         <p>Agregar Sede</p>
                                     </a>
                                 </div>
                                 <div v-for="(item, index) in campuses_data" class="col-md-12 col-lg-6">
-                                    <div class="wrapper-campus mb-3 position-relative" :class="(selected_campus_data && selected_campus_data.id) == item.id ? 'selected shadow' : ''">
-                                        <div @click="changeCampusData(item.id, index)" class="box box1">
+                                    <div class="wrapper-data mb-3 position-relative" :class="(selected_campus_data && selected_campus_data.id) == item.id ? 'selected shadow' : ''">
+                                        <div @click="changeCampusData(item.id)" class="box box1">
                                             <div class="preliminary-information">
-                                                <p class="campus-name text-truncate w-100">{{ item.name }}</p>
-                                                <p class="campus-relationship text-truncate w-100">{{ item.address }}</p>
-                                                <p class="campus-age text-truncate w-100">{{ item.city.name }} ({{ item.province.name }})</p>
+                                                <p class="data-position-one text-truncate w-100">{{ item.name }}</p>
+                                                <p class="data-position-two text-truncate w-100">{{ item.address }}</p>
+                                                <p class="data-position-three text-truncate w-100">{{ item.city.name }} ({{ item.province.name }})</p>
                                             </div>
                                         </div>
-                                        <div class="box box2">
-                                            <a class="edit-campus-data" @click="editCampusData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                            <a class="delete-campus-data" @click="deleteCampusData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                        <div class="box box2" style="display: flex; flex-direction: column; justify-content: space-between;">
+                                            <a class="edit-data" @click="editCampusData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></a>
+                                            <a v-if="areas_data && !areas_data.some(area => area.campus_id === item.id)" class="delete-data" @click="showDeleteAlert('deleteCampusData', item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'trash-can']" /></a>
                                         </div>
                                     </div>
                                 </div>
@@ -336,40 +326,30 @@
                 <div class="col-sm-12 col-xxl-6">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                            <div v-if="message" class="message-success mb-3">
                                 <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Área <strong>creada</strong> exitosamente!.</p>
-                                </div>
-                            </div>
-                            <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
-                                <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Área <strong>actualizada</strong> exitosamente!.</p>
-                                </div>
-                            </div>
-                            <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
-                                <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Área <strong>eliminada</strong> exitosamente!.</p>
+                                    <p class="mb-0" style="font-size: 14px;"> {{ this.message }}</p>
                                 </div>
                             </div>
                             <div v-if="areas_data && areas_data.length>0" class="row"> 
                                 <div class="col-md-12 col-lg-6">
-                                    <a @click="addAreaData" class="wrapper-add-area-data p-2 mb-3" :class="(add_area_data && !edit_area_data) ? 'selected shadow' : ''">
+                                    <a @click="addAreaData" class="wrapper-add-data p-2 mb-3" :class="(add_area_data && !edit_area_data) ? 'selected shadow' : ''">
                                         <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                         <p>Agregar Área</p>
                                     </a>
                                 </div>
                                 <div v-for="(item, index) in areas_data" class="col-md-12 col-lg-6">
-                                    <div class="wrapper-area mb-3 position-relative" :class="(selected_area_data && selected_area_data.id) == item.id ? 'selected shadow' : ''">
+                                    <div class="wrapper-data mb-3 position-relative" :class="(selected_area_data && selected_area_data.id) == item.id ? 'selected shadow' : ''">
                                         <div @click="changeAreaData(item.id, index)" class="box box1">
                                             <div class="preliminary-information">
-                                                <p class="area-name text-truncate w-100">{{ item.name }}</p>
-                                                <p class="area-campus text-truncate w-100">Sede: {{ item.campus.name }}</p>
-                                                <p class="area-leader text-truncate w-100">Líder: {{ item.leader.name }} {{ item.leader.first_surname }} {{ item.leader.second_surname }}</p>
+                                                <p class="data-position-one text-truncate w-100">{{ item.name }}</p>
+                                                <p class="data-position-two text-truncate w-100">Sede: {{ item.campus.name }}</p>
+                                                <p class="data-position-three text-truncate w-100">Líder: {{ item.leader.name }} {{ item.leader.first_surname }} {{ item.leader.second_surname }}</p>
                                             </div>
                                         </div>
-                                        <div class="box box2">
-                                            <a class="edit-area-data" @click="editAreaData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                            <a class="delete-area-data" @click="deleteAreaData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                        <div class="box box2" style="display: flex; flex-direction: column; justify-content: space-between;">
+                                            <a class="edit-data" @click="editAreaData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></a>
+                                            <a v-if="positions_data && !positions_data.some(position => position.area_id === item.id)" class="delete-data" @click="showDeleteAlert('deleteAreaData', item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'trash-can']" /></a>
                                         </div>
                                     </div>
                                 </div>
@@ -555,40 +535,30 @@
                 <div class="col-sm-12 col-xxl-6">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <div v-if="successfully_created_message && !successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
+                            <div v-if="message" class="message-success mb-3">
                                 <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Cargo <strong>creado</strong> exitosamente!.</p>
-                                </div>
-                            </div>
-                            <div v-if="!successfully_created_message && successfully_updated_message && !successfully_deleted_message" class="message-success mb-3">
-                                <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Cargo <strong>actualizado</strong> exitosamente!.</p>
-                                </div>
-                            </div>
-                            <div v-if="!successfully_created_message && !successfully_updated_message && successfully_deleted_message" class="message-success mb-3">
-                                <div class="content d-flex align-items-start p-2">
-                                    <p class="mb-0" style="font-size: 14px;"> Cargo <strong>eliminado</strong> exitosamente!.</p>
+                                    <p class="mb-0" style="font-size: 14px;"> {{ this.message }}</p>
                                 </div>
                             </div>
                             <div v-if="positions_data && positions_data.length>0" class="row"> 
                                 <div class="col-md-12 col-lg-6">
-                                    <a @click="addPositionData" class="wrapper-add-position-data p-2 mb-3" :class="(add_position_data && !edit_position_data) ? 'selected shadow' : ''">
+                                    <a @click="addPositionData" class="wrapper-add-data p-2 mb-3" :class="(add_position_data && !edit_position_data) ? 'selected shadow' : ''">
                                         <p><i class="fa fa-plus" aria-hidden="true"></i></p>
                                         <p>Agregar Cargo</p>
                                     </a>
                                 </div>
                                 <div v-for="(item, index) in positions_data" class="col-md-12 col-lg-6">
-                                    <div class="wrapper-position mb-3 position-relative" :class="(selected_position_data && selected_position_data.id) == item.id ? 'selected shadow' : ''">
+                                    <div class="wrapper-data mb-3 position-relative" :class="(selected_position_data && selected_position_data.id) == item.id ? 'selected shadow' : ''">
                                         <div @click="changePositionData(item.id, index)" class="box box1">
                                             <div class="preliminary-information">
-                                                <p class="position-name text-truncate w-100">{{ item.name }}</p>
-                                                <p class="position-campus text-truncate w-100">Área: {{ item.area.name }}</p>
-                                                <p class="position-leader text-truncate w-100">Salario estimado: $ {{ numberFormat(Math.round(item.estimated_salary)) }}</p>
+                                                <p class="data-position-one text-truncate w-100">{{ item.name }}</p>
+                                                <p class="data-position-two text-truncate w-100">Área: {{ item.area.name }}</p>
+                                                <p class="data-position-three text-truncate w-100">Salario estimado: $ {{ numberFormat(Math.round(item.estimated_salary)) }}</p>
                                             </div>
                                         </div>
-                                        <div class="box box2">
-                                            <a class="edit-position-data" @click="editPositionData(item, index)"><img :src="'/images/icons/edit.svg'" alt="edit"></a>
-                                            <a class="delete-position-data" @click="deletePositionData(item, index)"><img :src="'/images/icons/trash.svg'" alt="trash"></a>
+                                        <div class="box box2" style="display: flex; flex-direction: column; justify-content: space-between;">
+                                            <a class="edit-data" @click="editPositionData(item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></a>
+                                            <a v-if="contracts_data && !contracts_data.some(contract => contract.position_id === item.id)" class="delete-data" @click="showDeleteAlert('deletePositionData', item, index)" style="font-size: 22px; text-align:right;"><font-awesome-icon :icon="['fas', 'trash-can']" /></a>
                                         </div>
                                     </div>
                                 </div>
@@ -821,6 +791,7 @@
 </template>
 
 <script>
+
 export default {
     props: {
         company: { default: null, },
@@ -828,7 +799,7 @@ export default {
     },
     data() {
         return {
-            card_selected: '',
+            card_selected: 'general',
             message: '',
 
             province_id: '',
@@ -855,6 +826,7 @@ export default {
             criticality_levels: [],
             risk_classes: [],
 
+            contracts_data: [],
             campuses_data: [],
             areas_data: [],
             positions_data: [],
@@ -879,19 +851,73 @@ export default {
             successfully_updated_message: false,
             successfully_deleted_message: false,
 
+            showMessageCampus: false,
+            showMessageArea: false,
+            showMessagePosition: false,
+
             errors_campus_data: null,
             errors_area_data: null,
             errors_position_data: null,
         }
     },
     mounted () {
-        // console.log(this.company.id);
+        this.getContractsData(this.company.id)
+
         this.getCampusesData(this.company.id)
         this.getAreasData(this.company.id)
         this.getPositionsData(this.company.id)
         this.getCollaboratorsData(this.company.id)
     },
     methods: {
+        showDeleteAlert(action, item, index) {
+            // Ver ejemplos en: https://sweetalert2.github.io/#examples
+            this.$swal({
+                title: "¿Seguro que deseas eliminar este registro?",
+                text: "¡No podrás revertir esto!",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3f6ad8",
+                cancelButtonColor: "#444054",
+                confirmButtonText: "Si, eliminar!",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+            if (result.isConfirmed) {
+                if(action == 'deleteCampusData') {
+                    this.deleteCampusData(item, index)
+                } else if(action == 'deleteAreaData') {
+                    this.deleteAreaData(item, index)
+                } else if(action == 'deletePositionData') {
+                    this.deletePositionData(item, index)
+                }
+                this.$swal({
+                    title: "Eliminado!",
+                    text: "Su registro ha sido borrado.",
+                    icon: "success"
+                });
+            }
+            });
+        },
+        changeMainTab(tab) {
+            this.card_selected = tab
+            this.message = ''
+        },
+        getMessage(msg) {
+            if(msg != '' && msg != null) {
+                this.message = msg
+            }
+
+            setTimeout(() => {
+                this.message = ''
+
+                this.successfully_created_message = false
+                this.successfully_updated_message = false
+                this.successfully_deleted_message = false
+
+                this.showMessageCampus = false
+                this.showMessageArea = false
+                this.showMessagePosition = false
+            }, 3000)
+        },
         getCities(province) {
             let dataSend = {
                 "province": province,
@@ -924,6 +950,12 @@ export default {
             this.successfully_created_message = false
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
+
+            this.showMessageCampus = true
+            this.showMessageArea = false
+            this.showMessagePosition = false
+
+            this.errors_campus_data = null
         },
         addAreaData() {
             if(this.add_area_data == false) {
@@ -943,6 +975,12 @@ export default {
             this.successfully_created_message = false
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
+
+            this.showMessageCampus = false
+            this.showMessageArea = true
+            this.showMessagePosition = false
+
+            this.errors_area_data = null
         },
         addPositionData() {
             if(this.add_position_data == false) {
@@ -964,6 +1002,21 @@ export default {
             this.successfully_created_message = false
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
+
+            this.showMessageCampus = false
+            this.showMessageArea = false
+            this.showMessagePosition = true
+
+            this.errors_position_data = null
+        },
+        getContractsData(company_id) {
+            axios.get(`/contracts-data/${company_id}`)
+            .then(response => {
+                this.contracts_data = response.data.contracts;
+            })
+            .catch(e => {
+                // 
+            })
         },
         getCampusesData(company_id) {
             axios.get(`/campus-data/${company_id}`)
@@ -1003,7 +1056,7 @@ export default {
                 // 
             })
         },
-        changeCampusData(id, index) {
+        changeCampusData(id) {
             let new_selection_campus_data;
 
             if(this.campuses_data && this.campuses_data.length>0) {
@@ -1017,6 +1070,7 @@ export default {
             }
 
             this.selected_campus_data = new_selection_campus_data
+            console.log('//////////////////////////////////////////////Prueba');
             console.log(this.selected_campus_data);
 
             this.add_campus_data = false
@@ -1025,6 +1079,10 @@ export default {
             this.successfully_created_message = false
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
+
+            this.showMessageCampus = false
+            this.showMessageArea = false
+            this.showMessagePosition = false
         },
         changeAreaData(id, index) {
             let new_selection_area_data;
@@ -1040,7 +1098,6 @@ export default {
             }
 
             this.selected_area_data = new_selection_area_data
-            console.log(this.selected_area_data);
 
             this.add_area_data = false
             this.edit_area_data = false
@@ -1048,6 +1105,10 @@ export default {
             this.successfully_created_message = false
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
+
+            this.showMessageCampus = false
+            this.showMessageArea = false
+            this.showMessagePosition = false
         },
         changePositionData(id, index) {
             let new_selection_position_data;
@@ -1071,6 +1132,10 @@ export default {
             this.successfully_created_message = false
             this.successfully_updated_message = false
             this.successfully_deleted_message = false
+
+            this.showMessageCampus = false
+            this.showMessageArea = false
+            this.showMessagePosition = false
         },
         storeCampus() {
             let dataSend = {
@@ -1087,13 +1152,20 @@ export default {
             axios.post('/campuses', dataSend).then(
                 (response) => {
                     this.getCampusesData(this.company.id)
-                    this.campus_data = response.data.campus_data;
+                    this.selected_campus_data = response.data.campus;
+                    // this.campus_data = response.data.campus_data;
                     this.add_campus_data = false
                     this.edit_campus_data = false
 
                     this.successfully_created_message = true
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = false
+
+                    this.showMessageCampus = true
+                    this.showMessageArea = false
+                    this.showMessagePosition = false
+
+                    this.getMessage(response.data.message)
 
                     this.errors_campus_data = null
 
@@ -1119,13 +1191,20 @@ export default {
             axios.post('/areas', dataSend).then(
                 (response) => {
                     this.getAreasData(this.company.id)
-                    this.area_data = response.data.area_data;
+                    this.selected_area_data = response.data.area;
+
                     this.add_area_data = false
                     this.edit_area_data = false
 
                     this.successfully_created_message = true
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = false
+
+                    this.showMessageCampus = false
+                    this.showMessageArea = true
+                    this.showMessagePosition = false
+
+                    this.getMessage(response.data.message)
 
                     this.errors_area_data = null
 
@@ -1153,13 +1232,20 @@ export default {
             axios.post('/positions', dataSend).then(
                 (response) => {
                     this.getPositionsData(this.company.id)
-                    this.position_data = response.data.position_data;
+                    this.selected_position_data = response.data.position;
+
                     this.add_position_data = false
                     this.edit_position_data = false
 
                     this.successfully_created_message = true
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = false
+
+                    this.showMessageCampus = false
+                    this.showMessageArea = false
+                    this.showMessagePosition = true
+
+                    this.getMessage(response.data.message)
 
                     this.errors_position_data = null
 
@@ -1199,6 +1285,7 @@ export default {
             this.phone = item.phone
             this.email = item.email
             
+            this.errors_campus_data = null
         },
         editAreaData(item, index) {
             let new_selection_area_data;
@@ -1223,6 +1310,8 @@ export default {
             this.area_leader_id = item.leader_id
             this.area_name = item.name
             this.area_description = item.description
+
+            this.errors_area_data = null
         },
         editPositionData(item, index) {
             let new_selection_position_data;
@@ -1249,6 +1338,8 @@ export default {
             this.position_name = item.name
             this.position_estimated_salary = item.estimated_salary
             this.position_description = item.description
+
+            this.errors_position_data = null
         },
         updateCampus() {
             let dataSend = {
@@ -1266,13 +1357,20 @@ export default {
             axios.put(`/campuses/${this.campus_data_to_edit.id}`, dataSend).then(
                 (response) => {
                     this.getCampusesData(this.company.id)
+                    this.selected_campus_data = response.data.campus
 
                     this.add_campus_data = false
                     this.edit_campus_data = false
-
+                    
                     this.successfully_created_message = false
                     this.successfully_updated_message = true
                     this.successfully_deleted_message = false
+                    
+                    this.showMessageCampus = true
+                    this.showMessageArea = false
+                    this.showMessagePosition = false
+                    
+                    this.getMessage(response.data.message)
 
                     this.errors_campus_data = null
                 }).catch(
@@ -1297,6 +1395,7 @@ export default {
             axios.put(`/areas/${this.area_data_to_edit.id}`, dataSend).then(
                 (response) => {
                     this.getAreasData(this.company.id)
+                    this.selected_area_data = response.data.area
 
                     this.add_area_data = false
                     this.edit_area_data = false
@@ -1304,6 +1403,12 @@ export default {
                     this.successfully_created_message = false
                     this.successfully_updated_message = true
                     this.successfully_deleted_message = false
+
+                    this.showMessageCampus = false
+                    this.showMessageArea = true
+                    this.showMessagePosition = false
+
+                    this.getMessage(response.data.message)
 
                     this.errors_area_data = null
                 }).catch(
@@ -1330,6 +1435,7 @@ export default {
             axios.put(`/positions/${this.position_data_to_edit.id}`, dataSend).then(
                 (response) => {
                     this.getPositionsData(this.company.id)
+                    this.selected_position_data = response.data.position;
 
                     this.add_position_data = false
                     this.edit_position_data = false
@@ -1337,6 +1443,12 @@ export default {
                     this.successfully_created_message = false
                     this.successfully_updated_message = true
                     this.successfully_deleted_message = false
+
+                    this.showMessageCampus = false
+                    this.showMessageArea = false
+                    this.showMessagePosition = true
+
+                    this.getMessage(response.data.message)
 
                     this.errors_position_data = null
                 }).catch(
@@ -1360,6 +1472,13 @@ export default {
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = true
 
+                    this.showMessageCampus = true
+                    this.showMessageArea = false
+                    this.showMessagePosition = false
+
+                    this.getMessage(response.data.message)
+
+                    this.selected_campus_data = null
                     this.errors_campus_data = null
                 }).catch(
                 (error) => {
@@ -1382,6 +1501,13 @@ export default {
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = true
 
+                    this.showMessageCampus = false
+                    this.showMessageArea = true
+                    this.showMessagePosition = false
+
+                    this.getMessage(response.data.message)
+
+                    this.selected_area_data = null
                     this.errors_area_data = null
                 }).catch(
                 (error) => {
@@ -1404,6 +1530,13 @@ export default {
                     this.successfully_updated_message = false
                     this.successfully_deleted_message = true
 
+                    this.showMessageCampus = false
+                    this.showMessageArea = false
+                    this.showMessagePosition = true
+
+                    this.getMessage(response.data.message)
+
+                    this.selected_position_data = null
                     this.errors_position_data = null
                 }).catch(
                 (error) => {
@@ -1425,457 +1558,5 @@ export default {
 </script>
 
 <style scoped>
-
-.main-card {
-    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
-    padding: 0px;
-    border-radius: 5px;
-    background-color: #ffffff;
-    margin-bottom: 10px;
-}
-
-.main-card .wrapper-basic,
-.main-card .wrapper-address,
-.main-card .wrapper-contact,
-.main-card .wrapper-campus-data,
-.main-card .wrapper-area-data,
-.main-card .wrapper-position-data {
-    display: grid;
-    grid-gap: 1px;
-    /* background-color: #dee2e6; */
-    background-color: #555f78;
-    /* border: 1px solid #dee2e6; */
-    border: 1px solid #555f78;
-}
-
-.add-campus-card,
-.edit-campus-card {
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-}
-
-@media screen and (min-width: 300px) {
-    .main-card .wrapper-basic {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-1" "vl-1" "lb-2" "vl-2" "lb-3" "vl-3" "lb-4" "vl-4" "lb-5" "vl-5" "lb-6" "vl-6" "lb-7" "vl-7" "lb-8" "vl-8" "lb-9" "vl-9" "lb-10" "vl-10" "lb-11" "vl-11" "lb-12" "vl-12";
-    }
-
-    .main-card .wrapper-address {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-13" "vl-13" "lb-14" "vl-14" "lb-15" "vl-15" "lb-16" "vl-16";
-    }
-
-    .main-card .wrapper-contact {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-17" "vl-17" "lb-18" "vl-18" "lb-19" "vl-19";
-    }
-
-    .main-card .wrapper-campus-data {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-20" "vl-20" "lb-21" "vl-21" "lb-22" "vl-22" "lb-23" "vl-23" "lb-24" "vl-24";
-    }
-
-    .main-card .wrapper-area-data {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-25" "vl-25" "lb-26" "vl-26" "lb-27" "vl-27" "lb-28" "vl-28";
-    }
-
-    .main-card .wrapper-position-data {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-29" "vl-29" "lb-30" "vl-30" "lb-31" "vl-31" "lb-32" "vl-32" "lb-33" "vl-33" "lb-34" "vl-34";
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .main-card .wrapper-basic {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-1 lb-1 lb-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1"
-                                "lb-2 lb-2 lb-2 vl-2 vl-2 vl-2 lb-3 lb-3 lb-3 vl-3 vl-3 vl-3"
-                                "lb-4 lb-4 lb-4 vl-4 vl-4 vl-4 lb-5 lb-5 lb-5 vl-5 vl-5 vl-5"
-                                "lb-6 lb-6 lb-6 vl-6 vl-6 vl-6 lb-7 lb-7 lb-7 vl-7 vl-7 vl-7"
-                                "lb-8 lb-8 lb-8 vl-8 vl-8 vl-8 lb-9 lb-9 lb-9 vl-9 vl-9 vl-9"
-                                "lb-10 lb-10 lb-10 vl-10 vl-10 vl-10 lb-11 lb-11 lb-11 vl-11 vl-11 vl-11"
-                                "lb-12 lb-12 lb-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12"
-        ;
-    }
-
-    .main-card .wrapper-address {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-13 vl-13 vl-13 vl-13"
-                                "lb-14 vl-14 vl-14 vl-14"
-                                "lb-15 vl-15 vl-15 vl-15"
-                                "lb-16 vl-16 vl-16 vl-16"
-        ;
-    }
-
-    .main-card .wrapper-contact {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-17 vl-17 vl-17 vl-17"
-                                "lb-18 vl-18 vl-18 vl-18"
-                                "lb-19 vl-19 vl-19 vl-19"
-        ;
-    }
-
-    .main-card .wrapper-campus-data {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-20 vl-20 vl-20 vl-20"
-                                "lb-21 vl-21 vl-21 vl-21"
-                                "lb-22 vl-22 vl-22 vl-22"
-                                "lb-23 vl-23 vl-23 vl-23"
-                                "lb-24 vl-24 vl-24 vl-24"
-        ;
-    }
-
-    .main-card .wrapper-area-data {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-25 vl-25 vl-25 vl-25"
-                                "lb-26 vl-26 vl-26 vl-26"
-                                "lb-27 vl-27 vl-27 vl-27"
-                                "lb-28 vl-28 vl-28 vl-28"
-        ;
-    }
-
-    .main-card .wrapper-position-data {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-29 vl-29 vl-29 vl-29"
-                                "lb-30 vl-30 vl-30 vl-30"
-                                "lb-31 vl-31 vl-31 vl-31"
-                                "lb-32 vl-32 vl-32 vl-32"
-                                "lb-33 vl-33 vl-33 vl-33"
-                                "lb-34 vl-34 vl-34 vl-34"
-        ;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .main-card .wrapper-basic {
-        grid-template-columns: repeat(24, 1fr);
-        grid-template-areas:    "lb-1 lb-1 lb-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 lb-2 lb-2 lb-2 vl-2 vl-2 vl-2 lb-3 lb-3 lb-3 vl-3 vl-3 vl-3"
-                                "lb-4 lb-4 lb-4 vl-4 vl-4 vl-4 lb-5 lb-5 lb-5 vl-5 vl-5 vl-5 lb-6 lb-6 lb-6 vl-6 vl-6 vl-6 lb-7 lb-7 lb-7 vl-7 vl-7 vl-7"
-                                "lb-8 lb-8 lb-8 vl-8 vl-8 vl-8 lb-9 lb-9 lb-9 vl-9 vl-9 vl-9 lb-10 lb-10 lb-10 vl-10 vl-10 vl-10 lb-11 lb-11 lb-11 vl-11 vl-11 vl-11"
-                                "lb-12 lb-12 lb-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12"
-        ;
-    }
-
-    .main-card .wrapper-address {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-13 lb-13 lb-13 vl-13 vl-13 vl-13 lb-14 lb-14 lb-14 vl-14 vl-14 vl-14"
-                                "lb-15 lb-15 lb-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15 vl-15"
-                                "lb-16 lb-16 lb-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16 vl-16"
-        ;
-    }
-
-    .main-card .wrapper-contact {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-17 lb-17 lb-17 vl-17 vl-17 vl-17 lb-18 lb-18 lb-18 vl-18 vl-18 vl-18"
-                                "lb-19 lb-19 lb-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19"
-        ;
-    }
-
-    .main-card .wrapper-campus-data {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-20 lb-20 lb-20 vl-20 vl-20 vl-20 lb-21 lb-21 lb-21 vl-21 vl-21 vl-21"
-                                "lb-22 lb-22 lb-22 vl-22 vl-22 vl-22 vl-22 vl-22 vl-22 vl-22 vl-22 vl-22"
-                                "lb-23 lb-23 lb-23 vl-23 vl-23 vl-23 lb-24 lb-24 lb-24 vl-24 vl-24 vl-24"
-        ;
-    }
-
-    .main-card .wrapper-area-data {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 lb-26 lb-26 lb-26 vl-26 vl-26 vl-26"
-                                "lb-27 lb-27 lb-27 vl-27 vl-27 vl-27 vl-27 vl-27 vl-27 vl-27 vl-27 vl-27"
-                                "lb-28 lb-28 lb-28 vl-28 vl-28 vl-28 vl-28 vl-28 vl-28 vl-28 vl-28 vl-28"
-        ;
-    }
-
-    .main-card .wrapper-position-data {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-29 lb-29 lb-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29"
-                                "lb-30 lb-30 lb-30 vl-30 vl-30 vl-30 lb-31 lb-31 lb-31 vl-31 vl-31 vl-31"
-                                "lb-32 lb-32 lb-32 vl-32 vl-32 vl-32 lb-33 lb-33 lb-33 vl-33 vl-33 vl-33"
-                                "lb-34 lb-34 lb-34 vl-34 vl-34 vl-34 vl-34 vl-34 vl-34 vl-34 vl-34 vl-34"
-        ;
-    }
-}
-
-.main-card .wrapper-basic .box-label,
-.main-card .wrapper-address .box-label,
-.main-card .wrapper-contact .box-label,
-.main-card .wrapper-campus-data .box-label,
-.main-card .wrapper-area-data .box-label,
-.main-card .wrapper-position-data .box-label {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: #e0f3ff;
-    /* background-color: #444054; */
-    padding: 5px;
-    color: #6c757d;
-    /* color: #fff; */
-    font-weight: bold;
-}
-
-.main-card .wrapper-basic .box-label p,
-.main-card .wrapper-address .box-label p,
-.main-card .wrapper-contact .box-label p,
-.main-card .wrapper-campus-data .box-label p,
-.main-card .wrapper-area-data .box-label p,
-.main-card .wrapper-position-data .box-label p {
-    margin: 0;
-}
-
-.main-card .wrapper-basic .box-value,
-.main-card .wrapper-address .box-value,
-.main-card .wrapper-contact .box-value,
-.main-card .wrapper-campus-data .box-value,
-.main-card .wrapper-area-data .box-value,
-.main-card .wrapper-position-data .box-value {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
-    padding: 5px;
-    text-align: center;
-}
-
-.main-card .wrapper-basic .box-value p,
-.main-card .wrapper-address .box-value p,
-.main-card .wrapper-contact .box-value p,
-.main-card .wrapper-campus-data .box-value p,
-.main-card .wrapper-area-data .box-value p,
-.main-card .wrapper-position-data .box-value p {
-    margin: 0;
-}
-
-.main-card .wrapper-basic .lb-1 { grid-area: lb-1; }
-.main-card .wrapper-basic .vl-1 { grid-area: vl-1; }
-.main-card .wrapper-basic .lb-2 { grid-area: lb-2; }
-.main-card .wrapper-basic .vl-2 { grid-area: vl-2; }
-.main-card .wrapper-basic .lb-3 { grid-area: lb-3; }
-.main-card .wrapper-basic .vl-3 { grid-area: vl-3; }
-.main-card .wrapper-basic .lb-4 { grid-area: lb-4; }
-.main-card .wrapper-basic .vl-4 { grid-area: vl-4; }
-.main-card .wrapper-basic .lb-5 { grid-area: lb-5; }
-.main-card .wrapper-basic .vl-5 { grid-area: vl-5; }
-.main-card .wrapper-basic .lb-6 { grid-area: lb-6; }
-.main-card .wrapper-basic .vl-6 { grid-area: vl-6; }
-.main-card .wrapper-basic .lb-7 { grid-area: lb-7; }
-.main-card .wrapper-basic .vl-7 { grid-area: vl-7; }
-.main-card .wrapper-basic .lb-8 { grid-area: lb-8; }
-.main-card .wrapper-basic .vl-8 { grid-area: vl-8; }
-.main-card .wrapper-basic .lb-9 { grid-area: lb-9; }
-.main-card .wrapper-basic .vl-9 { grid-area: vl-9; }
-.main-card .wrapper-basic .lb-10 { grid-area: lb-10; }
-.main-card .wrapper-basic .vl-10 { grid-area: vl-10; }
-.main-card .wrapper-basic .lb-11 { grid-area: lb-11; }
-.main-card .wrapper-basic .vl-11 { grid-area: vl-11; }
-.main-card .wrapper-basic .lb-12 { grid-area: lb-12; }
-.main-card .wrapper-basic .vl-12 { grid-area: vl-12; }
-
-
-.main-card .wrapper-address .lb-13 { grid-area: lb-13; }
-.main-card .wrapper-address .vl-13 { grid-area: vl-13; }
-.main-card .wrapper-address .lb-14 { grid-area: lb-14; }
-.main-card .wrapper-address .vl-14 { grid-area: vl-14; }
-.main-card .wrapper-address .lb-15 { grid-area: lb-15; }
-.main-card .wrapper-address .vl-15 { grid-area: vl-15; }
-.main-card .wrapper-address .lb-16 { grid-area: lb-16; }
-.main-card .wrapper-address .vl-16 { grid-area: vl-16; }
-
-
-.main-card .wrapper-contact .lb-17 { grid-area: lb-17; }
-.main-card .wrapper-contact .vl-17 { grid-area: vl-17; }
-.main-card .wrapper-contact .lb-18 { grid-area: lb-18; }
-.main-card .wrapper-contact .vl-18 { grid-area: vl-18; }
-.main-card .wrapper-contact .lb-19 { grid-area: lb-19; }
-.main-card .wrapper-contact .vl-19 { grid-area: vl-19; }
-
-.main-card .wrapper-campus-data .lb-20 { grid-area: lb-20; }
-.main-card .wrapper-campus-data .vl-20 { grid-area: vl-20; }
-.main-card .wrapper-campus-data .lb-21 { grid-area: lb-21; }
-.main-card .wrapper-campus-data .vl-21 { grid-area: vl-21; }
-.main-card .wrapper-campus-data .lb-22 { grid-area: lb-22; }
-.main-card .wrapper-campus-data .vl-22 { grid-area: vl-22; }
-.main-card .wrapper-campus-data .lb-23 { grid-area: lb-23; }
-.main-card .wrapper-campus-data .vl-23 { grid-area: vl-23; }
-.main-card .wrapper-campus-data .lb-24 { grid-area: lb-24; }
-.main-card .wrapper-campus-data .vl-24 { grid-area: vl-24; }
-
-.main-card .wrapper-area-data .lb-25 { grid-area: lb-25; }
-.main-card .wrapper-area-data .vl-25 { grid-area: vl-25; }
-.main-card .wrapper-area-data .lb-26 { grid-area: lb-26; }
-.main-card .wrapper-area-data .vl-26 { grid-area: vl-26; }
-.main-card .wrapper-area-data .lb-27 { grid-area: lb-27; }
-.main-card .wrapper-area-data .vl-27 { grid-area: vl-27; }
-.main-card .wrapper-area-data .lb-28 { grid-area: lb-28; }
-.main-card .wrapper-area-data .vl-28 { grid-area: vl-28; }
-
-.main-card .wrapper-position-data .lb-29 { grid-area: lb-29; }
-.main-card .wrapper-position-data .vl-29 { grid-area: vl-29; }
-.main-card .wrapper-position-data .lb-30 { grid-area: lb-30; }
-.main-card .wrapper-position-data .vl-30 { grid-area: vl-30; }
-.main-card .wrapper-position-data .lb-31 { grid-area: lb-31; }
-.main-card .wrapper-position-data .vl-31 { grid-area: vl-31; }
-.main-card .wrapper-position-data .lb-32 { grid-area: lb-32; }
-.main-card .wrapper-position-data .vl-32 { grid-area: vl-32; }
-.main-card .wrapper-position-data .lb-33 { grid-area: lb-33; }
-.main-card .wrapper-position-data .vl-33 { grid-area: vl-33; }
-.main-card .wrapper-position-data .lb-34 { grid-area: lb-34; }
-.main-card .wrapper-position-data .vl-34 { grid-area: vl-34; }
-
-
-/* INFORMACIÓN FAMILIAR */
-.wrapper-add-campus-data,
-.wrapper-add-area-data,
-.wrapper-add-position-data {
-    border-radius: 8px;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-style: dashed;
-    height: 110px;
-    width: 100%;
-    border-width: 1px;
-    border-color: #3f6ad8;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    /* box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.10); */
-}
-
-.wrapper-add-campus-data.selected,
-.wrapper-add-area-data.selected,
-.wrapper-add-position-data.selected {
-    border-width: 2px;
-}
-
-.wrapper-add-campus-data p,
-.wrapper-add-area-data p,
-.wrapper-add-position-data p {
-    /* font-family: "gothambold"; */
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 22px;
-    color: #3f6ad8;
-    margin: 0px;
-}
-
-.wrapper-add-campus-data.disabled-add,
-.wrapper-add-area-data.disabled-add,
-.wrapper-add-position-data.disabled-add {
-    border-color: #C7C7C7;
-}
-
-.wrapper-add-campus-data.disabled-add p,
-.wrapper-add-area-data.disabled-add p,
-.wrapper-add-position-data.disabled-add p {
-    color: #C7C7C7;
-}
-
-.wrapper-campus,
-.wrapper-area,
-.wrapper-position {
-    display: grid;
-    grid-template-columns: 90% 10%;
-    height: 110px;
-    padding: 16px;
-    background: #fff;
-    border: 1px solid #3f6ad8;
-    border-radius: 8px;
-}
-
-.wrapper-campus.selected,
-.wrapper-area.selected,
-.wrapper-position.selected {
-    border: 2px solid #3f6ad8;
-}
-
-.wrapper-campus .box,
-.wrapper-area .box,
-.wrapper-position .box {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 5px;
-    width: 100%;
-}
-
-.wrapper-campus .box.box1,
-.wrapper-area .box.box1,
-.wrapper-position .box.box1 {
-    cursor: pointer;
-}
-
-.wrapper-campus .box.box2,
-.wrapper-area .box.box2,
-.wrapper-position .box.box2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    align-self: stretch;
-    width: 10%;
-}
-
-.wrapper-campus .box.box1 .preliminary-information,
-.wrapper-area .box.box1 .preliminary-information,
-.wrapper-position .box.box1 .preliminary-information {
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    justify-content: space-between;
-    gap: 5px;
-    width: 90%;
-}
-
-.wrapper-campus .box.box1 .preliminary-information p,
-.wrapper-area .box.box1 .preliminary-information p,
-.wrapper-position .box.box1 .preliminary-information p {
-    margin: 0px;
-}
-
-.wrapper-campus .box.box1 .preliminary-information p.campus-name,
-.wrapper-area .box.box1 .preliminary-information p.area-name,
-.wrapper-position .box.box1 .preliminary-information p.position-name {
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 18px;
-    text-decoration: none;
-}
-
-.wrapper-campus .box.box2 .edit-campus-data,
-.wrapper-area .box.box2 .edit-area-data,
-.wrapper-position .box.box2 .edit-position-data {
-    cursor: pointer
-}
-
-.wrapper-campus .box.box2 .delete-campus-data,
-.wrapper-area .box.box2 .delete-area-data,
-.wrapper-position .box.box2 .delete-position-data {
-    cursor: pointer
-}
-
-.message-success {
-    width: 100%;
-    background: #D8FFDC;
-    border-radius: 4px;
-    padding: 10px;
-}
-
-.message-success .content {
-    align-items: flex-start;
-    justify-content: center;
-    border-left: 5px solid #00660A;
-}
-
-.message-success .content p {
-    font-size: 16px;
-    line-height: 16px;
-}
-
-/* wrapper-campus-data */
-
+    @import './../../assets/css/company_show.css';
 </style>

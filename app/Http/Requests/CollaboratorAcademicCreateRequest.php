@@ -18,7 +18,7 @@ class CollaboratorAcademicCreateRequest extends FormRequest
                 'achievement_type_id' => 'required',
                 'degree' => 'required',
                 'institution' => 'required',
-                'end_date' => 'date',
+                'end_date' => 'required|date',
                 'certificate' => 'max:2048|mimes:pdf',
             ];
         } else {
@@ -26,7 +26,7 @@ class CollaboratorAcademicCreateRequest extends FormRequest
                 'achievement_type_id' => 'required',
                 'degree' => 'required',
                 'institution' => 'required',
-                'end_date' => 'date',
+                'end_date' => 'required|date',
             ];
         }
     }
@@ -35,9 +35,10 @@ class CollaboratorAcademicCreateRequest extends FormRequest
     {
         return [
             'achievement_type_id.required' => 'El tipo de logro es requerido.',
-            'degree.required' => 'El grado es requerido.',
-            'institution' => 'La institución es requerida.',
-            'end_date' => 'La fecha de finalización es requerida.',
+            'degree.required' => 'El título obtenido es requerido.',
+            'institution.required' => 'La institución es requerida.',
+            'end_date.required' => 'La fecha de finalización es requerida.',
+            'end_date.date' => 'Formato de fecha no válido.',
             'certificate.max' => 'El archivo no debe ser mayor a 2MB.',
             'certificate.mimes' => 'El archivo debe ser un PDF.',
         ];

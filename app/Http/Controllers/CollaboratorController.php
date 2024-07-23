@@ -14,6 +14,7 @@ use App\Models\CcfType;
 use App\Models\City;
 use App\Models\CivilStatusType;
 use App\Models\Collaborator;
+use App\Models\CollaboratorAcademicAchievement;
 use App\Models\CollaboratorContract;
 use App\Models\Company;
 use App\Models\ContractType;
@@ -34,6 +35,7 @@ use App\Models\SocialStratum;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class CollaboratorController extends Controller
@@ -131,42 +133,67 @@ class CollaboratorController extends Controller
     
             if($request->hasFile('image')) {
                 $file = request()->file('image');
+                
+                $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' =>  'mh/' . env("APP_ENV", "local") . '/' . $company_id . '/collaborators']); // => mh/local/1/collaborators/qxrcxytjrwufqjij9ix3
+                $image_public_id = $cloudinary_object->getPublicId();
+                $image_url = $cloudinary_object->getSecurePath();
+                
+                $data = array(
+                    'company_id' => $company_id,
+                    'name' => $request->name,
+                    'first_surname' => $request->first_surname,
+                    'second_surname' => $request->second_surname,
+                    'document_type_id' => $request->document_type_id,
+                    'document_number' => $request->document_number,
+                    'document_province_id' => $request->document_province_id,
+                    'document_city_id' => $request->document_city_id,
+                    'expedition_date' => $request->expedition_date,
+                    'birth_province_id' => $request->birth_province_id,
+                    'birth_city_id' => $request->birth_city_id,
+                    'birth_date' => $request->birth_date,
+                    'civil_status_type_id' => $request->civil_status_type_id,
+                    'sex_type_id' => $request->sex_type_id,
+                    'rh_type_id' => $request->rh_type_id,
+                    'observations' => $request->observations,
+                    'residence_province_id' => $request->residence_province_id,
+                    'residence_city_id' => $request->residence_city_id,
+                    'stratum_type_id' => $request->stratum_type_id,
+                    'housing_tenure_id' => $request->housing_tenure_id,
+                    'address' => $request->address,
+                    'phone' => $request->phone,
+                    'cellphone' => $request->cellphone,
+                    'email' => $request->email,
+                    'image_public_id' => $image_public_id,
+                    'image_url' => $image_url,
+                );
+            } else {
+                $data = array(
+                    'company_id' => $company_id,
+                    'name' => $request->name,
+                    'first_surname' => $request->first_surname,
+                    'second_surname' => $request->second_surname,
+                    'document_type_id' => $request->document_type_id,
+                    'document_number' => $request->document_number,
+                    'document_province_id' => $request->document_province_id,
+                    'document_city_id' => $request->document_city_id,
+                    'expedition_date' => $request->expedition_date,
+                    'birth_province_id' => $request->birth_province_id,
+                    'birth_city_id' => $request->birth_city_id,
+                    'birth_date' => $request->birth_date,
+                    'civil_status_type_id' => $request->civil_status_type_id,
+                    'sex_type_id' => $request->sex_type_id,
+                    'rh_type_id' => $request->rh_type_id,
+                    'observations' => $request->observations,
+                    'residence_province_id' => $request->residence_province_id,
+                    'residence_city_id' => $request->residence_city_id,
+                    'stratum_type_id' => $request->stratum_type_id,
+                    'housing_tenure_id' => $request->housing_tenure_id,
+                    'address' => $request->address,
+                    'phone' => $request->phone,
+                    'cellphone' => $request->cellphone,
+                    'email' => $request->email,
+                );
             }
-
-    
-            $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' =>  'mh/' . env("APP_ENV", "local") . '/' . $company_id . '/collaborators']); // => mh/local/1/collaborators/qxrcxytjrwufqjij9ix3
-            $image_public_id = $cloudinary_object->getPublicId();
-            $image_url = $cloudinary_object->getSecurePath();
-    
-            $data = array(
-                'company_id' => $company_id,
-                'name' => $request->name,
-                'first_surname' => $request->first_surname,
-                'second_surname' => $request->second_surname,
-                'document_type_id' => $request->document_type_id,
-                'document_number' => $request->document_number,
-                'document_province_id' => $request->document_province_id,
-                'document_city_id' => $request->document_city_id,
-                'expedition_date' => $request->expedition_date,
-                'birth_province_id' => $request->birth_province_id,
-                'birth_city_id' => $request->birth_city_id,
-                'birth_date' => $request->birth_date,
-                'civil_status_type_id' => $request->civil_status_type_id,
-                'sex_type_id' => $request->sex_type_id,
-                'rh_type_id' => $request->rh_type_id,
-                // 'academic_achievement_type_id' => $request->academic_achievement_type_id,
-                'observations' => $request->observations,
-                'residence_province_id' => $request->residence_province_id,
-                'residence_city_id' => $request->residence_city_id,
-                'stratum_type_id' => $request->stratum_type_id,
-                'housing_tenure_id' => $request->housing_tenure_id,
-                'address' => $request->address,
-                'phone' => $request->phone,
-                'cellphone' => $request->cellphone,
-                'email' => $request->email,
-                'image_public_id' => $image_public_id,
-                'image_url' => $image_url,
-            );
     
             $collaborator = Collaborator::create($data);
     
@@ -233,7 +260,20 @@ class CollaboratorController extends Controller
         $sex_type = SexType::where('id', $collaborator->sex_type_id)->first();
         $rh_type = RhType::where('id', $collaborator->rh_type_id)->first();
         $scholarship_type = Scholarship::where('id', $collaborator->scholarship_type_id)->first();
-        // $highest_academic_achievement = AcademicAchievementType::where('id', $collaborator->academic_achievement_type_id)->first();
+
+        // dd($collaborator);
+        $subQuery = CollaboratorAcademicAchievement::where('collaborator_id', $collaborator->id)
+            ->select(DB::raw('MAX(achievement_type_id) as max_achievement_type_id'))
+            ->pluck('max_achievement_type_id');
+
+        $highest_academic_achievement = AcademicAchievementType::whereIn('id', $subQuery)->first();
+
+        // $highest_academic_achievement = CollaboratorAcademicAchievement::where('collaborator_id', $collaborator->id)
+        //     ->orderBy('achievement_type_id', 'desc')
+        //     ->first();
+
+        // dd($highest_academic_achievement);
+
         $stratum_type = SocialStratum::where('id', $collaborator->stratum_type_id)->first();
         $housing_tenure = HousingTenure::where('id', $collaborator->housing_tenure_id)->first();
 
@@ -265,7 +305,7 @@ class CollaboratorController extends Controller
             'sex_type',
             'rh_type',
             // 'scholarship_type',
-            // 'highest_academic_achievement',
+            'highest_academic_achievement',
             'stratum_type',
             'housing_tenure',
             'relationship_types',
@@ -352,7 +392,6 @@ class CollaboratorController extends Controller
                 'civil_status_type_id' => $request->civil_status_type_id,
                 'sex_type_id' => $request->sex_type_id,
                 'rh_type_id' => $request->rh_type_id,
-                // 'scholarship_type_id' => $request->scholarship_type_id,
                 'observations' => $request->observations,
                 'residence_province_id' => $request->residence_province_id,
                 'residence_city_id' => $request->residence_city_id,
@@ -402,7 +441,6 @@ class CollaboratorController extends Controller
         // Las validaciones se realizan en CollaboratorContractEditRequest
 
         try {
-
             $collaborator_contract = CollaboratorContract::where('collaborator_id', $id)->first();
 
             $data = array(
@@ -432,7 +470,7 @@ class CollaboratorController extends Controller
     
             return response()->json([
                 'message'=>'Información contractual actualizada exitosamente!',
-                'collaborator'=>$collaborator_contract
+                'collaborator_contract'=>$collaborator_contract
             ]);
         } catch (Exception $e) {
             return response()->json([

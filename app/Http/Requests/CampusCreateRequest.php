@@ -18,21 +18,22 @@ class CampusCreateRequest extends FormRequest
             'address' => 'required',
             'province_id' => 'required',
             'city_id' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'email' => 'required|email:rfc,dns',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'name.required' => 'El nombre es requerido.',
-            'address.required' => 'La dirección es requerida.',
-            'province_id.required' => 'El departamento es requerido.',
-            'city_id.required' => 'El municipio es requerido.',
+            'name.required' => 'El nombre es requerido',
+            'address.required' => 'La dirección es requerida',
+            'province_id.required' => 'El departamento es requerido',
+            'city_id.required' => 'El municipio es requerido',
             'phone.required' => 'El teléfono es requerido',
-            'email.required' => 'El correo electrónico es requerido.',
-            'email.email' => 'El email no tiene el formato adecuado.',
+            'phone.numeric' => 'El teléfono debe ser un número',
+            'email.required' => 'El correo electrónico es requerido',
+            'email.email' => 'El email debe ser una dirección de correo válida',
         ];
     }
 }

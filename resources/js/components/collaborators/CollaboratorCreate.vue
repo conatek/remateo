@@ -287,49 +287,45 @@
             </div>
         </div>
 
-        <div class="tab-content">
+        <!-- <div class="tab-content">
             <div class="tab-pane tabs-animation fade" :class="tab_collaborator_status == 'contract' ? 'show active' : ''" id="tab-content-1" role="tabpanel">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
-                        <!-- <form @submit.prevent="storeCollaborator" enctype="multipart/form-data"> -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card-hover-shadow card-border mb-3 card">
-                                        <div class="card-header">
-                                            Información Contractual
-                                        </div>
-                                        <div class="card-body">
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card-hover-shadow card-border mb-3 card">
+                                    <div class="card-header">
+                                        Información Contractual
+                                    </div>
+                                    <div class="card-body">
                                     </div>
                                 </div>
                             </div>
-                        <!-- </form> -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="tab-content">
+        <!-- <div class="tab-content">
             <div class="tab-pane tabs-animation fade" :class="tab_collaborator_status == 'documentation' ? 'show active' : ''" id="tab-content-2" role="tabpanel">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
-                        <!-- <form @submit.prevent="storeCollaborator" enctype="multipart/form-data"> -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card-hover-shadow card-border mb-3 card">
-                                        <div class="card-header">
-                                            Gestión Documental
-                                        </div>
-                                        <div class="card-body">
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card-hover-shadow card-border mb-3 card">
+                                    <div class="card-header">
+                                        Gestión Documental
+                                    </div>
+                                    <div class="card-body">
                                     </div>
                                 </div>
                             </div>
-                        <!-- </form> -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -429,7 +425,9 @@ export default {
         storeCollaborator() {
             let fd = new FormData()
 
-            fd.append('image', this.image)
+            if(this.image) {
+                fd.append('image', this.image)
+            }
             fd.append('name', this.name)
             fd.append('first_surname', this.first_surname)
             fd.append('second_surname', this.second_surname)
@@ -457,8 +455,9 @@ export default {
             let url = ''
             axios.post('/collaborators', fd).then(
                 (res) => {
-                    console.log(res)
-                    url = `/collaborators/${res.data.collaborator.id}?origin=store`
+                    localStorage.setItem('origin', 'created');
+
+                    url = `/collaborators/${res.data.collaborator.id}`
                     window.location.href = url
                     this.errors = null
                 }).catch(

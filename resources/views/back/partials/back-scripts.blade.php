@@ -1,5 +1,6 @@
 <!-- plugin dependencies -->
 <script type="text/javascript" src="{{ asset('vendors/jquery/dist/jquery.min.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('vendors/jquery/dist/jquery.js') }}"></script> --}}
 <script type="text/javascript" src="{{ asset('vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/moment/moment.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/metismenu/dist/metisMenu.js') }}"></script>
@@ -32,6 +33,8 @@
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+{{-- <script src="sweetalert2.all.min.js"></script> --}}
+{{-- <script type="text/javascript" src="{{ asset('vendors/sweetalert2/dist/sweetalert2.all.min.js') }}"></script> --}}
 
 <!-- custome.js -->
 <script type="text/javascript" src="{{ asset('js/charts/apex-charts.js') }}"></script>

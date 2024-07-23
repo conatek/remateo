@@ -29,7 +29,7 @@ class CollaboratorDocumentCreateRequest extends FormRequest
     {
         return [
             'document_type_id.required' => 'El tipo de documento es requerido.',
-            'document.max' => 'El archivo no debe ser mayor a 2MB.',
+            'document.max' => 'El tamaño de archivo no debe ser mayor a 2MB.',
             'document.mimes' => 'El archivo debe ser un PDF.',
         ];
     }

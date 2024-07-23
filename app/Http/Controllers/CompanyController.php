@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyCreateRequest;
 use App\Http\Requests\CompanyEditRequest;
 use App\Models\Collaborator;
+use App\Models\CollaboratorContract;
 use App\Models\Company;
 use App\Models\Province;
 use Illuminate\Http\Request;
@@ -70,6 +71,23 @@ class CompanyController extends Controller
         // abort_if(Gate::denies('company_show'), 403);
         $provinces = Province::all()->sortBy("name");
         return view('back.company.show', compact('company', 'provinces'));
+    }
+
+    public function getContracts($company_id)
+    {
+        $results = [];
+        $contracts = [];
+
+        $contracts = Collaborator::join('companies as cp', 'cp.id', '=', 'collaborators.company_id')
+            ->join('collaborator_contracts as cc', 'cc.collaborator_id', '=', 'collaborators.id')
+            ->join('contract_types as ct', 'ct.id', '=', 'cc.contract_type_id')
+            ->where('cp.id', $company_id)
+            ->select('cc.position_id')
+            ->get();
+
+        $results['contracts'] = $contracts;
+
+        return $results;
     }
 
     public function getGenderData($company_id)

@@ -63,9 +63,11 @@ class CampusController extends Controller
         return view('back.campuses.create', compact('company', 'provinces'));
     }
 
-    // public function store(Request $request)
     public function store(CampusCreateRequest $request)
     {
+        $province = Province::where('id', $request->province_id)->first();
+        $city = City::where('id', $request->city_id)->first();
+
         $data = array(
             'company_id' => $request->company_id,
             'province_id' => $request->province_id,
@@ -78,9 +80,13 @@ class CampusController extends Controller
 
         $campus = Campus::create($data);
 
+        $data['id'] = $campus->id;
+        $data['province'] = $province;
+        $data['city'] = $city;
+
         return response()->json([
             'message'=>'Sede creada exitosamente!',
-            'campus'=>$campus
+            'campus'=>$data
         ]);
     }
 
@@ -97,10 +103,12 @@ class CampusController extends Controller
         return view('back.campuses.edit', compact('campus', 'provinces'));
     }
 
-//    public function update(Request $request, Campus $campus)
     public function update(CampusEditRequest $request)
     {
         // Las validaciones se realizan en PositionEditRequest
+
+        $province = Province::where('id', $request->province_id)->first();
+        $city = City::where('id', $request->city_id)->first();
 
         $data = array(
             'id' => $request->id,
@@ -116,9 +124,12 @@ class CampusController extends Controller
         $campus = Campus::where('id', $data['id'])->first();
         $campus->update($data);
 
+        $data['province'] = $province;
+        $data['city'] = $city;
+
         return response()->json([
             'message'=>'Sede actualizada exitosamente!',
-            'campus'=>$data['id']
+            'campus'=>$data
         ]);
     }
 
@@ -137,7 +148,7 @@ class CampusController extends Controller
             $campus->delete();
             
             return response()->json([
-                'message'=>'Información de sede eliminada exitosamente!',
+                'message'=>'Sede eliminada exitosamente!',
                 'campus'=>$campus,
             ]);
 

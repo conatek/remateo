@@ -150,7 +150,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div v-if="chartTestOneData && chartTestOneOptions" class="col-md-3">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
@@ -162,7 +162,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

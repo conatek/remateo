@@ -17,8 +17,6 @@ class CollaboratorAcademicAchievementController extends Controller
             $academic_achievements = CollaboratorAcademicAchievement::where('collaborator_id', $collaborator_id)->orderBy('achievement_type_id', 'desc')->orderBy('end_date', 'desc')->get();
             $academic_achievements_data = [];
 
-            // dd($relatives);
-
             foreach ($academic_achievements as $academic_achievement) {
                 $data = [];
 
@@ -51,6 +49,8 @@ class CollaboratorAcademicAchievementController extends Controller
 
         try{
             $company_id = auth()->user()->company_id;
+
+            $achievement_type = AcademicAchievementType::where('id', $request->achievement_type_id)->first();
     
             if($request->hasFile('certificate')) {
                 $file = request()->file('certificate');
@@ -78,13 +78,14 @@ class CollaboratorAcademicAchievementController extends Controller
                 );
             }
 
-            
-
             $academic_data = CollaboratorAcademicAchievement::create($data);
+
+            $data['id'] = $academic_data->id;
+            $data['achievement_type'] = $achievement_type->type;
     
             return response()->json([
                 'message'=>'Información académica creada exitosamente!',
-                'academic_data'=>$academic_data,
+                'academic_data'=>$data,
             ]);
         } catch(Exception $e) {
             return response()->json([
@@ -98,17 +99,17 @@ class CollaboratorAcademicAchievementController extends Controller
         // Las validaciones se realizan en CollaboratorAcademicEditRequest
 
         try {
-            $academic_achievement = CollaboratorAcademicAchievement::where('id', $academic_achievement_id)->first();
             $company_id = auth()->user()->company_id;
 
+            $achievement_type = AcademicAchievementType::where('id', $request->achievement_type_id)->first();
+
             $data = array(
+                'id' => $academic_achievement_id,
                 'collaborator_id' => $request->collaborator_id,
                 'achievement_type_id' => $request->achievement_type_id,
                 'degree' => $request->degree,
                 'institution' => $request->institution,
                 'end_date' => $request->end_date,
-                // 'certificate_public_id' => $certificate_public_id,
-                // 'certificate_url' => $certificate_url,
             );
     
             $url = isset($academic_achievement['certificate_url']) ? $academic_achievement['certificate_url'] : null;
@@ -129,11 +130,14 @@ class CollaboratorAcademicAchievementController extends Controller
                 $data['certificate_url'] = $url;
             }
     
+            $academic_achievement = CollaboratorAcademicAchievement::where('id', $academic_achievement_id)->first();
             $academic_achievement->update($data);
+
+            $data['achievement_type'] = $achievement_type->type;
     
             return response()->json([
-                'message'=>'Información académica actualizada exitosamente!',
-                'collaborator'=>$academic_achievement
+                'message' => 'Información académica actualizada exitosamente!',
+                'academic_data' => $data
             ]);
         } catch (Exception $e) {
             return response()->json([

@@ -71,6 +71,10 @@ class PositionController extends Controller
     {
         // Las validaciones se realizan en PositionCreateRequest
 
+        $area = Area::where('id', $request->area_id)->first();
+        $criticality_level = PositionCriticalityLevel::where('id', $request->criticality_level_id)->first();
+        $risk_class = PositionRiskClass::where('id', $request->risk_class_id)->first();
+
         $data = array(
             'company_id' => $request->company_id,
             'area_id' => $request->area_id,
@@ -83,9 +87,14 @@ class PositionController extends Controller
 
         $position = Position::create($data);
 
+        $data['id'] = $position->id;
+        $data['area'] = $area;
+        $data['criticality_level'] = $criticality_level;
+        $data['risk_class'] = $risk_class;
+
         return response()->json([
             'message'=>'Cargo creado exitosamente!',
-            'position'=>$position
+            'position'=>$data
         ]);
     }
 
@@ -106,6 +115,10 @@ class PositionController extends Controller
     {
         // Las validaciones se realizan en PositionEditRequest
 
+        $area = Area::where('id', $request->area_id)->first();
+        $criticality_level = PositionCriticalityLevel::where('id', $request->criticality_level_id)->first();
+        $risk_class = PositionRiskClass::where('id', $request->risk_class_id)->first();
+
         $data = array(
             'id' => $request->id,
             'company_id' => $request->company_id,
@@ -120,9 +133,13 @@ class PositionController extends Controller
         $position = Position::where('id', $data['id'])->first();
         $position->update($data);
 
+        $data['area'] = $area;
+        $data['criticality_level'] = $criticality_level;
+        $data['risk_class'] = $risk_class;
+
         return response()->json([
             'message'=>'Cargo actualizado exitosamente!',
-            'position'=>$data['id']
+            'position'=>$data
         ]);
     }
 
@@ -134,7 +151,7 @@ class PositionController extends Controller
             $position->delete();
             
             return response()->json([
-                'message'=>'Información de cargo eliminada exitosamente!',
+                'message'=>'Cargo eliminada exitosamente!',
                 'position'=>$position,
             ]);
 

@@ -23,6 +23,7 @@ class CollaboratorHomeVisitController extends Controller
                 $data['id'] = $home_visit->id;
                 $data['home_visit_type'] = HomeVisitType::where('id', $home_visit->home_visit_type_id)->first()->name;
                 $data['home_visit_type_id'] = $home_visit->home_visit_type_id;
+                // $data['home_visit_observations'] = $home_visit->observations;
                 $data['observations'] = $home_visit->observations;
                 $data['visit_date'] = $home_visit->visit_date;
                 $data['next_visit_date'] = $home_visit->next_visit_date;
@@ -62,7 +63,7 @@ class CollaboratorHomeVisitController extends Controller
                     'home_visit_type_id' => $request->home_visit_type_id,
                     'visit_date' => $request->visit_date,
                     'next_visit_date' => $request->next_visit_date,
-                    'observations' => $request->observations,
+                    'observations' => $request->home_visit_observations,
                     'report_public_id' => $report_public_id,
                     'report_url' => $report_url
                 );
@@ -72,15 +73,18 @@ class CollaboratorHomeVisitController extends Controller
                     'home_visit_type_id' => $request->home_visit_type_id,
                     'visit_date' => $request->visit_date,
                     'next_visit_date' => $request->next_visit_date,
-                    'observations' => $request->observations,
+                    'observations' => $request->home_visit_observations,
                 );
             }
 
             $home_visit_data = CollaboratorHomeVisit::create($data);
+
+            $data['id'] = $home_visit_data->id;
+            $data['home_visit_type'] = HomeVisitType::where('id', $home_visit_data->home_visit_type_id)->first()->name;
     
             return response()->json([
                 'message'=>'Visita domiciliaria ingresada exitosamente!',
-                'home_visit_data'=>$home_visit_data,
+                'home_visit_data'=>$data,
             ]);
         } catch(Exception $e) {
             return response()->json([
@@ -98,6 +102,7 @@ class CollaboratorHomeVisitController extends Controller
             $company_id = auth()->user()->company_id;
 
             $data = array(
+                'id' => $home_visit_id,
                 'collaborator_id' => $request->collaborator_id,
                 'home_visit_type_id' => $request->home_visit_type_id,
                 'visit_date' => $request->visit_date,
@@ -124,10 +129,12 @@ class CollaboratorHomeVisitController extends Controller
             }
     
             $home_visit->update($data);
+
+            $data['home_visit_type'] = HomeVisitType::where('id', $home_visit->home_visit_type_id)->first()->name;
     
             return response()->json([
                 'message'=>'Visita domiciliaria actualizada exitosamente!',
-                'home_visit'=>$home_visit
+                'home_visit'=>$data
             ]);
         } catch (Exception $e) {
             return response()->json([

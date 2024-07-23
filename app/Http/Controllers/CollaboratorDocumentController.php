@@ -71,10 +71,13 @@ class CollaboratorDocumentController extends Controller
             }
 
             $document_data = CollaboratorDocument::create($data);
+
+            $data['id'] = $document_data->id;
+            $data['document_type'] = ContractualDocumentType::where('id', $document_data->document_type_id)->first()->name;
     
             return response()->json([
                 'message'=>'Documento ingresado exitosamente!',
-                'document_data'=>$document_data,
+                'document_data'=>$data,
             ]);
         } catch(Exception $e) {
             return response()->json([
@@ -92,6 +95,7 @@ class CollaboratorDocumentController extends Controller
             $company_id = auth()->user()->company_id;
 
             $data = array(
+                'id' => $document_id,
                 'collaborator_id' => $request->collaborator_id,
                 'document_type_id' => $request->document_type_id,
                 'observations' => $request->document_observations,
@@ -116,10 +120,12 @@ class CollaboratorDocumentController extends Controller
             }
     
             $document->update($data);
+
+            $data['document_type'] = ContractualDocumentType::where('id', $data['document_type_id'])->first()->name;
     
             return response()->json([
                 'message'=>'Documento actualizado exitosamente!',
-                'document'=>$document
+                'document_data'=>$data
             ]);
         } catch (Exception $e) {
             return response()->json([

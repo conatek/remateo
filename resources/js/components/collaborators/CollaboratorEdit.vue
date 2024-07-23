@@ -11,11 +11,11 @@
                     <span>Información Contractual</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a @click="tab_collaborator_status = 'documentation'" role="tab" class="nav-link" :class="tab_collaborator_status == 'documentation' ? 'active' : ''" id="tab-2" data-bs-toggle="tab" href="#tab-content-2">
                     <span>Gestión Documental</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
         <div class="tab-content">
             <div class="tab-pane tabs-animation fade" :class="tab_collaborator_status == 'general' ? 'show active' : ''" id="tab-content-0" role="tabpanel">
@@ -454,27 +454,25 @@
             </div>
         </div>
 
-        <div class="tab-content">
+        <!-- <div class="tab-content">
             <div class="tab-pane tabs-animation fade" :class="tab_collaborator_status == 'documentation' ? 'show active' : ''" id="tab-content-2" role="tabpanel">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
-                        <!-- <form @submit.prevent="storeCollaborator" enctype="multipart/form-data"> -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card-hover-shadow card-border mb-3 card">
-                                        <div class="card-header">
-                                            Gestión Documental
-                                        </div>
-                                        <div class="card-body">
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card-hover-shadow card-border mb-3 card">
+                                    <div class="card-header">
+                                        Gestión Documental
+                                    </div>
+                                    <div class="card-body">
                                     </div>
                                 </div>
                             </div>
-                        <!-- </form> -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -735,17 +733,17 @@ export default {
                 '_method': 'PUT',
             }
 
+            let url = ''
             axios.post(`/collaborators/${this.collaborator.id}/contractual-information`, dataSend).then(
                 (res) => {
-                    this.getContractualInformation(this.collaborator.id)
-                    // console.log(res)
+                    localStorage.setItem('origin', 'contractual_info_created');
+
+                    url = `/collaborators/${res.data.collaborator_contract.collaborator_id}`
+                    window.location.href = url
                     this.errors = null
-                    this.message = 'Información contractual actualizada correctamente'
-                    console.log(this.message);
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        // console.log(error.response.data.errors)
                         this.errors = error.response.data.errors
                     }
                 })
@@ -771,16 +769,17 @@ export default {
                 'ccf_id': this.ccf_id,
             }
 
+            let url = ''
             axios.put(`/collaborators/${this.collaborator.id}/contractual-information`, dataSend).then(
                 (res) => {
-                    console.log(res)
+                    localStorage.setItem('origin', 'contractual_info_updated');
+
+                    url = `/collaborators/${res.data.collaborator_contract.collaborator_id}`
+                    window.location.href = url
                     this.errors = null
-                    this.message = 'Información contractual actualizada correctamente'
-                    console.log(this.message);
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        console.log(error.response.data.errors)
                         this.errors = error.response.data.errors
                     }
                 })

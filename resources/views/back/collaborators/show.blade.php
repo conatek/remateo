@@ -29,7 +29,7 @@
     </div>
 @endif --}}
 
-{{-- {{ dd($collaborator_contract) }}  --}}
+{{-- {{ dd($$highest_academic_achievement) }}  --}}
 
 <collaborator-show 
     :collaborator="{{ $collaborator }}"
@@ -45,6 +45,7 @@
     :sex_type="{{ $sex_type }}"
     :rh_type="{{ $rh_type }}"
     :stratum_type="{{ $stratum_type }}"
+    :highest_academic_achievement="{{ $highest_academic_achievement }}"
     :housing_tenure="{{ $housing_tenure }}"
     :relationship_types="{{ $relationship_types }}"
     :occupation_types="{{ $occupation_types }}"

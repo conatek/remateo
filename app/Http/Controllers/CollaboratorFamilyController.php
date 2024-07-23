@@ -28,11 +28,11 @@ class CollaboratorFamilyController extends Controller
                 $data['name'] = $relative->name;
                 $data['first_surname'] = $relative->first_surname;
                 $data['second_surname'] = $relative->second_surname;
-                $data['relationship'] = Relationship::where('id', $relative->relationship_id)->first()->name;
+                $data['relationship'] = Relationship::where('id', $relative->relationship_id)->first();
                 $data['relationship_id'] = $relative->relationship_id;
-                $data['occupation'] = Occupation::where('id', $relative->occupation_id)->first()->name;
+                $data['occupation'] = Occupation::where('id', $relative->occupation_id)->first();
                 $data['occupation_id'] = $relative->occupation_id;
-                $data['sex'] = SexType::where('id', $relative->sex_type_id)->first()->name;
+                $data['sex'] = SexType::where('id', $relative->sex_type_id)->first();
                 $data['sex_id'] = $relative->sex_type_id;
                 $data['birth_date'] = $relative->birth_date;
                 $data['status'] = '';
@@ -55,6 +55,10 @@ class CollaboratorFamilyController extends Controller
         // Las validaciones se realizan en CollaboratorFamilyCreateRequest
 
         try{
+            $relationship = Relationship::where('id', $request->relationship_id)->first();
+            $occupation = Occupation::where('id', $request->occupation_id)->first();
+            $sex = SexType::where('id', $request->sex_type_id)->first();
+
             $data = array(
                 'collaborator_id' => $request->collaborator_id,
                 'name' => $request->name,
@@ -67,10 +71,15 @@ class CollaboratorFamilyController extends Controller
             );
 
             $relative_data = CollaboratorFamily::create($data);
+
+            $data['id'] = $relative_data->id;
+            $data['relationship'] = $relationship;
+            $data['occupation'] = $occupation;
+            $data['sex'] = $sex;
     
             return response()->json([
                 'message'=>'Familiar creado exitosamente!',
-                'relative_data'=>$relative_data,
+                'relative_data'=>$data,
             ]);
         } catch(Exception $e) {
             return response()->json([
@@ -84,6 +93,10 @@ class CollaboratorFamilyController extends Controller
         // Las validaciones se realizan en CollaboratorFamilyEditRequest
 
         try{
+            $relationship = Relationship::where('id', $request->relationship_id)->first();
+            $occupation = Occupation::where('id', $request->occupation_id)->first();
+            $sex = SexType::where('id', $request->sex_type_id)->first();
+
             $data = array(
                 'id' => $request->id,
                 'collaborator_id' => $request->collaborator_id,
@@ -98,10 +111,14 @@ class CollaboratorFamilyController extends Controller
 
             $relative_data = CollaboratorFamily::where('id', $data['id'])->first();
             $relative_data->update($data);
+
+            $data['relationship'] = $relationship;
+            $data['occupation'] = $occupation;
+            $data['sex'] = $sex;
     
             return response()->json([
                 'message'=>'Familiar actualizado exitosamente!',
-                'relative_data'=>$relative_data,
+                'relative_data'=>$data,
             ]);
         } catch(Exception $e) {
             return response()->json([
