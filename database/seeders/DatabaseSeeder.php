@@ -17,14 +17,16 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            CompanyTypeSeeder::class,
+            IndustrySeeder::class,
+            DocumentTypeSeeder::class,
+            ProvinceSeeder::class,
+            CitySeeder::class,
             CompanySeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
             RoleHasPermissionSeeder::class,
             UserSeeder::class,
-            ProvinceSeeder::class,
-            CitySeeder::class,
-            DocumentTypeSeeder::class,
             SocialStratumSeeder::class,
             SexTypeSeeder::class,
             RhTypeSeeder::class,

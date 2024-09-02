@@ -7,7 +7,12 @@ const components = {
     'campus-create': defineAsyncComponent(() => import('./components/campus/CampusCreate.vue')),
     'campus-edit': defineAsyncComponent(() => import('./components/campus/CampusEdit.vue')),
 
+    'company-index': defineAsyncComponent(() => import('./components/company/CompanyIndex.vue')),
+    'company-create': defineAsyncComponent(() => import('./components/company/CompanyCreate.vue')),
     'company-show': defineAsyncComponent(() => import('./components/company/CompanyShow.vue')),
+    'company-detail': defineAsyncComponent(() => import('./components/company/CompanyDetail.vue')),
+    'company-edit': defineAsyncComponent(() => import('./components/company/CompanyEdit.vue')),
+
     'control-panel': defineAsyncComponent(() => import('./components/company/ControlPanel.vue')),
     'sociodemographic-profile': defineAsyncComponent(() => import('./components/company/SociodemographicProfile.vue')),
     'alerts': defineAsyncComponent(() => import('./components/company/Alerts.vue')),

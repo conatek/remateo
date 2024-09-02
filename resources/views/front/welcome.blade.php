@@ -125,7 +125,7 @@
                                 <div class="col mb-5 h-100">
                                     <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
                                     <h2 class="h5">Gestión Integral de Tareas y Proyectos</h2>
-                                    <p class="mb-0">Utiliza nuestras herramientas tipo Trello para asignar, gestionar y supervisar tareas y proyectos, garantizando que nada se quede sin hacer.</p>
+                                    <p class="mb-0">Utiliza nuestras herramientas para asignar, gestionar y supervisar tareas y proyectos, garantizando que nada se quede sin hacer.</p>
                                 </div>
                                 <div class="col mb-5 mb-md-0 h-100">
                                     <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-bar-chart"></i></div>

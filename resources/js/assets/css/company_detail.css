@@ -8,22 +8,13 @@
 
 .main-card .wrapper-basic,
 .main-card .wrapper-contact,
-.main-card .wrapper-social,
-.main-card .wrapper-campus-data,
-.main-card .wrapper-area-data,
-.main-card .wrapper-position-data {
+.main-card .wrapper-social {
     display: grid;
     grid-gap: 1px;
     /* background-color: #dee2e6; */
     background-color: #555f78;
     /* border: 1px solid #dee2e6; */
     border: 1px solid #555f78;
-}
-
-.add-campus-card,
-.edit-campus-card {
-    background-color: #fff;
-    border: 1px solid #dee2e6;
 }
 
 @media screen and (min-width: 300px) {
@@ -40,21 +31,6 @@
     .main-card .wrapper-social {
         grid-template-columns: repeat(1, 1fr);
         grid-template-areas:    "lb-17" "vl-17" "lb-18" "vl-18" "lb-19" "vl-19" "lb-20" "vl-20" "lb-21" "vl-21";
-    }
-
-    .main-card .wrapper-campus-data {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-22" "vl-22" "lb-23" "vl-23" "lb-24" "vl-24" "lb-25" "vl-25" "lb-26" "vl-26";
-    }
-
-    .main-card .wrapper-area-data {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-27" "vl-27" "lb-28" "vl-28" "lb-29" "vl-29" "lb-30" "vl-30";
-    }
-
-    .main-card .wrapper-position-data {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-31" "vl-31" "lb-32" "vl-32" "lb-33" "vl-33" "lb-34" "vl-34" "lb-35" "vl-35" "lb-36" "vl-36";
     }
 }
 
@@ -89,36 +65,6 @@
                                 "lb-21 vl-21 vl-21 vl-21"
         ;
     }
-
-    .main-card .wrapper-campus-data {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-22 vl-22 vl-22 vl-22"
-                                "lb-23 vl-23 vl-23 vl-23"
-                                "lb-24 vl-24 vl-24 vl-24"
-                                "lb-25 vl-25 vl-25 vl-25"
-                                "lb-26 vl-26 vl-26 vl-26"
-        ;
-    }
-
-    .main-card .wrapper-area-data {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-27 vl-27 vl-27 vl-27"
-                                "lb-28 vl-28 vl-28 vl-28"
-                                "lb-29 vl-29 vl-29 vl-29"
-                                "lb-30 vl-30 vl-30 vl-30"
-        ;
-    }
-
-    .main-card .wrapper-position-data {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-31 vl-31 vl-31 vl-31"
-                                "lb-32 vl-32 vl-32 vl-32"
-                                "lb-33 vl-33 vl-33 vl-33"
-                                "lb-34 vl-34 vl-34 vl-34"
-                                "lb-35 vl-35 vl-35 vl-35"
-                                "lb-36 vl-36 vl-36 vl-36"
-        ;
-    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -149,39 +95,11 @@
                                 "lb-21 lb-21 lb-21 vl-21 vl-21 vl-21 vl-21 vl-21 vl-21 vl-21 vl-21 vl-21"
         ;
     }
-
-    .main-card .wrapper-campus-data {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-22 lb-22 lb-22 vl-22 vl-22 vl-22 lb-23 lb-23 lb-23 vl-23 vl-23 vl-23"
-                                "lb-24 lb-24 lb-24 vl-24 vl-24 vl-24 vl-24 vl-24 vl-24 vl-24 vl-24 vl-24"
-                                "lb-25 lb-25 lb-25 vl-25 vl-25 vl-25 lb-26 lb-26 lb-26 vl-26 vl-26 vl-26"
-        ;
-    }
-
-    .main-card .wrapper-area-data {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-27 lb-27 lb-27 vl-27 vl-27 vl-27 lb-28 lb-28 lb-28 vl-28 vl-28 vl-28"
-                                "lb-29 lb-29 lb-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29 vl-29"
-                                "lb-30 lb-30 lb-30 vl-30 vl-30 vl-30 vl-30 vl-30 vl-30 vl-30 vl-30 vl-30"
-        ;
-    }
-
-    .main-card .wrapper-position-data {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-31 lb-31 lb-31 vl-31 vl-31 vl-31 vl-31 vl-31 vl-31 vl-31 vl-31 vl-31"
-                                "lb-32 lb-32 lb-32 vl-32 vl-32 vl-32 lb-33 lb-33 lb-33 vl-33 vl-33 vl-33"
-                                "lb-34 lb-34 lb-34 vl-34 vl-34 vl-34 lb-35 lb-35 lb-35 vl-35 vl-35 vl-35"
-                                "lb-36 lb-36 lb-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36 vl-36"
-        ;
-    }
 }
 
 .main-card .wrapper-basic .box-label,
 .main-card .wrapper-contact .box-label,
-.main-card .wrapper-social .box-label,
-.main-card .wrapper-campus-data .box-label,
-.main-card .wrapper-area-data .box-label,
-.main-card .wrapper-position-data .box-label {
+.main-card .wrapper-social .box-label {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -195,19 +113,13 @@
 
 .main-card .wrapper-basic .box-label p,
 .main-card .wrapper-contact .box-label p,
-.main-card .wrapper-social .box-label p,
-.main-card .wrapper-campus-data .box-label p,
-.main-card .wrapper-area-data .box-label p,
-.main-card .wrapper-position-data .box-label p {
+.main-card .wrapper-social .box-label p {
     margin: 0;
 }
 
 .main-card .wrapper-basic .box-value,
 .main-card .wrapper-contact .box-value,
-.main-card .wrapper-social .box-value,
-.main-card .wrapper-campus-data .box-value,
-.main-card .wrapper-area-data .box-value,
-.main-card .wrapper-position-data .box-value {
+.main-card .wrapper-social .box-value {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -219,10 +131,7 @@
 
 .main-card .wrapper-basic .box-value p,
 .main-card .wrapper-contact .box-value p,
-.main-card .wrapper-social .box-value p,
-.main-card .wrapper-campus-data .box-value p,
-.main-card .wrapper-area-data .box-value p,
-.main-card .wrapper-position-data .box-value p {
+.main-card .wrapper-social .box-value p {
     margin: 0;
 }
 
@@ -272,42 +181,6 @@
 .main-card .wrapper-social .vl-20 { grid-area: vl-20; }
 .main-card .wrapper-social .lb-21 { grid-area: lb-21; }
 .main-card .wrapper-social .vl-21 { grid-area: vl-21; }
-
-
-.main-card .wrapper-campus-data .lb-22 { grid-area: lb-22; }
-.main-card .wrapper-campus-data .vl-22 { grid-area: vl-22; }
-.main-card .wrapper-campus-data .lb-23 { grid-area: lb-23; }
-.main-card .wrapper-campus-data .vl-23 { grid-area: vl-23; }
-.main-card .wrapper-campus-data .lb-24 { grid-area: lb-24; }
-.main-card .wrapper-campus-data .vl-24 { grid-area: vl-24; }
-.main-card .wrapper-campus-data .lb-25 { grid-area: lb-25; }
-.main-card .wrapper-campus-data .vl-25 { grid-area: vl-25; }
-.main-card .wrapper-campus-data .lb-26 { grid-area: lb-26; }
-.main-card .wrapper-campus-data .vl-26 { grid-area: vl-26; }
-
-
-.main-card .wrapper-area-data .lb-27 { grid-area: lb-27; }
-.main-card .wrapper-area-data .vl-27 { grid-area: vl-27; }
-.main-card .wrapper-area-data .lb-28 { grid-area: lb-28; }
-.main-card .wrapper-area-data .vl-28 { grid-area: vl-28; }
-.main-card .wrapper-area-data .lb-29 { grid-area: lb-29; }
-.main-card .wrapper-area-data .vl-29 { grid-area: vl-29; }
-.main-card .wrapper-area-data .lb-30 { grid-area: lb-30; }
-.main-card .wrapper-area-data .vl-30 { grid-area: vl-30; }
-
-
-.main-card .wrapper-position-data .lb-31 { grid-area: lb-31; }
-.main-card .wrapper-position-data .vl-31 { grid-area: vl-31; }
-.main-card .wrapper-position-data .lb-32 { grid-area: lb-32; }
-.main-card .wrapper-position-data .vl-32 { grid-area: vl-32; }
-.main-card .wrapper-position-data .lb-33 { grid-area: lb-33; }
-.main-card .wrapper-position-data .vl-33 { grid-area: vl-33; }
-.main-card .wrapper-position-data .lb-34 { grid-area: lb-34; }
-.main-card .wrapper-position-data .vl-34 { grid-area: vl-34; }
-.main-card .wrapper-position-data .lb-35 { grid-area: lb-35; }
-.main-card .wrapper-position-data .vl-35 { grid-area: vl-35; }
-.main-card .wrapper-position-data .lb-36 { grid-area: lb-36; }
-.main-card .wrapper-position-data .vl-36 { grid-area: vl-36; }
 
 
 .wrapper-add-data {

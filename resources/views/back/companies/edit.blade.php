@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div class="mbg-3 alert alert-info alert-dismissible fade show" role="alert">
+    {{-- <div class="mbg-3 alert alert-info alert-dismissible fade show" role="alert">
         <span class="pe-2">
             <i class="fa fa-question-circle"></i>
         </span>
@@ -47,5 +47,14 @@
                 <button type="submit" class="mt-2 btn btn-primary">Actualizar</button>
             </form>
         </div>
-    </div>
+    </div> --}}
+
+    <company-edit 
+        :company="{{ $company }}"
+        :company_types="{{ $company_types }}"
+        :document_types="{{ $document_types }}"
+        :provinces="{{ $provinces }}"
+        :industry_types="{{ $industry_types }}"
+    ></company-edit>
+
 @endsection

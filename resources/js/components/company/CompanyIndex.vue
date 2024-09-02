@@ -8,19 +8,19 @@
                             <span class="pe-2">
                                 <i class="fa fa-star"></i>
                             </span>
-                            Colaborador actualizado correctamente!
+                            Empresa actualizada correctamente!
                         </div>
                         <div v-else-if="origin == 'created'" class="mbg-3 alert alert-success alert-dismissible fade show" role="alert">
                             <span class="pe-2">
                                 <i class="fa fa-star"></i>
                             </span>
-                            Colaborador creado correctamente!
+                            Empresa creada correctamente!
                         </div>
                         <div v-else-if="origin == 'deleted'" class="mbg-3 alert alert-success alert-dismissible fade show" role="alert">
                             <span class="pe-2">
                                 <i class="fa fa-star"></i>
                             </span>
-                            Colaborador eliminado correctamente!
+                            Empresa eliminada correctamente!
                         </div>
                     </div>
                 </div>
@@ -32,70 +32,44 @@
                                     <i class="fa fa-search fa-w-16 "></i>
                                 </div>
                             </div>
-                            <input v-model="search" @input="handleSearch" placeholder="Buscar Colaborador ..." type="text" class="form-control">
+                            <input v-model="search" @input="handleSearch" placeholder="Buscar Empresa ..." type="text" class="form-control">
                         </div>
                     </div>
                 </div>
-                <div v-if="collaborators !== null" class="row">
-                    <div v-for="collaborator in paginatedData" :key="collaborator.id" class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-                        <!-- <div class="mb-3 text-dark card-border card bg-light">
-                            <div class="card-header">{{ collaborator.name }} {{ collaborator.first_surname }} {{ collaborator.second_surname }}</div>
-                            <div class="card-body">
-                                {{ collaborator.id }} - {{ collaborator.name }} {{ collaborator.first_surname }} {{ collaborator.second_surname }}
-                            </div>
-                            <div class="d-block text-end card-footer">
-                                <a :href="`/collaborators/${collaborator.id}`" class="btn-shadow-success btn btn-success btn-lg"><i class="fa fa-eye"></i> Ver detalle</a>
-                                <a :href="`/collaborators/${collaborator.id}/edit`" class="btn-shadow-primary btn btn-primary btn-lg mx-2"><i class="fa fa-edit"></i> Editar</a>
-                                <a @click="deleteCollaborator(collaborator.id)" class="btn-shadow-danger btn btn-danger btn-lg"><i class="fa fa-trash"></i> Eliminar</a>
-                            </div>
-                        </div> -->
-
-
-                        <!-- <div class="card-hover-shadow card-border text-white mb-3 card bg-dark" style="border:1px solid #495057;"> -->
+                <div v-if="companies !== null" class="row">
+                    <div v-for="company in paginatedData" :key="company.id" class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                         <div class="card-hover-shadow text-white mb-3 card bg-dark" style="border: none;">
                             <div class="dropdown-menu-header">
-                                <!-- <div class="dropdown-menu-header-inner" style="background-color: #cbcbcb; color:#495057;"> -->
                                 <div class="dropdown-menu-header-inner bg-heavy-rain" style="color:#495057; margin: 0; border: none; border-radius: 0;">
                                     <div class="menu-header-content">
-                                        <!-- <div class="avatar-icon-wrapper mb-3 avatar-icon-xl">
-                                            <div class="avatar-icon">
-                                                <img src="images/avatars/2.jpg" alt="Avatar 5">
-                                            </div>
-                                        </div> -->
                                         <div class="avatar-icon-wrapper me-2 avatar-icon-xl">
-                                            <div v-if="collaborator && collaborator.image_url" class="avatar-icon rounded">
-                                                <img :src="collaborator.image_url" :alt="collaborator.name">
+                                            <div v-if="company && company.image_url" class="avatar-icon rounded">
+                                                <img :src="company.image_url" :alt="company.company_name">
                                             </div>
                                             <div v-else class="avatar-icon rounded">
-                                                <img :src="'/images/default-profile.jpeg'" :alt="collaborator.name">
+                                                <img :src="'/images/default-profile.jpeg'" :alt="company.company_name">
                                             </div>
                                         </div>
                                         <div>
-                                            <h5 class="menu-header-title text-truncate">{{ collaborator.id }} - {{ collaborator.name }} {{ collaborator.first_surname }} {{ collaborator.second_surname }}</h5>
+                                            <h5 class="menu-header-title text-truncate">{{ company.id }} - {{ company.company_name }}</h5>
                                             <h6 class="menu-header-subtitle text-truncate">Applications Technician</h6>
                                         </div>
                                         <div class="menu-header-btn-pane pt-1">
-                                            <!-- <button class="btn-icon btn btn-dark btn-sm">
-                                                <i class="pe-7s-config btn-icon-wrapper"></i>
-                                                Ver detalle
-                                            </button> -->
-                                            <a :href="`/collaborators/${collaborator.id}`" class="btn-shadow-dark btn-icon btn btn-dark btn-lg"><i class="fa fa-eye"></i> Ver detalle</a>
+                                            <a :href="`/companies/${company.id}`" class="btn-shadow-dark btn-icon btn btn-dark btn-lg"><i class="fa fa-eye"></i> Ver detalle</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="text-center d-block card-footer" style="border: none;">
-                                <!-- <button class="btn-shadow-dark btn-wider btn btn-dark">Send Message</button> -->
-
-                                <a :href="`/collaborators/${collaborator.id}/edit`" class="btn-shadow-primary btn btn-primary btn-lg mx-2"><i class="fa fa-edit"></i> Editar</a>
-                                <!-- <a @click="deleteCollaborator(collaborator.id)" class="btn-shadow-danger btn btn-danger btn-lg"><i class="fa fa-trash"></i> Eliminar</a> -->
-                                <a @click="showDeleteAlert('deleteCollaborator', collaborator.id)" class="btn-shadow-danger btn btn-danger btn-lg"><i class="fa fa-trash"></i> Eliminar</a>
+                                <a :href="`/companies/${company.id}/edit`" class="btn-shadow-primary btn btn-primary btn-lg mx-2"><i class="fa fa-edit"></i> Editar</a>
+                                <!-- <a @click="deleteCompany(company.id)" class="btn-shadow-danger btn btn-danger btn-lg"><i class="fa fa-trash"></i> Eliminar</a> -->
+                                <a @click="showDeleteAlert('deleteCompany', company.id)" class="btn-shadow-danger btn btn-danger btn-lg"><i class="fa fa-trash"></i> Eliminar</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <nav v-if="collaborators !== null" class="" aria-label="Page navigation example">
+                <nav v-if="companies !== null" class="" aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
                             <a @click="getPreviousPage()" class="page-link" aria-label="Previous">
@@ -122,27 +96,24 @@
 <script>
 export default {
     props: {
-        company_id: {
-            default: null,
-        },
-        collaborators: {
+        companies: {
             default: null,
         },
     },
     data() {
         return {
             loading: 0,
-            
+
             message: '',
 
-            collaboratorsData: null,
-            collaboratorsPerPage: 12,
-            collaboratorsWithFilter: false,
+            companiesData: null,
+            companiesPerPage: 12,
+            companiesWithFilter: false,
             paginatedData: [],
             currentPage: 1,
             totalPages: 0,
             search: '',
-            filteredCollaborators: [],
+            filteredCompanies: [],
 
             origin: '',
         }
@@ -150,7 +121,7 @@ export default {
     mounted () {
         this.getOrigin()
 
-        this.getTotalPages(this.collaborators)
+        this.getTotalPages(this.companies)
         this.getPageData(1)
     },
     methods: {
@@ -167,8 +138,8 @@ export default {
                 cancelButtonText: "Cancelar",
             }).then((result) => {
             if (result.isConfirmed) {
-                if(action == 'deleteCollaborator') {
-                    this.deleteCollaborator(item)
+                if(action == 'deleteCompany') {
+                    this.deleteCompany(item)
                 }
                 this.$swal({
                     title: "Eliminado!",
@@ -177,6 +148,21 @@ export default {
                 });
             }
             });
+        },
+        getMessage(msg) {
+            if(msg != '' && msg != null) {
+                this.message = msg
+            }
+
+            setTimeout(() => {
+                this.message = ''
+
+                this.successfully_created_message = false
+                this.successfully_updated_message = false
+                this.successfully_deleted_message = false
+
+
+            }, 3000)
         },
         getOrigin() {
             const origin = localStorage.getItem('origin');
@@ -190,35 +176,35 @@ export default {
         },
         handleSearch() {
             if (this.search.length > 0) {
-                this.collaboratorsWithFilter = true;
+                this.companiesWithFilter = true;
 
-                this.filteredCollaborators = this.collaborators.filter(collaborator => 
-                    collaborator.name.toLowerCase().includes(this.search.toLowerCase()) ||
-                    collaborator.first_surname.toLowerCase().includes(this.search.toLowerCase()) ||
-                    collaborator.second_surname.toLowerCase().includes(this.search.toLowerCase()) ||
-                    collaborator.document_number.toLowerCase().includes(this.search.toLowerCase()) ||
-                    collaborator.email.toLowerCase().includes(this.search.toLowerCase()) ||
-                    collaborator.cellphone.toLowerCase().includes(this.search.toLowerCase())
+                this.filteredCompanies = this.companies.filter(company => 
+                    company.company_name.toLowerCase().includes(this.search.toLowerCase())
+                    // company.first_surname.toLowerCase().includes(this.search.toLowerCase()) ||
+                    // company.second_surname.toLowerCase().includes(this.search.toLowerCase()) ||
+                    // company.document_number.toLowerCase().includes(this.search.toLowerCase()) ||
+                    // company.email.toLowerCase().includes(this.search.toLowerCase()) ||
+                    // company.cellphone.toLowerCase().includes(this.search.toLowerCase())
                 );
 
-                this.getTotalPages(this.filteredCollaborators);
+                this.getTotalPages(this.filteredCompanies);
                 this.getPageData(1); // Siempre muestra la primera página después de buscar
             } else {
-                this.collaboratorsWithFilter = false;
-                this.getTotalPages(this.collaborators);
+                this.companiesWithFilter = false;
+                this.getTotalPages(this.companies);
                 this.getPageData(1); // Muestra la primera página al limpiar la búsqueda
             }
         },
         getTotalPages(data) {
-            this.totalPages = Math.ceil(data.length / this.collaboratorsPerPage)
+            this.totalPages = Math.ceil(data.length / this.companiesPerPage)
         },
         getPageData(page) {
             this.paginatedData = [];
-            let start = (page * this.collaboratorsPerPage) - this.collaboratorsPerPage;
-            let end = (page * this.collaboratorsPerPage);
+            let start = (page * this.companiesPerPage) - this.companiesPerPage;
+            let end = (page * this.companiesPerPage);
 
-            // Utiliza los colaboradores filtrados si hay una búsqueda activa, de lo contrario usa todos los colaboradores
-            const data = this.collaboratorsWithFilter ? this.filteredCollaborators : this.collaborators;
+            // Utiliza las empresas filtradas si hay una búsqueda activa, de lo contrario usa todas las empresas
+            const data = this.companiesWithFilter ? this.filteredCompanies : this.companies;
             
             this.paginatedData = data.slice(start, end);
             this.currentPage = page;
@@ -231,27 +217,29 @@ export default {
         },
 
         getNextPage() {
-            const data = this.collaboratorsWithFilter ? this.filteredCollaborators : this.collaborators;
-            if (this.currentPage < Math.ceil(data.length / this.collaboratorsPerPage)) {
+            const data = this.companiesWithFilter ? this.filteredCompanies : this.companies;
+            if (this.currentPage < Math.ceil(data.length / this.companiesPerPage)) {
                 this.currentPage++;
             }
             this.getPageData(this.currentPage);
         },
-        editCollaborator(collaborator){
-            axios.get(`/collaborators/${collaborator}/edit`)
-        },
-        deleteCollaborator(id){
+        deleteCompany(id){
+            // console.log('Eliminar empresa: ' + id);
+
             let url = ''
-            axios.delete(`/collaborators/${id}/destroy`).then(
+            axios.delete(`/companies/${id}/destroy`).then(
                 (res) => {
                     localStorage.setItem('origin', 'deleted');
 
-                    url = `/collaborators`
+                    // this.getMessage(res.data.message)
+
+                    url = `/companies`
                     window.location.href = url
                     this.errors = null
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
+                        console.log(error.response.data.errors)
                         this.errors = error.response.data.errors
                     }
                 })
@@ -259,3 +247,23 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+    .message-success {
+        width: 100%;
+        background: #D8FFDC;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    .message-success .content {
+        align-items: flex-start;
+        justify-content: center;
+        border-left: 5px solid #00660A;
+    }
+
+    .message-success .content p {
+        font-size: 16px;
+        line-height: 16px;
+    }
+</style>

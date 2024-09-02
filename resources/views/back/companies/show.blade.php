@@ -30,12 +30,13 @@
         </div>
     @endif
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card-shadow-primary border mb-3 card card-body border-primary">
-                <h5 class="card-title">{{ $company->name  }}</h5>
-                En este espacio colocaremos la información de la empresa.
-            </div>
-        </div>
-    </div>
+    <company-detail 
+        :company="{{ $company }}"
+        :company_type="{{ $company_type }}"
+        :industry_type="{{ $industry_type }}"
+        :identification_type="{{ $identification_type }}"
+        :province="{{ $province }}"
+        :city="{{ $city }}"
+    ></company-detail>
+
 @endsection

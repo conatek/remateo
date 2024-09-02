@@ -24,63 +24,13 @@
 
     @if (session('success'))
         <div class="mbg-3 alert alert-success alert-dismissible fade show" role="alert">
-        <span class="pe-2">
-            <i class="fa fa-star"></i>
-            {{-- <i class="pe-7s-star"></i> --}}
-        </span>
+            <span class="pe-2">
+                <i class="fa fa-star"></i>
+                <i class="pe-7s-star"></i>
+            </span>
             {{ session('success') }}
         </div>
     @endif
 
-    <div class="main-card mb-3 card">
-        <div class="card-body">
-            {{-- <table style="width: 100%;" id="example" class="table table-cntk table-hover table-striped table-bordered"> --}}
-            <table style="width: 100%;" id="dt_users" class="table table-cntk table-hover table-bordered">
-                <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($companies as $company)
-                    <tr>
-                        <td>{{ $company->name }}</td>
-                        <td class="td-actions">
-                            @can('company_show')
-                            <a href="{{ route('companies.show', $company->id) }}" class="mb-2 me-2 btn-icon btn btn-sm btn-success">
-                                <i class="pe-7s-look btn-icon-wrapper"></i>Mostrar
-                            </a>
-                            @endcan
-
-                            @can('company_edit')
-                            <a href="{{ route('companies.edit', $company->id) }}" class="mb-2 me-2 btn-icon btn btn-sm btn-primary">
-                                <i class="pe-7s-pen btn-icon-wrapper"></i>Editar
-                            </a>
-                            @endcan
-
-                            @can('company_destroy')
-                            <form action="{{ route('companies.destroy', $company->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="mb-2 me-2 btn-icon btn btn-sm btn-danger" type="submit">
-                                    <i class="pe-7s-trash btn-icon-wrapper"></i>Eliminar
-                                </button>
-                            </form>
-                            @endcan
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Acciones</th>
-                </tr>
-                </tfoot>
-            </table>
-
-            {{-- {{ $users->onEachSide(2)->links() }} --}}
-        </div>
-    </div>
+    <company-index :companies="{{ $companies }}"></company-index>
 @endsection
