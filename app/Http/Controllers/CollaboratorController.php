@@ -42,7 +42,7 @@ class CollaboratorController extends Controller
 {
     public function getCollaborators() {
         $results = [];
-        
+
         $user_company_id = auth()->user()->company_id;
         $collaborators = Collaborator::where('company_id', $user_company_id)->get();
         $collaborators_data = [];
@@ -57,7 +57,7 @@ class CollaboratorController extends Controller
 
             array_push($collaborators_data, $data);
         }
-        
+
         $results['collaborators'] = $collaborators_data;
 
         return $results;
@@ -87,7 +87,7 @@ class CollaboratorController extends Controller
             $contractual_information['arl'] = $arl;
             $contractual_information['ccf'] = $ccf;
         }
-        
+
         $results['contractual_information'] = $contractual_information;
 
         return $results;
@@ -130,14 +130,14 @@ class CollaboratorController extends Controller
 
         try{
             $company_id = auth()->user()->company_id;
-    
+
             if($request->hasFile('image')) {
                 $file = request()->file('image');
-                
+
                 $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' =>  'mh/' . env("APP_ENV", "local") . '/' . $company_id . '/collaborators']); // => mh/local/1/collaborators/qxrcxytjrwufqjij9ix3
                 $image_public_id = $cloudinary_object->getPublicId();
                 $image_url = $cloudinary_object->getSecurePath();
-                
+
                 $data = array(
                     'company_id' => $company_id,
                     'name' => $request->name,
@@ -194,9 +194,9 @@ class CollaboratorController extends Controller
                     'email' => $request->email,
                 );
             }
-    
+
             $collaborator = Collaborator::create($data);
-    
+
             return response()->json([
                 'message'=>'Colaborador creado exitosamente!',
                 'collaborator'=>$collaborator
@@ -248,7 +248,6 @@ class CollaboratorController extends Controller
 
         abort_if(Gate::denies('collaborator_show'), 403);
 
-        // $collaborator_contract = CollaboratorContract::where('collaborator_id', $collaborator->id)->first();
         $document_type = DocumentType::where('id', $collaborator->document_type_id)->first();
         $document_province = Province::where('id', $collaborator->document_province_id)->first();
         $document_city = City::where('id', $collaborator->document_city_id)->first();
@@ -261,18 +260,16 @@ class CollaboratorController extends Controller
         $rh_type = RhType::where('id', $collaborator->rh_type_id)->first();
         $scholarship_type = Scholarship::where('id', $collaborator->scholarship_type_id)->first();
 
-        // dd($collaborator);
-        $subQuery = CollaboratorAcademicAchievement::where('collaborator_id', $collaborator->id)
-            ->select(DB::raw('MAX(achievement_type_id) as max_achievement_type_id'))
-            ->pluck('max_achievement_type_id');
+        $highest_academic_achievement = CollaboratorAcademicAchievement::where('collaborator_id', $collaborator->id)
+            ->join('academic_achievement_types', 'collaborator_academic_achievements.achievement_type_id', '=', 'academic_achievement_types.id')
+            ->orderBy('collaborator_academic_achievements.achievement_type_id', 'desc')
+            ->select('academic_achievement_types.*')
+            ->first();
 
-        $highest_academic_achievement = AcademicAchievementType::whereIn('id', $subQuery)->first();
-
-        // $highest_academic_achievement = CollaboratorAcademicAchievement::where('collaborator_id', $collaborator->id)
-        //     ->orderBy('achievement_type_id', 'desc')
-        //     ->first();
-
-        // dd($highest_academic_achievement);
+        if($highest_academic_achievement == null) {
+            $highest_academic_achievement = new AcademicAchievementType();
+            $highest_academic_achievement->type = 'Sin asignar';
+        }
 
         $stratum_type = SocialStratum::where('id', $collaborator->stratum_type_id)->first();
         $housing_tenure = HousingTenure::where('id', $collaborator->housing_tenure_id)->first();
@@ -288,14 +285,11 @@ class CollaboratorController extends Controller
         $relationship_type = Relationship::where('id', $collaborator->relationship_id)->first();
         $occupation_type = Occupation::where('id', $collaborator->occupation_id)->first();
 
-        // $position_type = Position::where('id', $collaborator_contract->position_id)->first();
-
         return view('back.collaborators.show', compact(
             'company',
-            'collaborator', 
-            // 'collaborator_contract', 
-            'document_type', 
-            'document_province', 
+            'collaborator',
+            'document_type',
+            'document_province',
             'document_city',
             'birth_province',
             'birth_city',
@@ -304,7 +298,6 @@ class CollaboratorController extends Controller
             'civil_status',
             'sex_type',
             'rh_type',
-            // 'scholarship_type',
             'highest_academic_achievement',
             'stratum_type',
             'housing_tenure',
@@ -324,7 +317,7 @@ class CollaboratorController extends Controller
     {
         $user = auth()->user();
         $company = Company::where('id', $user->company_id)->first();
-        
+
         abort_if(Gate::denies('collaborator_edit'), 403);
 
         $document_types = DocumentType::all();
@@ -349,12 +342,12 @@ class CollaboratorController extends Controller
 
         return view('back.collaborators.edit', compact(
             'company',
-            'collaborator', 
+            'collaborator',
             'document_types',
-            'sex_types', 
-            'rh_types', 
-            // 'academic_achievement_types', 
-            'stratum_types', 
+            'sex_types',
+            'rh_types',
+            // 'academic_achievement_types',
+            'stratum_types',
             'civil_status_types',
             'housing_tenure_types',
             'provinces',
@@ -402,7 +395,7 @@ class CollaboratorController extends Controller
                 'cellphone' => $request->cellphone,
                 'email' => $request->email,
             );
-    
+
             $url = isset($collaborator['image_url']) ? $collaborator['image_url'] : null;
             $public_id = isset($collaborator['image_public_id']) ? $collaborator['image_public_id'] : null;
             if($request->hasFile('image')) {
@@ -420,11 +413,11 @@ class CollaboratorController extends Controller
                 $data['image_public_id'] = $public_id;
                 $data['image_url'] = $url;
             }
-    
+
             $collaborator->update($data);
 
             // return redirect()->route('collaborators.show', $collaborator->id)->with('success', 'Colaborador actualizado correctamente.');
-    
+
             return response()->json([
                 'message'=>'Colaborador actualizado exitosamente!',
                 'collaborator'=>$collaborator
@@ -467,7 +460,7 @@ class CollaboratorController extends Controller
             } else {
                 $collaborator_contract = CollaboratorContract::create($data);
             }
-    
+
             return response()->json([
                 'message'=>'Información contractual actualizada exitosamente!',
                 'collaborator_contract'=>$collaborator_contract
@@ -488,7 +481,7 @@ class CollaboratorController extends Controller
                 $public_id = $collaborator['image_public_id'];
                 Cloudinary::destroy($public_id);
             }
-    
+
             $collaborator->delete();
 
             return response()->json([

@@ -158,7 +158,7 @@
                                     <p class="">Mayor logro académico:</p>
                                 </div>
                                 <div class="box-value vl-11">
-                                    <p class="">{{ (highest_academic_achievement.type == '' || highest_academic_achievement.type == null ) ? 'Sin asignar' : highest_academic_achievement.type }}</p>
+                                    <p class="">{{ highest_academic_achievement.type }}</p>
                                 </div>
                                 <div class="box-label lb-12">
                                     <p class="">Observaciones</p>
@@ -208,7 +208,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="col-sm-12 col-lg-6">
                     <div class="main-card mb-3 card">
                         <div class="card-header">
@@ -239,7 +239,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <div v-else-if="card_selected == 'contract'">
             <div class="row">
@@ -347,7 +347,7 @@
                         <div class="card-header">
                             Información Contractual No Disponible
                         </div>
-                    </div> 
+                    </div>
 
                 </div>
             </div>
@@ -387,7 +387,7 @@
                                             <p class="mb-0" style="font-size: 14px;"> {{ message }}</p>
                                         </div>
                                     </div>
-                                    <div v-if="relatives_data && relatives_data.length>0" class="row"> 
+                                    <div v-if="relatives_data && relatives_data.length>0" class="row">
                                         <div class="col-md-12 col-lg-6">
                                             <a @click="addRelativeData" class="wrapper-add-data p-2 mb-3" :class="(add_relative_data && !edit_relative_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
@@ -675,7 +675,7 @@
                                             <p class="mb-0" style="font-size: 14px;"> {{ message }}</p>
                                         </div>
                                     </div>
-                                    <div v-if="academic_achievements_data && academic_achievements_data.length>0" class="row"> 
+                                    <div v-if="academic_achievements_data && academic_achievements_data.length>0" class="row">
                                         <div class="col-md-12 col-lg-6">
                                             <a @click="addAcademicData" class="wrapper-add-data p-2 mb-3" :class="(add_academic_data && !edit_academic_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
@@ -909,7 +909,7 @@
                                             <p class="mb-0" style="font-size: 14px;"> {{ message }}</p>
                                         </div>
                                     </div>
-                                    <div v-if="medical_examination_data && medical_examination_data.length>0" class="row"> 
+                                    <div v-if="medical_examination_data && medical_examination_data.length>0" class="row">
                                         <div class="col-md-12 col-lg-6">
                                             <a @click="addMedicalExaminationData" class="wrapper-add-data p-2 mb-3" :class="(add_medical_examination_data && !edit_medical_examination_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
@@ -1118,7 +1118,7 @@
                                             <p class="mb-0" style="font-size: 14px;"> {{ message }}</p>
                                         </div>
                                     </div>
-                                    <div v-if="home_visit_data && home_visit_data.length>0" class="row"> 
+                                    <div v-if="home_visit_data && home_visit_data.length>0" class="row">
                                         <div class="col-md-12 col-lg-6">
                                             <a @click="addHomeVisitData" class="wrapper-add-data p-2 mb-3" :class="(add_home_visit_data && !edit_home_visit_data) ? 'selected shadow' : ''">
                                                 <p><i class="fa fa-plus" aria-hidden="true"></i></p>
@@ -1192,7 +1192,7 @@
                                                                         <span v-if="errors_home_visit_data && errors_home_visit_data.next_visit_date" class="error text-danger" for="next_visit_date">{{ errors_home_visit_data.next_visit_date[0] }}</span>
                                                                     </div>
                                                                 </div>
-                                                            </div> 
+                                                            </div>
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
@@ -1260,7 +1260,7 @@
                                                                         <span v-if="errors_home_visit_data && errors_home_visit_data.next_visit_date" class="error text-danger" for="next_visit_date">{{ errors_home_visit_data.next_visit_date[0] }}</span>
                                                                     </div>
                                                                 </div>
-                                                            </div> 
+                                                            </div>
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="position-relative mb-3">
@@ -1352,7 +1352,7 @@
                                     <p class="mb-0" style="font-size: 14px;"> {{ message }}</p>
                                 </div>
                             </div>
-                            <div v-if="document_data && document_data.length>0" class="row"> 
+                            <div v-if="document_data && document_data.length>0" class="row">
                                 <div class="col-md-12 col-lg-6">
                                     <a @click="addDocumentData" class="wrapper-add-data p-2 mb-3" :class="(add_document_data && !edit_document_data) ? 'selected shadow' : ''">
                                         <p><i class="fa fa-plus" aria-hidden="true"></i></p>
@@ -1409,7 +1409,7 @@
                                                                 <span v-if="errors_document_data && errors_document_data.document_type_id" class="error text-danger" for="document_type_id">{{ errors_document_data.document_type_id[0] }}</span>
                                                             </div>
                                                         </div>
-                                                    </div> 
+                                                    </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="position-relative mb-3">
@@ -1462,7 +1462,7 @@
                                                                 <span v-if="errors_document_data && errors_document_data.document_type_id" class="error text-danger" for="document_type_id">{{ errors_document_data.document_type_id[0] }}</span>
                                                             </div>
                                                         </div>
-                                                    </div> 
+                                                    </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="position-relative mb-3">
@@ -1537,7 +1537,6 @@
 export default {
     props: {
         collaborator: { default: null, },
-        // collaborator_contract: { default: null, },
         document_type: { default: null, },
         document_province: { default: null, },
         document_city: { default: null, },
@@ -1551,7 +1550,6 @@ export default {
         highest_academic_achievement: { default: null, },
         stratum_type: { default: null, },
         housing_tenure: { default: null, },
-
         relationship_types: { default: null, },
         relationship_type: { default: null, },
         occupation_types: { default: null, },
@@ -1735,7 +1733,7 @@ export default {
                 window.open(response.data.certificate_download_url, '_blank');
             })
             .catch(e => {
-                console.error('Error:', e); 
+                console.error('Error:', e);
             })
         },
         downloadMedicalExaminationResult(medical_examination_id) {
@@ -1744,7 +1742,7 @@ export default {
                 window.open(response.data.result_download_url, '_blank');
             })
             .catch(e => {
-                console.error('Error:', e); 
+                console.error('Error:', e);
             })
         },
         downloadHomeVisitReport(home_visit_id) {
@@ -1753,7 +1751,7 @@ export default {
                 window.open(response.data.report_download_url, '_blank');
             })
             .catch(e => {
-                console.error('Error:', e); 
+                console.error('Error:', e);
             })
         },
         downloadDocument(document_id) {
@@ -1762,7 +1760,7 @@ export default {
                 window.open(response.data.document_download_url, '_blank');
             })
             .catch(e => {
-                console.error('Error:', e); 
+                console.error('Error:', e);
             })
         },
         getContractualInformation(collaborator_id) {
@@ -1791,7 +1789,7 @@ export default {
                 // this.card_selected = 'contract';
             })
             .catch(e => {
-                console.error('Error:', e);  
+                console.error('Error:', e);
 
                 // this.card_selected = 'contract';
             })
@@ -1916,7 +1914,7 @@ export default {
                 this.relatives_data = response.data.relatives_data;
             })
             .catch(e => {
-                console.error('Error:', e);  
+                console.error('Error:', e);
             })
         },
         getAcademicData(collaborator_id) {
@@ -1925,7 +1923,7 @@ export default {
                 this.academic_achievements_data = response.data.academic_achievements_data;
             })
             .catch(e => {
-                console.error('Error:', e);  
+                console.error('Error:', e);
             })
         },
         getMedicalExaminationData(collaborator_id) {
@@ -1934,7 +1932,7 @@ export default {
                 this.medical_examination_data = response.data.medical_examination_data;
             })
             .catch(e => {
-                console.error('Error:', e);  
+                console.error('Error:', e);
             })
         },
         getHomeVisitData(collaborator_id) {
@@ -1943,7 +1941,7 @@ export default {
                 this.home_visit_data = response.data.home_visit_data;
             })
             .catch(e => {
-                console.error('Error:', e);  
+                console.error('Error:', e);
             })
         },
         getDocumentData(collaborator_id) {
@@ -1952,7 +1950,7 @@ export default {
                 this.document_data = response.data.document_data;
             })
             .catch(e => {
-                console.error('Error:', e);  
+                console.error('Error:', e);
             })
         },
         changeMainTab(tab) {
@@ -1991,7 +1989,7 @@ export default {
             if(this.relatives_data && this.relatives_data.length>0) {
                 this.relatives_data.forEach(element => {
                     if(element.id !== id) {
-                        
+
                     } else {
                         new_selection_relative_data = element
                     }
@@ -2013,7 +2011,7 @@ export default {
             if(this.academic_achievements_data && this.academic_achievements_data.length>0) {
                 this.academic_achievements_data.forEach(element => {
                     if(element.id !== id) {
-                        
+
                     } else {
                         new_selection_academic_data = element
                     }
@@ -2035,7 +2033,7 @@ export default {
             if(this.medical_examination_data && this.medical_examination_data.length>0) {
                 this.medical_examination_data.forEach(element => {
                     if(element.id !== id) {
-                        
+
                     } else {
                         new_selection_medical_examination_data = element
                     }
@@ -2057,7 +2055,7 @@ export default {
             if(this.home_visit_data && this.home_visit_data.length>0) {
                 this.home_visit_data.forEach(element => {
                     if(element.id !== id) {
-                        
+
                     } else {
                         new_selection_home_visit_data = element
                     }
@@ -2079,7 +2077,7 @@ export default {
             if(this.document_data && this.document_data.length>0) {
                 this.document_data.forEach(element => {
                     if(element.id !== id) {
-                        
+
                     } else {
                         new_selection_document_data = element
                     }
@@ -2277,11 +2275,11 @@ export default {
         },
         editRelativeData(item, index) {
             let new_selection_relative_data;
-            
+
             if(this.relatives_data && this.relatives_data.length>0) {
                 this.relatives_data.forEach(element => {
                     if(element.id !== item.id) {
-                        
+
                     } else {
                         new_selection_relative_data = element
                     }
@@ -2306,11 +2304,11 @@ export default {
         },
         editAcademicData(item, index) {
             let new_selection_academic_data;
-            
+
             if(this.academic_achievements_data && this.academic_achievements_data.length>0) {
                 this.academic_achievements_data.forEach(element => {
                     if(element.id !== item.id) {
-                        
+
                     } else {
                         new_selection_academic_data = element
                     }
@@ -2328,16 +2326,16 @@ export default {
             this.institution = item.institution
             this.end_date = item.end_date
             this.certificate = null
-            
+
             this.errors_academic_data = null
-        },       
+        },
         editMedicalExaminationData(item, index) {
             let new_selection_medical_examination_data;
-            
+
             if(this.medical_examination_data && this.medical_examination_data.length>0) {
                 this.medical_examination_data.forEach(element => {
                     if(element.id !== item.id) {
-                        
+
                     } else {
                         new_selection_medical_examination_data = element
                     }
@@ -2354,16 +2352,16 @@ export default {
             this.examination_date = item.examination_date
             this.examination_observations = item.observations
             this.examination_result = null
-            
+
             this.errors_medical_examination_data = null
         },
         editHomeVisitData(item, index) {
             let new_selection_home_visit_data;
-            
+
             if(this.home_visit_data && this.home_visit_data.length>0) {
                 this.home_visit_data.forEach(element => {
                     if(element.id !== item.id) {
-                        
+
                     } else {
                         new_selection_home_visit_data = element
                     }
@@ -2381,16 +2379,16 @@ export default {
             this.next_visit_date = item.next_visit_date
             this.home_visit_observations = item.observations
             this.home_visit_report = null
-            
+
             this.errors_home_visit_data = null
         },
         editDocumentData(item, index) {
             let new_selection_document_data;
-            
+
             if(this.document_data && this.document_data.length>0) {
                 this.document_data.forEach(element => {
                     if(element.id !== item.id) {
-                        
+
                     } else {
                         new_selection_document_data = element
                     }
@@ -2406,7 +2404,7 @@ export default {
             this.document_type_id = item.document_type_id
             this.document_observations = item.observations
             this.document = null
-            
+
             this.errors_document_data = null
         },
         updateRelativeData(){
@@ -2579,7 +2577,7 @@ export default {
                 })
         },
         deleteRelativeData(item, index) {
-            
+
             axios.delete(`/relative-data-delete/${item.id}`).then(
                 (response) => {
                     this.getRelativesData(this.collaborator.id)

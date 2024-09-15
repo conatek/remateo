@@ -20,20 +20,8 @@
     </div>
 </div>
 
-{{-- @if($message !== '')
-    <div class="mbg-3 alert alert-success alert-dismissible fade show" role="alert">
-        <span class="pe-2">
-            <i class="fa fa-star"></i>
-        </span>
-        {{ $message }}
-    </div>
-@endif --}}
-
-{{-- {{ dd($$highest_academic_achievement) }}  --}}
-
-<collaborator-show 
+<collaborator-show
     :collaborator="{{ $collaborator }}"
-    {{-- :collaborator_contract="{{ $collaborator_contract }}" --}}
     :document_type="{{ $document_type }}"
     :document_province="{{ $document_province }}"
     :document_city="{{ $document_city }}"
