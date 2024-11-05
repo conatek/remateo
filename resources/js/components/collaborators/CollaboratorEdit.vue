@@ -67,7 +67,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
@@ -100,7 +100,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
@@ -141,7 +141,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
@@ -171,7 +171,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="position-relative mb-3">
@@ -232,7 +232,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="position-relative mb-3">
@@ -244,7 +244,7 @@
                                             </div>
                                         </div>
                                     </div>
-        
+
                                     <div class="card-hover-shadow card-border mb-3 card">
                                         <div class="card-header">
                                             Información De Contacto
@@ -266,7 +266,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="position-relative mb-3">
@@ -647,7 +647,7 @@ export default {
                 this.ccf_id = this.contractual_information.ccf_id;
             })
             .catch(e => {
-                // 
+                //
             })
         },
         updateCollaborator() {
@@ -657,7 +657,7 @@ export default {
                 'first_surname': this.first_surname,
                 'second_surname': this.second_surname,
                 'document_type_id': this.document_type_id,
-                
+
             }
 
             let fd = new FormData()
@@ -693,13 +693,13 @@ export default {
                 (res) => {
                     localStorage.setItem('origin', 'updated');
 
-                    url = `/collaborators/${res.data.collaborator.id}`
+                    // url = `/collaborators/${res.data.collaborator.id}`
+                    url = `/collaborators`
                     window.location.href = url
                     this.errors = null
                 }).catch(
                 (error) => {
                     if(error && error.response && error.response.data && error.response.data.errors) {
-                        console.log(error.response.data.errors)
                         this.errors = error.response.data.errors
                     }
                 })
@@ -712,8 +712,6 @@ export default {
             }
         },
         storeContractualInformation() {
-            console.log('Store Contractual Information');
-
             let dataSend = {
                 'position_id': this.position_id,
                 'salary': this.salary,
@@ -738,7 +736,8 @@ export default {
                 (res) => {
                     localStorage.setItem('origin', 'contractual_info_created');
 
-                    url = `/collaborators/${res.data.collaborator_contract.collaborator_id}`
+                    // url = `/collaborators/${res.data.collaborator_contract.collaborator_id}`
+                    url = `/collaborators`
                     window.location.href = url
                     this.errors = null
                 }).catch(
@@ -749,8 +748,6 @@ export default {
                 })
         },
         updateContractualInformation() {
-            console.log('Update Contractual Information');
-
             let dataSend = {
                 'position_id': this.position_id,
                 'salary': this.salary,
@@ -774,7 +771,8 @@ export default {
                 (res) => {
                     localStorage.setItem('origin', 'contractual_info_updated');
 
-                    url = `/collaborators/${res.data.collaborator_contract.collaborator_id}`
+                    // url = `/collaborators/${res.data.collaborator_contract.collaborator_id}`
+                    url = `/collaborators`
                     window.location.href = url
                     this.errors = null
                 }).catch(

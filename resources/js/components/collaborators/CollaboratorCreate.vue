@@ -67,7 +67,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
@@ -100,7 +100,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
@@ -141,7 +141,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                                     <div class="position-relative mb-3">
@@ -171,7 +171,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="position-relative mb-3">
@@ -232,7 +232,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="position-relative mb-3">
@@ -244,7 +244,7 @@
                                             </div>
                                         </div>
                                     </div>
-        
+
                                     <div class="card-hover-shadow card-border mb-3 card">
                                         <div class="card-header">
                                             Información De Contacto
@@ -266,7 +266,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-        
+
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="position-relative mb-3">
@@ -457,7 +457,8 @@ export default {
                 (res) => {
                     localStorage.setItem('origin', 'created');
 
-                    url = `/collaborators/${res.data.collaborator.id}`
+                    // url = `/collaborators/${res.data.collaborator.id}`
+                    url = `/collaborators`
                     window.location.href = url
                     this.errors = null
                 }).catch(

@@ -43,10 +43,16 @@
                             <h6 class="menu-header-subtitle">{{ collaborator.email }}</h6>
                         </div>
                         <div class="menu-header-btn-pane">
-                            <a :href="`/collaborators/${collaborator.id}/edit`" class="ladda-button btn btn-pill btn-light" data-style="slide-right">
+
+                            <!-- <a :href="`/collaborators/${collaborator.id}/edit`" class="ladda-button btn btn-pill btn-light" data-style="slide-right">
                                 <span class="ladda-label">Editar</span>
                                 <span class="ladda-spinner"></span>
-                            </a>
+                            </a> -->
+
+                            <button @click="emitEditCollaborator" class="ladda-button btn btn-pill btn-light" data-style="slide-right">
+                                <span class="ladda-label">Editar</span>
+                                <!-- <span class="ladda-spinner"></span> -->
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1703,6 +1709,9 @@ export default {
                 });
             }
             });
+        },
+        emitEditCollaborator() {
+            this.$emit('editCollaborator', this.collaborator.id)
         },
         getMessage(msg) {
             if(msg != '' && msg != null) {
