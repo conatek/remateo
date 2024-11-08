@@ -12,6 +12,17 @@ use Illuminate\Http\Request;
 
 class CollaboratorDocumentController extends Controller
 {
+    public function __construct()
+    {
+        // Aplicamos el middleware AJAX solo a métodos específicos
+        $this->middleware(function ($request, $next) {
+            if (!request()->ajax()) {
+                abort(403, 'Acceso denegado');
+            }
+            return $next($request);
+        });
+    }
+
     public function show($collaborator_id) {
         try{
             $documents = CollaboratorDocument::where('collaborator_id', $collaborator_id)->orderBy('id', 'asc')->get();
@@ -47,7 +58,7 @@ class CollaboratorDocumentController extends Controller
 
         try{
             $company_id = auth()->user()->company_id;
-    
+
             if($request->hasFile('document')) {
                 $file = request()->file('document');
 
@@ -74,7 +85,7 @@ class CollaboratorDocumentController extends Controller
 
             $data['id'] = $document_data->id;
             $data['document_type'] = ContractualDocumentType::where('id', $document_data->document_type_id)->first()->name;
-    
+
             return response()->json([
                 'message'=>'Documento ingresado exitosamente!',
                 'document_data'=>$data,
@@ -100,7 +111,7 @@ class CollaboratorDocumentController extends Controller
                 'document_type_id' => $request->document_type_id,
                 'observations' => $request->document_observations,
             );
-    
+
             $url = isset($document['document_url']) ? $document['document_url'] : null;
             $public_id = isset($document['document_public_id']) ? $document['document_public_id'] : null;
             if($request->hasFile('document')) {
@@ -118,11 +129,11 @@ class CollaboratorDocumentController extends Controller
                 $data['document_public_id'] = $public_id;
                 $data['document_url'] = $url;
             }
-    
+
             $document->update($data);
 
             $data['document_type'] = ContractualDocumentType::where('id', $data['document_type_id'])->first()->name;
-    
+
             return response()->json([
                 'message'=>'Documento actualizado exitosamente!',
                 'document_data'=>$data
@@ -159,7 +170,7 @@ class CollaboratorDocumentController extends Controller
                 $public_id = $document['document_public_id'];
                 Cloudinary::destroy($public_id);
             }
-    
+
             $document->delete();
 
             return response()->json([

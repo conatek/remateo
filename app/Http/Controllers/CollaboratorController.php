@@ -40,10 +40,23 @@ use Illuminate\Support\Facades\Gate;
 
 class CollaboratorController extends Controller
 {
+    public function __construct()
+    {
+        // Aplicamos el middleware AJAX solo a métodos específicos
+        $this->middleware(function ($request, $next) {
+            if (!request()->ajax()) {
+                abort(403, 'Acceso denegado');
+            }
+            return $next($request);
+        })->except(['index']);
+    }
+
     public function getCollaborators() {
         $results = [];
 
-        $user_company_id = auth()->user()->company_id;
+        $user = auth()->user();
+
+        $user_company_id = $user->company_id;
         $collaborators = Collaborator::where('company_id', $user_company_id)->get();
         $collaborators_data = [];
 
@@ -259,7 +272,16 @@ class CollaboratorController extends Controller
         $result = [];
 
         $user = auth()->user();
-        $company = Company::where('id', $user->company_id)->first();
+
+        if (request()->ajax()) {
+            if($user->company_id != $collaborator->company_id) {
+                abort(403, 'No autorizado');
+            }
+        } else {
+            abort(403, 'No autorizado');
+        }
+
+        $company = Company::where('id', $collaborator->company_id)->first();
 
         abort_if(Gate::denies('collaborator_show'), 403);
 

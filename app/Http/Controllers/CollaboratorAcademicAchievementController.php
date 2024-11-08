@@ -12,6 +12,17 @@ use Illuminate\Http\Request;
 
 class CollaboratorAcademicAchievementController extends Controller
 {
+    public function __construct()
+    {
+        // Aplicamos el middleware AJAX solo a métodos específicos
+        $this->middleware(function ($request, $next) {
+            if (!request()->ajax()) {
+                abort(403, 'Acceso denegado');
+            }
+            return $next($request);
+        });
+    }
+
     public function show($collaborator_id) {
         try{
             $academic_achievements = CollaboratorAcademicAchievement::where('collaborator_id', $collaborator_id)->orderBy('achievement_type_id', 'desc')->orderBy('end_date', 'desc')->get();
@@ -51,7 +62,7 @@ class CollaboratorAcademicAchievementController extends Controller
             $company_id = auth()->user()->company_id;
 
             $achievement_type = AcademicAchievementType::where('id', $request->achievement_type_id)->first();
-    
+
             if($request->hasFile('certificate')) {
                 $file = request()->file('certificate');
 
@@ -82,7 +93,7 @@ class CollaboratorAcademicAchievementController extends Controller
 
             $data['id'] = $academic_data->id;
             $data['achievement_type'] = $achievement_type->type;
-    
+
             return response()->json([
                 'message'=>'Información académica creada exitosamente!',
                 'academic_data'=>$data,
@@ -111,7 +122,7 @@ class CollaboratorAcademicAchievementController extends Controller
                 'institution' => $request->institution,
                 'end_date' => $request->end_date,
             );
-    
+
             $url = isset($academic_achievement['certificate_url']) ? $academic_achievement['certificate_url'] : null;
             $public_id = isset($academic_achievement['certificate_public_id']) ? $academic_achievement['certificate_public_id'] : null;
             if($request->hasFile('certificate')) {
@@ -129,12 +140,12 @@ class CollaboratorAcademicAchievementController extends Controller
                 $data['certificate_public_id'] = $public_id;
                 $data['certificate_url'] = $url;
             }
-    
+
             $academic_achievement = CollaboratorAcademicAchievement::where('id', $academic_achievement_id)->first();
             $academic_achievement->update($data);
 
             $data['achievement_type'] = $achievement_type->type;
-    
+
             return response()->json([
                 'message' => 'Información académica actualizada exitosamente!',
                 'academic_data' => $data
@@ -171,7 +182,7 @@ class CollaboratorAcademicAchievementController extends Controller
                 $public_id = $academic_achievement['certificate_public_id'];
                 Cloudinary::destroy($public_id);
             }
-    
+
             $academic_achievement->delete();
 
             return response()->json([

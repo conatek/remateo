@@ -12,6 +12,17 @@ use Illuminate\Http\Request;
 
 class CollaboratorMedicalExaminationController extends Controller
 {
+    public function __construct()
+    {
+        // Aplicamos el middleware AJAX solo a métodos específicos
+        $this->middleware(function ($request, $next) {
+            if (!request()->ajax()) {
+                abort(403, 'Acceso denegado');
+            }
+            return $next($request);
+        });
+    }
+
     public function show($collaborator_id) {
         try{
             $medical_examinations = CollaboratorMedicalExamination::where('collaborator_id', $collaborator_id)->orderBy('examination_date', 'desc')->get();
@@ -48,7 +59,7 @@ class CollaboratorMedicalExaminationController extends Controller
 
         try{
             $company_id = auth()->user()->company_id;
-    
+
             if($request->hasFile('examination_result')) {
                 $file = request()->file('examination_result');
 
@@ -74,12 +85,12 @@ class CollaboratorMedicalExaminationController extends Controller
             }
 
             $medical_examination_data = CollaboratorMedicalExamination::create($data);
-            
+
             $examination_type = MedicalExaminationType::where('id', $medical_examination_data->examination_type_id)->first();
 
             $data['id'] = $medical_examination_data->id;
             $data['examination_type'] = $examination_type->name;
-    
+
             return response()->json([
                 'message'=>'Examen médico ingresado exitosamente!',
                 'medical_examination_data'=>$data,
@@ -105,7 +116,7 @@ class CollaboratorMedicalExaminationController extends Controller
                 'examination_date' => $request->examination_date,
                 'observations' => $request->examination_observations,
             );
-    
+
             $url = isset($medical_examination['result_url']) ? $medical_examination['result_url'] : null;
             $public_id = isset($medical_examination['result_public_id']) ? $medical_examination['result_public_id'] : null;
             if($request->hasFile('examination_result')) {
@@ -124,14 +135,14 @@ class CollaboratorMedicalExaminationController extends Controller
                 $data['result_url'] = $url;
             }
 
-            
+
             $medical_examination = CollaboratorMedicalExamination::where('id', $medical_examination_id)->first();
             $medical_examination->update($data);
 
             $examination_type = MedicalExaminationType::where('id', $request->examination_type_id)->first();
 
             $data['examination_type'] = $examination_type->name;
-    
+
             return response()->json([
                 'message'=>'Evaluación médica actualizada exitosamente!',
                 'medical_examination'=>$data
@@ -168,7 +179,7 @@ class CollaboratorMedicalExaminationController extends Controller
                 $public_id = $medical_examination['result_public_id'];
                 Cloudinary::destroy($public_id);
             }
-    
+
             $medical_examination->delete();
 
             return response()->json([

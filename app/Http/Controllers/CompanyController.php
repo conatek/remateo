@@ -20,211 +20,23 @@ use Illuminate\Support\Facades\Gate;
 
 class CompanyController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        abort_if(Gate::denies('company_index'), 403);
-        $companies = Company::all();
-        return view('back.companies.index', compact('companies'));
-    }
-
-    public function create()
-    {
-        abort_if(Gate::denies('company_create'), 403);
-
-        $company_types = CompanyType::all();
-        $document_types = DocumentType::all();
-        $provinces = Province::all();
-        $industry_types = Industry::all();
-
-        return view('back.companies.create', compact('company_types', 'document_types', 'provinces', 'industry_types'));
-    }
-
-    public function store(CompanyCreateRequest $request)
-    {
-        try {
-            // Asignación masiva de los datos a través del método fill()
-            $company = new Company();
-            $company->fill($request->only([
-                'company_type_id', 
-                'company_name', 
-                'identification_type_id', 
-                'identification_number', 
-                'province_id', 
-                'city_id', 
-                'address', 
-                'industry_type_id', 
-                'size', 
-                'founded_at', 
-                'description', 
-                'contact_name', 
-                'contact_first_surname', 
-                'contact_second_surname', 
-                'website', 
-                'email', 
-                'phone', 
-                'cellphone', 
-                'facebook', 
-                'instagram', 
-                'linkedin', 
-                'x_twitter', 
-                'youtube'
-            ]));
-
-            // Manejo del campo 'is_active'
-            $company->is_active = $request->filled('is_active') ? 1 : 0;
-
-            // Guardar la empresa
-            $company->save();
-
-            // Subida y actualización del logo, si existe
-            if ($request->hasFile('logo')) {
-                $this->uploadLogo($company, $request->file('logo'));
+        // Aplicamos el middleware AJAX solo a métodos específicos
+        $this->middleware(function ($request, $next) {
+            if (!request()->ajax()) {
+                abort(403, 'Acceso denegado');
             }
-
-            return response()->json([
-                'message' => 'Empresa creada exitosamente!',
-                'company' => $company,
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 500);
-        }
+            return $next($request);
+        })->except(['companyShow']);
     }
 
-    protected function uploadLogo(Company $company, $logoFile)
-    {
-        $cloudinary_object = Cloudinary::upload($logoFile->getRealPath(), [
-            'folder' => 'mh/' . env("APP_ENV", "local") . '/' . $company->id . '/logo'
-        ]);
-
-        $company->update([
-            'logo_public_id' => $cloudinary_object->getPublicId(),
-            'logo_url' => $cloudinary_object->getSecurePath(),
-        ]);
-    }
-
-    public function show(Company $company)
-    {
-        abort_if(Gate::denies('company_show'), 403);
-
-        $company_type = CompanyType::where('id', $company->company_type_id)->first();
-        $industry_type = Industry::where('id', $company->industry_type_id)->first();
-        $identification_type = DocumentType::where('id', $company->identification_type_id)->first();
-        $province = Province::where('id', $company->province_id)->first();
-        $city = City::where('id', $company->city_id)->first();
-
-        return view('back.companies.show', compact('company', 'company_type', 'industry_type', 'identification_type', 'province', 'city'));
-    }
-
-    public function edit(Company $company)
-    {
-        abort_if(Gate::denies('company_edit'), 403);
-
-        $company_types = CompanyType::all();
-        $document_types = DocumentType::all();
-        $provinces = Province::all();
-        $industry_types = Industry::all();
-
-        return view('back.companies.edit', compact('company', 'company_types', 'document_types', 'provinces', 'industry_types'));
-    }
-
-    public function update(CompanyEditRequest $request, Company $company)
-    {
-        // Las validaciones se realizan en CompanyEditRequest
-
-        try {
-            $data = array(
-                'company_name' => $request->company_name,
-                'company_type_id' => $request->company_type_id,
-                'identification_type_id' => $request->identification_type_id,
-                'identification_number' => $request->identification_number,
-                'province_id' => $request->province_id,
-                'city_id' => $request->city_id,
-                'address' => $request->address,
-                'industry_type_id' => $request->industry_type_id,
-                'size' => $request->size,
-                'founded_at' => $request->founded_at,
-                'description' => $request->description,
-
-                'contact_name' => $request->contact_name,
-                'contact_first_surname' => $request->contact_first_surname,
-                'contact_second_surname' => $request->contact_second_surname,
-                'website' => $request->website,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'cellphone' => $request->cellphone,
-
-                'facebook' => $request->facebook,
-                'instagram' => $request->instagram,
-                'linkedin' => $request->linkedin,
-                'x_twitter' => $request->x_twitter,
-                'youtube' => $request->youtube
-            );
-
-            // Manejo del campo 'is_active'
-            $company->is_active = $request->filled('is_active') ? 1 : 0;
-
-            // dd($data);
-
-            // Guardar la empresa
-            $company->update($data);
-
-            // Subida y actualización del logo, si existe
-            if ($request->hasFile('logo')) {
-                $this->uploadLogo($company, $request->file('logo'));
-            }
-    
-            return response()->json([
-                'message' => 'Empresa actualizada exitosamente!',
-                'company' => $company,
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    // public function destroy(Company $company)
-    // {
-    //     abort_if(Gate::denies('company_destroy'), 403);
-
-    //     $company->delete();
-
-    //     return back()->with('success', 'Empresa eliminada correctamente.');
-    // }
-
-    public function destroy($id)
-    {
-        abort_if(Gate::denies('collaborator_destroy'), 403);
-
-        $company = Company::find($id);
-        
-        try {
-            if(isset($company['logo_public_id'])) {
-                $public_id = $company['logo_public_id'];
-                Cloudinary::destroy($public_id);
-            }
-    
-            $company->delete();
-
-            return response()->json([
-                'message'=>'Empresa eliminada exitosamente!',
-                'company'=>$company
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ]);
-        }
-    }
-
-
-    // COMPANY
-    public function companyShow(Company $company)
+    public function companyShow()
     {
         // abort_if(Gate::denies('company_show'), 403);
+        $user = auth()->user();
+        $company = Company::where('id', $user->company_id)->first();
+
         $provinces = Province::all()->sortBy("name");
         $company_type = CompanyType::where('id', $company->company_type_id)->first();
         $industry_type = Industry::where('id', $company->industry_type_id)->first();
@@ -300,12 +112,12 @@ class CompanyController extends Controller
 
         $data = Collaborator::select(
             DB::raw('
-                CASE 
-                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) < 25 THEN "Menor de 25" 
-                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 26 AND 33 THEN "Entre 26 y 33" 
-                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 34 AND 41 THEN "Entre 34 y 41" 
-                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 42 AND 49 THEN "Entre 42 y 49" 
-                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 50 AND 60 THEN "Entre 50 y 60" 
+                CASE
+                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) < 25 THEN "Menor de 25"
+                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 26 AND 33 THEN "Entre 26 y 33"
+                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 34 AND 41 THEN "Entre 34 y 41"
+                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 42 AND 49 THEN "Entre 42 y 49"
+                    WHEN TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 50 AND 60 THEN "Entre 50 y 60"
                     ELSE "Mayor de 60"
                 END as age_group'),
             DB::raw('COUNT(*) as count')
@@ -329,7 +141,7 @@ class CompanyController extends Controller
 
         $data = Collaborator::join('companies as cp', 'cp.id', '=', 'collaborators.company_id')
             ->join(DB::raw('(
-                SELECT 
+                SELECT
                     caa.collaborator_id,
                     MAX(caa.achievement_type_id) AS level,
                     (
@@ -427,7 +239,7 @@ class CompanyController extends Controller
             DB::raw('MONTH(birth_date) AS month'),
             DB::raw('DAY(birth_date) AS day'),
             DB::raw("
-                CASE 
+                CASE
                     WHEN WEEK(birth_date_this_year, 1) = WEEK(CURDATE(), 1) THEN 'current'
                     WHEN WEEK(birth_date_this_year, 1) = WEEK(CURDATE() + INTERVAL 1 WEEK, 1) THEN 'next'
                     ELSE 'none'
@@ -456,29 +268,6 @@ class CompanyController extends Controller
     {
         $results = [];
 
-        // $data = Collaborator::select(
-        //     DB::raw("CONCAT(collaborators.name, ' ', collaborators.first_surname, ' ', collaborators.second_surname) AS name"),
-        //     'collaborators.document_number AS document',
-        //     'collaborators.birth_date',
-        //     'cc.contract_end_date',
-        //     DB::raw('YEAR(cc.contract_end_date) AS year'),
-        //     DB::raw('MONTH(cc.contract_end_date) AS month'),
-        //     DB::raw('DAY(cc.contract_end_date) AS day'),
-        //     DB::raw("
-        //         CASE 
-        //             WHEN (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE()) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = WEEK(CURDATE(), 1)) 
-        //               OR (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE() + INTERVAL 1 YEAR) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = 1 AND WEEK(CURDATE(), 1) = WEEK(CURDATE())) THEN 'current'
-        //             WHEN (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE()) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = WEEK(CURDATE() + INTERVAL 1 WEEK, 1)) 
-        //               OR (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE() + INTERVAL 1 YEAR) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = 1 AND WEEK(CURDATE() + INTERVAL 1 WEEK, 1) = 1) THEN 'next'
-        //             ELSE 'none'
-        //         END AS week
-        //     ")
-        // )
-        // ->join('collaborator_contracts AS cc', 'collaborators.id', '=', 'cc.collaborator_id')
-        // ->where('cc.contract_end_date', '>=', DB::raw('CURDATE()'))
-        // ->orderBy(DB::raw('cc.contract_end_date'), 'asc')
-        // ->get();
-
         $data = Collaborator::select(
             DB::raw("CONCAT(collaborators.name, ' ', collaborators.first_surname, ' ', collaborators.second_surname) AS name"),
             'collaborators.document_number AS document',
@@ -488,11 +277,11 @@ class CompanyController extends Controller
             DB::raw('MONTH(cc.contract_end_date) AS month'),
             DB::raw('DAY(cc.contract_end_date) AS day'),
             DB::raw("
-                CASE 
+                CASE
                     WHEN (cc.contract_end_date - INTERVAL 1 MONTH < CURDATE()) THEN 'previous'
-                    WHEN (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE()) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = WEEK(CURDATE(), 1)) 
+                    WHEN (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE()) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = WEEK(CURDATE(), 1))
                       OR (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE() + INTERVAL 1 YEAR) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = 1 AND WEEK(CURDATE(), 1) = WEEK(CURDATE())) THEN 'current'
-                    WHEN (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE()) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = WEEK(CURDATE() + INTERVAL 1 WEEK, 1)) 
+                    WHEN (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE()) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = WEEK(CURDATE() + INTERVAL 1 WEEK, 1))
                       OR (YEAR(cc.contract_end_date - INTERVAL 1 MONTH) = YEAR(CURDATE() + INTERVAL 1 YEAR) AND WEEK(cc.contract_end_date - INTERVAL 1 MONTH, 1) = 1 AND WEEK(CURDATE() + INTERVAL 1 WEEK, 1) = 1) THEN 'next'
                     ELSE 'none'
                 END AS week

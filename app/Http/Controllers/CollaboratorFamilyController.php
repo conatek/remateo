@@ -14,6 +14,17 @@ use Exception;
 
 class CollaboratorFamilyController extends Controller
 {
+    public function __construct()
+    {
+        // Aplicamos el middleware AJAX solo a métodos específicos
+        $this->middleware(function ($request, $next) {
+            if (!request()->ajax()) {
+                abort(403, 'Acceso denegado');
+            }
+            return $next($request);
+        });
+    }
+
     public function show($collaborator_id) {
         try{
             $relatives = CollaboratorFamily::where('collaborator_id', $collaborator_id)->orderBy('created_at', 'desc')->get();
@@ -76,7 +87,7 @@ class CollaboratorFamilyController extends Controller
             $data['relationship'] = $relationship;
             $data['occupation'] = $occupation;
             $data['sex'] = $sex;
-    
+
             return response()->json([
                 'message'=>'Familiar creado exitosamente!',
                 'relative_data'=>$data,
@@ -115,7 +126,7 @@ class CollaboratorFamilyController extends Controller
             $data['relationship'] = $relationship;
             $data['occupation'] = $occupation;
             $data['sex'] = $sex;
-    
+
             return response()->json([
                 'message'=>'Familiar actualizado exitosamente!',
                 'relative_data'=>$data,
@@ -133,7 +144,7 @@ class CollaboratorFamilyController extends Controller
             $relative = CollaboratorFamily::where('collaborator_id', $relative_data->collaborator_id)->first();
 
             $relative->delete();
-            
+
             return response()->json([
                 'message'=>'Información de familiar eliminada exitosamente!',
                 'relative'=>$relative,
@@ -155,5 +166,5 @@ class CollaboratorFamilyController extends Controller
     }
 
 
-    
+
 }

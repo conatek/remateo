@@ -12,6 +12,17 @@ use Illuminate\Http\Request;
 
 class CollaboratorHomeVisitController extends Controller
 {
+    public function __construct()
+    {
+        // Aplicamos el middleware AJAX solo a métodos específicos
+        $this->middleware(function ($request, $next) {
+            if (!request()->ajax()) {
+                abort(403, 'Acceso denegado');
+            }
+            return $next($request);
+        });
+    }
+
     public function show($collaborator_id) {
         try{
             $home_visits = CollaboratorHomeVisit::where('collaborator_id', $collaborator_id)->orderBy('visit_date', 'desc')->get();
@@ -50,7 +61,7 @@ class CollaboratorHomeVisitController extends Controller
 
         try{
             $company_id = auth()->user()->company_id;
-    
+
             if($request->hasFile('home_visit_report')) {
                 $file = request()->file('home_visit_report');
 
@@ -81,7 +92,7 @@ class CollaboratorHomeVisitController extends Controller
 
             $data['id'] = $home_visit_data->id;
             $data['home_visit_type'] = HomeVisitType::where('id', $home_visit_data->home_visit_type_id)->first()->name;
-    
+
             return response()->json([
                 'message'=>'Visita domiciliaria ingresada exitosamente!',
                 'home_visit_data'=>$data,
@@ -109,7 +120,7 @@ class CollaboratorHomeVisitController extends Controller
                 'next_visit_date' => $request->next_visit_date,
                 'observations' => $request->home_visit_observations,
             );
-    
+
             $url = isset($home_visit['report_url']) ? $home_visit['report_url'] : null;
             $public_id = isset($home_visit['report_public_id']) ? $home_visit['report_public_id'] : null;
             if($request->hasFile('home_visit_report')) {
@@ -127,11 +138,11 @@ class CollaboratorHomeVisitController extends Controller
                 $data['report_public_id'] = $public_id;
                 $data['report_url'] = $url;
             }
-    
+
             $home_visit->update($data);
 
             $data['home_visit_type'] = HomeVisitType::where('id', $home_visit->home_visit_type_id)->first()->name;
-    
+
             return response()->json([
                 'message'=>'Visita domiciliaria actualizada exitosamente!',
                 'home_visit'=>$data
@@ -168,7 +179,7 @@ class CollaboratorHomeVisitController extends Controller
                 $public_id = $home_visit['report_public_id'];
                 Cloudinary::destroy($public_id);
             }
-    
+
             $home_visit->delete();
 
             return response()->json([

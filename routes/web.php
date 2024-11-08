@@ -12,6 +12,7 @@ use App\Http\Controllers\CollaboratorDocumentController;
 use App\Http\Controllers\CollaboratorFamilyController;
 use App\Http\Controllers\CollaboratorHomeVisitController;
 use App\Http\Controllers\CollaboratorMedicalExaminationController;
+use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -41,19 +42,17 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/users-company/{user}', [UserCompanyController::class, 'update'])->name('users_company.update');
     Route::delete('/users-company/{user}', [UserCompanyController::class, 'destroy'])->name('users_company.destroy');
 
-    Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
-    Route::get('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
-    Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
-    Route::get('/companies/{company}', [CompanyController::class, 'show'])->name('companies.show');
-    Route::get('/companies/{company}/edit', [CompanyController::class, 'edit'])->name('companies.edit');
-    Route::put('/companies/{company}', [CompanyController::class, 'update'])->name('companies.update');
-    Route::delete('/companies/{company}/destroy', [CompanyController::class, 'destroy'])->name('companies.destroy');
+    // COMPANIES
+    Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index');
+    Route::get('/companies/create', [CompaniesController::class, 'create'])->name('companies.create');
+    Route::post('/companies', [CompaniesController::class, 'store'])->name('companies.store');
+    Route::get('/companies/{company}', [CompaniesController::class, 'show'])->name('companies.show');
+    Route::get('/companies/{company}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
+    Route::put('/companies/{company}', [CompaniesController::class, 'update'])->name('companies.update');
+    Route::delete('/companies/{company}/destroy', [CompaniesController::class, 'destroy'])->name('companies.destroy');
 
-
-
-
-
-    Route::get('/company/{company}', [CompanyController::class, 'companyShow'])->name('company.show');
+    // COMPANY DATA
+    Route::get('/company', [CompanyController::class, 'companyShow'])->name('company.show');
     Route::get('/contracts-data/{company_id}', [CompanyController::class, 'getContracts']);
     Route::get('/gender-data/{company_id}', [CompanyController::class, 'getGenderData']);
     Route::get('/civil-status-data/{company_id}', [CompanyController::class, 'getCivilStatusData']);
@@ -63,9 +62,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/length-service-data/{company_id}', [CompanyController::class, 'getLengthServiceData']);
     Route::get('/get-next-birthdays/{company_id}', [CompanyController::class, 'getNextBirthdays']);
     Route::get('/get-expiring-contracts/{company_id}', [CompanyController::class, 'getExpiringContracts']);
-
-
-
 
     // AREAS DATA
     Route::get('/areas-data/{company_id}', [AreaController::class, 'getAreas']);
