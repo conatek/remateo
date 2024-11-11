@@ -1,187 +1,124 @@
 .main-card {
-    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
-    padding: 0px;
-    border-radius: 5px;
-    background-color: #ffffff;
-    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: .25rem;
+    overflow: hidden;
 }
 
-.main-card .wrapper-basic,
-.main-card .wrapper-contact,
-.main-card .wrapper-social {
-    display: grid;
-    grid-gap: 1px;
-    /* background-color: #dee2e6; */
-    background-color: #555f78;
-    /* border: 1px solid #dee2e6; */
-    border: 1px solid #555f78;
+.card-header {
+    background-color: #127cb3;
+    color: #fff;
+    padding: 10px 15px;
 }
+
+.card-body {
+    padding: 20px;
+}
+
+.wrapper-basic,
+.wrapper-contact,
+.wrapper-social,
+.wrapper-campus,
+.wrapper-area,
+.wrapper-position {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.data-pair {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.box-label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.box-value {
+    color: #333;
+}
+
+.box-label p, .box-value p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+
+
 
 @media screen and (min-width: 300px) {
-    .main-card .wrapper-basic {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-1" "vl-1" "lb-2" "vl-2" "lb-3" "vl-3" "lb-4" "vl-4" "lb-5" "vl-5" "lb-6" "vl-6" "lb-7" "vl-7" "lb-8" "vl-8" "lb-9" "vl-9" "lb-10" "vl-10" "lb-11" "vl-11";
+    .wrapper-basic {
+        grid-template-columns: 1fr;
     }
 
-    .main-card .wrapper-contact {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-12" "vl-12" "lb-13" "vl-13" "lb-14" "vl-14" "lb-15" "vl-15" "lb-16" "vl-16";
+    .wrapper-contact,
+    .wrapper-social,
+    .wrapper-campus,
+    .wrapper-area,
+    .wrapper-position {
+        grid-template-columns: 1fr;
     }
 
-    .main-card .wrapper-social {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-areas:    "lb-17" "vl-17" "lb-18" "vl-18" "lb-19" "vl-19" "lb-20" "vl-20" "lb-21" "vl-21";
+    .wrapper-basic>.full-width {
+        grid-column: span 1;
     }
+
+    .wrapper-contact>.full-width {
+        grid-column: span 1;
+    }
+
 }
 
 @media screen and (min-width: 768px) {
-    .main-card .wrapper-basic {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-1 lb-1 lb-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1"
-                                "lb-2 lb-2 lb-2 vl-2 vl-2 vl-2 lb-3 lb-3 lb-3 vl-3 vl-3 vl-3"
-                                "lb-4 lb-4 lb-4 vl-4 vl-4 vl-4 lb-5 lb-5 lb-5 vl-5 vl-5 vl-5"
-                                "lb-6 lb-6 lb-6 vl-6 vl-6 vl-6 lb-7 lb-7 lb-7 vl-7 vl-7 vl-7"
-                                "lb-8 lb-8 lb-8 vl-8 vl-8 vl-8 lb-9 lb-9 lb-9 vl-9 vl-9 vl-9"
-                                "lb-10 lb-10 lb-10 vl-10 vl-10 vl-10 lb-11 lb-11 lb-11 vl-11 vl-11 vl-11"
-        ;
+    .wrapper-basic {
+        grid-template-columns: 1fr 1fr;
     }
 
-    .main-card .wrapper-contact {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-12 vl-12 vl-12 vl-12"
-                                "lb-13 vl-13 vl-13 vl-13"
-                                "lb-14 vl-14 vl-14 vl-14"
-                                "lb-15 vl-15 vl-15 vl-15"
-                                "lb-16 vl-16 vl-16 vl-16"
-        ;
+    .wrapper-contact,
+    .wrapper-social,
+    .wrapper-campus,
+    .wrapper-area,
+    .wrapper-position {
+        grid-template-columns: 1fr;
     }
 
-    .main-card .wrapper-social {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-areas:    "lb-17 vl-17 vl-17 vl-17"
-                                "lb-18 vl-18 vl-18 vl-18"
-                                "lb-19 vl-19 vl-19 vl-19"
-                                "lb-20 vl-20 vl-20 vl-20"
-                                "lb-21 vl-21 vl-21 vl-21"
-        ;
+    .wrapper-basic>.full-width {
+        grid-column: span 2;
     }
+
+    .wrapper-contact>.full-width {
+        grid-column: span 1;
+    }
+
 }
 
 @media screen and (min-width: 1200px) {
-    .main-card .wrapper-basic {
-        grid-template-columns: repeat(24, 1fr);
-        grid-template-areas:    "lb-1 lb-1 lb-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 vl-1 lb-2 lb-2 lb-2 vl-2 vl-2 vl-2 lb-3 lb-3 lb-3 vl-3 vl-3 vl-3"
-                                "lb-4 lb-4 lb-4 vl-4 vl-4 vl-4 lb-5 lb-5 lb-5 vl-5 vl-5 vl-5 lb-6 lb-6 lb-6 vl-6 vl-6 vl-6 lb-7 lb-7 lb-7 vl-7 vl-7 vl-7"
-                                "lb-8 lb-8 lb-8 vl-8 vl-8 vl-8 vl-8 vl-8 vl-8 vl-8 vl-8 vl-8 lb-9 lb-9 lb-9 vl-9 vl-9 vl-9 lb-10 lb-10 lb-10 vl-10 vl-10 vl-10"
-                                "lb-11 lb-11 lb-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11 vl-11"
-        ;
+    .wrapper-basic {
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
-    .main-card .wrapper-contact {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-12 lb-12 lb-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12 vl-12"
-                                "lb-13 lb-13 lb-13 vl-13 vl-13 vl-13 vl-13 vl-13 vl-13 vl-13 vl-13 vl-13"
-                                "lb-14 lb-14 lb-14 vl-14 vl-14 vl-14 vl-14 vl-14 vl-14 vl-14 vl-14 vl-14"
-                                "lb-15 lb-15 lb-15 vl-15 vl-15 vl-15 lb-16 lb-16 lb-16 vl-16 vl-16 vl-16"
-        ;
+    .wrapper-contact, .wrapper-social {
+        grid-template-columns: 1fr 1fr;
     }
 
-    .main-card .wrapper-social {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-areas:    "lb-17 lb-17 lb-17 vl-17 vl-17 vl-17 vl-17 vl-17 vl-17 vl-17 vl-17 vl-17"
-                                "lb-18 lb-18 lb-18 vl-18 vl-18 vl-18 vl-18 vl-18 vl-18 vl-18 vl-18 vl-18"
-                                "lb-19 lb-19 lb-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19 vl-19"
-                                "lb-20 lb-20 lb-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20 vl-20"
-                                "lb-21 lb-21 lb-21 vl-21 vl-21 vl-21 vl-21 vl-21 vl-21 vl-21 vl-21 vl-21"
-        ;
+    .wrapper-campus, .wrapper-area, .wrapper-position {
+        grid-template-columns: 1fr;
     }
+
+    .wrapper-basic>.full-width {
+        grid-column: span 2;
+    }
+
+    .wrapper-contact>.full-width {
+        grid-column: span 2;
+    }
+
 }
-
-.main-card .wrapper-basic .box-label,
-.main-card .wrapper-contact .box-label,
-.main-card .wrapper-social .box-label {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: #e0f3ff;
-    /* background-color: #444054; */
-    padding: 5px;
-    color: #6c757d;
-    /* color: #fff; */
-    font-weight: bold;
-}
-
-.main-card .wrapper-basic .box-label p,
-.main-card .wrapper-contact .box-label p,
-.main-card .wrapper-social .box-label p {
-    margin: 0;
-}
-
-.main-card .wrapper-basic .box-value,
-.main-card .wrapper-contact .box-value,
-.main-card .wrapper-social .box-value {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
-    padding: 5px;
-    text-align: center;
-}
-
-.main-card .wrapper-basic .box-value p,
-.main-card .wrapper-contact .box-value p,
-.main-card .wrapper-social .box-value p {
-    margin: 0;
-}
-
-.main-card .wrapper-basic .lb-1 { grid-area: lb-1; }
-.main-card .wrapper-basic .vl-1 { grid-area: vl-1; }
-.main-card .wrapper-basic .lb-2 { grid-area: lb-2; }
-.main-card .wrapper-basic .vl-2 { grid-area: vl-2; }
-.main-card .wrapper-basic .lb-3 { grid-area: lb-3; }
-.main-card .wrapper-basic .vl-3 { grid-area: vl-3; }
-.main-card .wrapper-basic .lb-4 { grid-area: lb-4; }
-.main-card .wrapper-basic .vl-4 { grid-area: vl-4; }
-.main-card .wrapper-basic .lb-5 { grid-area: lb-5; }
-.main-card .wrapper-basic .vl-5 { grid-area: vl-5; }
-.main-card .wrapper-basic .lb-6 { grid-area: lb-6; }
-.main-card .wrapper-basic .vl-6 { grid-area: vl-6; }
-.main-card .wrapper-basic .lb-7 { grid-area: lb-7; }
-.main-card .wrapper-basic .vl-7 { grid-area: vl-7; }
-.main-card .wrapper-basic .lb-8 { grid-area: lb-8; }
-.main-card .wrapper-basic .vl-8 { grid-area: vl-8; }
-.main-card .wrapper-basic .lb-9 { grid-area: lb-9; }
-.main-card .wrapper-basic .vl-9 { grid-area: vl-9; }
-.main-card .wrapper-basic .lb-10 { grid-area: lb-10; }
-.main-card .wrapper-basic .vl-10 { grid-area: vl-10; }
-.main-card .wrapper-basic .lb-11 { grid-area: lb-11; }
-.main-card .wrapper-basic .vl-11 { grid-area: vl-11; }
-
-
-.main-card .wrapper-contact .lb-12 { grid-area: lb-12; }
-.main-card .wrapper-contact .vl-12 { grid-area: vl-12; }
-.main-card .wrapper-contact .lb-13 { grid-area: lb-13; }
-.main-card .wrapper-contact .vl-13 { grid-area: vl-13; }
-.main-card .wrapper-contact .lb-14 { grid-area: lb-14; }
-.main-card .wrapper-contact .vl-14 { grid-area: vl-14; }
-.main-card .wrapper-contact .lb-15 { grid-area: lb-15; }
-.main-card .wrapper-contact .vl-15 { grid-area: vl-15; }
-.main-card .wrapper-contact .lb-16 { grid-area: lb-16; }
-.main-card .wrapper-contact .vl-16 { grid-area: vl-16; }
-
-
-.main-card .wrapper-social .lb-17 { grid-area: lb-17; }
-.main-card .wrapper-social .vl-17 { grid-area: vl-17; }
-.main-card .wrapper-social .lb-18 { grid-area: lb-18; }
-.main-card .wrapper-social .vl-18 { grid-area: vl-18; }
-.main-card .wrapper-social .lb-19 { grid-area: lb-19; }
-.main-card .wrapper-social .vl-19 { grid-area: vl-19; }
-.main-card .wrapper-social .lb-20 { grid-area: lb-20; }
-.main-card .wrapper-social .vl-20 { grid-area: vl-20; }
-.main-card .wrapper-social .lb-21 { grid-area: lb-21; }
-.main-card .wrapper-social .vl-21 { grid-area: vl-21; }
-
 
 .wrapper-add-data {
     border-radius: 8px;
@@ -194,11 +131,10 @@
     height: 110px;
     width: 100%;
     border-width: 1px;
-    border-color: #3f6ad8;
+    border-color: #127cb3;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    /* box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.10); */
 }
 
 .wrapper-add-data.selected {
@@ -210,7 +146,7 @@
     font-size: 18px;
     font-weight: bold;
     line-height: 22px;
-    color: #3f6ad8;
+    color: #127cb3;
     margin: 0px;
 }
 
@@ -228,17 +164,17 @@
     height: 110px;
     padding: 16px;
     background: #fff;
-    border: 1px solid #3f6ad8;
+    border: 1px solid #127cb3;
     border-radius: 8px;
 }
 
 .wrapper-data.selected {
-    border: 2px solid #3f6ad8;
+    border: 2px solid #127cb3;
     background-color: #e0f3ff;
 }
 
 tr.selected {
-    border: 2px solid #3f6ad8;
+    border: 2px solid #127cb3;
     background-color: #e0f3ff;
 }
 
@@ -296,5 +232,3 @@ tr.selected {
     font-size: 16px;
     line-height: 16px;
 }
-
-/* wrapper-campus-data */

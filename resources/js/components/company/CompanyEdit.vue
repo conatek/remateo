@@ -383,7 +383,8 @@ export default {
                 (res) => {
                     localStorage.setItem('origin', 'updated');
 
-                    url = `/companies/${res.data.company.id}`
+                    // url = `/companies/${res.data.company.id}`
+                    url = `/companies`
                     window.location.href = url
                     this.errors = null
                 }).catch(

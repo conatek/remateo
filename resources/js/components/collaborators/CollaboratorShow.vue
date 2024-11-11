@@ -25,9 +25,10 @@
             Información contractual creada correctamente!
         </div>
 
+        <!-- <div class="card-shadow-primary profile-responsive card-border mb-3 card"> -->
         <div class="card-shadow-primary profile-responsive card-border mb-3 card">
             <div class="dropdown-menu-header">
-                <div class="dropdown-menu-header-inner bg-focus">
+                <div class="dropdown-menu-header-inner" style="background-color: #127cb3;">
                     <div class="menu-header-image opacity-3" style="background-image: url('');"></div>
                     <div class="menu-header-content btn-pane-right">
                         <div class="avatar-icon-wrapper me-2 avatar-icon-xl">
@@ -43,15 +44,9 @@
                             <h6 class="menu-header-subtitle">{{ collaborator.email }}</h6>
                         </div>
                         <div class="menu-header-btn-pane">
-
-                            <!-- <a :href="`/collaborators/${collaborator.id}/edit`" class="ladda-button btn btn-pill btn-light" data-style="slide-right">
-                                <span class="ladda-label">Editar</span>
-                                <span class="ladda-spinner"></span>
-                            </a> -->
-
-                            <button @click="emitEditCollaborator" class="ladda-button btn btn-pill btn-light" data-style="slide-right">
-                                <span class="ladda-label">Editar</span>
-                                <!-- <span class="ladda-spinner"></span> -->
+                            <button @click="emitEditCollaborator" class="btn btn-lg btn-mh-white">
+                                <font-awesome-icon :icon="['fas', 'pen-to-square']" />
+                                Editar colaborador
                             </button>
                         </div>
                     </div>
@@ -100,77 +95,101 @@
                         </div>
                         <div class="card-body">
                             <div class="wrapper-basic mt-3">
-                                <div class="box-label lb-1">
-                                    <p class="">Nombre completo:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-1">
+                                        <p class="">Nombre completo:</p>
+                                    </div>
+                                    <div class="box-value vl-1">
+                                        <p class="">{{ collaborator.name }} {{ collaborator.first_surname }} {{ collaborator.second_surname }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-1">
-                                    <p class="">{{ collaborator.name }} {{ collaborator.first_surname }} {{ collaborator.second_surname }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-2">
+                                        <p class="">Tipo de documento:</p>
+                                    </div>
+                                    <div class="box-value vl-2">
+                                        <p class="">{{ document_type.type }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-2">
-                                    <p class="">Tipo de documento:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-3">
+                                        <p class="">Número de documento:</p>
+                                    </div>
+                                    <div class="box-value vl-3">
+                                        <p class="">{{ collaborator.document_number }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-2">
-                                    <p class="">{{ document_type.type }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-4">
+                                        <p class="">Lugar de expedición:</p>
+                                    </div>
+                                    <div class="box-value vl-4">
+                                        <p class="">{{ document_city.name }} ({{ document_province.name }})</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-3">
-                                    <p class="">Número de documento:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-5">
+                                        <p class="">Fecha de expedición:</p>
+                                    </div>
+                                    <div class="box-value vl-5">
+                                        <p class="">{{ collaborator.expedition_date }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-3">
-                                    <p class="">{{ collaborator.document_number }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-6">
+                                        <p class="">Lugar de nacimiento:</p>
+                                    </div>
+                                    <div class="box-value vl-6">
+                                        <p class="">{{ birth_city.name }} ({{ birth_province.name }})</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-4">
-                                    <p class="">Lugar de expedición:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-7">
+                                        <p class="">Fecha de nacimiento:</p>
+                                    </div>
+                                    <div class="box-value vl-7">
+                                        <p class="">{{ collaborator.birth_date }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-4">
-                                    <p class="">{{ document_city.name }} ({{ document_province.name }})</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-8">
+                                        <p class="">Estado civil:</p>
+                                    </div>
+                                    <div class="box-value vl-8">
+                                        <p class="">{{ civil_status.type }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-5">
-                                    <p class="">Fecha de expedición:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-9">
+                                        <p class="">Sexo:</p>
+                                    </div>
+                                    <div class="box-value vl-9">
+                                        <p class="">{{ sex_type.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-5">
-                                    <p class="">{{ collaborator.expedition_date }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-10">
+                                        <p class="">Tipo de sangre:</p>
+                                    </div>
+                                    <div class="box-value vl-10">
+                                        <p class="">{{ rh_type.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-6">
-                                    <p class="">Lugar de nacimiento:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-11">
+                                        <p class="">Mayor logro académico:</p>
+                                    </div>
+                                    <div class="box-value vl-11">
+                                        <p class="">{{ highest_academic_achievement.type }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-6">
-                                    <p class="">{{ birth_city.name }} ({{ birth_province.name }})</p>
-                                </div>
-                                <div class="box-label lb-7">
-                                    <p class="">Fecha de nacimiento:</p>
-                                </div>
-                                <div class="box-value vl-7">
-                                    <p class="">{{ collaborator.birth_date }}</p>
-                                </div>
-                                <div class="box-label lb-8">
-                                    <p class="">Estado civil:</p>
-                                </div>
-                                <div class="box-value vl-8">
-                                    <p class="">{{ civil_status.type }}</p>
-                                </div>
-                                <div class="box-label lb-9">
-                                    <p class="">Sexo:</p>
-                                </div>
-                                <div class="box-value vl-9">
-                                    <p class="">{{ sex_type.name }}</p>
-                                </div>
-                                <div class="box-label lb-10">
-                                    <p class="">Tipo de sangre:</p>
-                                </div>
-                                <div class="box-value vl-10">
-                                    <p class="">{{ rh_type.name }}</p>
-                                </div>
-                                <div class="box-label lb-11">
-                                    <p class="">Mayor logro académico:</p>
-                                </div>
-                                <div class="box-value vl-11">
-                                    <p class="">{{ highest_academic_achievement.type }}</p>
-                                </div>
-                                <div class="box-label lb-12">
-                                    <p class="">Observaciones</p>
-                                </div>
-                                <div class="box-value vl-12">
-                                    <p class="">{{ (collaborator.observations == null || collaborator.observations == '') ? 'Sin asignar' : collaborator.observations }}</p>
+                                <div class="data-pair full-width">
+                                    <div class="box-label lb-12">
+                                        <p class="">Observaciones</p>
+                                    </div>
+                                    <div class="box-value vl-12">
+                                        <p class="">{{ (collaborator.observations == null || collaborator.observations == '') ? 'Sin asignar' : collaborator.observations }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -186,29 +205,37 @@
                         </div>
                         <div class="card-body">
                             <div class="wrapper-address mt-3">
-                                <div class="box-label lb-13">
-                                    <p class="">Lugar de residencia:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-13">
+                                        <p class="">Lugar de residencia:</p>
+                                    </div>
+                                    <div class="box-value vl-13">
+                                        <p class="">{{ residence_city.name }} ({{ residence_province.name }})</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-13">
-                                    <p class="">{{ residence_city.name }} ({{ residence_province.name }})</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-14">
+                                        <p class="">Estrato social:</p>
+                                    </div>
+                                    <div class="box-value vl-14">
+                                        <p class="">{{ stratum_type.id }} - {{ stratum_type.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-14">
-                                    <p class="">Estrato social:</p>
+                                <div class="data-pair full-width">
+                                    <div class="box-label lb-15">
+                                        <p class="">Dirección:</p>
+                                    </div>
+                                    <div class="box-value vl-15">
+                                        <p class="">{{ collaborator.address }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-14">
-                                    <p class="">{{ stratum_type.id }} - {{ stratum_type.name }}</p>
-                                </div>
-                                <div class="box-label lb-15">
-                                    <p class="">Dirección:</p>
-                                </div>
-                                <div class="box-value vl-15">
-                                    <p class="">{{ collaborator.address }}</p>
-                                </div>
-                                <div class="box-label lb-16">
-                                    <p class="">Tenencia:</p>
-                                </div>
-                                <div class="box-value vl-16">
-                                    <p class="">{{ housing_tenure.type }}</p>
+                                <div class="data-pair full-width">
+                                    <div class="box-label lb-16">
+                                        <p class="">Tenencia:</p>
+                                    </div>
+                                    <div class="box-value vl-16">
+                                        <p class="">{{ housing_tenure.type }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -222,23 +249,29 @@
                         </div>
                         <div class="card-body">
                             <div class="wrapper-contact mt-3">
-                                <div class="box-label lb-17">
-                                    <p class="">Teléfono fijo:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-17">
+                                        <p class="">Teléfono fijo:</p>
+                                    </div>
+                                    <div class="box-value vl-17">
+                                        <p class="">{{ collaborator.phone }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-17">
-                                    <p class="">{{ collaborator.phone }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-18">
+                                        <p class="">Celular:</p>
+                                    </div>
+                                    <div class="box-value vl-18">
+                                        <p class="">{{ collaborator.cellphone }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-18">
-                                    <p class="">Celular:</p>
-                                </div>
-                                <div class="box-value vl-18">
-                                    <p class="">{{ collaborator.cellphone }}</p>
-                                </div>
-                                <div class="box-label lb-19">
-                                    <p class="">Email:</p>
-                                </div>
-                                <div class="box-value vl-19">
-                                    <p class="">{{ collaborator.email }}</p>
+                                <div class="data-pair full-width">
+                                    <div class="box-label lb-19">
+                                        <p class="">Email:</p>
+                                    </div>
+                                    <div class="box-value vl-19">
+                                        <p class="">{{ collaborator.email }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -255,96 +288,126 @@
                             Información Contractual
                         </div>
                         <div class="card-body">
-                            <div class="wrapper-contract-information mt-3">
-                                <div class="box-label lb-25">
-                                    <p class="">Cargo:</p>
+                            <div class="wrapper-contract mt-3">
+                                <div class="data-pair">
+                                    <div class="box-label lb-25">
+                                        <p class="">Cargo:</p>
+                                    </div>
+                                    <div class="box-value vl-25">
+                                        <p v-if="contractual_information && contractual_information.position && contractual_information.position.name" class="">{{ contractual_information.position.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-25">
-                                    <p v-if="contractual_information && contractual_information.position && contractual_information.position.name" class="">{{ contractual_information.position.name }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-26">
+                                        <p class="">Salario:</p>
+                                    </div>
+                                    <div class="box-value vl-26">
+                                        <p v-if="contractual_information && contractual_information.salary" class="">$ {{ numberFormat(Math.round(contractual_information.salary)) }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-26">
-                                    <p class="">Salario:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-27">
+                                        <p class="">Tipo de contrato:</p>
+                                    </div>
+                                    <div class="box-value vl-27">
+                                        <p v-if="contractual_information && contractual_information.contract_type && contractual_information.contract_type.name" class="">{{ contractual_information.contract_type.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-26">
-                                    <p v-if="contractual_information && contractual_information.salary" class="">$ {{ numberFormat(Math.round(contractual_information.salary)) }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-28">
+                                        <p class="">Fecha inicio:</p>
+                                    </div>
+                                    <div class="box-value vl-28">
+                                        <p v-if="contractual_information && contractual_information.contract_start_date" class="">{{ contractual_information.contract_start_date }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-27">
-                                    <p class="">Tipo de contrato:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-29">
+                                        <p class="">Fecha fin:</p>
+                                    </div>
+                                    <div class="box-value vl-29">
+                                        <p v-if="contractual_information && contractual_information.contract_end_date" class="">{{ contractual_information.contract_end_date }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-27">
-                                    <p v-if="contractual_information && contractual_information.contract_type && contractual_information.contract_type.name" class="">{{ contractual_information.contract_type.name }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-30">
+                                        <p class="">Fecha fin prueba:</p>
+                                    </div>
+                                    <div class="box-value vl-30">
+                                        <p v-if="contractual_information && contractual_information.test_period_end_date" class="">{{ contractual_information.test_period_end_date }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-28">
-                                    <p class="">Fecha inicio:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-31">
+                                        <p class="">Caja de compensación:</p>
+                                    </div>
+                                    <div class="box-value vl-31">
+                                        <p v-if="contractual_information && contractual_information.ccf && contractual_information.ccf.name" class="">{{ contractual_information.ccf.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-28">
-                                    <p v-if="contractual_information && contractual_information.contract_start_date" class="">{{ contractual_information.contract_start_date }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-32">
+                                        <p class="">EPS:</p>
+                                    </div>
+                                    <div class="box-value vl-32">
+                                        <p v-if="contractual_information && contractual_information.eps && contractual_information.eps.name" class="">{{ contractual_information.eps.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-29">
-                                    <p class="">Fecha fin:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-33">
+                                        <p class="">AFP Pensiones:</p>
+                                    </div>
+                                    <div class="box-value vl-33">
+                                        <p v-if="contractual_information && contractual_information.afp_pension && contractual_information.afp_pension.name" class="">{{ contractual_information.afp_pension.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-29">
-                                    <p v-if="contractual_information && contractual_information.contract_end_date" class="">{{ contractual_information.contract_end_date }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-34">
+                                        <p class="">AFP Cesantías:</p>
+                                    </div>
+                                    <div class="box-value vl-34">
+                                        <p v-if="contractual_information && contractual_information.afp_saving && contractual_information.afp_saving.name" class="">{{ contractual_information.afp_saving.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-30">
-                                    <p class="">Fecha fin prueba:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-35">
+                                        <p class="">ARL:</p>
+                                    </div>
+                                    <div class="box-value vl-35">
+                                        <p v-if="contractual_information && contractual_information.arl && contractual_information.arl.name" class="">{{ contractual_information.arl.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-30">
-                                    <p v-if="contractual_information && contractual_information.test_period_end_date" class="">{{ contractual_information.test_period_end_date }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-36">
+                                        <p class="">Email corp.:</p>
+                                    </div>
+                                    <div class="box-value vl-36">
+                                        <p v-if="contractual_information && contractual_information.corporate_email" class="">{{ contractual_information.corporate_email }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-31">
-                                    <p class="">Caja de compensación:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-37">
+                                        <p class="">Celular corp.:</p>
+                                    </div>
+                                    <div class="box-value vl-37">
+                                        <p v-if="contractual_information && contractual_information.corporate_cellphone" class="">{{ contractual_information.corporate_cellphone }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-31">
-                                    <p v-if="contractual_information && contractual_information.ccf && contractual_information.ccf.name" class="">{{ contractual_information.ccf.name }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-38">
+                                        <p class="">Banco:</p>
+                                    </div>
+                                    <div class="box-value vl-38">
+                                        <p v-if="contractual_information && contractual_information.bank && contractual_information.bank.name" class="">{{ contractual_information.bank.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-32">
-                                    <p class="">EPS:</p>
-                                </div>
-                                <div class="box-value vl-32">
-                                    <p v-if="contractual_information && contractual_information.eps && contractual_information.eps.name" class="">{{ contractual_information.eps.name }}</p>
-                                </div>
-                                <div class="box-label lb-33">
-                                    <p class="">AFP Pensiones:</p>
-                                </div>
-                                <div class="box-value vl-33">
-                                    <p v-if="contractual_information && contractual_information.afp_pension && contractual_information.afp_pension.name" class="">{{ contractual_information.afp_pension.name }}</p>
-                                </div>
-                                <div class="box-label lb-34">
-                                    <p class="">AFP Cesantías:</p>
-                                </div>
-                                <div class="box-value vl-34">
-                                    <p v-if="contractual_information && contractual_information.afp_saving && contractual_information.afp_saving.name" class="">{{ contractual_information.afp_saving.name }}</p>
-                                </div>
-                                <div class="box-label lb-35">
-                                    <p class="">ARL:</p>
-                                </div>
-                                <div class="box-value vl-35">
-                                    <p v-if="contractual_information && contractual_information.arl && contractual_information.arl.name" class="">{{ contractual_information.arl.name }}</p>
-                                </div>
-                                <div class="box-label lb-36">
-                                    <p class="">Email corp.:</p>
-                                </div>
-                                <div class="box-value vl-36">
-                                    <p v-if="contractual_information && contractual_information.corporate_email" class="">{{ contractual_information.corporate_email }}</p>
-                                </div>
-                                <div class="box-label lb-37">
-                                    <p class="">Celular corp.:</p>
-                                </div>
-                                <div class="box-value vl-37">
-                                    <p v-if="contractual_information && contractual_information.corporate_cellphone" class="">{{ contractual_information.corporate_cellphone }}</p>
-                                </div>
-                                <div class="box-label lb-38">
-                                    <p class="">Banco:</p>
-                                </div>
-                                <div class="box-value vl-38">
-                                    <p v-if="contractual_information && contractual_information.bank && contractual_information.bank.name" class="">{{ contractual_information.bank.name }}</p>
-                                </div>
-                                <div class="box-label lb-39">
-                                    <p class="">Número de cuenta:</p>
-                                </div>
-                                <div class="box-value vl-39">
-                                    <p v-if="contractual_information && contractual_information.bank_account" class="">{{ contractual_information.bank_account }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-39">
+                                        <p class="">Número de cuenta:</p>
+                                    </div>
+                                    <div class="box-value vl-39">
+                                        <p v-if="contractual_information && contractual_information.bank_account" class="">{{ contractual_information.bank_account }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -626,36 +689,46 @@
                                                         Información del Familiar
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="wrapper-relative-data mt-3">
-                                                            <div class="box-label lb-20">
-                                                                <p class="">Nombre:</p>
+                                                        <div class="wrapper-relative mt-3">
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-20">
+                                                                    <p class="">Nombre:</p>
+                                                                </div>
+                                                                <div class="box-value vl-20">
+                                                                    <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-value vl-20">
-                                                                <p class="">{{ selected_relative_data.name }} {{ selected_relative_data.first_surname }} {{ selected_relative_data.second_surname }}</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-21">
+                                                                    <p class="">Parentesco:</p>
+                                                                </div>
+                                                                <div class="box-value vl-21">
+                                                                    <p class="">{{ selected_relative_data.relationship.name }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-label lb-21">
-                                                                <p class="">Parentesco:</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-22">
+                                                                    <p class="">Sexo:</p>
+                                                                </div>
+                                                                <div class="box-value vl-22">
+                                                                    <p class="">{{ selected_relative_data.sex.name }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-value vl-21">
-                                                                <p class="">{{ selected_relative_data.relationship.name }}</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-23">
+                                                                    <p class="">Ocupación:</p>
+                                                                </div>
+                                                                <div class="box-value vl-23">
+                                                                    <p class="">{{ selected_relative_data.occupation.name }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-label lb-22">
-                                                                <p class="">Sexo:</p>
-                                                            </div>
-                                                            <div class="box-value vl-22">
-                                                                <p class="">{{ selected_relative_data.sex.name }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-23">
-                                                                <p class="">Ocupación:</p>
-                                                            </div>
-                                                            <div class="box-value vl-23">
-                                                                <p class="">{{ selected_relative_data.occupation.name }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-24">
-                                                                <p class="">Fecha de nacimiento:</p>
-                                                            </div>
-                                                            <div class="box-value vl-24">
-                                                                <p class="">{{ selected_relative_data.birth_date }}</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-24">
+                                                                    <p class="">Fecha de nacimiento:</p>
+                                                                </div>
+                                                                <div class="box-value vl-24">
+                                                                    <p class="">{{ selected_relative_data.birth_date }}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -863,30 +936,38 @@
                                                         Información del Logro
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="wrapper-academic-data my-3">
-                                                            <div class="box-label lb-40">
-                                                                <p class="">Título:</p>
+                                                        <div class="wrapper-academic my-3">
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-40">
+                                                                    <p class="">Título:</p>
+                                                                </div>
+                                                                <div class="box-value vl-40">
+                                                                    <p class="">{{ selected_academic_data.degree }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-value vl-40">
-                                                                <p class="">{{ selected_academic_data.degree }}</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-41">
+                                                                    <p class="">Institución:</p>
+                                                                </div>
+                                                                <div class="box-value vl-41">
+                                                                    <p class="">{{ selected_academic_data.institution }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-label lb-41">
-                                                                <p class="">Institución:</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-42">
+                                                                    <p class="">Nivel de formación:</p>
+                                                                </div>
+                                                                <div class="box-value vl-42">
+                                                                    <p class="">{{ selected_academic_data.achievement_type }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-value vl-41">
-                                                                <p class="">{{ selected_academic_data.institution }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-42">
-                                                                <p class="">Nivel de formación:</p>
-                                                            </div>
-                                                            <div class="box-value vl-42">
-                                                                <p class="">{{ selected_academic_data.achievement_type }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-43">
-                                                                <p class="">Fecha de grado:</p>
-                                                            </div>
-                                                            <div class="box-value vl-43">
-                                                                <p class="">{{ selected_academic_data.end_date }}</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-43">
+                                                                    <p class="">Fecha de grado:</p>
+                                                                </div>
+                                                                <div class="box-value vl-43">
+                                                                    <p class="">{{ selected_academic_data.end_date }}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
 
@@ -1078,26 +1159,31 @@
                                                         Información de Salud
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="wrapper-medical-examination-data my-3">
-                                                            <div class="box-label lb-44">
-                                                                <p class="">Tipo de evaluación:</p>
+                                                        <div class="wrapper-medical-examination my-3">
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-44">
+                                                                    <p class="">Tipo de evaluación:</p>
+                                                                </div>
+                                                                <div class="box-value vl-44">
+                                                                    <p class="">{{ selected_medical_examination_data.examination_type }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-value vl-44">
-                                                                <p class="">{{ selected_medical_examination_data.examination_type }}</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-45">
+                                                                    <p class="">Fecha:</p>
+                                                                </div>
+                                                                <div class="box-value vl-45">
+                                                                    <p class="">{{ selected_medical_examination_data.examination_date }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-label lb-45">
-                                                                <p class="">Fecha:</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-46">
+                                                                    <p class="">Observaciones:</p>
+                                                                </div>
+                                                                <div class="box-value vl-46">
+                                                                    <p class="">{{ selected_medical_examination_data.observations }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-value vl-45">
-                                                                <p class="">{{ selected_medical_examination_data.examination_date }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-46">
-                                                                <p class="">Observaciones:</p>
-                                                            </div>
-                                                            <div class="box-value vl-46">
-                                                                <p class="">{{ selected_medical_examination_data.observations }}</p>
-                                                            </div>
-
                                                         </div>
                                                         <button v-if="selected_medical_examination_data && selected_medical_examination_data.result_url" @click="downloadMedicalExaminationResult(selected_medical_examination_data.id)" class="mb-2 mr-2 btn-icon btn btn-primary">
                                                             <font-awesome-icon :icon="['fas', 'download']" /> Descargar Resultado
@@ -1306,31 +1392,38 @@
                                                         Información de Visita Domiciliaria
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="wrapper-home-visit-data my-3">
-                                                            <div class="box-label lb-47">
-                                                                <p class="">Motivo de visita:</p>
+                                                        <div class="wrapper-home-visit my-3">
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-47">
+                                                                    <p class="">Motivo de visita:</p>
+                                                                </div>
+                                                                <div class="box-value vl-47">
+                                                                    <p class="">{{ selected_home_visit_data.home_visit_type }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-value vl-47">
-                                                                <p class="">{{ selected_home_visit_data.home_visit_type }}</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-48">
+                                                                    <p class="">Fecha visita:</p>
+                                                                </div>
+                                                                <div class="box-value vl-48">
+                                                                    <p class="">{{ selected_home_visit_data.visit_date }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-label lb-48">
-                                                                <p class="">Fecha visita:</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-49">
+                                                                    <p class="">Fecha próxima:</p>
+                                                                </div>
+                                                                <div class="box-value vl-49">
+                                                                    <p class="">{{ selected_home_visit_data.next_visit_date }}</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="box-value vl-48">
-                                                                <p class="">{{ selected_home_visit_data.visit_date }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-49">
-                                                                <p class="">Fecha próxima:</p>
-                                                            </div>
-                                                            <div class="box-value vl-49">
-                                                                <p class="">{{ selected_home_visit_data.next_visit_date }}</p>
-                                                            </div>
-                                                            <div class="box-label lb-50">
-                                                                <p class="">Observaciones:</p>
-                                                            </div>
-                                                            <div class="box-value vl-50">
-                                                                <!-- <p class="">{{ selected_home_visit_data.home_visit_observations ? selected_home_visit_data.home_visit_observations : 'Ninguna' }}</p> -->
-                                                                <p class="">{{ selected_home_visit_data.observations ? selected_home_visit_data.observations : 'Ninguna' }}</p>
+                                                            <div class="data-pair">
+                                                                <div class="box-label lb-50">
+                                                                    <p class="">Observaciones:</p>
+                                                                </div>
+                                                                <div class="box-value vl-50">
+                                                                    <p class="">{{ selected_home_visit_data.observations ? selected_home_visit_data.observations : 'Ninguna' }}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <button v-if="selected_home_visit_data && selected_home_visit_data.report_url" @click="downloadHomeVisitReport(selected_home_visit_data.id)" class="mb-2 mr-2 btn-icon btn btn-primary">
@@ -1508,18 +1601,22 @@
                                                 Información de Documento
                                             </div>
                                             <div class="card-body">
-                                                <div class="wrapper-document-data my-3">
-                                                    <div class="box-label lb-51">
-                                                        <p class="">Tipo de documento:</p>
+                                                <div class="wrapper-document my-3">
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-51">
+                                                            <p class="">Tipo de documento:</p>
+                                                        </div>
+                                                        <div class="box-value vl-51">
+                                                            <p class="">{{ selected_document_data.document_type }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-value vl-51">
-                                                        <p class="">{{ selected_document_data.document_type }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-52">
-                                                        <p class="">Observaciones:</p>
-                                                    </div>
-                                                    <div class="box-value vl-52">
-                                                        <p class="">{{ selected_document_data.observations ? selected_document_data.observations : 'Ninguna' }}</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-52">
+                                                            <p class="">Observaciones:</p>
+                                                        </div>
+                                                        <div class="box-value vl-52">
+                                                            <p class="">{{ selected_document_data.observations ? selected_document_data.observations : 'Ninguna' }}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <button v-if="selected_document_data && selected_document_data.document_url" @click="downloadDocument(selected_document_data.id)" class="mb-2 mr-2 btn-icon btn btn-primary">
@@ -2732,10 +2829,5 @@ export default {
 
 <style scoped>
     @import './../../assets/css/collaborator_show.css';
-
-    /* .swal2-title {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 18px !important;
-        color: green !important;
-    } */
+    @import './../../assets/css/custom.css';
 </style>

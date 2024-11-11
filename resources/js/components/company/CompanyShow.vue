@@ -2,7 +2,7 @@
     <div>
         <div class="card-shadow-primary profile-responsive card-border mb-3 card">
             <div class="dropdown-menu-header">
-                <div class="dropdown-menu-header-inner bg-focus">
+                <div class="dropdown-menu-header-inner" style="background-color: #127cb3;">
                     <div class="menu-header-image opacity-3" style="background-image: url('');"></div>
                     <div class="menu-header-content btn-pane-right">
                         <div class="avatar-icon-wrapper me-2 avatar-icon-xl">
@@ -73,71 +73,93 @@
                         </div>
                         <div class="card-body">
                             <div class="wrapper-basic mt-3">
-                                <div class="box-label lb-1">
-                                    <p class="">Nombre empresa:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-1">
+                                        <p class="">Nombre empresa:</p>
+                                    </div>
+                                    <div class="box-value vl-1">
+                                        <p class="">{{ company.company_name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-1">
-                                    <p class="">{{ company.company_name }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-2">
+                                        <p class="">Tipo empresa:</p>
+                                    </div>
+                                    <div class="box-value vl-2">
+                                        <p class="">{{ company_type.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-2">
-                                    <p class="">Tipo empresa:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-3">
+                                        <p class="">Sector:</p>
+                                    </div>
+                                    <div class="box-value vl-3">
+                                        <p class="">{{ industry_type.name }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-2">
-                                    <p class="">{{ company_type.name }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-4">
+                                        <p class="">Tipo de identificación:</p>
+                                    </div>
+                                    <div class="box-value vl-4">
+                                        <p class="">{{ identification_type.type }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-3">
-                                    <p class="">Sector:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-5">
+                                        <p class="">Número de identificación:</p>
+                                    </div>
+                                    <div class="box-value vl-5">
+                                        <p class="">{{ company.identification_number }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-3">
-                                    <p class="">{{ industry_type.name }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-6">
+                                        <p class="">Sede principal:</p>
+                                    </div>
+                                    <div class="box-value vl-6">
+                                        <p class="">{{ city.name }} ({{ province.name }})</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-4">
-                                    <p class="">Tipo de identificación:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-7">
+                                        <p class="">Tamaño:</p>
+                                    </div>
+                                    <div class="box-value vl-7">
+                                        <p class="">{{ company.size }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-4">
-                                    <p class="">{{ identification_type.type }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-8">
+                                        <p class="">Dirección:</p>
+                                    </div>
+                                    <div class="box-value vl-8">
+                                        <p class="">{{ company.address }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-5">
-                                    <p class="">Número de identificación:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-9">
+                                        <p class="">Fecha de fundación:</p>
+                                    </div>
+                                    <div class="box-value vl-9">
+                                        <p class="">{{ company.founded_at }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-5">
-                                    <p class="">{{ company.identification_number }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-10">
+                                        <p class="">Estado:</p>
+                                    </div>
+                                    <div class="box-value vl-10">
+                                        <p class="">{{ company.is_active == 0 ? 'Inactiva' : 'Activa' }}</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-6">
-                                    <p class="">Sede principal:</p>
-                                </div>
-                                <div class="box-value vl-6">
-                                    <p class="">{{ city.name }} ({{ province.name }})</p>
-                                </div>
-                                <div class="box-label lb-7">
-                                    <p class="">Tamaño:</p>
-                                </div>
-                                <div class="box-value vl-7">
-                                    <p class="">{{ company.size }}</p>
-                                </div>
-                                <div class="box-label lb-8">
-                                    <p class="">Dirección:</p>
-                                </div>
-                                <div class="box-value vl-8">
-                                    <p class="">{{ company.address }}</p>
-                                </div>
-                                <div class="box-label lb-9">
-                                    <p class="">Fecha de fundación:</p>
-                                </div>
-                                <div class="box-value vl-9">
-                                    <p class="">{{ company.founded_at }}</p>
-                                </div>
-                                <div class="box-label lb-10">
-                                    <p class="">Estado:</p>
-                                </div>
-                                <div class="box-value vl-10">
-                                    <p class="">{{ company.is_active == 0 ? 'Inactiva' : 'Activa' }}</p>
-                                </div>
-                                <div class="box-label lb-11">
-                                    <p class="">Descripción</p>
-                                </div>
-                                <div class="box-value vl-11">
-                                    <p class="">{{ company.description }}</p>
+                                <div class="data-pair full-width">
+                                    <div class="box-label lb-11">
+                                        <p class="">Descripción</p>
+                                    </div>
+                                    <div class="box-value vl-11">
+                                        <p class="">{{ company.description }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,41 +175,56 @@
                         </div>
                         <div class="card-body">
                             <div class="wrapper-contact mt-3">
-                                <div class="box-label lb-12">
-                                    <p class="">Nombre:</p>
+                                <div class="data-pair full-width">
+                                    <div class="box-label lb-12">
+                                        <p class="">Nombre:</p>
+                                    </div>
+                                    <div class="box-value vl-12">
+                                        <p v-if="company && company.contact_name" class="">{{ company.contact_name }} {{ company.contact_first_surname }} {{ company.contact_second_surname }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-12">
-                                    <p class="">{{ company.contact_name }} {{ company.contact_first_surname }}  {{ company.contact_second_surname }}</p>
+                                <div class="data-pair full-width">
+                                    <div class="box-label lb-13">
+                                        <p class="">Sitio web:</p>
+                                    </div>
+                                    <div class="box-value vl-13">
+                                        <p v-if="company && company.website" class="">{{ company.website }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-13">
-                                    <p class="">Sitio web:</p>
+                                <div class="data-pair full-width">
+                                    <div class="box-label lb-14">
+                                        <p class="">Email:</p>
+                                    </div>
+                                    <div class="box-value vl-14">
+                                        <p v-if="company && company.email" class="">{{ company.email }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-13">
-                                    <p class="">{{ company.website }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-15">
+                                        <p class="">Teléfono:</p>
+                                    </div>
+                                    <div class="box-value vl-15">
+                                        <p v-if="company && company.phone" class="">{{ company.phone }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-14">
-                                    <p class="">Email:</p>
-                                </div>
-                                <div class="box-value vl-14">
-                                    <p class="">{{ company.email }}</p>
-                                </div>
-                                <div class="box-label lb-15">
-                                    <p class="">Teléfono:</p>
-                                </div>
-                                <div class="box-value vl-15">
-                                    <p class="">{{ company.phone }}</p>
-                                </div>
-                                <div class="box-label lb-16">
-                                    <p class="">Celular:</p>
-                                </div>
-                                <div class="box-value vl-16">
-                                    <p class="">{{ company.cellphone }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-16">
+                                        <p class="">Celular:</p>
+                                    </div>
+                                    <div class="box-value vl-16">
+                                        <p v-if="company && company.cellphone" class="">{{ company.cellphone }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="col-sm-12 col-lg-6">
                     <div class="main-card mb-3 card">
                         <div class="card-header">
@@ -195,35 +232,50 @@
                         </div>
                         <div class="card-body">
                             <div class="wrapper-social mt-3">
-                                <div class="box-label lb-17">
-                                    <p class="">Facebook:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-17">
+                                        <p class="">Facebook:</p>
+                                    </div>
+                                    <div class="box-value vl-17">
+                                        <p v-if="company && company.facebook" class="">{{ company.facebook }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-17">
-                                    <p class="">{{ company.facebook }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-18">
+                                        <p class="">Instagram:</p>
+                                    </div>
+                                    <div class="box-value vl-18">
+                                        <p v-if="company && company.instagram" class="">{{ company.instagram }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-18">
-                                    <p class="">Instagram:</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-19">
+                                        <p class="">LinkedIn:</p>
+                                    </div>
+                                    <div class="box-value vl-19">
+                                        <p v-if="company && company.linkedin" class="">{{ company.linkedin }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
-                                <div class="box-value vl-18">
-                                    <p class="">{{ company.instagram }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-20">
+                                        <p class="">X (Twitter):</p>
+                                    </div>
+                                    <div class="box-value vl-20">
+                                        <p v-if="company && company.x_twitter" class="">{{ company.x_twitter }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
-                                <div class="box-label lb-19">
-                                    <p class="">LinkedIn:</p>
-                                </div>
-                                <div class="box-value vl-19">
-                                    <p class="">{{ company.linkedin }}</p>
-                                </div>
-                                <div class="box-label lb-20">
-                                    <p class="">X (Twitter):</p>
-                                </div>
-                                <div class="box-value vl-20">
-                                    <p class="">{{ company.x_twitter }}</p>
-                                </div>
-                                <div class="box-label lb-21">
-                                    <p class="">YouTube:</p>
-                                </div>
-                                <div class="box-value vl-21">
-                                    <p class="">{{ company.youtube }}</p>
+                                <div class="data-pair">
+                                    <div class="box-label lb-21">
+                                        <p class="">YouTube:</p>
+                                    </div>
+                                    <div class="box-value vl-21">
+                                        <p v-if="company && company.youtube" class="">{{ company.youtube }}</p>
+                                        <p v-else class="">Sin asignar</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -241,7 +293,7 @@
                                     <p class="mb-0" style="font-size: 14px;"> {{ this.message }}</p>
                                 </div>
                             </div>
-                            <div v-if="campuses_data && campuses_data.length>0" class="row"> 
+                            <div v-if="campuses_data && campuses_data.length>0" class="row">
                                 <div class="col-md-12 col-lg-6">
                                     <a @click="addCampusData" class="wrapper-add-data p-2 mb-3" :class="(add_campus_data && !edit_campus_data) ? 'selected shadow' : ''">
                                         <p><i class="fa fa-plus" aria-hidden="true"></i></p>
@@ -437,36 +489,46 @@
                                                 Información de la Sede
                                             </div>
                                             <div class="card-body">
-                                                <div class="wrapper-campus-data mt-3">
-                                                    <div class="box-label lb-22">
-                                                        <p class="">Nombre:</p>
+                                                <div class="wrapper-campus mt-3">
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-22">
+                                                            <p class="">Nombre:</p>
+                                                        </div>
+                                                        <div class="box-value vl-22">
+                                                            <p class="">{{ selected_campus_data.name }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-value vl-22">
-                                                        <p class="">{{ selected_campus_data.name }}</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-23">
+                                                            <p class="">Ubicación:</p>
+                                                        </div>
+                                                        <div class="box-value vl-23">
+                                                            <p class="">{{ selected_campus_data.city.name }} ({{ selected_campus_data.province.name }})</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-label lb-23">
-                                                        <p class="">Ubicación:</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-24">
+                                                            <p class="">Dirección:</p>
+                                                        </div>
+                                                        <div class="box-value vl-24">
+                                                            <p class="">{{ selected_campus_data.address }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-value vl-23">
-                                                        <p class="">{{ selected_campus_data.city.name }} ({{ selected_campus_data.province.name }})</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-25">
+                                                            <p class="">Teléfono:</p>
+                                                        </div>
+                                                        <div class="box-value vl-25">
+                                                            <p class="">{{ selected_campus_data.phone }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-label lb-24">
-                                                        <p class="">Dirección:</p>
-                                                    </div>
-                                                    <div class="box-value vl-24">
-                                                        <p class="">{{ selected_campus_data.address }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-25">
-                                                        <p class="">Teléfono:</p>
-                                                    </div>
-                                                    <div class="box-value vl-25">
-                                                        <p class="">{{ selected_campus_data.phone }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-26">
-                                                        <p class="">Correo electrónico:</p>
-                                                    </div>
-                                                    <div class="box-value vl-26">
-                                                        <p class="">{{ selected_campus_data.email }}</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-26">
+                                                            <p class="">Correo electrónico:</p>
+                                                        </div>
+                                                        <div class="box-value vl-26">
+                                                            <p class="">{{ selected_campus_data.email }}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -489,7 +551,7 @@
                                     <p class="mb-0" style="font-size: 14px;"> {{ this.message }}</p>
                                 </div>
                             </div>
-                            <div v-if="areas_data && areas_data.length>0" class="row"> 
+                            <div v-if="areas_data && areas_data.length>0" class="row">
                                 <div class="col-md-12 col-lg-6">
                                     <a @click="addAreaData" class="wrapper-add-data p-2 mb-3" :class="(add_area_data && !edit_area_data) ? 'selected shadow' : ''">
                                         <p><i class="fa fa-plus" aria-hidden="true"></i></p>
@@ -652,30 +714,38 @@
                                                 Información del Área
                                             </div>
                                             <div class="card-body">
-                                                <div class="wrapper-area-data mt-3">
-                                                    <div class="box-label lb-27">
-                                                        <p class="">Nombre:</p>
+                                                <div class="wrapper-area mt-3">
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-27">
+                                                            <p class="">Nombre:</p>
+                                                        </div>
+                                                        <div class="box-value vl-27">
+                                                            <p class="">{{ selected_area_data.name }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-value vl-27">
-                                                        <p class="">{{ selected_area_data.name }}</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-28">
+                                                            <p class="">Sede:</p>
+                                                        </div>
+                                                        <div class="box-value vl-28">
+                                                            <p class="">{{ selected_area_data.campus.name }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-label lb-28">
-                                                        <p class="">Sede:</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-29">
+                                                            <p class="">Líder:</p>
+                                                        </div>
+                                                        <div class="box-value vl-29">
+                                                            <p class="">{{ selected_area_data.leader.name }} {{ selected_area_data.leader.first_surname }} {{ selected_area_data.leader.second_surname }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-value vl-28">
-                                                        <p class="">{{ selected_area_data.campus.name }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-29">
-                                                        <p class="">Líder:</p>
-                                                    </div>
-                                                    <div class="box-value vl-29">
-                                                        <p class="">{{ selected_area_data.leader.name }} {{ selected_area_data.leader.first_surname }} {{ selected_area_data.leader.second_surname }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-30">
-                                                        <p class="">Descripción:</p>
-                                                    </div>
-                                                    <div class="box-value vl-30">
-                                                        <p class="">{{ selected_area_data.description }}</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-30">
+                                                            <p class="">Descripción:</p>
+                                                        </div>
+                                                        <div class="box-value vl-30">
+                                                            <p class="">{{ selected_area_data.description }}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -698,7 +768,7 @@
                                     <p class="mb-0" style="font-size: 14px;"> {{ this.message }}</p>
                                 </div>
                             </div>
-                            <div v-if="positions_data && positions_data.length>0" class="row"> 
+                            <div v-if="positions_data && positions_data.length>0" class="row">
                                 <div class="col-md-12 col-lg-6">
                                     <a @click="addPositionData" class="wrapper-add-data p-2 mb-3" :class="(add_position_data && !edit_position_data) ? 'selected shadow' : ''">
                                         <p><i class="fa fa-plus" aria-hidden="true"></i></p>
@@ -897,42 +967,54 @@
                                                 Información del Cargo
                                             </div>
                                             <div class="card-body">
-                                                <div class="wrapper-position-data mt-3">
-                                                    <div class="box-label lb-31">
-                                                        <p class="">Nombre:</p>
+                                                <div class="wrapper-position mt-3">
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-31">
+                                                            <p class="">Nombre:</p>
+                                                        </div>
+                                                        <div class="box-value vl-31">
+                                                            <p class="">{{ selected_position_data.name }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-value vl-31">
-                                                        <p class="">{{ selected_position_data.name }}</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-32">
+                                                            <p class="">Área:</p>
+                                                        </div>
+                                                        <div class="box-value vl-32">
+                                                            <p class="">{{ selected_position_data.area.name }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-label lb-32">
-                                                        <p class="">Área:</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-33">
+                                                            <p class="">Salario:</p>
+                                                        </div>
+                                                        <div class="box-value vl-33">
+                                                            <p class="">$ {{ numberFormat(selected_position_data.estimated_salary) }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-value vl-32">
-                                                        <p class="">{{ selected_position_data.area.name }}</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-34">
+                                                            <p class="">Criticidad:</p>
+                                                        </div>
+                                                        <div class="box-value vl-34">
+                                                            <p class="">{{ selected_position_data.criticality_level.level }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-label lb-33">
-                                                        <p class="">Salario:</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-35">
+                                                            <p class="">Riesgo:</p>
+                                                        </div>
+                                                        <div class="box-value vl-35">
+                                                            <p class="">{{ selected_position_data.risk_class.class }} - {{ selected_position_data.risk_class.description }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="box-value vl-33">
-                                                        <p class="">$ {{ numberFormat(selected_position_data.estimated_salary) }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-34">
-                                                        <p class="">Criticidad:</p>
-                                                    </div>
-                                                    <div class="box-value vl-34">
-                                                        <p class="">{{ selected_position_data.criticality_level.level }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-35">
-                                                        <p class="">Riesgo:</p>
-                                                    </div>
-                                                    <div class="box-value vl-35">
-                                                        <p class="">{{ selected_position_data.risk_class.class }} - {{ selected_position_data.risk_class.description }}</p>
-                                                    </div>
-                                                    <div class="box-label lb-36">
-                                                        <p class="">Descripción:</p>
-                                                    </div>
-                                                    <div class="box-value vl-36">
-                                                        <p class="">{{ selected_position_data.description }}</p>
+                                                    <div class="data-pair">
+                                                        <div class="box-label lb-36">
+                                                            <p class="">Descripción:</p>
+                                                        </div>
+                                                        <div class="box-value vl-36">
+                                                            <p class="">{{ selected_position_data.description }}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1178,7 +1260,7 @@ export default {
                 this.contracts_data = response.data.contracts;
             })
             .catch(e => {
-                // 
+                //
             })
         },
         getCampusesData(company_id) {
@@ -1187,7 +1269,7 @@ export default {
                 this.campuses_data = response.data.campuses;
             })
             .catch(e => {
-                // 
+                //
             })
         },
         getAreasData(company_id) {
@@ -1196,7 +1278,7 @@ export default {
                 this.areas_data = response.data.areas;
             })
             .catch(e => {
-                // 
+                //
             })
         },
         getPositionsData(company_id) {
@@ -1207,7 +1289,7 @@ export default {
                 this.risk_classes = response.data.risk_classes;
             })
             .catch(e => {
-                // 
+                //
             })
         },
         getCollaboratorsData(company_id) {
@@ -1216,7 +1298,7 @@ export default {
                 this.collaborators_data = response.data.collaborators;
             })
             .catch(e => {
-                // 
+                //
             })
         },
         changeCampusData(id) {
@@ -1423,7 +1505,7 @@ export default {
         },
         editCampusData(item, index) {
             let new_selection_campus_data;
-            
+
             if(this.campuses_data && this.campuses_data.length>0) {
                 this.campuses_data.forEach(element => {
                     if(element.id !== item.id) {
@@ -1447,12 +1529,12 @@ export default {
             this.city_id = this.campus_data_to_edit.city_id
             this.phone = item.phone
             this.email = item.email
-            
+
             this.errors_campus_data = null
         },
         editAreaData(item, index) {
             let new_selection_area_data;
-            
+
             if(this.areas_data && this.areas_data.length>0) {
                 this.areas_data.forEach(element => {
                     if(element.id !== item.id) {
@@ -1463,7 +1545,7 @@ export default {
                 }, new_selection_area_data);
             }
             this.selected_area_data = new_selection_area_data
-            
+
             this.area_data_to_edit = item
 
             this.add_area_data = false
@@ -1478,7 +1560,7 @@ export default {
         },
         editPositionData(item, index) {
             let new_selection_position_data;
-            
+
             if(this.positions_data && this.positions_data.length>0) {
                 this.positions_data.forEach(element => {
                     if(element.id !== item.id) {
@@ -1489,7 +1571,7 @@ export default {
                 }, new_selection_position_data);
             }
             this.selected_position_data = new_selection_position_data
-            
+
             this.position_data_to_edit = item
 
             this.add_position_data = false
@@ -1524,15 +1606,15 @@ export default {
 
                     this.add_campus_data = false
                     this.edit_campus_data = false
-                    
+
                     this.successfully_created_message = false
                     this.successfully_updated_message = true
                     this.successfully_deleted_message = false
-                    
+
                     this.showMessageCampus = true
                     this.showMessageArea = false
                     this.showMessagePosition = false
-                    
+
                     this.getMessage(response.data.message)
 
                     this.errors_campus_data = null
@@ -1623,7 +1705,7 @@ export default {
                 })
         },
         deleteCampusData(item, index) {
-            
+
             axios.delete(`/campus-data-delete/${item.id}`).then(
                 (response) => {
                     this.getCampusesData(this.company.id)
@@ -1652,7 +1734,7 @@ export default {
                 })
         },
         deleteAreaData(item, index) {
-            
+
             axios.delete(`/area-data-delete/${item.id}`).then(
                 (response) => {
                     this.getAreasData(this.company.id)
@@ -1681,7 +1763,7 @@ export default {
                 })
         },
         deletePositionData(item, index) {
-            
+
             axios.delete(`/position-data-delete/${item.id}`).then(
                 (response) => {
                     this.getPositionsData(this.company.id)

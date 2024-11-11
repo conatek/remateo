@@ -17,21 +17,25 @@ use Illuminate\Support\Facades\Gate;
 
 class CompaniesController extends Controller
 {
-    // public function __construct()
-    // {
-    //     // Aplicamos el middleware AJAX solo a métodos específicos
-    //     $this->middleware(function ($request, $next) {
-    //         if (!request()->ajax()) {
-    //             abort(403, 'Acceso denegado');
-    //         }
-    //         return $next($request);
-    //     })->except(['index']);
-    // }
+    public function __construct()
+    {
+        // Aplicamos el middleware AJAX solo a métodos específicos
+        $this->middleware(function ($request, $next) {
+            if (!request()->ajax()) {
+                abort(403, 'Acceso denegado');
+            }
+            return $next($request);
+        })->except(['index']);
+    }
 
     public function index()
     {
-        abort_if(Gate::denies('company_index'), 403);
-        $companies = Company::all();
+        abort_if(Gate::denies('company_index'), 403, 'ACCESO DENEGADO');
+
+        $companies = Company::orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
         return view('back.companies.index', compact('companies'));
     }
 
@@ -39,12 +43,19 @@ class CompaniesController extends Controller
     {
         abort_if(Gate::denies('company_create'), 403);
 
+        $result = [];
+
         $company_types = CompanyType::all();
         $document_types = DocumentType::all();
         $provinces = Province::all();
         $industry_types = Industry::all();
 
-        return view('back.companies.create', compact('company_types', 'document_types', 'provinces', 'industry_types'));
+        $result['company_types'] = $company_types;
+        $result['document_types'] = $document_types;
+        $result['provinces'] = $provinces;
+        $result['industry_types'] = $industry_types;
+
+        return $result;
     }
 
     public function store(CompanyCreateRequest $request)
@@ -116,25 +127,42 @@ class CompaniesController extends Controller
     {
         abort_if(Gate::denies('company_show'), 403);
 
+        $result = [];
+
         $company_type = CompanyType::where('id', $company->company_type_id)->first();
         $industry_type = Industry::where('id', $company->industry_type_id)->first();
         $identification_type = DocumentType::where('id', $company->identification_type_id)->first();
         $province = Province::where('id', $company->province_id)->first();
         $city = City::where('id', $company->city_id)->first();
 
-        return view('back.companies.show', compact('company', 'company_type', 'industry_type', 'identification_type', 'province', 'city'));
+        $result['company'] = $company;
+        $result['company_type'] = $company_type;
+        $result['industry_type'] = $industry_type;
+        $result['identification_type'] = $identification_type;
+        $result['province'] = $province;
+        $result['city'] = $city;
+
+        return $result;
     }
 
     public function edit(Company $company)
     {
         abort_if(Gate::denies('company_edit'), 403);
 
+        $result = [];
+
         $company_types = CompanyType::all();
         $document_types = DocumentType::all();
         $provinces = Province::all();
         $industry_types = Industry::all();
 
-        return view('back.companies.edit', compact('company', 'company_types', 'document_types', 'provinces', 'industry_types'));
+        $result['company'] = $company;
+        $result['company_types'] = $company_types;
+        $result['document_types'] = $document_types;
+        $result['provinces'] = $provinces;
+        $result['industry_types'] = $industry_types;
+
+        return $result;
     }
 
     public function update(CompanyEditRequest $request, Company $company)
@@ -173,8 +201,6 @@ class CompaniesController extends Controller
             // Manejo del campo 'is_active'
             $company->is_active = $request->filled('is_active') ? 1 : 0;
 
-            // dd($data);
-
             // Guardar la empresa
             $company->update($data);
 
@@ -196,7 +222,7 @@ class CompaniesController extends Controller
 
     public function destroy($id)
     {
-        abort_if(Gate::denies('collaborator_destroy'), 403);
+        abort_if(Gate::denies('company_destroy'), 403);
 
         $company = Company::find($id);
 

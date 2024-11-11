@@ -1,7 +1,7 @@
 @extends('back.layouts.app')
 
 @section('content')
-    <div class="app-page-title">
+    {{-- <div class="app-page-title">
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
@@ -20,7 +20,7 @@
                 @endcan
             </div>
         </div>
-    </div>
+    </div> --}}
 
     @if (session('success'))
         <div class="mbg-3 alert alert-success alert-dismissible fade show" role="alert">
