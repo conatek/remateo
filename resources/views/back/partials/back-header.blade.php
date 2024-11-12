@@ -1,4 +1,4 @@
-<div class="app-header header-shadow">
+<div class="app-header header-shadow" style="border-bottom: 4px solid #ff4600;">
     <div class="app-header__logo">
         <div class="logo-src"></div>
         <div class="header__pane ms-auto">

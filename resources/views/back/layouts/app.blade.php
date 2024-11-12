@@ -5,7 +5,7 @@
     </head>
     <body>
         <div id="app">
-            <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+            <div class="app-container app-theme-green body-tabs-shadow fixed-header fixed-sidebar">
                 @include('back.partials.back-header')
                 @include('back.partials.back-ui-theme-settings')
                 {{-- @include('back.partials.back-main') --}}
