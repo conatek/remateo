@@ -17,8 +17,10 @@ class UserController extends Controller
     public function index()
     {
         abort_if(Gate::denies('user_index'), 403);
-        $users = User::all();
-        return view('back.users.index', compact('users'));
+        $users = User::with(['company', 'roles'])->get();
+        $roles = Role::all();
+
+        return view('back.users.index', compact('users', 'roles'));
     }
 
     public function create()
@@ -44,7 +46,7 @@ class UserController extends Controller
                 'image_url' => $image_url,
                 'password' => bcrypt($request->input('password')),
             ]);
-        
+
         $roles = $request->input('roles', []);
         $user->syncRoles($roles);
         return redirect()->route('users.show', $user->id)->with('success', 'Usuario creado exitosamente!');
@@ -60,10 +62,22 @@ class UserController extends Controller
     public function edit(User $user)
     {
         abort_if(Gate::denies('user_edit'), 403);
-        $companies = Company::all()->pluck('name', 'id');
-        $roles = Role::all()->pluck('name', 'id');
+        // $companies = Company::all()->pluck('name', 'id');
+        // $roles = Role::all()->pluck('name', 'id');
+        // $user->load('roles');
+        // return view('back.users.edit', compact('user', 'companies', 'roles'));
+
+        $result = [];
+
+        $company = Company::where('id', $user->company_id)->pluck('company_name', 'id');
+        // $roles = Role::all()->pluck('name', 'id');
         $user->load('roles');
-        return view('back.users.edit', compact('user', 'companies', 'roles'));
+
+        $result['company'] = $company;
+        // $result['roles'] = $roles;
+        $result['user'] = $user;
+
+        return $result;
     }
 
     public function update(UserEditRequest $request, User $user)
@@ -72,12 +86,11 @@ class UserController extends Controller
 
         $data = $request->only('name', 'email', 'company_id');
         $password = $request->input('password');
+
         if($password) {
             $data['password'] = bcrypt($password);
         }
 
-        // dd($user['image_public_id']);
-        
         $url = isset($user['image_url']) ? $user['image_url'] : null;
         $public_id = isset($user['image_public_id']) ? $user['image_public_id'] : null;
         if($request->hasFile('image')) {
@@ -99,7 +112,12 @@ class UserController extends Controller
         $user->update($data);
         $roles = $request->input('roles', []);
         $user->syncRoles($roles);
-        return redirect()->route('users.show', $user->id)->with('success', 'Usuario actualizado correctamente.');
+        // return redirect()->route('users.show', $user->id)->with('success', 'Usuario actualizado correctamente.');
+
+        return response()->json([
+            'message'=>'CUsuario actualizado exitosamente!',
+            'user'=>$user
+        ]);
     }
 
     public function destroy(User $user)

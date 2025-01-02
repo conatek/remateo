@@ -7,7 +7,6 @@
                         Próximos Cumpleaños
                     </div>
                     <div class="card-body">
-                        <!-- <table v-if="relatives_data && relatives_data.length>0" style="width: 100%;" id="example" class="table table-hover table-bordered"> -->
                         <table style="width: 100%;" id="dt_birthdays" class="table table-hover table-bordered">
                             <thead>
                                 <tr>
@@ -18,7 +17,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item, index) in next_birthdays" 
+                                <tr v-for="(item, index) in next_birthdays"
                                     :class="item.week == 'current' ? 'bk-green' : (item.week == 'next' ? 'bk-yellow' : '')">
                                     <td>{{ item.name }}</td>
                                     <td>{{ (item.document).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
@@ -49,7 +48,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item, index) in expiring_contracts" 
+                                <tr v-for="(item, index) in expiring_contracts"
                                     :class="item.week == 'current' ? 'bk-green' : item.week == 'next' ? 'bk-yellow' : item.week == 'previous' ? 'bk-red' : ''">
                                     <td>{{ item.name }}</td>
                                     <td>{{ (item.document).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
@@ -106,7 +105,7 @@ export default {
                 };
             })
             .catch(e => {
-                console.error('Error:', e);  
+                console.error('Error:', e);
             })
         },
         getNextBirthdays(company_id) {
@@ -117,7 +116,7 @@ export default {
                 birthdaysDatatable();
             })
             .catch(error => {
-                console.error('Error:', e);  
+                console.error('Error:', e);
             });
         },
         getExpiringContracts(company_id) {
@@ -128,7 +127,7 @@ export default {
                 contractsDatatable();
             })
             .catch(error => {
-                console.error('Error:', e);  
+                console.error('Error:', e);
             });
         },
         convertMonth(month) {

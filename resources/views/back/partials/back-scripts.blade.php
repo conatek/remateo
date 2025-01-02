@@ -11,10 +11,12 @@
 <script type="text/javascript" src="{{ asset('vendors/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/apexcharts/dist/apexcharts.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/bootstrap-table/dist/bootstrap-table.min.js') }}"></script>
+
 {{-- <script type="text/javascript" src="{{ asset('vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script> --}}
+
 <script type="text/javascript" src="{{ asset('vendors/select2/dist/js/select2.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/@atomaras/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendors/apexcharts/dist/apexcharts.min.js') }}"></script>
@@ -33,6 +35,7 @@
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
 {{-- <script src="sweetalert2.all.min.js"></script> --}}
 {{-- <script type="text/javascript" src="{{ asset('vendors/sweetalert2/dist/sweetalert2.all.min.js') }}"></script> --}}
 

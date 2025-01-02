@@ -149,4 +149,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/document-data-update/{document_data}', [CollaboratorDocumentController::class, 'update']);
     Route::get('/download-document/{document_data}', [CollaboratorDocumentController::class, 'downloadDocument']);
     Route::delete('/document-data-delete/{document_data}', [CollaboratorDocumentController::class, 'destroy']);
+
+    // LOAD COLLABORATORS
+
 });

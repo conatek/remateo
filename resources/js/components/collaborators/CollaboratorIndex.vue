@@ -119,11 +119,11 @@
                                     <div class="title-total">
                                         <div class="title text-truncate">Cargo del Colaborador</div>
                                         <div class="name-profile text-truncate">{{ collaborator ? collaborator.name : '' }}</div>
-                                        <div class="surname-profile text-truncate mb-3">{{ collaborator ? collaborator.first_surname : '' }} {{ collaborator ? collaborator.second_surname : '' }}</div>
+                                        <div class="surname-profile text-truncate" style="border-bottom: 1px dotted #127cb3; padding-bottom: 10px; margin-bottom: 10px;">{{ collaborator ? collaborator.first_surname : '' }} {{ collaborator ? collaborator.second_surname : '' }}</div>
                                         <div class="email-profile text-truncate">{{ collaborator ? collaborator.email : '' }}</div>
                                         <div class="cellphone-profile text-truncate">{{ collaborator ? collaborator.cellphone : '' }}</div>
 
-                                        <div class="desc"></div>
+                                        <!-- <div class="desc"></div> -->
                                         <div class="actions">
                                             <button v-if="collaborator" @click="getCollaborator(collaborator.id)"><i class="fa fa-eye"></i></button>
                                             <button v-if="collaborator" @click="editCollaborator(collaborator.id)"><i class="fa fa-edit"></i></button>

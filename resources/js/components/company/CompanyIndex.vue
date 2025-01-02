@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="app-page-title">
-            <div v-if="selected_company == null && add_company == false && edit_company == false" class="page-title-wrapper">
+            <div v-if="selected_company == null && add_company == false && edit_company == false && load_collaborators == false" class="page-title-wrapper">
                 <div class="page-title-heading">
                     <div class="page-title-icon">
                         <i class="pe-7s-culture text-success"></i>
@@ -17,7 +17,7 @@
                     </button>
                 </div>
             </div>
-            <div v-else-if="selected_company != null && add_company == false && edit_company == false" class="page-title-wrapper">
+            <div v-else-if="selected_company != null && add_company == false && edit_company == false && load_collaborators == false" class="page-title-wrapper">
                 <div class="page-title-heading">
                     <div class="page-title-icon">
                         <i class="pe-7s-culture text-success"></i>
@@ -33,7 +33,7 @@
                     </button>
                 </div>
             </div>
-            <div v-else-if="selected_company == null && add_company == true && edit_company == false" class="page-title-wrapper">
+            <div v-else-if="selected_company == null && add_company == true && edit_company == false && load_collaborators == false" class="page-title-wrapper">
                 <div class="page-title-heading">
                     <div class="page-title-icon">
                         <i class="pe-7s-culture text-success"></i>
@@ -49,13 +49,29 @@
                     </button>
                 </div>
             </div>
-            <div v-else-if="selected_company != null && add_company == false && edit_company == true" class="page-title-wrapper">
+            <div v-else-if="selected_company != null && add_company == false && edit_company == true && load_collaborators == false" class="page-title-wrapper">
                 <div class="page-title-heading">
                     <div class="page-title-icon">
                         <i class="pe-7s-culture text-success"></i>
                     </div>
                     <div>
                         Editar Empresa
+                    </div>
+                </div>
+                <div class="page-title-actions">
+                    <button @click="returnToList()" class="btn btn-mh-dark-blue me-3">
+                        <i class="fa fa-arrow-left"></i>
+                        Volver al listado
+                    </button>
+                </div>
+            </div>
+            <div v-else-if="selected_company != null && add_company == false && edit_company == false && load_collaborators == true" class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-users text-success"></i>
+                    </div>
+                    <div>
+                        Cargar Colaboradores
                     </div>
                 </div>
                 <div class="page-title-actions">
@@ -90,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="selected_company == null && add_company == false && edit_company == false">
+                <div v-if="selected_company == null && add_company == false && edit_company == false && load_collaborators == false">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
                             <div class="input-group mb-3">
@@ -114,11 +130,11 @@
                                     <div class="portada"></div>
                                     <div class="title-total">
                                         <div class="title text-truncate">Sector de la Empresa</div>
-                                        <div class="name-profile text-truncate mb-3">{{ company ? company.company_name : '' }}</div>
+                                        <div class="name-profile text-truncate" style="border-bottom: 1px dotted #127cb3; padding-bottom: 10px; margin-bottom: 10px;">{{ company ? company.company_name : '' }}</div>
                                         <div class="email-profile text-truncate">{{ company ? company.email : '' }}</div>
                                         <div class="cellphone-profile text-truncate">{{ company ? company.cellphone : '' }}</div>
 
-                                        <div class="desc"></div>
+                                        <!-- <div class="desc"></div> -->
                                         <div class="actions">
                                             <button v-if="company" @click="getCompany(company.id)"><i class="fa fa-eye"></i></button>
                                             <button v-if="company" @click="editCompany(company.id)"><i class="fa fa-edit"></i></button>
@@ -150,9 +166,10 @@
                         </ul>
                     </nav>
                 </div>
-                <div v-if="selected_company !== null && add_company == false && edit_company == false">
+                <div v-if="selected_company !== null && add_company == false && edit_company == false && load_collaborators == false">
                     <company-detail
                         @editCompany="editCompany"
+                        @loadCollaborators="loadCollaborators"
                         :company="selected_company"
                         :company_type="companyData.company_type"
                         :industry_type="companyData.industry_type"
@@ -161,7 +178,7 @@
                         :city="companyData.city"
                     ></company-detail>
                 </div>
-                <div v-if="selected_company == null && add_company == true && edit_company == false">
+                <div v-if="selected_company == null && add_company == true && edit_company == false && load_collaborators == false">
                     <company-create
                         :company_types="selectsDataCreate.company_types"
                         :document_types="selectsDataCreate.document_types"
@@ -169,7 +186,7 @@
                         :industry_types="selectsDataCreate.industry_types"
                     ></company-create>
                 </div>
-                <div v-if="selected_company != null && add_company == false && edit_company == true">
+                <div v-if="selected_company != null && add_company == false && edit_company == true && load_collaborators == false">
                     <company-edit
                         :company="companyDataEdit.company"
                         :company_types="companyDataEdit.company_types"
@@ -177,6 +194,11 @@
                         :provinces="companyDataEdit.provinces"
                         :industry_types="companyDataEdit.industry_types"
                     ></company-edit>
+                </div>
+                <div v-if="selected_company != null && add_company == false && edit_company == false && load_collaborators == true">
+                    <company-collaborators></company-collaborators>
+
+                    <!-- <p>Aquí va el componente para carga masiva de colaboradores ...</p> -->
                 </div>
 
 
@@ -201,6 +223,7 @@ export default {
             selected_company: null,
             add_company: false,
             edit_company: false,
+            load_collaborators: false,
 
             companyData: null,
             companyDataEdit: null,
@@ -268,6 +291,7 @@ export default {
             this.selected_company = null
             this.add_company = false
             this.edit_company = false
+            this.load_collaborators = false
         },
         getOrigin() {
             const origin = localStorage.getItem('origin');
@@ -332,6 +356,7 @@ export default {
             this.selected_company = this.companies.find(c => c.id === company)
             this.add_company = false
             this.edit_company = false
+            this.load_collaborators = false
 
             axios.get(`/companies/${company}`).then(
                 (res) => {
@@ -354,6 +379,7 @@ export default {
             this.selected_company = null
             this.add_company = true
             this.edit_company = false
+            this.load_collaborators = false
 
             axios.get(`/companies/create`).then(
                 (res) => {
@@ -370,6 +396,7 @@ export default {
             this.selected_company = this.companies.find(c => c.id === company)
             this.add_company = false
             this.edit_company = true
+            this.load_collaborators = false
 
             axios.get(`/companies/${company}/edit`).then(
                 (res) => {
@@ -381,6 +408,12 @@ export default {
                         this.errors = error.response.data.errors
                     }
                 })
+        },
+        loadCollaborators(company){
+            this.selected_company = this.companies.find(c => c.id === company)
+            this.add_company = false
+            this.edit_company = false
+            this.load_collaborators = true
         },
         deleteCompany(id){
             // console.log('Eliminar empresa: ' + id);

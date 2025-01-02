@@ -12,6 +12,7 @@ const components = {
     'company-show': defineAsyncComponent(() => import('./components/company/CompanyShow.vue')),
     'company-detail': defineAsyncComponent(() => import('./components/company/CompanyDetail.vue')),
     'company-edit': defineAsyncComponent(() => import('./components/company/CompanyEdit.vue')),
+    'company-collaborators': defineAsyncComponent(() => import('./components/company/CompanyCollaborators.vue')),
 
     'control-panel': defineAsyncComponent(() => import('./components/company/ControlPanel.vue')),
     'sociodemographic-profile': defineAsyncComponent(() => import('./components/company/SociodemographicProfile.vue')),
@@ -22,6 +23,8 @@ const components = {
     'collaborator-create': defineAsyncComponent(() => import('./components/collaborators/CollaboratorCreate.vue')),
     'collaborator-show': defineAsyncComponent(() => import('./components/collaborators/CollaboratorShow.vue')),
     'collaborator-edit': defineAsyncComponent(() => import('./components/collaborators/CollaboratorEdit.vue')),
+
+    'user-index': defineAsyncComponent(() => import('./components/users/UserIndex.vue')),
 
 };
 

@@ -64,9 +64,14 @@
         </div>
         @include('back.partials.back-drawer-wrapper')
 
+
         <div class="app-drawer-overlay d-none animated fadeIn"></div>
 
+        {{-- scripts comunes --}}
         @include('back.partials.back-scripts')
+
+        {{-- scripts específicos --}}
+        @yield('scripts')
 
         @vite('resources/js/app.js')
     </body>

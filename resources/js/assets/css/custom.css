@@ -121,9 +121,12 @@
     height: 100%;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    background-image: url("/images/card-image-bk.png");
+    /* border-right: 2px dotted #127cb3; */
+    /* background-image: url("/images/card-image-bk.png");
     background-position: bottom center;
-    background-size: cover;
+    background-size: cover; */
+    /* background: linear-gradient(0deg, #fff, #ff4600); */
+    background: linear-gradient(0deg, #fff, #0dacff);
 }
 
 .actions>button {

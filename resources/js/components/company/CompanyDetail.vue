@@ -30,9 +30,13 @@
                             <h6 class="menu-header-subtitle">Información complementaria</h6>
                         </div>
                         <div class="menu-header-btn-pane">
-                            <button @click="emitEditCompany" class="btn btn-lg btn-mh-white">
+                            <button @click="emitEditCompany" class="btn btn-lg btn-mh-white m-2">
                                 <font-awesome-icon :icon="['fas', 'pen-to-square']" />
                                 Editar empresa
+                            </button>
+                            <button @click="emitLoadCollaborators" class="btn btn-lg btn-mh-white m-2">
+                                <font-awesome-icon :icon="['fas', 'upload']" />
+                                Carga masiva de colaboradores
                             </button>
                         </div>
                     </div>
@@ -445,6 +449,9 @@ export default {
         },
         emitEditCompany() {
             this.$emit('editCompany', this.company.id)
+        },
+        emitLoadCollaborators() {
+            this.$emit('loadCollaborators', this.company.id)
         },
         changeMainTab(tab) {
             this.card_selected = tab
