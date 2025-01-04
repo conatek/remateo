@@ -11,16 +11,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Exception;
 
 class UserController extends Controller
 {
     public function index()
     {
         abort_if(Gate::denies('user_index'), 403);
+        $companies = Company::select('id', 'company_name')->get();
         $users = User::with(['company', 'roles'])->get();
         $roles = Role::all();
 
-        return view('back.users.index', compact('users', 'roles'));
+        return view('back.users.index', compact('users', 'roles', 'companies'));
     }
 
     public function create()
@@ -35,10 +37,15 @@ class UserController extends Controller
     {
         // Las validaciones se realizan en UserCreateRequest
 
-        $file = request()->file('image');
-        $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' =>  'mh/' . env("APP_ENV", "local") . '/' . $request['company_id'] . '/users']); // => mh/local/1/users/qxrcxytjrwufqjij9ix3
-        $image_public_id = $cloudinary_object->getPublicId();
-        $image_url = $cloudinary_object->getSecurePath();
+        if($request->hasFile('image')) {
+            $file = request()->file('image');
+            $cloudinary_object = Cloudinary::upload($file->getRealPath(), ['folder' =>  'mh/' . env("APP_ENV", "local") . '/' . $request['company_id'] . '/users']); // => mh/local/1/users/qxrcxytjrwufqjij9ix3
+            $image_public_id = $cloudinary_object->getPublicId();
+            $image_url = $cloudinary_object->getSecurePath();
+        } else {
+            $image_public_id = null;
+            $image_url = null;
+        }
 
         $user = User::create($request->only('name', 'email', 'company_id')
             + [
@@ -49,7 +56,13 @@ class UserController extends Controller
 
         $roles = $request->input('roles', []);
         $user->syncRoles($roles);
-        return redirect()->route('users.show', $user->id)->with('success', 'Usuario creado exitosamente!');
+        // return redirect()->route('users.show', $user->id)->with('success', 'Usuario creado exitosamente!');
+
+        return response()->json([
+            'message'=>'Usuario creado exitosamente',
+            'user'=>$user
+        ]);
+
     }
 
     public function show(User $user)
@@ -115,21 +128,32 @@ class UserController extends Controller
         // return redirect()->route('users.show', $user->id)->with('success', 'Usuario actualizado correctamente.');
 
         return response()->json([
-            'message'=>'CUsuario actualizado exitosamente!',
+            'message'=>'Usuario actualizado exitosamente!',
             'user'=>$user
         ]);
     }
 
-    public function destroy(User $user)
+    public function destroy($user_id)
     {
-        abort_if(Gate::denies('user_destroy'), 403);
-        if(auth()->user()->id == $user->id) {
-            return redirect()->route('users.index');
-        }
+        // abort_if(Gate::denies('user_destroy'), 403);
 
-        $public_id = $user['image_public_id'];
-        Cloudinary::destroy($public_id);
-        $user->delete();
-        return back()->with('success', 'Usuario eliminado correctamente.');
+        try {
+            $user = User::where('id', $user_id)->first();
+            if(isset($user['image_public_id'])) {
+                $public_id = $user['image_public_id'];
+                Cloudinary::destroy($public_id);
+            }
+
+            $user->delete();
+
+            return response()->json([
+                'message'=>'Usuario eliminado exitosamente!',
+                'user'=>$user
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

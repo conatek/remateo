@@ -17,13 +17,13 @@
                     </button>
                 </div>
             </div>
-            <div v-else-if="selected_user != null && add_user == false && edit_user == false" class="page-title-wrapper">
+            <div v-else-if="selected_user == null && add_user == true && edit_user == false" class="page-title-wrapper">
                 <div class="page-title-heading">
                     <div class="page-title-icon">
                         <i class="pe-7s-users text-success"></i>
                     </div>
                     <div>
-                        Detalle de Usuario
+                        Agregar Usuario
                     </div>
                 </div>
                 <div class="page-title-actions">
@@ -51,6 +51,28 @@
             </div>
         </div>
 
+        <!-- <div v-if="message" class="message-success mb-3">
+            <div class="content d-flex align-items-start p-2">
+                <p class="mb-0" style="font-size: 14px;"> {{ message }}</p>
+            </div>
+        </div> -->
+
+        <div v-if="origin === 'created'" class="message-success mb-3">
+            <div class="content d-flex align-items-start p-2">
+                <p class="mb-0">Usuario creado exitosamente</p>
+            </div>
+        </div>
+        <div v-if="origin === 'updated'" class="message-success mb-3">
+            <div class="content d-flex align-items-start p-2">
+                <p class="mb-0">Usuario actualizado exitosamente</p>
+            </div>
+        </div>
+        <div v-if="origin === 'deleted'" class="message-success mb-3">
+            <div class="content d-flex align-items-start p-2">
+                <p class="mb-0">Usuario eliminado exitosamente</p>
+            </div>
+        </div>
+
         <div v-if="selected_user == null && add_user == false && edit_user == false" class="main-card mb-3 card">
             <div class="card-body table-responsive">
                 <table style="width: 100%;" id="dt_users" class="table table-cntk table-hover table-bordered">
@@ -64,7 +86,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="user in users" :key="user.id">
+                        <tr v-for="(user, index) in users" :key="user.id">
                             <td>{{ user.name }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.company.company_name }}</td>
@@ -75,13 +97,10 @@
                                 </div>
                             </td>
                             <td class="align-middle text-end">
-                                <!-- <button v-if="user" @click="showUser(user.id)" class="me-2 btn-icon btn btn-sm btn-success">
-                                    <i class="fa fa-eye"></i> Mostrar
-                                </button> -->
                                 <button v-if="user" @click="editUser(user.id)" class="me-2 btn-icon btn btn-sm btn-primary">
                                     <i class="fa fa-edit"></i> Editar
                                 </button>
-                                <button v-if="user" @click="deleteUser(user.id)" class="btn-icon btn btn-sm btn-danger">
+                                <button v-if="user" @click="showDeleteAlert(user.id, index)" class="btn-icon btn btn-sm btn-danger">
                                     <i class="fa fa-trash"></i> Eliminar
                                 </button>
                             </td>
@@ -97,14 +116,74 @@
                         </tr>
                     </tfoot>
                 </table>
-
-                <!-- {{-- {{ $users->onEachSide(2)->links() }} --}} -->
             </div>
         </div>
 
-        <div v-else-if="selected_user != null && add_user == false && edit_user == false" class="main-card mb-3 card">
-            <div class="card-body table-responsive">
-                <p>Mostrar</p>
+        <div v-else-if="selected_user == null && add_user == true && edit_user == false" class="main-card mb-3 card">
+            <div class="card-body">
+                <form @submit.prevent="storeUser" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input v-model="name" name="name" id="name" type="text" class="form-control" placeholder="Ingresa el nombre del ususario" autofocus>
+                                <span v-if="errors && errors.name" class="error text-danger" for="name">{{ errors.name[0] }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input v-model="email" name="email" id="email" type="email" class="form-control" placeholder="Ingresa el correo electrónico" autocomplete="new-password">
+                                <span v-if="errors && errors.email" class="error text-danger" for="email">{{ errors.email[0] }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                <label for="company_id" class="form-label">Empresa*</label>
+                                <select v-if="companies.length > 0" v-model="company_id" name="company_id" class="form-control"  id="company_id">
+                                    <option value="" disabled selected hidden>Selecciona la empresa</option>
+                                    <option v-for="company in companies" :value="company.id">{{ company.company_name }}</option>
+                                </select>
+                                <span v-if="errors && errors.company_id" class="error text-danger" for="company_id">{{ errors.company_id[0] }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                <label for="image" class="form-label">Imagen</label>
+                                <div class="input-group">
+                                    <input @change="onChangeImage" type="file" name="image" id="image" class="form-control">
+                                </div>
+                                <span v-if="errors && errors.image" class="error text-danger" for="image">{{ errors.image[0] }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input v-model="password" name="password" id="password" type="password" class="form-control" placeholder="Ingresa la contraseña solo si la deseas modificar" autocomplete="new-password">
+                                <span v-if="errors && errors.password" class="error text-danger" for="password">{{ errors.password[0] }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-2 btn btn-primary">Guardar</button>
+                    <hr>
+                    <p>Asignar Roles</p>
+                    <div v-if="roles" class="row">
+                        <div v-for="role in roles" :key="role.id" class="col-lg-3 col-md-4 col-sm-6 py-1">
+                            <div class="form-group clearfix">
+                                <div class="icheck-primary d-inline">
+                                    <!-- <p>{{ role.name }}</p> -->
+                                    <input type="checkbox" :id="'checkbox_' + role.name"
+                                        :value="role.id" v-model="selected_roles">
+                                    <label :for="'checkbox_' + role.name">{{ role.name }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -156,8 +235,8 @@
                                     <label for="image" class="form-label">Imagen</label>
                                     <div class="input-group">
                                         <input @change="onChangeImage" type="file" name="image" id="image" class="form-control">
-                                        <span v-if="errors && errors.image" class="error text-danger" for="image">{{ errors.image[0] }}</span>
                                     </div>
+                                    <span v-if="errors && errors.image" class="error text-danger" for="image">{{ errors.image[0] }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -196,6 +275,9 @@ import { usersDatatable } from '../../assets/js/tables.js';
 
 export default {
     props: {
+        companies: {
+            default: null,
+        },
         users: {
             default: null,
         },
@@ -210,19 +292,27 @@ export default {
             edit_user: false,
 
             userData: null,
+            // company_id: '',
 
             selected_roles: [],
-            company_id: null,
-            name: null,
-            email: null,
+            company_id: '',
+            name: '',
+            email: '',
             image: null,
-            password: null,
+            password: '',
 
             errors: null,
             message: '',
+
+            successfully_created_message: false,
+            successfully_updated_message: false,
+            successfully_deleted_message: false,
+
+            origin: '',
         };
     },
     mounted() {
+        this.getOrigin()
         usersDatatable();
     },
     watch: {
@@ -236,6 +326,51 @@ export default {
         }
     },
     methods: {
+        showDeleteAlert(item, index) {
+            // Ver ejemplos en: https://sweetalert2.github.io/#examples
+            this.$swal({
+                title: "¿Seguro que deseas eliminar este registro?",
+                text: "¡No podrás revertir esto!",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3f6ad8",
+                cancelButtonColor: "#444054",
+                confirmButtonText: "Si, eliminar!",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+            if (result.isConfirmed) {
+                this.deleteUser(item, index)
+                this.$swal({
+                    title: "Eliminado!",
+                    text: "Su registro ha sido borrado.",
+                    icon: "success"
+                });
+            }
+            });
+        },
+        getMessage(msg) {
+            if(msg != '' && msg != null) {
+                this.message = msg
+            }
+
+            setTimeout(() => {
+                this.message = ''
+
+                this.successfully_created_message = false
+                this.successfully_updated_message = false
+                this.successfully_deleted_message = false
+            }, 3000)
+        },
+        getOrigin() {
+            const origin = localStorage.getItem('origin');
+            if (origin !== null) {
+                this.origin = origin;
+                localStorage.removeItem('origin');
+            }
+            setTimeout(() => {
+                this.origin = '';
+            }, 3000);
+        },
         returnToList() {
             this.selected_user = null
             this.add_user = false
@@ -246,14 +381,47 @@ export default {
         onChangeImage(e) {
             this.image = e.target.files[0]
         },
-        showUser(user) {
-            this.selected_user = this.users.find(u => u.id === user);
-            this.add_user = false;
+        addUser() {
+            this.selected_user = null;
+            this.add_user = true;
             this.edit_user = false;
 
-            axios.get(`/users/${user}`).then(
+            this.company_id = '';
+            this.name = '';
+            this.email = '';
+            this.image = null;
+            this.password = '';
+            this.selected_roles = [];
+
+        },
+        storeUser() {
+            let fd = new FormData()
+
+            fd.append('company_id', this.company_id)
+            fd.append('name', this.name)
+            fd.append('email', this.email)
+            fd.append('image', this.image)
+            fd.append('password', this.password)
+            this.selected_roles.forEach((role, index) => {
+                fd.append(`roles[${index}]`, role);
+            });
+
+            // console.log('Este es el FD:');
+            // for (let [key, value] of fd.entries()) {
+            //     console.log(`${key}: ${value}`);
+            // }
+
+            axios.post('/users', fd).then(
                 (res) => {
-                    this.userData = res.data
+                    localStorage.setItem('origin', 'created');
+
+                    this.successfully_created_message = true
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = false
+
+                    this.getMessage(res.data.message)
+
+                    window.location.href = '/users'
                     this.errors = null
                 }).catch(
                 (error) => {
@@ -289,11 +457,9 @@ export default {
             fd.append('name', this.name)
             fd.append('email', this.email)
             fd.append('image', this.image)
-            // fd.append('password', this.password)
             if (this.password) {
-                fd.append('password', this.password); // Solo añade el campo si tiene valor
+                fd.append('password', this.password);
             }
-            // fd.append('roles', this.selected_roles)
             this.selected_roles.forEach((role, index) => {
                 fd.append(`roles[${index}]`, role);
             });
@@ -305,9 +471,37 @@ export default {
                 (res) => {
                     localStorage.setItem('origin', 'updated');
 
-                    // url = `/collaborators/${res.data.collaborator.id}`
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = true
+                    this.successfully_deleted_message = false
+
                     url = `/users`
                     window.location.href = url
+
+                    this.getMessage(res.data.message)
+
+                    this.errors = null
+                }).catch(
+                (error) => {
+                    if(error && error.response && error.response.data && error.response.data.errors) {
+                        this.errors = error.response.data.errors
+                    }
+                })
+        },
+        deleteUser(user) {
+            console.log('El usuario es:');
+            console.log(user);
+            axios.delete(`/users/${user}`).then(
+                (res) => {
+                    localStorage.setItem('origin', 'deleted');
+
+                    this.successfully_created_message = false
+                    this.successfully_updated_message = false
+                    this.successfully_deleted_message = true
+
+                    this.getMessage(res.data.message)
+
+                    window.location.href = '/users'
                     this.errors = null
                 }).catch(
                 (error) => {
@@ -317,12 +511,27 @@ export default {
                 })
         },
     },
-    created() {
-        // Add your created hook logic here
-    }
 };
 </script>
 
 <style scoped>
     @import './../../assets/css/custom.css';
+
+    .message-success {
+        width: 100%;
+        background: #D8FFDC;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    .message-success .content {
+        align-items: flex-start;
+        justify-content: center;
+        border-left: 5px solid #00660A;
+    }
+
+    .message-success .content p {
+        font-size: 16px;
+        line-height: 16px;
+    }
 </style>

@@ -757,7 +757,7 @@
                                                         </div>
                                                         <div class="widget-content-left">
                                                             <div class="widget-heading">{{ auth()->user()->name }}</div>
-                                                            <div class="widget-subheading opacity-8">A short profile description</div>
+                                                            <div class="widget-subheading opacity-8">{{ auth()->user()->company->company_name }}</div>
                                                         </div>
                                                         <div class="widget-content-right me-2">
                                                             <button class="btn-pill btn-shadow btn-shine btn btn-focus" onclick="event.preventDefault();
@@ -775,7 +775,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="scroll-area-xs" style="height: 150px;">
+                                    {{-- <div class="scroll-area-xs" style="height: 150px;">
                                         <div class="scrollbar-container ps">
                                             <ul class="nav flex-column">
                                                 <li class="nav-item-header nav-item">Activity</li>
@@ -833,7 +833,7 @@
                                         <li class="nav-item-btn text-center nav-item">
                                             <button class="btn-wide btn btn-primary btn-sm"> Open Messages</button>
                                         </li>
-                                    </ul>
+                                    </ul> --}}
                                 </div>
                             </div>
                         </div>

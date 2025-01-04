@@ -6,37 +6,31 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UserEditRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
-//        dd($this);
         $user = $this->route('user');
-        return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'sometimes',
-        ];
+
+        if($this->request->get('image') != "null"){
+            return [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'password' => 'sometimes|min:8',
+                'image' => 'sometimes|nullable|image|mimes:jpeg,png,jpg|dimensions:max_width=200,max_height=200|max:100',
+            ];
+        } else {
+            return [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'password' => 'sometimes|min:8',
+            ];
+        }
     }
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string, string>
-     */
     public function messages(): array
     {
         return [
@@ -45,6 +39,11 @@ class UserEditRequest extends FormRequest
             'email.email' => 'El campo email no tiene el formato adecuado.',
             'email.unique' => 'El email ya se encuentra registrado.',
             'password.required' => 'El campo contraseña es requerido.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'image.image' => 'El archivo debe ser una imagen.',
+            'image.dimensions' => 'Las dimensiones maximas de imagen son 200 x 200',
+            'image.mimes' => 'Formato de imagen no admitido (usar jpeg, jpg, png).',
+            'image.max' => 'El archivo excede el tamaño permitido (100KB).',
         ];
     }
 }
