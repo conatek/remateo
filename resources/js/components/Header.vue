@@ -15,7 +15,7 @@
         </div>
         <div class="app-header__mobile-menu">
             <div>
-                <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                <button @click="openSidebarMobile()" type="button" class="hamburger hamburger--elastic mobile-toggle-nav" :class="{ 'is-active': isOpenSidebarMobile }">
                     <span class="hamburger-box">
                         <span class="hamburger-inner"></span>
                     </span>
@@ -24,7 +24,8 @@
         </div>
         <div class="app-header__menu">
             <span>
-                <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                <!-- <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav"> -->
+                <button type="button" class="btn-icon btn-icon-only btn btn-light btn-sm mobile-toggle-header-nav" style="background-color: #fff; border: 1px solid #fff; color: #58a2c9;">
                     <span class="btn-icon-wrapper">
                         <i class="fa fa-ellipsis-v fa-w-6"></i>
                     </span>
@@ -111,6 +112,10 @@ export default {
             type: Boolean,
             required: true,
         },
+        isOpenSidebarMobile: {
+            type: Boolean,
+            required: false,
+        },
     },
     data() {
         return {
@@ -124,6 +129,9 @@ export default {
         },
         openRightDrawer() {
             this.$emit('openRightDrawer');
+        },
+        openSidebarMobile() {
+            this.$emit('openSidebarMobile');
         },
     },
 };

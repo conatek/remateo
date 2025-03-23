@@ -1,6 +1,6 @@
 <template>
     <!-- <div class="app-sidebar sidebar-shadow collapsed"> -->
-    <div class="app-sidebar sidebar-shadow" :class="{ collapsed: !isCollapsed }" @mouseover="hoverSidebar(true)" @mouseleave="hoverSidebar(false)">
+    <div class="app-sidebar sidebar-shadow" :class="{ 'collapsed': !isCollapsed }" @mouseover="hoverSidebar(true)" @mouseleave="hoverSidebar(false)">
         <div class="scrollbar-sidebar">
             <div class="app-sidebar__inner">
                 <ul class="vertical-nav-menu">

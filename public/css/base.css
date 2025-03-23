@@ -7796,7 +7796,7 @@ button,
   .app-header .header-user-info > .widget-subheading {
     font-size: 0.8rem; }
 
-.app-header__logo {
+/* .app-header__logo {
   padding: 0 1.5rem;
   height: 60px;
   width: 280px;
@@ -7805,11 +7805,10 @@ button,
   transition: width .2s; }
   .app-header__logo .logo-src {
     height: 30px;
-    width: 200px;
-    /* width: 100%; */
+    width: 100%;
     background: url("../../images/logo-muyhumano-lineal.png");
     background-size: contain;
-    background-repeat: no-repeat; }
+    background-repeat: no-repeat; } */
 
 .app-header__menu,
 .app-header__mobile-menu {
@@ -8428,8 +8427,9 @@ button,
 .closed-sidebar.closed-sidebar-mobile .app-header {
   margin-left: 0 !important; }
 
-.closed-sidebar.fixed-footer .app-footer__inner {
-  margin-left: 0 !important; }
+/* .closed-sidebar.fixed-footer .app-footer__inner {
+  margin-left: 0 !important;
+} */
 
 .app-main {
   flex: 1;
@@ -8518,9 +8518,9 @@ button,
     display: flex;
     align-content: center;
     align-items: center; }
-    .app-footer .app-footer__inner .app-footer-left {
+    /* .app-footer .app-footer__inner .app-footer-left {
       display: flex;
-      align-items: center; }
+      align-items: center; } */
     .app-footer .app-footer__inner .app-footer-right {
       margin-left: auto;
       display: flex; }
@@ -8553,18 +8553,18 @@ button,
     text-decoration: none;
     opacity: 1; }
 
-.fixed-footer .app-footer {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  z-index: 7; }
-  .fixed-footer .app-footer .app-footer__inner {
-    margin-left: 280px;
-    box-shadow: 0.3rem -0.46875rem 2.1875rem rgba(4, 9, 20, 0.02), 0.3rem -0.9375rem 1.40625rem rgba(4, 9, 20, 0.02), 0.3rem -0.25rem 0.53125rem rgba(4, 9, 20, 0.04), 0.3rem -0.125rem 0.1875rem rgba(4, 9, 20, 0.02); }
+/* .fixed-footer .app-footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 7; }
+    .fixed-footer .app-footer .app-footer__inner {
+        margin-left: 280px;
+        box-shadow: 0.3rem -0.46875rem 2.1875rem rgba(4, 9, 20, 0.02), 0.3rem -0.9375rem 1.40625rem rgba(4, 9, 20, 0.02), 0.3rem -0.25rem 0.53125rem rgba(4, 9, 20, 0.04), 0.3rem -0.125rem 0.1875rem rgba(4, 9, 20, 0.02); }
 
 .fixed-footer .app-main .app-main__outer {
-  padding-bottom: 60px; }
+  padding-bottom: 60px; } */
 
 .app-page-title {
   padding: 1.5rem;
@@ -24122,11 +24122,11 @@ span.multiselect-native-select select {
     padding-left: 0 !important; }
   .app-header {
     justify-content: space-between; }
-    .app-header .app-header__logo {
+    /* .app-header .app-header__logo {
       display: none;
       order: 2;
       background: transparent !important;
-      border: 0 !important; }
+      border: 0 !important; } */
     .app-header .app-header__content {
       visibility: hidden;
       opacity: 0;
