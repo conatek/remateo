@@ -1,5 +1,4 @@
 <template>
-    <!-- <div class="app-container app-theme-dark fixed-header fixed-sidebar fixed-footer" :class="{ 'closed-sidebar': !isCollapsed }"> -->
     <div class="app-container app-theme-dark fixed-header fixed-sidebar fixed-footer"
         :class="{
             'closed-sidebar': !isCollapsed,
